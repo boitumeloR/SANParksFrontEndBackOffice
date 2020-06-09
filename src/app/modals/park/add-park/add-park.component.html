@@ -1,0 +1,36 @@
+<div class="dialog">
+  <h2 mat-dialog-title>Add Park</h2>
+<mat-dialog-content appearance="mat-typography">
+  <div class="example-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Park Name</mat-label>
+      <input matInput>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Park Limit</mat-label>
+      <input matInput type="number">
+      <mat-hint>The maximum amount of people in a park</mat-hint>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Park Location</mat-label>
+      <input matInput>
+      <mat-hint>Enter GPS Co-Ordinates</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Park Description</mat-label>
+      <textarea matInput #input maxlength="100"></textarea>
+      <mat-hint>{{input.value?.length || 0}}/100</mat-hint>
+    </mat-form-field>
+  </div>
+  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Add Park</button>
+</mat-dialog-actions>
+</div>
+
+
+
+

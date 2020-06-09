@@ -1,0 +1,102 @@
+<h2 mat-dialog-title>Update Activity</h2>
+<mat-horizontal-stepper linear #stepper>
+    <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
+        <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Enter Activity Details</ng-template>
+        <mat-form-field appearance="fill">
+            <mat-label>Activity Type</mat-label>
+            <mat-select required>
+                <mat-option value="option">Option</mat-option>
+                <mat-option value="option">Option</mat-option>
+                <mat-option value="option">Option</mat-option>
+                <mat-option value="option">Option</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Activity Description</mat-label>
+            <textarea matInput #input maxlength="100" required></textarea>
+            <mat-hint>{{input.value?.length || 0}}/100</mat-hint>
+            </mat-form-field>
+            <mat-form-field>
+            <mat-label>Activity Max Capacity</mat-label>
+            <input matInput placeholder="12" formControlName="firstCtrl" type="number" required>
+            </mat-form-field>
+            <mat-form-field>
+            <mat-label>Minimum Age</mat-label>
+            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" type="number" required>
+            </mat-form-field>
+            <mat-form-field>
+            <mat-label>Maximum Age</mat-label>
+            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" type="number" required>
+            </mat-form-field>
+
+            <mat-form-field>
+            <mat-label>Update Parks to Avail Activity</mat-label>
+            <mat-select [formControl]="parks" multiple>
+                <mat-option *ngFor="let park of parkList" [value]="park">{{park}}</mat-option>
+            </mat-select>
+            </mat-form-field>   
+            <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close color="warn">Cancel</button>
+            <button mat-button matStepperNext color="primary">Next</button>
+            </mat-dialog-actions>
+        <div>
+        </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Update Activity In Camps</ng-template>
+        <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Kruger National Park
+                </mat-panel-title>
+                <mat-panel-description>
+                  Select Camps To Include Activity
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+          
+                <mat-checkbox >Berg - En Dal Rest Camp</mat-checkbox>
+                <br>
+                <mat-checkbox >Berg - En Dal Rest Camp</mat-checkbox>
+                <br>
+                <mat-checkbox >Berg - En Dal Rest Camp</mat-checkbox>
+                <br>
+                <mat-checkbox >Berg - En Dal Rest Camp</mat-checkbox>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Kruger National Park
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Select Camps To Include Activity
+                  </mat-panel-description>
+              </mat-expansion-panel-header>
+              <p>I'm visible because I am open</p>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <mat-dialog-actions>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </mat-dialog-actions>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Save Activity</ng-template>
+        <mat-dialog-actions align="start">
+        <button mat-button matStepperPrevious>Go Back</button>
+        <button mat-button mat-dialog-close color="warn">Cancel</button>
+        <button mat-button [mat-dialog-close]="true" color="primary" cdkFocusInitial>Save Activity</button>
+        </mat-dialog-actions>
+    </mat-step>
+    </mat-horizontal-stepper>
+
+  
+
