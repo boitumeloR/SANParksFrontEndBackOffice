@@ -39,4 +39,14 @@ body {
         background: rgb(4, 126, 4); 
       }
       */
+      ::-webkit-scrollbar{
+        width: 5px;
+        margin: 0;
+        padding: 0;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: rgb(160, 160, 160);
+        border-radius: 17px;
+      }
 }

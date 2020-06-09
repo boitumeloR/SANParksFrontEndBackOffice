@@ -20,6 +20,7 @@ import { AddAccommodationTypeComponent } from './modals/accommodation-type/add-a
 import {UpdateAccommodationTypeComponent} from './modals/accommodation-type/update-accommodation-type/update-accommodation-type.component';
 import {DeleteAccommodationTypeComponent} from './modals/accommodation-type/delete-accommodation-type/delete-accommodation-type.component';
 import { AccommodationImagesComponent } from './subcomponents/accommodation-images/accommodation-images.component';
+import { SimplebarAngularModule } from 'simplebar-angular';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { AccommodationImagesComponent } from './subcomponents/accommodation-imag
     DeleteAccommodationTypeComponent
   ],
   imports: [
+    SimplebarAngularModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserModule,
