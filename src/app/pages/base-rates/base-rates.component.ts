@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
-import { AddParkComponent } from 'src/app/modals/park/add-park/add-park.component';
-import {MatDialog} from '@angular/material/dialog';
-import { UpdateParkComponent } from 'src/app/modals/park/update-park/update-park.component';
-import { DeleteParkComponent } from 'src/app/modals/park/delete-park/delete-park.component';
-
-
+import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { UpdateBaseRateComponent } from 'src/app/modals/base-rate/update-base-rate/update-base-rate.component';
+import { DeleteBaseRateComponent } from 'src/app/modals/base-rate/delete-base-rate/delete-base-rate.component';
+import { AddBaseRateComponent } from 'src/app/modals/base-rate/add-base-rate/add-base-rate.component';
 
 export interface PeriodicElement {
   name: string;
@@ -36,14 +34,15 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
   {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
 ];
-@Component({
-  selector: 'app-park',
-  templateUrl: './park.component.html',
-  styleUrls: ['./park.component.scss']
-})
-export class ParkComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol',  'symbol2', 'Actions'];
+@Component({
+  selector: 'app-base-rates',
+  templateUrl: './base-rates.component.html',
+  styleUrls: ['./base-rates.component.scss']
+})
+export class BaseRatesComponent implements OnInit {
+
+  displayedColumns: string[] = ['accommodation-type', 'park', 'camp', 'season',  'amount', 'Actions'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -53,20 +52,20 @@ export class ParkComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  addPark() {
-    const dialogRef = this.dialog.open(AddParkComponent);
+  addActivity() {
+    const dialogRef = this.dialog.open(AddBaseRateComponent, {disableClose: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
-  updatePark(park) {
-    const dialogRef = this.dialog.open(UpdateParkComponent);
+  updateActivity(park) {
+    const dialogRef = this.dialog.open(UpdateBaseRateComponent);
   }
 
-  deletePark(park) {
-    const dialogRef = this.dialog.open(DeleteParkComponent);
+  deleteActivity(park) {
+    const dialogRef = this.dialog.open(DeleteBaseRateComponent);
   }
 
 }

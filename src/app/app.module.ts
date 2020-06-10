@@ -19,8 +19,11 @@ import { AccommodationTypeComponent } from './pages/accommodation-type/accommoda
 import { AddAccommodationTypeComponent } from './modals/accommodation-type/add-accommodation-type/add-accommodation-type.component';
 import {UpdateAccommodationTypeComponent} from './modals/accommodation-type/update-accommodation-type/update-accommodation-type.component';
 import {DeleteAccommodationTypeComponent} from './modals/accommodation-type/delete-accommodation-type/delete-accommodation-type.component';
-import { AccommodationImagesComponent } from './subcomponents/accommodation-images/accommodation-images.component';
 import { SimplebarAngularModule } from 'simplebar-angular';
+import { BaseRatesComponent } from './pages/base-rates/base-rates.component';
+import { AddBaseRateComponent } from './modals/base-rate/add-base-rate/add-base-rate.component';
+import { UpdateBaseRateComponent } from './modals/base-rate/update-base-rate/update-base-rate.component';
+import { DeleteBaseRateComponent } from './modals/base-rate/delete-base-rate/delete-base-rate.component';
 
 
 @NgModule({
@@ -40,7 +43,10 @@ import { SimplebarAngularModule } from 'simplebar-angular';
     AddAccommodationTypeComponent,
     UpdateAccommodationTypeComponent,
     DeleteAccommodationTypeComponent,
-    AccommodationImagesComponent
+    BaseRatesComponent,
+    AddBaseRateComponent,
+    UpdateBaseRateComponent,
+    DeleteBaseRateComponent
   ],
   entryComponents: [
     AddParkComponent,
