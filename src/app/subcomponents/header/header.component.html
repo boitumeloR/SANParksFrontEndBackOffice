@@ -78,6 +78,29 @@
         <mat-divider></mat-divider>
 
         <mat-expansion-panel>
+
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Amenity
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option [routerLink]="[ '/amenity']">
+              Amenity
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/']">
+              Amenity Type
+            </mat-list-option>
+            <mat-list-option [routerLink] = "[ '/' ]">
+              Amenity Status
+            </mat-list-option>
+            <mat-list-option [routerLink] = "[ '/amenity-penalty' ]">
+              Amenity Penalty
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+        <mat-divider></mat-divider>
+        <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
               Activity
@@ -90,7 +113,7 @@
             <mat-list-option>
               Activity Type
             </mat-list-option>
-            <mat-list-option>
+            <mat-list-option [routerLink]="[ '/activity-rate']">
               Activity Rates
             </mat-list-option>
           </mat-selection-list>
