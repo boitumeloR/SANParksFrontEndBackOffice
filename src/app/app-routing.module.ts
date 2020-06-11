@@ -5,6 +5,7 @@ import { AddParkComponent } from './modals/park/add-park/add-park.component';
 import { ActivityComponent } from './pages/activity/activity.component';
 import { AccommodationTypeComponent } from './pages/accommodation-type/accommodation-type.component';
 import { BaseRatesComponent } from './pages/base-rates/base-rates.component';
+import { AddRatesComponent } from './pages/add-rates/add-rates.component';
 
 
 const routes: Routes = [
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'base-rate',
     component: BaseRatesComponent
+  },
+  {
+    path: 'add-rate',
+    component: AddRatesComponent
   }
 ];
 

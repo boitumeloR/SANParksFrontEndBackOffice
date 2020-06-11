@@ -24,6 +24,10 @@ import { BaseRatesComponent } from './pages/base-rates/base-rates.component';
 import { AddBaseRateComponent } from './modals/base-rate/add-base-rate/add-base-rate.component';
 import { UpdateBaseRateComponent } from './modals/base-rate/update-base-rate/update-base-rate.component';
 import { DeleteBaseRateComponent } from './modals/base-rate/delete-base-rate/delete-base-rate.component';
+import { AddRatesComponent } from './pages/add-rates/add-rates.component';
+import { AddAddRateComponent } from './modals/add-rate/add-add-rate/add-add-rate.component';
+import { UpdateAddRateComponent } from './modals/add-rate/update-add-rate/update-add-rate.component';
+import { DeleteAddRateComponent } from './modals/add-rate/delete-add-rate/delete-add-rate.component';
 
 
 @NgModule({
@@ -46,7 +50,11 @@ import { DeleteBaseRateComponent } from './modals/base-rate/delete-base-rate/del
     BaseRatesComponent,
     AddBaseRateComponent,
     UpdateBaseRateComponent,
-    DeleteBaseRateComponent
+    DeleteBaseRateComponent,
+    AddRatesComponent,
+    AddAddRateComponent,
+    UpdateAddRateComponent,
+    DeleteAddRateComponent
   ],
   entryComponents: [
     AddParkComponent,
