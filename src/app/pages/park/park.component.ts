@@ -43,7 +43,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class ParkComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol',  'symbol2', 'symbol3', 'Actions'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol',  'symbol2', 'Actions'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

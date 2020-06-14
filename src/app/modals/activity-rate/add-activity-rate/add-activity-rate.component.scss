@@ -1,0 +1,20 @@
+.mat-form-field {
+    margin-top: 26px;
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+}
+.mat-dialog-content {
+    height: 99%;
+}
+
+h2 {
+    margin-right: 200px;
+}
+
+:host ::ng-deep {
+    .mat-horizontal-stepper-header-container {
+      position: inherit;
+    }
+}
+

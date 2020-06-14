@@ -7,6 +7,7 @@
             <mat-label>Accommodation Type Name</mat-label>
             <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
         </mat-form-field>
+        <mat-divider></mat-divider>
         <mat-form-field appearance="fill">
             <mat-label>Accommodation Type Description</mat-label>
             <textarea matInput #input maxlength="100" required></textarea>
@@ -46,7 +47,7 @@
     </mat-step>
     <mat-step>
         <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Assign Accommodation Type To Camps</ng-template>
+        <ng-template matStepLabel>Assign To Camps</ng-template>
         <mat-dialog-content>
             <mat-accordion>
                 <mat-expansion-panel>

@@ -19,7 +19,27 @@ import { AccommodationTypeComponent } from './pages/accommodation-type/accommoda
 import { AddAccommodationTypeComponent } from './modals/accommodation-type/add-accommodation-type/add-accommodation-type.component';
 import {UpdateAccommodationTypeComponent} from './modals/accommodation-type/update-accommodation-type/update-accommodation-type.component';
 import {DeleteAccommodationTypeComponent} from './modals/accommodation-type/delete-accommodation-type/delete-accommodation-type.component';
-import { AccommodationImagesComponent } from './subcomponents/accommodation-images/accommodation-images.component';
+import { SimplebarAngularModule } from 'simplebar-angular';
+import { BaseRatesComponent } from './pages/base-rates/base-rates.component';
+import { AddBaseRateComponent } from './modals/base-rate/add-base-rate/add-base-rate.component';
+import { UpdateBaseRateComponent } from './modals/base-rate/update-base-rate/update-base-rate.component';
+import { DeleteBaseRateComponent } from './modals/base-rate/delete-base-rate/delete-base-rate.component';
+import { AddRatesComponent } from './pages/add-rates/add-rates.component';
+import { AddAddRateComponent } from './modals/add-rate/add-add-rate/add-add-rate.component';
+import { UpdateAddRateComponent } from './modals/add-rate/update-add-rate/update-add-rate.component';
+import { DeleteAddRateComponent } from './modals/add-rate/delete-add-rate/delete-add-rate.component';
+import { AmenityComponent } from './pages/amenity/amenity.component';
+import { AddAmenityComponent } from './modals/amenity/add-amenity/add-amenity.component';
+import { UpdateAmenityComponent } from './modals/amenity/update-amenity/update-amenity.component';
+import { DeleteAmenityComponent } from './modals/amenity/delete-amenity/delete-amenity.component';
+import { AmenityPenaltyComponent } from './pages/amenity-penalty/amenity-penalty.component';
+import { AddAmenityPenaltyComponent } from './modals/amenity-penalty/add-amenity-penalty/add-amenity-penalty.component';
+import { UpdateAmenityPenaltyComponent } from './modals/amenity-penalty/update-amenity-penalty/update-amenity-penalty.component';
+import { DeleteAmenityPenaltyComponent } from './modals/amenity-penalty/delete-amenity-penalty/delete-amenity-penalty.component';
+import { ActivityRateComponent } from './pages/activity-rate/activity-rate.component';
+import { AddActivityRateComponent } from './modals/activity-rate/add-activity-rate/add-activity-rate.component';
+import { UpdateActivityRateComponent } from './modals/activity-rate/update-activity-rate/update-activity-rate.component';
+import { DeleteActivityRateComponent } from './modals/activity-rate/delete-activity-rate/delete-activity-rate.component';
 
 
 @NgModule({
@@ -39,7 +59,26 @@ import { AccommodationImagesComponent } from './subcomponents/accommodation-imag
     AddAccommodationTypeComponent,
     UpdateAccommodationTypeComponent,
     DeleteAccommodationTypeComponent,
-    AccommodationImagesComponent
+    BaseRatesComponent,
+    AddBaseRateComponent,
+    UpdateBaseRateComponent,
+    DeleteBaseRateComponent,
+    AddRatesComponent,
+    AddAddRateComponent,
+    UpdateAddRateComponent,
+    DeleteAddRateComponent,
+    AmenityComponent,
+    AddAmenityComponent,
+    UpdateAmenityComponent,
+    DeleteAmenityComponent,
+    AmenityPenaltyComponent,
+    AddAmenityPenaltyComponent,
+    UpdateAmenityPenaltyComponent,
+    DeleteAmenityPenaltyComponent,
+    ActivityRateComponent,
+    AddActivityRateComponent,
+    UpdateActivityRateComponent,
+    DeleteActivityRateComponent
   ],
   entryComponents: [
     AddParkComponent,
@@ -53,6 +92,7 @@ import { AccommodationImagesComponent } from './subcomponents/accommodation-imag
     DeleteAccommodationTypeComponent
   ],
   imports: [
+    SimplebarAngularModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserModule,
