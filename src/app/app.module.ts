@@ -42,6 +42,7 @@ import { UpdateActivityRateComponent } from './modals/activity-rate/update-activ
 import { DeleteActivityRateComponent } from './modals/activity-rate/delete-activity-rate/delete-activity-rate.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,7 +79,8 @@ import { DeleteActivityRateComponent } from './modals/activity-rate/delete-activ
     ActivityRateComponent,
     AddActivityRateComponent,
     UpdateActivityRateComponent,
-    DeleteActivityRateComponent
+    DeleteActivityRateComponent,
+
   ],
   entryComponents: [
     AddParkComponent,
