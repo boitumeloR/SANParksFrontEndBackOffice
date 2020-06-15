@@ -13,7 +13,7 @@ import { ActivityRateComponent } from './pages/activity-rate/activity-rate.compo
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'Park',
     component: ParkComponent
   },
   {
