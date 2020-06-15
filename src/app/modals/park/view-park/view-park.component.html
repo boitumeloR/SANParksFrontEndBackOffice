@@ -1,0 +1,38 @@
+
+<div class="dialog">
+  
+  <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
+    <mat-icon>close</mat-icon>
+  </button>
+  <h2 mat-dialog-title>View Park</h2>
+   
+
+  <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Park Name</mat-label>
+        <input matInput value="Addo Elephant National Park" disabled>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Park Limit</mat-label>
+        <input matInput type="number" value="150" disabled>
+        <mat-hint>The maximum amount of people in a park</mat-hint>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Park Location</mat-label>
+        <input matInput value="S 33° 26' 40" disabled>
+        <mat-hint>Park GPS Co-Ordinates</mat-hint>
+      </mat-form-field>
+        <div class="description">
+          <label>Park Description</label>
+          <p>Addo Elephant National Park is a diverse wildlife conservation park situated close to Port Elizabeth in South Africa and is one of the country's 20 national parks. It currently ranks third in size after Kruger National Park and the Kgalagadi Transfrontier Park.</p>
+        </div>
+    </div>
+    
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button [mat-dialog-close] color="primary" (click)="updatePark()">Update</button>
+    <button mat-raised-button [mat-dialog-close]="true" color="warn" (click)="deletePark()">Delete</button>
+  </mat-dialog-actions>
+  </div>

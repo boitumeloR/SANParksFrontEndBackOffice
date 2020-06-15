@@ -42,7 +42,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class ActivityRateComponent implements OnInit {
 
-  displayedColumns: string[] = ['activity',  'child-amount', 'adult-amount', 'date-effective', 'Actions'];
+  displayedColumns: string[] = ['activity','date-effective', 'Actions'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
