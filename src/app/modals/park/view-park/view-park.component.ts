@@ -14,7 +14,7 @@ export class ViewParkComponent implements OnInit {
   ngOnInit(): void {
   }
   updatePark(){
-    const dialogRef = this.dialog.open(UpdateParkComponent);
+    const dialogRef = this.dialog.open(UpdateParkComponent,{disableClose: true});
   }
 
   deletePark(){
