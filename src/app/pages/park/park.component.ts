@@ -9,7 +9,7 @@ import { ViewParkComponent } from 'src/app/modals/park/view-park/view-park.compo
 
 export interface PeriodicElement {
   name: string;
-  
+
 }
 const ELEMENT_DATA: PeriodicElement[] = [
   { name: 'Addo Elephant National Park'},
@@ -41,8 +41,11 @@ export class ParkComponent implements OnInit {
     });
   }
 
-  ViewPark(park) { 
-    const dialogRef = this.dialog.open(ViewParkComponent);
+  ViewPark(park) {
+    const dialogRef = this.dialog.open(ViewParkComponent, {disableClose: true});
+    // disableclose restricts the user from just clicking on the backdrop then the modal closes,
+    // use it when entering info in a modal, so the user doesnt lose data they've
+    //  been entering if they click outside the modal
   }
 
 
