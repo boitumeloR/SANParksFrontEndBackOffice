@@ -50,6 +50,14 @@ import {ViewParkGateComponent} from 'src/app/modals/park-gate/view-park-gate/vie
 import {UpdateParkGateComponent} from 'src/app/modals/park-gate/update-park-gate/update-park-gate.component';
 import {UpdateParkGateConfirmationComponent} from 'src/app/modals/park-gate/update-park-gate-confirmation/update-park-gate-confirmation.component';
 import {DeleteParkGateComponent} from 'src/app/modals/park-gate/delete-park-gate/delete-park-gate.component';
+import { ParkGateTimeComponent } from 'src/app/pages/park-gate-time/park-gate-time.component';
+import { AddParkGateTimeComponent } from 'src/app/modals/park-gate-time/add-park-gate-time/add-park-gate-time.component';
+import { UpdateParkGateTimeComponent } from 'src/app/modals/park-gate-time/update-park-gate-time/update-park-gate-time.component';
+import { DeleteParkGateTimeComponent } from 'src/app/modals/park-gate-time/delete-park-gate-time/delete-park-gate-time.component';
+import { UpdateParkGateTimeConfirmationComponent } from 'src/app/modals/park-gate-time/update-park-gate-time-confirmation/update-park-gate-time-confirmation.component';
+import { ViewParkGateTimeComponent } from 'src/app/modals/park-gate-time/view-park-gate-time/view-park-gate-time.component';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { AddParkGateTimeConfirmationComponent } from './modals/park-gate-time/add-park-gate-time-confirmation/add-park-gate-time-confirmation.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -96,7 +104,14 @@ import {DeleteParkGateComponent} from 'src/app/modals/park-gate/delete-park-gate
     ViewParkGateComponent,
     UpdateParkGateComponent,
     UpdateParkGateConfirmationComponent,
-    DeleteParkGateComponent
+    DeleteParkGateComponent,
+    ParkGateTimeComponent,
+    AddParkGateTimeComponent,
+    UpdateParkGateTimeComponent,
+    DeleteParkGateTimeComponent,
+    UpdateParkGateTimeConfirmationComponent,
+    ViewParkGateTimeComponent,
+    AddParkGateTimeConfirmationComponent
   ],
   entryComponents: [
     AddParkComponent,
@@ -117,7 +132,8 @@ import {DeleteParkGateComponent} from 'src/app/modals/park-gate/delete-park-gate
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    NgxMaterialTimepickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,14 @@
+mat-form-field {
+    margin: auto; // makes the form fields go towards the middle
+    display: block; // restricts them from sharing one line
+    width: 80%;
+    margin-bottom: 20px; //space between the bottom of every form
+}
+// This margin right makes the modal width a bit wider for readability and ease of access / use it in all your modals to 
+// extend accoringly
+h2 {
+    margin-right: 320px;
+}
+#alignCloseRight{
+    float: right;
+}

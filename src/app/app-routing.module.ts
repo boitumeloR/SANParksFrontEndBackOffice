@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ParkComponent } from './pages/park/park.component';
 import { AddParkComponent } from './modals/park/add-park/add-park.component';
@@ -10,6 +10,7 @@ import { AmenityComponent } from './pages/amenity/amenity.component';
 import { AmenityPenaltyComponent } from './pages/amenity-penalty/amenity-penalty.component';
 import { ActivityRateComponent } from './pages/activity-rate/activity-rate.component';
 import {ParkGateComponent} from './pages/park-gate/park-gate.component'
+import { ParkGateTimeComponent } from './pages/park-gate-time/park-gate-time.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,9 @@ const routes: Routes = [
   },{
     path: 'Park-Gate',
     component: ParkGateComponent
+  },{
+    path:'Park-Gate-Time',
+    component: ParkGateTimeComponent
   },
   {
     path: 'home',
