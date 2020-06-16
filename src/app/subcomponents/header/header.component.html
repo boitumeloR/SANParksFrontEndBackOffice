@@ -21,133 +21,156 @@
 </mat-toolbar>
 
 <mat-sidenav-container class="example-container" color="primary">
-    <mat-sidenav [(opened)] = "opened" mode="side" color = "primary">
-        <div class="links">
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Park
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-selection-list #shoes [multiple]="false">
-              <mat-list-option>
-                Hello World
-              </mat-list-option>
-            </mat-selection-list>
-          </mat-expansion-panel>
-          <mat-divider></mat-divider>
-          <mat-expansion-panel>
+    <mat-sidenav [(opened)] = "opened" mode="side" color = "primary" data-simplebar data-simplebar-auto-hide="true">
+      <div class="links">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Park
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option [routerLink]="['/Park']">
+              Park
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+        <mat-divider></mat-divider>
+        <mat-expansion-panel>
 
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Camp
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-selection-list #shoes [multiple]="false">
-              <mat-list-option>
-                Hello World
-              </mat-list-option>
-            </mat-selection-list>
-          </mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Camp
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option>
+              Hello World
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
 
-          <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
 
-          <mat-expansion-panel>
+        <mat-expansion-panel>
 
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Accommodation
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-selection-list #shoes [multiple]="false">
-              <mat-list-option>
-                Accommodation
-              </mat-list-option>
-              <mat-list-option [routerLink]="[ '/accommodation-type']">
-                Accommodation Type
-              </mat-list-option>
-              <mat-list-option>
-                Base Rates
-              </mat-list-option>
-              <mat-list-option>
-                Add Rates
-              </mat-list-option>
-            </mat-selection-list>
-          </mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Accommodation
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option>
+              Accommodation
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/accommodation-type']">
+              Accommodation Type
+            </mat-list-option>
+            <mat-list-option [routerLink] = "[ '/base-rate' ]">
+              Base Rates
+            </mat-list-option>
+            <mat-list-option [routerLink] = "[ '/add-rate' ]">
+              Add Rates
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
 
-          <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
 
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Activity
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-selection-list #shoes [multiple]="false">
-              <mat-list-option [routerLink]="[ '/activity']">
-                Activity
-              </mat-list-option>
-              <mat-list-option>
-                Activity Type
-              </mat-list-option>
-              <mat-list-option>
-                Activity Rates
-              </mat-list-option>
-            </mat-selection-list>
-          </mat-expansion-panel>
+        <mat-expansion-panel>
 
-          <mat-divider></mat-divider>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Booking
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-selection-list #shoes [multiple]="false">
-              <mat-list-option>
-                Pre Booked Day Visit
-              </mat-list-option>
-              <mat-list-option>
-                Accommodation
-              </mat-list-option>
-              <mat-list-option>
-                Activity
-              </mat-list-option>
-              <mat-list-option>
-                Check Availability
-              </mat-list-option>
-            </mat-selection-list>
-          </mat-expansion-panel>
-          <mat-divider></mat-divider>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Wildcard
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-selection-list #shoes [multiple]="false">
-              <mat-list-option>
-                Hello World
-              </mat-list-option>
-            </mat-selection-list>
-          </mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Amenity
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option [routerLink]="[ '/amenity']">
+              Amenity
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/']">
+              Amenity Type
+            </mat-list-option>
+            <mat-list-option [routerLink] = "[ '/' ]">
+              Amenity Status
+            </mat-list-option>
+            <mat-list-option [routerLink] = "[ '/amenity-penalty' ]">
+              Amenity Penalty
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+        <mat-divider></mat-divider>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Activity
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option [routerLink]="[ '/activity']">
+              Activity
+            </mat-list-option>
+            <mat-list-option>
+              Activity Type
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/activity-rate']">
+              Activity Rates
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
 
-          <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Booking
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option>
+              Pre Booked Day Visit
+            </mat-list-option>
+            <mat-list-option>
+              Accommodation
+            </mat-list-option>
+            <mat-list-option>
+              Activity
+            </mat-list-option>
+            <mat-list-option>
+              Check Availability
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+        <mat-divider></mat-divider>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Wildcard
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option>
+              Hello World
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
 
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Check In
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-selection-list #shoes [multiple]="false">
-              <mat-list-option>
-                Hello World
-              </mat-list-option>
-            </mat-selection-list>
-          </mat-expansion-panel>
-        </div>       
-    </mat-sidenav>
+        <mat-divider></mat-divider>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Check In
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option>
+              Hello World
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+      </div>       
+  </mat-sidenav>
     <mat-sidenav-content>
         <ng-content>
 

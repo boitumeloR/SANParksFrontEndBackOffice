@@ -1,0 +1,128 @@
+<h2 mat-dialog-title>Create Activity Rate Details</h2>
+<mat-horizontal-stepper linear #stepper>
+    <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
+        <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Enter Accommodation Type Details</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Activity Type</mat-label>
+          <mat-select>
+            <mat-option value="option">Option</mat-option>
+            <mat-option value="option">Option</mat-option>
+            <mat-option value="option">Option</mat-option>
+            <mat-option value="option">Option</mat-option>
+          </mat-select>
+      </mat-form-field> 
+          <mat-form-field>
+            <mat-label>Activity</mat-label>
+            <mat-select>
+              <mat-option value="option">Option</mat-option>
+              <mat-option value="option">Option</mat-option>
+              <mat-option value="option">Option</mat-option>
+              <mat-option value="option">Option</mat-option>
+            </mat-select>
+            </mat-form-field> 
+            <mat-form-field>
+              <mat-label>Rate Type</mat-label>
+              <mat-select [(value)] = "selected" formControlName="firstCtrl" required>
+                  <mat-option *ngFor="let item of rateTypes" [value]="item.ID">{{item.Name}}</mat-option>
+              </mat-select>
+              </mat-form-field> 
+   
+            <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close color="warn">Cancel</button>
+            <button mat-button matStepperNext color="primary" (click)="print()">Next</button>
+            </mat-dialog-actions>
+        <div>
+        </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Add Rate Amounts &amp; Save</ng-template>
+        <mat-dialog-content>
+          <span [ngSwitch]="selected">
+          <p *ngSwitchCase="0">
+            <mat-form-field class="example-full-width">
+              <mat-label>Adult Rate</mat-label>
+              <span matPrefix>R &nbsp;</span>
+              <input type="number" matInput placeholder="1000">
+            </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>Child Rate</mat-label>
+                <span matPrefix>R &nbsp;</span>
+                <input type="number" matInput placeholder="1000">
+              </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Date Effective</mat-label>
+                <input matInput type="date">
+            </mat-form-field>
+          </p>
+          <p *ngSwitchCase="1">
+            <mat-form-field class="example-full-width">
+              <mat-label>Rate Per Hut</mat-label>
+              <span matPrefix>R &nbsp;</span>
+              <input type="number" matInput placeholder="1000">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Date Effective</mat-label>
+                <input matInput type="date">
+            </mat-form-field>
+          </p>
+          <p *ngSwitchCase="2">
+            <mat-form-field class="example-full-width">
+              <mat-label>With Bike</mat-label>
+              <span matPrefix>R &nbsp;</span>
+              <input type="number" matInput placeholder="1000">
+            </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>No Bike</mat-label>
+                <span matPrefix>R &nbsp;</span>
+                <input type="number" matInput placeholder="1000">
+              </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Date Effective</mat-label>
+                <input matInput type="date">
+            </mat-form-field>
+          </p>
+          <p *ngSwitchCase="3">
+            <mat-form-field class="example-full-width">
+              <mat-label>Rate Per Person</mat-label>
+              <span matPrefix>R &nbsp;</span>
+              <input type="number" matInput placeholder="1000">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Date Effective</mat-label>
+                <input matInput type="date">
+            </mat-form-field>
+          </p>
+          <p *ngSwitchCase="4">
+            <mat-form-field class="example-full-width">
+              <mat-label>Rate Per Vehicle</mat-label>
+              <span matPrefix>R &nbsp;</span>
+              <input type="number" matInput placeholder="1000">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Date Effective</mat-label>
+                <input matInput type="date">
+            </mat-form-field>
+          </p>
+          <p *ngSwitchDefault>
+            Hello
+          </p>
+          </span>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+          <button mat-button matStepperPrevious>Go Back</button>
+          <button mat-button mat-dialog-close color="warn">Cancel</button>
+          <button mat-button [mat-dialog-close]="true" color="primary" cdkFocusInitial>Save Rate</button>
+      </mat-dialog-actions>
+        </form>
+    </mat-step>
+    <!--ON dev-->
+    </mat-horizontal-stepper>
+
+  
+

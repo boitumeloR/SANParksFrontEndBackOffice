@@ -16,11 +16,13 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 
 @NgModule({
   declarations: [],
   imports: [
+    MatDatepickerModule,
     MatCheckboxModule,
     MatStepperModule,
     MatSelectModule,
@@ -40,6 +42,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatExpansionModule
   ],
   exports: [
+    MatDatepickerModule,
     MatCheckboxModule,
     MatStepperModule,
     MatSelectModule,
