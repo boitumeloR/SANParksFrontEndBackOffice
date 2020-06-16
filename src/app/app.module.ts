@@ -43,13 +43,7 @@ import { DeleteActivityRateComponent } from './modals/activity-rate/delete-activ
 import { ViewParkComponent } from './modals/park/view-park/view-park.component';
 import {UpdateParkConfirmationComponent} from 'src/app/modals/park/update-park-confirmation/update-park-confirmation.component';
 import { AddParkConfirmationComponent } from './modals/park/add-park-confirmation/add-park-confirmation.component';
-import { AddParkGateComponent } from './add-park-gate/add-park-gate.component';
-import { AddParkGateConfirmationComponent } from './add-park-gate-confirmation/add-park-gate-confirmation.component';
-import { UpdateParkGateComponent } from './update-park-gate/update-park-gate.component';
-import { UpdateParkGateConfirmationComponent } from './update-park-gate-confirmation/update-park-gate-confirmation.component';
-import { DeleteParkGateComponent } from './delete-park-gate/delete-park-gate.component';
-import { ViewParkGateComponent } from './view-park-gate/view-park-gate.component';
-import { ParkGateComponent } from './park-gate/park-gate.component';
+import { AddParkGateComponent } from './modals/park-gate/add-park-gate/add-park-gate.component';
 
 
 @NgModule({
@@ -92,13 +86,7 @@ import { ParkGateComponent } from './park-gate/park-gate.component';
     ViewParkComponent,
     UpdateParkConfirmationComponent,
     AddParkConfirmationComponent,
-    AddParkGateComponent,
-    AddParkGateConfirmationComponent,
-    UpdateParkGateComponent,
-    UpdateParkGateConfirmationComponent,
-    DeleteParkGateComponent,
-    ViewParkGateComponent,
-    ParkGateComponent
+    AddParkGateComponent
 
   ],
   entryComponents: [
