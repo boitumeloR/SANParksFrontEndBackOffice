@@ -1,0 +1,37 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Add Park Gate</h2>
+  <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Park Gate Name</mat-label>
+        <input matInput>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Park Gate Limit</mat-label>
+        <input matInput type="number">
+        <mat-hint>The maximum amount of people allowed through this park gate</mat-hint>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Park Gate Location</mat-label>
+        <input matInput>
+        <mat-hint>Enter GPS Co-Ordinates</mat-hint>
+      </mat-form-field>
+      <mat-form-field hintLabel="Max 300 characters" appearance="fill">
+        <mat-label>Park Gate Description</mat-label>
+        <textarea matInput #input maxlength="300"></textarea>
+        <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
+      </mat-form-field>
+    </div>
+    
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="addParkGate()">Add Park Gate</button>
+  </mat-dialog-actions>
+  </div>
+  
+  
+  
+  
+  

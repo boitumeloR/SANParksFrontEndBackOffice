@@ -9,12 +9,15 @@ import { AddRatesComponent } from './pages/add-rates/add-rates.component';
 import { AmenityComponent } from './pages/amenity/amenity.component';
 import { AmenityPenaltyComponent } from './pages/amenity-penalty/amenity-penalty.component';
 import { ActivityRateComponent } from './pages/activity-rate/activity-rate.component';
-
+import {ParkGateComponent} from './pages/park-gate/park-gate.component'
 
 const routes: Routes = [
   {
     path: 'Park',
     component: ParkComponent
+  },{
+    path: 'Park-Gate',
+    component: ParkGateComponent
   },
   {
     path: 'home',

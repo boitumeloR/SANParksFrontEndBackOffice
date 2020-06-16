@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UpdateParkConfirmationComponent} from 'src/app/modals/park/update-park-confirmation/update-park-confirmation.component';
-import {MatDialog} from '@angular/material/dialog'
+import {MatDialog} from '@angular/material/dialog';
 @Component({
   selector: 'app-update-park',
   templateUrl: './update-park.component.html',

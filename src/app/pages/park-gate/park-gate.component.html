@@ -1,5 +1,5 @@
 
-<h1>Park</h1>
+<h1>Park Gate</h1>
 <div class="example-container">
   <mat-form-field hintLabel="Max 100 characters" appearance="fill">
     <mat-label>Keyword Filter</mat-label>
@@ -7,7 +7,7 @@
     <mat-hint>&nbsp; {{input.value?.length || 0}}/100</mat-hint>
   </mat-form-field>
 
-  <button mat-fab color="primary" aria-label="Add Park" (click)="addPark()">
+  <button mat-fab color="primary" aria-label="Add Park" (click)="addParkGate()">
     <mat-icon>add</mat-icon>
   </button>
 
@@ -16,15 +16,20 @@
     <table mat-table [dataSource]="dataSource">
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Park Name </th>
+        <th mat-header-cell *matHeaderCellDef> Gate Name </th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
 
+      <!-- Location Column-->
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef> Gate Location </th>
+        <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+      </ng-container>
       <!-- Actions Column -->
       <ng-container matColumnDef="view">
-        <th mat-header-cell *matHeaderCellDef> View Park </th>
+        <th mat-header-cell *matHeaderCellDef> View Park Gate </th>
         <td mat-cell *matCellDef="let element"> 
-          <a mat-button (click)="ViewPark(element)">
+          <a mat-button (click)="viewParkGate(element)">
             <mat-icon>visibility</mat-icon>
           </a>
         </td>

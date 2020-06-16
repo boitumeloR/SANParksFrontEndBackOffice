@@ -1,0 +1,32 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Update Park Gate</h2>
+  <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Park Gate Name</mat-label>
+        <input matInput value="Orpen Gate">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Park Gate Limit</mat-label>
+        <input matInput type="number" value="150">
+        <mat-hint>The maximum amount of people in a park</mat-hint>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Park Gate Location</mat-label>
+        <input matInput value="24.5762° S, 31.0579° E">
+        <mat-hint>GPS Co-Ordinates</mat-hint>
+      </mat-form-field>
+      <mat-form-field hintLabel="Max 300 characters" appearance="fill">
+        <mat-label>Park Gate Description</mat-label>
+        <textarea matInput #input maxlength="300" value="Orpen Gate rests on the edge of a band of what is known as sweetveld that stretches in a band from east to west across Kruger, and the reason for the predominance of game to the area"></textarea>
+        <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
+      </mat-form-field>
+    </div>
+    
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial color="primary" (click)="updateParkGate()">Update Park Gate</button>
+  </mat-dialog-actions>
+  </div>

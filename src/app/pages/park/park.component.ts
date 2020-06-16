@@ -34,18 +34,18 @@ export class ParkComponent implements OnInit {
   }
 
   addPark() {
-    const dialogRef = this.dialog.open(AddParkComponent);
-
+    const dialogRef = this.dialog.open(AddParkComponent,{disableClose: true});
+    // disableclose restricts the user from just clicking on the backdrop then the modal closes,
+    // use it when entering info in a modal, so the user doesnt lose data they've
+    //  been entering if they click outside the modal
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
   ViewPark(park) {
-    const dialogRef = this.dialog.open(ViewParkComponent, {disableClose: true});
-    // disableclose restricts the user from just clicking on the backdrop then the modal closes,
-    // use it when entering info in a modal, so the user doesnt lose data they've
-    //  been entering if they click outside the modal
+    const dialogRef = this.dialog.open(ViewParkComponent);
+   
   }
 
 

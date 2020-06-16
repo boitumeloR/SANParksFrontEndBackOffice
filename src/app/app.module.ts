@@ -43,8 +43,13 @@ import { DeleteActivityRateComponent } from './modals/activity-rate/delete-activ
 import { ViewParkComponent } from './modals/park/view-park/view-park.component';
 import {UpdateParkConfirmationComponent} from 'src/app/modals/park/update-park-confirmation/update-park-confirmation.component';
 import { AddParkConfirmationComponent } from './modals/park/add-park-confirmation/add-park-confirmation.component';
-
-
+import { AddParkGateComponent } from './modals/park-gate/add-park-gate/add-park-gate.component';
+import {ParkGateComponent} from './pages/park-gate/park-gate.component'
+import {AddParkGateConfirmationComponent} from 'src/app/modals/park-gate/add-park-gate-confirmation/add-park-gate-confirmation.component';
+import {ViewParkGateComponent} from 'src/app/modals/park-gate/view-park-gate/view-park-gate.component';
+import {UpdateParkGateComponent} from 'src/app/modals/park-gate/update-park-gate/update-park-gate.component';
+import {UpdateParkGateConfirmationComponent} from 'src/app/modals/park-gate/update-park-gate-confirmation/update-park-gate-confirmation.component';
+import {DeleteParkGateComponent} from 'src/app/modals/park-gate/delete-park-gate/delete-park-gate.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,7 +89,14 @@ import { AddParkConfirmationComponent } from './modals/park/add-park-confirmatio
     DeleteActivityRateComponent,
     ViewParkComponent,
     UpdateParkConfirmationComponent,
-    AddParkConfirmationComponent
+    AddParkConfirmationComponent,
+    AddParkGateComponent,
+    ParkGateComponent,
+    AddParkGateConfirmationComponent,
+    ViewParkGateComponent,
+    UpdateParkGateComponent,
+    UpdateParkGateConfirmationComponent,
+    DeleteParkGateComponent
   ],
   entryComponents: [
     AddParkComponent,
@@ -95,7 +107,8 @@ import { AddParkConfirmationComponent } from './modals/park/add-park-confirmatio
     DeleteActivityComponent,
     AddAccommodationTypeComponent,
     UpdateAccommodationTypeComponent,
-    DeleteAccommodationTypeComponent
+    DeleteAccommodationTypeComponent,
+    AddParkGateComponent
   ],
   imports: [
     SimplebarAngularModule,
