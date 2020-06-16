@@ -40,6 +40,9 @@ import { ActivityRateComponent } from './pages/activity-rate/activity-rate.compo
 import { AddActivityRateComponent } from './modals/activity-rate/add-activity-rate/add-activity-rate.component';
 import { UpdateActivityRateComponent } from './modals/activity-rate/update-activity-rate/update-activity-rate.component';
 import { DeleteActivityRateComponent } from './modals/activity-rate/delete-activity-rate/delete-activity-rate.component';
+import { ViewParkComponent } from './modals/park/view-park/view-park.component';
+import {UpdateParkConfirmationComponent} from 'src/app/modals/park/update-park-confirmation/update-park-confirmation.component';
+import { AddParkConfirmationComponent } from './modals/park/add-park-confirmation/add-park-confirmation.component';
 
 
 
@@ -80,7 +83,13 @@ import { DeleteActivityRateComponent } from './modals/activity-rate/delete-activ
     AddActivityRateComponent,
     UpdateActivityRateComponent,
     DeleteActivityRateComponent,
+<<<<<<< HEAD
 
+=======
+    ViewParkComponent,
+    UpdateParkConfirmationComponent,
+    AddParkConfirmationComponent
+>>>>>>> d400510f694ef7cba9f1f72448f441a526177921
   ],
   entryComponents: [
     AddParkComponent,

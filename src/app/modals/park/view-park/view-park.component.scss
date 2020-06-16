@@ -1,0 +1,33 @@
+mat-form-field {
+    margin: auto; // makes the form fields go towards the middle
+    display: block; // restricts them from sharing one line
+    width: 80%;
+    margin-bottom: 20px; //space between the bottom of every form
+}
+// This margin right makes the modal width a bit wider for readability and ease of access / use it in all your modals to 
+// extend accoringly
+h2 {
+    margin-right: 320px;
+}
+p {
+    margin: auto;
+    display: block;
+    width: 80%;
+    margin-bottom: 20px;
+    opacity: 0.6;
+}
+// Replaced with a div and p tag, this styles it to look like a mat-form-field
+.description {
+    margin: auto;
+    width: 320px;
+    padding: 10px;
+    border-radius: 7px;
+    background-color: rgb(250, 250, 250);
+
+    label {
+        opacity: 0.6;
+    }
+}
+#alignCloseRight{
+    float: right;
+}
