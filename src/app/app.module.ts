@@ -43,7 +43,10 @@ import { DeleteActivityRateComponent } from './modals/activity-rate/delete-activ
 import { ViewParkComponent } from './modals/park/view-park/view-park.component';
 import {UpdateParkConfirmationComponent} from 'src/app/modals/park/update-park-confirmation/update-park-confirmation.component';
 import { AddParkConfirmationComponent } from './modals/park/add-park-confirmation/add-park-confirmation.component';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 328be80b2895e0d5cd2fb86e739d31e8831b3117
 
 
 @NgModule({
@@ -84,12 +87,18 @@ import { AddParkConfirmationComponent } from './modals/park/add-park-confirmatio
     UpdateActivityRateComponent,
     DeleteActivityRateComponent,
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     ViewParkComponent,
     UpdateParkConfirmationComponent,
     AddParkConfirmationComponent
 >>>>>>> d400510f694ef7cba9f1f72448f441a526177921
+=======
+    ViewParkComponent,
+    UpdateParkConfirmationComponent,
+    AddParkConfirmationComponent
+>>>>>>> 328be80b2895e0d5cd2fb86e739d31e8831b3117
   ],
   entryComponents: [
     AddParkComponent,
