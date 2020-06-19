@@ -66,6 +66,13 @@ import { UpdateDailyConservationFeeConfirmationComponent } from 'src/app/modals/
 import { UpdateDailyConservationFeeComponent } from 'src/app/modals/daily-conservation-fee/update-daily-conservation-fee/update-daily-conservation-fee.component';
 import { ViewDailyConservationFeeComponent } from 'src/app/modals/daily-conservation-fee/view-daily-conservation-fee/view-daily-conservation-fee.component';
 import {MatNativeDateModule} from '@angular/material/core';
+import { SeasonComponent } from './pages/season/season.component';
+import { AddSeasonComponent } from './modals/season/add-season/add-season.component';
+import { AddSeasonConfirmationComponent } from './modals/season/add-season-confirmation/add-season-confirmation.component';
+import { UpdateSeasonConfirmationComponent } from './modals/season/update-season-confirmation/update-season-confirmation.component';
+import { UpdateSeasonComponent } from './modals/season/update-season/update-season.component';
+import { DeleteSeasonComponent } from './modals/season/delete-season/delete-season.component';
+import { ViewSeasonComponent } from './modals/season/view-season/view-season.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -126,7 +133,14 @@ import {MatNativeDateModule} from '@angular/material/core';
     DeleteDailyConservationFeeConfirmationComponent,
     UpdateDailyConservationFeeConfirmationComponent,
     UpdateDailyConservationFeeComponent,
-    ViewDailyConservationFeeComponent
+    ViewDailyConservationFeeComponent,
+    SeasonComponent,
+    AddSeasonComponent,
+    AddSeasonConfirmationComponent,
+    UpdateSeasonConfirmationComponent,
+    UpdateSeasonComponent,
+    DeleteSeasonComponent,
+    ViewSeasonComponent
   ],
   entryComponents: [
     AddParkComponent,
