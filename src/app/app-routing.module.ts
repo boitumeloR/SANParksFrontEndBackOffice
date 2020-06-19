@@ -11,7 +11,7 @@ import { AmenityPenaltyComponent } from './pages/amenity-penalty/amenity-penalty
 import { ActivityRateComponent } from './pages/activity-rate/activity-rate.component';
 import {ParkGateComponent} from './pages/park-gate/park-gate.component'
 import { ParkGateTimeComponent } from './pages/park-gate-time/park-gate-time.component';
-
+import {DailyConservationFeeComponent} from './pages/daily-conservation-fee/daily-conservation-fee.component'
 const routes: Routes = [
   {
     path: 'Park',
@@ -22,6 +22,10 @@ const routes: Routes = [
   },{
     path:'Park-Gate-Time',
     component: ParkGateTimeComponent
+  },
+  {
+    path: 'Daily-Conservation-Fee',
+    component: DailyConservationFeeComponent
   },
   {
     path: 'home',

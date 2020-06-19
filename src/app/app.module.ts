@@ -58,6 +58,14 @@ import { UpdateParkGateTimeConfirmationComponent } from 'src/app/modals/park-gat
 import { ViewParkGateTimeComponent } from 'src/app/modals/park-gate-time/view-park-gate-time/view-park-gate-time.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { AddParkGateTimeConfirmationComponent } from './modals/park-gate-time/add-park-gate-time-confirmation/add-park-gate-time-confirmation.component';
+import { DailyConservationFeeComponent } from 'src/app/pages/daily-conservation-fee/daily-conservation-fee.component';
+import { AddDailyConservationFeeComponent } from 'src/app/modals/daily-conservation-fee/add-daily-conservation-fee/add-daily-conservation-fee.component';
+import { AddDailyConservationFeeConfirmationComponent } from 'src/app/modals/daily-conservation-fee/add-daily-conservation-fee-confirmation/add-daily-conservation-fee-confirmation.component';
+import { DeleteDailyConservationFeeConfirmationComponent } from 'src/app/modals/daily-conservation-fee/delete-daily-conservation-fee-confirmation/delete-daily-conservation-fee-confirmation.component';
+import { UpdateDailyConservationFeeConfirmationComponent } from 'src/app/modals/daily-conservation-fee/update-daily-conservation-fee-confirmation/update-daily-conservation-fee-confirmation.component';
+import { UpdateDailyConservationFeeComponent } from 'src/app/modals/daily-conservation-fee/update-daily-conservation-fee/update-daily-conservation-fee.component';
+import { ViewDailyConservationFeeComponent } from 'src/app/modals/daily-conservation-fee/view-daily-conservation-fee/view-daily-conservation-fee.component';
+import {MatNativeDateModule} from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -111,7 +119,14 @@ import { AddParkGateTimeConfirmationComponent } from './modals/park-gate-time/ad
     DeleteParkGateTimeComponent,
     UpdateParkGateTimeConfirmationComponent,
     ViewParkGateTimeComponent,
-    AddParkGateTimeConfirmationComponent
+    AddParkGateTimeConfirmationComponent,
+    DailyConservationFeeComponent,
+    AddDailyConservationFeeComponent,
+    AddDailyConservationFeeConfirmationComponent,
+    DeleteDailyConservationFeeConfirmationComponent,
+    UpdateDailyConservationFeeConfirmationComponent,
+    UpdateDailyConservationFeeComponent,
+    ViewDailyConservationFeeComponent
   ],
   entryComponents: [
     AddParkComponent,
@@ -133,7 +148,8 @@ import { AddParkGateTimeConfirmationComponent } from './modals/park-gate-time/ad
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
