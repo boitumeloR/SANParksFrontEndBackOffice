@@ -73,6 +73,13 @@ import { UpdateSeasonConfirmationComponent } from './modals/season/update-season
 import { UpdateSeasonComponent } from './modals/season/update-season/update-season.component';
 import { DeleteSeasonComponent } from './modals/season/delete-season/delete-season.component';
 import { ViewSeasonComponent } from './modals/season/view-season/view-season.component';
+import { CampTypeComponent } from './pages/camp-type/camp-type.component';
+import { AddCampTypeComponent } from './modals/camp-type/add-camp-type/add-camp-type.component';
+import { AddCampTypeConfirmationComponent } from './modals/camp-type/add-camp-type-confirmation/add-camp-type-confirmation.component';
+import { UpdateCampTypeConfirmationComponent } from './modals/camp-type/update-camp-type-confirmation/update-camp-type-confirmation.component';
+import { UpdateCampTypeComponent } from './modals/camp-type/update-camp-type/update-camp-type.component';
+import { ViewCampTypeComponent } from './modals/camp-type/view-camp-type/view-camp-type.component';
+import { DeleteCampTypeComponent } from './modals/camp-type/delete-camp-type/delete-camp-type.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -140,7 +147,14 @@ import { ViewSeasonComponent } from './modals/season/view-season/view-season.com
     UpdateSeasonConfirmationComponent,
     UpdateSeasonComponent,
     DeleteSeasonComponent,
-    ViewSeasonComponent
+    ViewSeasonComponent,
+    CampTypeComponent,
+    AddCampTypeComponent,
+    AddCampTypeConfirmationComponent,
+    UpdateCampTypeConfirmationComponent,
+    UpdateCampTypeComponent,
+    ViewCampTypeComponent,
+    DeleteCampTypeComponent
   ],
   entryComponents: [
     AddParkComponent,
