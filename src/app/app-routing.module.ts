@@ -14,6 +14,7 @@ import { ParkGateTimeComponent } from './pages/park-gate-time/park-gate-time.com
 import {DailyConservationFeeComponent} from './pages/daily-conservation-fee/daily-conservation-fee.component';
 import {SeasonComponent} from 'src/app/pages/season/season.component';
 import { CampTypeComponent } from './pages/camp-type/camp-type.component';
+import {CampComponent} from './pages/camp/camp.component'
 const routes: Routes = [
   {
     path: 'Park',
@@ -35,6 +36,10 @@ const routes: Routes = [
   },{
     path: 'Camp-Type',
     component: CampTypeComponent
+  },
+  {
+    path: 'Camp',
+    component: CampComponent
   },
   {
     path: 'home',

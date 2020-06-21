@@ -9,7 +9,9 @@ export interface PeriodicElement {
   name: string;
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Camp Site (CK6P)'}
+  { name: 'Camp Site'},
+  { name: 'Satellite Camp'},
+  { name: 'Bushveld Camps'},
 ];
 @Component({
   selector: 'app-camp-type',
