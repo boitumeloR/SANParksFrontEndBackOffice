@@ -80,6 +80,13 @@ import { UpdateCampTypeConfirmationComponent } from './modals/camp-type/update-c
 import { UpdateCampTypeComponent } from './modals/camp-type/update-camp-type/update-camp-type.component';
 import { ViewCampTypeComponent } from './modals/camp-type/view-camp-type/view-camp-type.component';
 import { DeleteCampTypeComponent } from './modals/camp-type/delete-camp-type/delete-camp-type.component';
+import { CampComponent } from './pages/camp/camp.component';
+import { AddCampComponent } from './modals/camp/add-camp/add-camp.component';
+import { AddCampConfirmationComponent } from './modals/camp/add-camp-confirmation/add-camp-confirmation.component';
+import { UpdateCampComponent } from './modals/camp/update-camp/update-camp.component';
+import { UpdateCampConfirmationComponent } from './modals/camp/update-camp-confirmation/update-camp-confirmation.component';
+import { DeleteCampComponent } from './modals/camp/delete-camp/delete-camp.component';
+import { ViewCampComponent } from './modals/camp/view-camp/view-camp.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -154,7 +161,14 @@ import { DeleteCampTypeComponent } from './modals/camp-type/delete-camp-type/del
     UpdateCampTypeConfirmationComponent,
     UpdateCampTypeComponent,
     ViewCampTypeComponent,
-    DeleteCampTypeComponent
+    DeleteCampTypeComponent,
+    CampComponent,
+    AddCampComponent,
+    AddCampConfirmationComponent,
+    UpdateCampComponent,
+    UpdateCampConfirmationComponent,
+    DeleteCampComponent,
+    ViewCampComponent
   ],
   entryComponents: [
     AddParkComponent,
