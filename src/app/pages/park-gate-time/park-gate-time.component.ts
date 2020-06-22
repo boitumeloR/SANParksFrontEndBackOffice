@@ -35,6 +35,7 @@ export class ParkGateTimeComponent implements OnInit {
   addParkGateTime(){
     const addParkGateTimeDialog =  this.dialog.open(AddParkGateTimeComponent,{disableClose: true});
 
+    
     addParkGateTimeDialog.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });

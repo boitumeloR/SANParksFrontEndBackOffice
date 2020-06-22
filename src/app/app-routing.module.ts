@@ -15,6 +15,7 @@ import {DailyConservationFeeComponent} from './pages/daily-conservation-fee/dail
 import {SeasonComponent} from 'src/app/pages/season/season.component';
 import { CampTypeComponent } from './pages/camp-type/camp-type.component';
 import {CampComponent} from './pages/camp/camp.component'
+import { CampGateTimeComponent } from './pages/camp-gate-time/camp-gate-time.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -40,6 +41,9 @@ const routes: Routes = [
   {
     path: 'Camp',
     component: CampComponent
+  },{
+    path: 'Camp-Gate-Time',
+    component: CampGateTimeComponent
   },
   {
     path: 'home',
