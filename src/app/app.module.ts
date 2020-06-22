@@ -94,6 +94,13 @@ import { UpdateCampGateTimeConfirmationComponent } from './modals/camp-gate-time
 import { UpdateCampGateTimeComponent } from './modals/camp-gate-time/update-camp-gate-time/update-camp-gate-time.component';
 import { DeleteCampGateTimeComponent } from './modals/camp-gate-time/delete-camp-gate-time/delete-camp-gate-time.component';
 import { ViewCampGateTimeComponent } from './modals/camp-gate-time/view-camp-gate-time/view-camp-gate-time.component';
+import { WildcardClusterComponent } from './pages/wildcard-cluster/wildcard-cluster.component';
+import { AddWildcardClusterComponent } from './modals/wildcard-cluster/add-wildcard-cluster/add-wildcard-cluster.component';
+import { AddWildcardClusterConfirmationComponent } from './modals/wildcard-cluster/add-wildcard-cluster-confirmation/add-wildcard-cluster-confirmation.component';
+import { UpdateWildcardClusterConfirmationComponent } from './modals/wildcard-cluster/update-wildcard-cluster-confirmation/update-wildcard-cluster-confirmation.component';
+import { UpdateWildcardClusterComponent } from './modals/wildcard-cluster/update-wildcard-cluster/update-wildcard-cluster.component';
+import { DeleteWildcardClusterComponent } from './modals/wildcard-cluster/delete-wildcard-cluster/delete-wildcard-cluster.component';
+import { ViewWildcardClusterComponent } from './modals/wildcard-cluster/view-wildcard-cluster/view-wildcard-cluster.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -182,7 +189,14 @@ import { ViewCampGateTimeComponent } from './modals/camp-gate-time/view-camp-gat
     UpdateCampGateTimeConfirmationComponent,
     UpdateCampGateTimeComponent,
     DeleteCampGateTimeComponent,
-    ViewCampGateTimeComponent
+    ViewCampGateTimeComponent,
+    WildcardClusterComponent,
+    AddWildcardClusterComponent,
+    AddWildcardClusterConfirmationComponent,
+    UpdateWildcardClusterConfirmationComponent,
+    UpdateWildcardClusterComponent,
+    DeleteWildcardClusterComponent,
+    ViewWildcardClusterComponent
   ],
   entryComponents: [
     AddParkComponent,

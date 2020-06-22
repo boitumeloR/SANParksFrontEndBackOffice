@@ -16,6 +16,7 @@ import {SeasonComponent} from 'src/app/pages/season/season.component';
 import { CampTypeComponent } from './pages/camp-type/camp-type.component';
 import {CampComponent} from './pages/camp/camp.component'
 import { CampGateTimeComponent } from './pages/camp-gate-time/camp-gate-time.component';
+import { WildcardClusterComponent } from './pages/wildcard-cluster/wildcard-cluster.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -44,6 +45,9 @@ const routes: Routes = [
   },{
     path: 'Camp-Gate-Time',
     component: CampGateTimeComponent
+  },{
+    path:'Wildcard-Cluster',
+    component: WildcardClusterComponent
   },
   {
     path: 'home',
