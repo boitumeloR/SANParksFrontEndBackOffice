@@ -87,6 +87,13 @@ import { UpdateCampComponent } from './modals/camp/update-camp/update-camp.compo
 import { UpdateCampConfirmationComponent } from './modals/camp/update-camp-confirmation/update-camp-confirmation.component';
 import { DeleteCampComponent } from './modals/camp/delete-camp/delete-camp.component';
 import { ViewCampComponent } from './modals/camp/view-camp/view-camp.component';
+import { CampGateTimeComponent } from './pages/camp-gate-time/camp-gate-time.component';
+import { AddCampGateTimeComponent } from './modals/camp-gate-time/add-camp-gate-time/add-camp-gate-time.component';
+import { AddCampGateTimeConfirmationComponent } from './modals/camp-gate-time/add-camp-gate-time-confirmation/add-camp-gate-time-confirmation.component';
+import { UpdateCampGateTimeConfirmationComponent } from './modals/camp-gate-time/update-camp-gate-time-confirmation/update-camp-gate-time-confirmation.component';
+import { UpdateCampGateTimeComponent } from './modals/camp-gate-time/update-camp-gate-time/update-camp-gate-time.component';
+import { DeleteCampGateTimeComponent } from './modals/camp-gate-time/delete-camp-gate-time/delete-camp-gate-time.component';
+import { ViewCampGateTimeComponent } from './modals/camp-gate-time/view-camp-gate-time/view-camp-gate-time.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -168,7 +175,14 @@ import { ViewCampComponent } from './modals/camp/view-camp/view-camp.component';
     UpdateCampComponent,
     UpdateCampConfirmationComponent,
     DeleteCampComponent,
-    ViewCampComponent
+    ViewCampComponent,
+    CampGateTimeComponent,
+    AddCampGateTimeComponent,
+    AddCampGateTimeConfirmationComponent,
+    UpdateCampGateTimeConfirmationComponent,
+    UpdateCampGateTimeComponent,
+    DeleteCampGateTimeComponent,
+    ViewCampGateTimeComponent
   ],
   entryComponents: [
     AddParkComponent,
