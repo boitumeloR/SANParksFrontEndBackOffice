@@ -35,6 +35,6 @@ export class WildcardClusterComponent implements OnInit {
     const addWildcardClusterDialog = this.dialog.open(AddWildcardClusterComponent,{disableClose: true});
   }
   viewWildcardCluster(wildcardCluster){
-    const deleteWildcardClusterDialog = this.dialog.open(ViewWildcardClusterComponent);
+    const viewWildcardClusterDialog = this.dialog.open(ViewWildcardClusterComponent);
   }
 }

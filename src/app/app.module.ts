@@ -108,6 +108,13 @@ import { UpdateWildcardCategoryConfirmationComponent } from './modals/wildcard-c
 import { UpdateWildcardCategoryComponent } from './modals/wildcard-category/update-wildcard-category/update-wildcard-category.component';
 import { DeleteWildcardCategoryComponent } from './modals/wildcard-category/delete-wildcard-category/delete-wildcard-category.component';
 import { ViewWildcardCategoryComponent } from './modals/wildcard-category/view-wildcard-category/view-wildcard-category.component';
+import { WildcardRateComponent } from './pages/wildcard-rate/wildcard-rate.component';
+import { AddWildcardRateComponent } from './modals/wildcard-rate/add-wildcard-rate/add-wildcard-rate.component';
+import { AddWildcardRateConfirmationComponent } from './modals/wildcard-rate/add-wildcard-rate-confirmation/add-wildcard-rate-confirmation.component';
+import { UpdateWildcardRateConfirmationComponent } from './modals/wildcard-rate/update-wildcard-rate-confirmation/update-wildcard-rate-confirmation.component';
+import { UpdateWildcardRateComponent } from './modals/wildcard-rate/update-wildcard-rate/update-wildcard-rate.component';
+import { DeleteWildcardRateComponent } from './modals/wildcard-rate/delete-wildcard-rate/delete-wildcard-rate.component';
+import { ViewWildcardRateComponent } from './modals/wildcard-rate/view-wildcard-rate/view-wildcard-rate.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -210,7 +217,14 @@ import { ViewWildcardCategoryComponent } from './modals/wildcard-category/view-w
     UpdateWildcardCategoryConfirmationComponent,
     UpdateWildcardCategoryComponent,
     DeleteWildcardCategoryComponent,
-    ViewWildcardCategoryComponent
+    ViewWildcardCategoryComponent,
+    WildcardRateComponent,
+    AddWildcardRateComponent,
+    AddWildcardRateConfirmationComponent,
+    UpdateWildcardRateConfirmationComponent,
+    UpdateWildcardRateComponent,
+    DeleteWildcardRateComponent,
+    ViewWildcardRateComponent
   ],
   entryComponents: [
     AddParkComponent,
