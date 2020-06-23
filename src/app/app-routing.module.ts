@@ -18,6 +18,7 @@ import {CampComponent} from './pages/camp/camp.component'
 import { CampGateTimeComponent } from './pages/camp-gate-time/camp-gate-time.component';
 import { WildcardClusterComponent } from './pages/wildcard-cluster/wildcard-cluster.component';
 import { WildcardCategoryComponent } from './pages/wildcard-category/wildcard-category.component';
+import { WildcardRateComponent } from './pages/wildcard-rate/wildcard-rate.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -53,6 +54,10 @@ const routes: Routes = [
   {
     path:'Wildcard-Category',
     component: WildcardCategoryComponent 
+  },
+  {
+    path: 'Wildcard-Rate',
+    component: WildcardRateComponent
   },
   {
     path: 'home',
