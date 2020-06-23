@@ -101,6 +101,13 @@ import { UpdateWildcardClusterConfirmationComponent } from './modals/wildcard-cl
 import { UpdateWildcardClusterComponent } from './modals/wildcard-cluster/update-wildcard-cluster/update-wildcard-cluster.component';
 import { DeleteWildcardClusterComponent } from './modals/wildcard-cluster/delete-wildcard-cluster/delete-wildcard-cluster.component';
 import { ViewWildcardClusterComponent } from './modals/wildcard-cluster/view-wildcard-cluster/view-wildcard-cluster.component';
+import { WildcardCategoryComponent } from './pages/wildcard-category/wildcard-category.component';
+import { AddWildcardCategoryComponent } from './modals/wildcard-category/add-wildcard-category/add-wildcard-category.component';
+import { AddWildcardCategoryConfirmationComponent } from './modals/wildcard-category/add-wildcard-category-confirmation/add-wildcard-category-confirmation.component';
+import { UpdateWildcardCategoryConfirmationComponent } from './modals/wildcard-category/update-wildcard-category-confirmation/update-wildcard-category-confirmation.component';
+import { UpdateWildcardCategoryComponent } from './modals/wildcard-category/update-wildcard-category/update-wildcard-category.component';
+import { DeleteWildcardCategoryComponent } from './modals/wildcard-category/delete-wildcard-category/delete-wildcard-category.component';
+import { ViewWildcardCategoryComponent } from './modals/wildcard-category/view-wildcard-category/view-wildcard-category.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -196,7 +203,14 @@ import { ViewWildcardClusterComponent } from './modals/wildcard-cluster/view-wil
     UpdateWildcardClusterConfirmationComponent,
     UpdateWildcardClusterComponent,
     DeleteWildcardClusterComponent,
-    ViewWildcardClusterComponent
+    ViewWildcardClusterComponent,
+    WildcardCategoryComponent,
+    AddWildcardCategoryComponent,
+    AddWildcardCategoryConfirmationComponent,
+    UpdateWildcardCategoryConfirmationComponent,
+    UpdateWildcardCategoryComponent,
+    DeleteWildcardCategoryComponent,
+    ViewWildcardCategoryComponent
   ],
   entryComponents: [
     AddParkComponent,
