@@ -15,10 +15,6 @@ import { ActivityComponent } from './pages/activity/activity.component';
 import { AddActivityComponent } from './modals/activity/add-activity/add-activity.component';
 import { UpdateActivityComponent } from './modals/activity/update-activity/update-activity.component';
 import { DeleteActivityComponent } from './modals/activity/delete-activity/delete-activity.component';
-import { AccommodationTypeComponent } from './pages/accommodation-type/accommodation-type.component';
-import { AddAccommodationTypeComponent } from './modals/accommodation-type/add-accommodation-type/add-accommodation-type.component';
-import {UpdateAccommodationTypeComponent} from './modals/accommodation-type/update-accommodation-type/update-accommodation-type.component';
-import {DeleteAccommodationTypeComponent} from './modals/accommodation-type/delete-accommodation-type/delete-accommodation-type.component';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { BaseRatesComponent } from './pages/base-rates/base-rates.component';
 import { AddBaseRateComponent } from './modals/base-rate/add-base-rate/add-base-rate.component';
@@ -115,6 +111,13 @@ import { UpdateWildcardRateConfirmationComponent } from './modals/wildcard-rate/
 import { UpdateWildcardRateComponent } from './modals/wildcard-rate/update-wildcard-rate/update-wildcard-rate.component';
 import { DeleteWildcardRateComponent } from './modals/wildcard-rate/delete-wildcard-rate/delete-wildcard-rate.component';
 import { ViewWildcardRateComponent } from './modals/wildcard-rate/view-wildcard-rate/view-wildcard-rate.component';
+import { AccomodationTypeComponent } from './pages/accomodation-type/accomodation-type.component';
+import { AddAccomodationTypeComponent } from './modals/accomodation-type/add-accomodation-type/add-accomodation-type.component';
+import { UpdateAccomodationTypeComponent } from './modals/accomodation-type/update-accomodation-type/update-accomodation-type.component';
+import { UpdateAccomodationTypeConfirmationComponent } from './modals/accomodation-type/update-accomodation-type-confirmation/update-accomodation-type-confirmation.component';
+import { AddAccomodationTypeConfirmationComponent } from './modals/accomodation-type/add-accomodation-type-confirmation/add-accomodation-type-confirmation.component';
+import { DeleteAccomodationTypeComponent } from './modals/accomodation-type/delete-accomodation-type/delete-accomodation-type.component';
+import { ViewAccomodationTypeComponent } from './modals/accomodation-type/view-accomodation-type/view-accomodation-type.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -128,10 +131,6 @@ import { ViewWildcardRateComponent } from './modals/wildcard-rate/view-wildcard-
     AddActivityComponent,
     UpdateActivityComponent,
     DeleteActivityComponent,
-    AccommodationTypeComponent,
-    AddAccommodationTypeComponent,
-    UpdateAccommodationTypeComponent,
-    DeleteAccommodationTypeComponent,
     BaseRatesComponent,
     AddBaseRateComponent,
     UpdateBaseRateComponent,
@@ -224,7 +223,14 @@ import { ViewWildcardRateComponent } from './modals/wildcard-rate/view-wildcard-
     UpdateWildcardRateConfirmationComponent,
     UpdateWildcardRateComponent,
     DeleteWildcardRateComponent,
-    ViewWildcardRateComponent
+    ViewWildcardRateComponent,
+    AccomodationTypeComponent,
+    AddAccomodationTypeComponent,
+    UpdateAccomodationTypeComponent,
+    UpdateAccomodationTypeConfirmationComponent,
+    AddAccomodationTypeConfirmationComponent,
+    DeleteAccomodationTypeComponent,
+    ViewAccomodationTypeComponent
   ],
   entryComponents: [
     AddParkComponent,
@@ -233,9 +239,6 @@ import { ViewWildcardRateComponent } from './modals/wildcard-rate/view-wildcard-
     AddActivityComponent,
     UpdateActivityComponent,
     DeleteActivityComponent,
-    AddAccommodationTypeComponent,
-    UpdateAccommodationTypeComponent,
-    DeleteAccommodationTypeComponent,
     AddParkGateComponent
   ],
   imports: [
