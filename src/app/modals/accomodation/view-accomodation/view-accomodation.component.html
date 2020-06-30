@@ -1,0 +1,35 @@
+
+<div class="dialog">
+    <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
+  
+      <mat-icon>close</mat-icon>
+    </button>
+    <h2 mat-dialog-title>View Accomodation</h2>
+  
+    <mat-dialog-content appearance="mat-typography">
+      <div class="example-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Unit Number</mat-label>
+            <input matInput value="107" disabled>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Accomodation Type</mat-label>
+            <input matInput value="Camp Site (CK6P)" disabled>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Park</mat-label>
+            <input matInput value="Addo Elephant National Park" disabled>
+            <mat-hint>Park in which this accomodation is.</mat-hint>        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Camp</mat-label>
+            <input matInput value="Letaba" disabled>
+            <mat-hint>Camp in which this accomodation is.</mat-hint>
+        </mat-form-field>
+      </div>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button [mat-dialog-close] color="primary" (click)="updateAccomodation()">Update</button>
+        <button mat-raised-button [mat-dialog-close]="true" color="warn" (click)="deleteAccomodation()">Delete</button>
+    </mat-dialog-actions>
+<div>

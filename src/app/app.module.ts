@@ -118,6 +118,13 @@ import { UpdateAccomodationTypeConfirmationComponent } from './modals/accomodati
 import { AddAccomodationTypeConfirmationComponent } from './modals/accomodation-type/add-accomodation-type-confirmation/add-accomodation-type-confirmation.component';
 import { DeleteAccomodationTypeComponent } from './modals/accomodation-type/delete-accomodation-type/delete-accomodation-type.component';
 import { ViewAccomodationTypeComponent } from './modals/accomodation-type/view-accomodation-type/view-accomodation-type.component';
+import { AccomodationComponent } from './pages/accomodation/accomodation.component';
+import { AddAccomodationComponent } from './modals/accomodation/add-accomodation/add-accomodation.component';
+import { AddAccomodationConfirmationComponent } from './modals/accomodation/add-accomodation-confirmation/add-accomodation-confirmation.component';
+import { UpdateAccomodationConfirmationComponent } from './modals/accomodation/update-accomodation-confirmation/update-accomodation-confirmation.component';
+import { UpdateAccomodationComponent } from './modals/accomodation/update-accomodation/update-accomodation.component';
+import { DeleteAccomodationComponent } from './modals/accomodation/delete-accomodation/delete-accomodation.component';
+import { ViewAccomodationComponent } from './modals/accomodation/view-accomodation/view-accomodation.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -230,7 +237,14 @@ import { ViewAccomodationTypeComponent } from './modals/accomodation-type/view-a
     UpdateAccomodationTypeConfirmationComponent,
     AddAccomodationTypeConfirmationComponent,
     DeleteAccomodationTypeComponent,
-    ViewAccomodationTypeComponent
+    ViewAccomodationTypeComponent,
+    AccomodationComponent,
+    AddAccomodationComponent,
+    AddAccomodationConfirmationComponent,
+    UpdateAccomodationConfirmationComponent,
+    UpdateAccomodationComponent,
+    DeleteAccomodationComponent,
+    ViewAccomodationComponent
   ],
   entryComponents: [
     AddParkComponent,
