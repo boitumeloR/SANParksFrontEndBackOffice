@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ParkComponent } from './pages/park/park.component';
 import { AddParkComponent } from './modals/park/add-park/add-park.component';
 import { ActivityComponent } from './pages/activity/activity.component';
+import { AccomodationComponent } from './pages/accomodation/accomodation.component';
 import { AccomodationTypeComponent } from './pages/accomodation-type/accomodation-type.component';
 import { BaseRatesComponent } from './pages/base-rates/base-rates.component';
 import { AddRatesComponent } from './pages/add-rates/add-rates.component';
@@ -70,6 +71,10 @@ const routes: Routes = [
   {
     path: 'activity',
     component: ActivityComponent
+  },
+  {
+    path: 'Accomodation',
+    component: AccomodationComponent
   },
   {
     path: 'Accomodation-Type',
