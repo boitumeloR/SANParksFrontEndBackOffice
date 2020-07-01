@@ -1,0 +1,41 @@
+
+<div class="dialog">
+    <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
+    <mat-icon>close</mat-icon>
+    </button>
+    <h2 mat-dialog-title>View Amenity </h2>
+  
+    <mat-dialog-content appearance="mat-typography">
+      <div class="example-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Park</mat-label>
+            <input matInput value="Addo Elephant National Park" disabled>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Camp</mat-label>
+            <input matInput value="Addo" disabled>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Accomodation Type</mat-label>
+            <input matInput value="Camp Site (CK6P)" disabled>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Unit Number</mat-label>
+            <input matInput value="107" disabled>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Amenity Type</mat-label>
+            <input matInput value="Working" disabled>
+        </mat-form-field>
+        <div class="description" >
+            <label>Amenity Description</label>
+            <p>This unique, stylish fridge is compact enough in order to fit into smaller kitchens, but large enough to store what you need it to. It has a 220 litre NETT capacity, along with direct cooling, an interchangeable Z shelf and a balcony that fits up to three 2.5 litre bottles</p>
+        </div>
+      </div>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button [mat-dialog-close] color="primary" (click)="updateAmenity()">Update</button>
+        <button mat-raised-button [mat-dialog-close]="true" color="warn" (click)="deleteAmenity()">Delete</button>
+    </mat-dialog-actions>
+<div>

@@ -5,7 +5,6 @@ import { AddParkComponent } from './modals/park/add-park/add-park.component';
 import { ActivityComponent } from './pages/activity/activity.component';
 import { AccomodationComponent } from './pages/accomodation/accomodation.component';
 import { AccomodationTypeComponent } from './pages/accomodation-type/accomodation-type.component';
-import { AmenityPenaltyComponent } from './pages/amenity-penalty/amenity-penalty.component';
 import { ActivityRateComponent } from './pages/activity-rate/activity-rate.component';
 import {ParkGateComponent} from './pages/park-gate/park-gate.component'
 import { ParkGateTimeComponent } from './pages/park-gate-time/park-gate-time.component';
@@ -20,6 +19,7 @@ import { WildcardRateComponent } from './pages/wildcard-rate/wildcard-rate.compo
 import { AccomodationBaseRateComponent } from './pages/accomodation-base-rate/accomodation-base-rate.component';
 import { AccomodationAddRateComponent } from './pages/accomodation-add-rate/accomodation-add-rate.component';
 import { AmenityTypeComponent } from './pages/amenity-type/amenity-type.component';
+import { AmenityComponent } from './pages/amenity/amenity.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -93,8 +93,8 @@ const routes: Routes = [
     component: AmenityTypeComponent
   },
   {
-    path: 'amenity-penalty',
-    component: AmenityPenaltyComponent
+    path: 'Amenity',
+    component: AmenityComponent
   },
   {
     path: 'activity-rate',

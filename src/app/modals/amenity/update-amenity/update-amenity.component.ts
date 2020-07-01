@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { UpdateAmenityConfirmationComponent } from 'src/app/modals/amenity/update-amenity-confirmation/update-amenity-confirmation.component';
+import {MatDialog} from '@angular/material/dialog';
+import {FormGroup} from '@angular/forms';
 @Component({
   selector: 'app-update-amenity',
   templateUrl: './update-amenity.component.html',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateAmenityComponent implements OnInit {
 
-  constructor() { }
+  amenityLocation: FormGroup;
+  amenityDetails: FormGroup;
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  updateAmenity(){
+    const updateAmenityConfirmationDialog = this.dialog.open(UpdateAmenityConfirmationComponent)
+  }
 }

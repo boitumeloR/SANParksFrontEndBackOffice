@@ -1,65 +1,84 @@
-<div class="dialog">
-    <h2 mat-dialog-title>Update Amenity</h2>
-  <mat-dialog-content appearance="mat-typography">
-    <div class="example-container">
-        <mat-form-field appearance="fill">
-            <mat-label>Accommodation Type</mat-label>
-            <mat-hint>The amenity will be available in accommodations with this type</mat-hint>
-            <mat-select>
-              <mat-option value="option">Option</mat-option>
-              <mat-option value="option">Option</mat-option>
-              <mat-option value="option">Option</mat-option>
-              <mat-option value="option">Option</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <br>
-        <mat-form-field appearance="fill">
-            <mat-label>Amenity Type</mat-label>
-            <mat-select>
-              <mat-option value="option">Option</mat-option>
-              <mat-option value="option">Option</mat-option>
-              <mat-option value="option">Option</mat-option>
-              <mat-option value="option">Option</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Amenity Status</mat-label>
-            <mat-select>
-              <mat-option value="option">Option</mat-option>
-              <mat-option value="option">Option</mat-option>
-              <mat-option value="option">Option</mat-option>
-              <mat-option value="option">Option</mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Amenity Description</mat-label>
-            <textarea matInput></textarea>
-        </mat-form-field>
-        <br>
-        <h3>Penalty Amount</h3>
-        <mat-form-field class="example-full-width">
-            <mat-label>Amenity Penalty</mat-label>
-            <span matPrefix>R &nbsp;</span>
-            <input type="number" matInput placeholder="1000">
-            <mat-hint>Client will be liable to pay this amount upon vandalisation</mat-hint>
-          </mat-form-field>
-          <br>
-          <mat-form-field>
-            <mat-label>Date Effective</mat-label>
-            <input matInput type="date">
-        </mat-form-field>
-    </div>
-    
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close color="warn">Cancel</button>
-    <button mat-button [mat-dialog-close]="true" color="primary">Update Amenity</button>
-  </mat-dialog-actions>
-  </div>
+<h2 mat-dialog-title>Update Amenity</h2>
+<mat-horizontal-stepper [linear] #stepper>
+    <mat-step [stepControl]="amenityLocation">
+        <form [formControl]="amenityLocation">
+            <ng-template matStepLabel>Amenity Location</ng-template>
+            <mat-dialog-content appearance="mat-typography">
+                <mat-form-field appearance="fill">
+                    <mat-label>Park</mat-label>
+                    <mat-select>
+                        <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
+                        <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
+                        <mat-option value="Kruger National Park">Kruger National Park</mat-option>
+                    </mat-select>
+                    <mat-hint>Park in which this amenity is in.</mat-hint>
+                </mat-form-field> 
+                <mat-form-field appearance="fill"> <!--Populated based on the selected Park-->
+                    <mat-label>Camp</mat-label>
+                    <mat-select>
+                        <mat-option value="Addo">Addo</mat-option>
+                        <mat-option value="Spekboom">Spekboom</mat-option>
+                        <mat-option value="Matyholweni">Matyholweni</mat-option>
+                    </mat-select>
+                    <mat-hint>Camp in which this amenity is in.</mat-hint>
+                </mat-form-field> 
+                <mat-form-field appearance="fill"> <!--Populated based on the selected camp, show acc types in camp -->
+                    <mat-label>Accomodation Type</mat-label>
+                    <mat-select>
+                        <mat-option value="	Camp Site (CK6P)">Camp Site (CK6P)</mat-option>
+                        <mat-option value="Bungalow BA3">Bungalow BA3</mat-option>
+                        <mat-option value="Bungalow BA3U">Bungalow BA3U</mat-option>
+                    </mat-select>
+                    <mat-hint>Accomodation type in which this amenity is in.</mat-hint>
+                </mat-form-field> 
+                <mat-form-field appearance="fill"> <!--Populated based on the selected acc type, show unit number of acc in this camp-->
+                    <mat-label>Unit Number</mat-label>
+                    <mat-select>
+                        <mat-option value="107">107</mat-option>
+                        <mat-option value="52">52</mat-option>
+                        <mat-option value="14">14</mat-option>
+                    </mat-select>
+                    <mat-hint>Unit number in which this amenity is in.</mat-hint>
+                </mat-form-field> 
+            </mat-dialog-content>
+            <mat-dialog-actions align="end">
+                <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+                <button mat-raised-button color="primary" matStepperNext>Next</button>
+            </mat-dialog-actions>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="amenityDetails">
+        <form [formControl]="amenityDetails">
+            <ng-template matStepLabel>Amenity Details</ng-template>
+            <mat-dialog-content appearance="mat-typography">
+                <mat-form-field appearance="fill">  
+                    <mat-label>Amenity Type</mat-label>
+                    <mat-select>
+                        <mat-option value="Fridge">Fridge</mat-option>
+                        <mat-option value="Stove">Stove</mat-option>
+                        <mat-option value="Television">Television</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field hintLabel="Max 300 characters" appearance="fill">
+                    <mat-label>Amenity Description</mat-label>
+                    <textarea cdkTextareaAutosize matInput #input maxlength="300" value="This unique, stylish fridge is compact enough in order to fit into smaller kitchens, but large enough to store what you need it to. It has a 220 litre NETT capacity, along with direct cooling, an interchangeable Z shelf and a balcony that fits up to three 2.5 litre bottles"></textarea>
+                    <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill"> 
+                    <mat-label>Amenity Status</mat-label>
+                    <mat-select>
+                        <mat-option value="Working">Working</mat-option>
+                        <mat-option value="Under Repair">Under Repair</mat-option>
+                        <mat-option value="Broken">Broken</mat-option>
+                    </mat-select>
+                    <mat-hint>Status of this amenity</mat-hint>
+                </mat-form-field>
+            </mat-dialog-content>
+        </form>
+        <mat-dialog-actions align="end">
+            <button mat-raised-button  color="warn" matStepperPrevious >Back</button>
+            <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="updateAmenity()">Update Amenity</button>
+        </mat-dialog-actions>
+    </mat-step>
+</mat-horizontal-stepper>
   
-  
-  
-  
-  
-

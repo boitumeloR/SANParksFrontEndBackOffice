@@ -16,13 +16,6 @@ import { AddActivityComponent } from './modals/activity/add-activity/add-activit
 import { UpdateActivityComponent } from './modals/activity/update-activity/update-activity.component';
 import { DeleteActivityComponent } from './modals/activity/delete-activity/delete-activity.component';
 import { SimplebarAngularModule } from 'simplebar-angular';
-import { AddAmenityComponent } from './modals/amenity/add-amenity/add-amenity.component';
-import { UpdateAmenityComponent } from './modals/amenity/update-amenity/update-amenity.component';
-import { DeleteAmenityComponent } from './modals/amenity/delete-amenity/delete-amenity.component';
-import { AmenityPenaltyComponent } from './pages/amenity-penalty/amenity-penalty.component';
-import { AddAmenityPenaltyComponent } from './modals/amenity-penalty/add-amenity-penalty/add-amenity-penalty.component';
-import { UpdateAmenityPenaltyComponent } from './modals/amenity-penalty/update-amenity-penalty/update-amenity-penalty.component';
-import { DeleteAmenityPenaltyComponent } from './modals/amenity-penalty/delete-amenity-penalty/delete-amenity-penalty.component';
 import { ActivityRateComponent } from './pages/activity-rate/activity-rate.component';
 import { AddActivityRateComponent } from './modals/activity-rate/add-activity-rate/add-activity-rate.component';
 import { UpdateActivityRateComponent } from './modals/activity-rate/update-activity-rate/update-activity-rate.component';
@@ -137,6 +130,13 @@ import { UpdateAmentityTypeConfirmationComponent } from './modals/amenity-type/u
 import { AddAmentityTypeConfirmationComponent } from './modals/amenity-type/add-amentity-type-confirmation/add-amentity-type-confirmation.component';
 import { DeleteAmentityTypeConfirmationComponent } from './modals/amenity-type/delete-amentity-type-confirmation/delete-amentity-type-confirmation.component';
 import { ViewAmentityTypeConfirmationComponent } from './modals/amenity-type/view-amentity-type-confirmation/view-amentity-type-confirmation.component';
+import { AmenityComponent } from './pages/amenity/amenity.component';
+import { AddAmenityConfirmationComponent } from './modals/amenity/add-amenity-confirmation/add-amenity-confirmation.component';
+import { UpdateAmenityConfirmationComponent } from './modals/amenity/update-amenity-confirmation/update-amenity-confirmation.component';
+import { ViewAmenityComponent } from './modals/amenity/view-amenity/view-amenity.component';
+import { AddAmenityComponent } from './modals/amenity/add-amenity/add-amenity.component';
+import { UpdateAmenityComponent } from './modals/amenity/update-amenity/update-amenity.component';
+import { DeleteAmenityComponent } from './modals/amenity/delete-amenity/delete-amenity.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -150,13 +150,6 @@ import { ViewAmentityTypeConfirmationComponent } from './modals/amenity-type/vie
     AddActivityComponent,
     UpdateActivityComponent,
     DeleteActivityComponent,
-    AddAmenityComponent,
-    UpdateAmenityComponent,
-    DeleteAmenityComponent,
-    AmenityPenaltyComponent,
-    AddAmenityPenaltyComponent,
-    UpdateAmenityPenaltyComponent,
-    DeleteAmenityPenaltyComponent,
     ActivityRateComponent,
     AddActivityRateComponent,
     UpdateActivityRateComponent,
@@ -268,7 +261,14 @@ import { ViewAmentityTypeConfirmationComponent } from './modals/amenity-type/vie
     UpdateAmentityTypeConfirmationComponent,
     AddAmentityTypeConfirmationComponent,
     DeleteAmentityTypeConfirmationComponent,
-    ViewAmentityTypeConfirmationComponent
+    ViewAmentityTypeConfirmationComponent,
+    AmenityComponent,
+    AddAmenityConfirmationComponent,
+    UpdateAmenityConfirmationComponent,
+    ViewAmenityComponent,
+    AddAmenityComponent,
+    UpdateAmenityComponent,
+    DeleteAmenityComponent
   ],
   entryComponents: [
     AddParkComponent,
