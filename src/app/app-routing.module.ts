@@ -20,6 +20,7 @@ import { AccomodationBaseRateComponent } from './pages/accomodation-base-rate/ac
 import { AccomodationAddRateComponent } from './pages/accomodation-add-rate/accomodation-add-rate.component';
 import { AmenityTypeComponent } from './pages/amenity-type/amenity-type.component';
 import { AmenityComponent } from './pages/amenity/amenity.component';
+import { AmenityPenaltyComponent } from './pages/amenity-penalty/amenity-penalty.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -95,6 +96,10 @@ const routes: Routes = [
   {
     path: 'Amenity',
     component: AmenityComponent
+  },
+  {
+    path: 'Amenity-Penalty',
+    component: AmenityPenaltyComponent
   },
   {
     path: 'activity-rate',
