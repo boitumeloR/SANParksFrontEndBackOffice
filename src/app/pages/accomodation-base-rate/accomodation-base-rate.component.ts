@@ -35,7 +35,7 @@ export class AccomodationBaseRateComponent implements OnInit {
     const viewAccomodationBaseRateDialog = this.dialog.open(ViewAccomodationBaseRateComponent);
   }
 
-  addAccomodation(){
+  addAccomodationBaseRate(){
     const addAccomodationBaseRateDialog = this.dialog.open(AddAccomodationBaseRateComponent,{disableClose: true});
   }
 }

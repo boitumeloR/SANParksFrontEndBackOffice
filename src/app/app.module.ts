@@ -16,10 +16,6 @@ import { AddActivityComponent } from './modals/activity/add-activity/add-activit
 import { UpdateActivityComponent } from './modals/activity/update-activity/update-activity.component';
 import { DeleteActivityComponent } from './modals/activity/delete-activity/delete-activity.component';
 import { SimplebarAngularModule } from 'simplebar-angular';
-import { AddRatesComponent } from './pages/add-rates/add-rates.component';
-import { AddAddRateComponent } from './modals/add-rate/add-add-rate/add-add-rate.component';
-import { UpdateAddRateComponent } from './modals/add-rate/update-add-rate/update-add-rate.component';
-import { DeleteAddRateComponent } from './modals/add-rate/delete-add-rate/delete-add-rate.component';
 import { AmenityComponent } from './pages/amenity/amenity.component';
 import { AddAmenityComponent } from './modals/amenity/add-amenity/add-amenity.component';
 import { UpdateAmenityComponent } from './modals/amenity/update-amenity/update-amenity.component';
@@ -128,6 +124,13 @@ import { UpdateAccomodationBaseRateConfirmationComponent } from './modals/accomo
 import { UpdateAccomodationBaseRateComponent } from './modals/accomodation-base-rate/update-accomodation-base-rate/update-accomodation-base-rate.component';
 import { DeleteAccomodationBaseRateComponent } from './modals/accomodation-base-rate/delete-accomodation-base-rate/delete-accomodation-base-rate.component';
 import { ViewAccomodationBaseRateComponent } from './modals/accomodation-base-rate/view-accomodation-base-rate/view-accomodation-base-rate.component';
+import { AccomodationAddRateComponent } from './pages/accomodation-add-rate/accomodation-add-rate.component';
+import { AddAccomodationAddRateComponent } from './modals/accomodation-add-rate/add-accomodation-add-rate/add-accomodation-add-rate.component';
+import { AddAccomodationAddRateConfirmationComponent } from './modals/accomodation-add-rate/add-accomodation-add-rate-confirmation/add-accomodation-add-rate-confirmation.component';
+import { UpdateAccomodationAddRateConfirmationComponent } from './modals/accomodation-add-rate/update-accomodation-add-rate-confirmation/update-accomodation-add-rate-confirmation.component';
+import { UpdateAccomodationAddRateComponent } from './modals/accomodation-add-rate/update-accomodation-add-rate/update-accomodation-add-rate.component';
+import { DeleteAccomodationAddRateComponent } from './modals/accomodation-add-rate/delete-accomodation-add-rate/delete-accomodation-add-rate.component';
+import { ViewAccomodationAddRateComponent } from './modals/accomodation-add-rate/view-accomodation-add-rate/view-accomodation-add-rate.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -141,10 +144,6 @@ import { ViewAccomodationBaseRateComponent } from './modals/accomodation-base-ra
     AddActivityComponent,
     UpdateActivityComponent,
     DeleteActivityComponent,
-    AddRatesComponent,
-    AddAddRateComponent,
-    UpdateAddRateComponent,
-    DeleteAddRateComponent,
     AmenityComponent,
     AddAmenityComponent,
     UpdateAmenityComponent,
@@ -250,7 +249,14 @@ import { ViewAccomodationBaseRateComponent } from './modals/accomodation-base-ra
     UpdateAccomodationBaseRateConfirmationComponent,
     UpdateAccomodationBaseRateComponent,
     DeleteAccomodationBaseRateComponent,
-    ViewAccomodationBaseRateComponent
+    ViewAccomodationBaseRateComponent,
+    AccomodationAddRateComponent,
+    AddAccomodationAddRateComponent,
+    AddAccomodationAddRateConfirmationComponent,
+    UpdateAccomodationAddRateConfirmationComponent,
+    UpdateAccomodationAddRateComponent,
+    DeleteAccomodationAddRateComponent,
+    ViewAccomodationAddRateComponent
   ],
   entryComponents: [
     AddParkComponent,

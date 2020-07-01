@@ -1,4 +1,4 @@
-<h1>Accomodation Base Rate</h1>
+<h1>Accomodation Add Rate</h1>
 <div class="example-container">
   <mat-form-field hintLabel="Max 100 characters" appearance="fill">
     <mat-label>Keyword Filter</mat-label>
@@ -6,7 +6,7 @@
     <mat-hint>&nbsp; {{input.value?.length || 0}}/100</mat-hint>
   </mat-form-field>
 
-  <button mat-fab color="primary" aria-label="Add accomodation type " (click)="addAccomodationBaseRate()">
+  <button mat-fab color="primary" aria-label="Add accomodation type " (click)="addAccomodationAddRate()">
     <mat-icon>add</mat-icon>
   </button>
 
@@ -18,19 +18,15 @@
         <th mat-header-cell *matHeaderCellDef> Accomodation Type</th>
         <td mat-cell *matCellDef="let element"> {{element.accomodationType}} </td>
       </ng-container> 
-      <ng-container matColumnDef="camp">
-        <th mat-header-cell *matHeaderCellDef> Camp</th>
-        <td mat-cell *matCellDef="let element"> {{element.camp}} </td>
-      </ng-container>
-      <ng-container matColumnDef="rate">
-        <th mat-header-cell *matHeaderCellDef> Rate</th>
-        <td mat-cell *matCellDef="let element"> {{element.rate}} </td>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> Date Effective</th>
+        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
       </ng-container>
       <!-- View Column -->
       <ng-container matColumnDef="view">
         <th mat-header-cell *matHeaderCellDef> View Rate </th>
         <td mat-cell *matCellDef="let element"> 
-          <a mat-button (click)="viewAccomodationBaseRate(element)">
+          <a mat-button (click)="viewAccomodationAddRate(element)">
             <mat-icon>visibility</mat-icon>
           </a>
         </td>
