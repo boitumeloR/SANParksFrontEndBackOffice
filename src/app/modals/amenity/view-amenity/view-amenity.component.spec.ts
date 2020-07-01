@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AmenityPenaltyComponent } from './amenity-penalty.component';
+import { ViewAmenityComponent } from './view-amenity.component';
 
-describe('AmenityPenaltyComponent', () => {
-  let component: AmenityPenaltyComponent;
-  let fixture: ComponentFixture<AmenityPenaltyComponent>;
+describe('ViewAmenityComponent', () => {
+  let component: ViewAmenityComponent;
+  let fixture: ComponentFixture<ViewAmenityComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AmenityPenaltyComponent ]
+      declarations: [ ViewAmenityComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AmenityPenaltyComponent);
+    fixture = TestBed.createComponent(ViewAmenityComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

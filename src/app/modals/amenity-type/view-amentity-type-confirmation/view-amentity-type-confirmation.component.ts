@@ -17,7 +17,6 @@ export class ViewAmentityTypeConfirmationComponent implements OnInit {
 
   updateAmenityType(){
     const updateCampDialog = this.dialog.open(UpdateAmentityTypeComponent,{disableClose: true});
-
   }
   
   deleteAmenityType(){
