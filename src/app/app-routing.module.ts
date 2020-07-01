@@ -5,7 +5,6 @@ import { AddParkComponent } from './modals/park/add-park/add-park.component';
 import { ActivityComponent } from './pages/activity/activity.component';
 import { AccomodationComponent } from './pages/accomodation/accomodation.component';
 import { AccomodationTypeComponent } from './pages/accomodation-type/accomodation-type.component';
-import { AmenityComponent } from './pages/amenity/amenity.component';
 import { AmenityPenaltyComponent } from './pages/amenity-penalty/amenity-penalty.component';
 import { ActivityRateComponent } from './pages/activity-rate/activity-rate.component';
 import {ParkGateComponent} from './pages/park-gate/park-gate.component'
@@ -20,6 +19,7 @@ import { WildcardCategoryComponent } from './pages/wildcard-category/wildcard-ca
 import { WildcardRateComponent } from './pages/wildcard-rate/wildcard-rate.component';
 import { AccomodationBaseRateComponent } from './pages/accomodation-base-rate/accomodation-base-rate.component';
 import { AccomodationAddRateComponent } from './pages/accomodation-add-rate/accomodation-add-rate.component';
+import { AmenityTypeComponent } from './pages/amenity-type/amenity-type.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -60,7 +60,7 @@ const routes: Routes = [
     path: 'Wildcard-Rate',
     component: WildcardRateComponent
   },
-  {
+  { //Perhaps we should have an actual home component
     path: 'home',
     component: ParkComponent
   },
@@ -89,8 +89,8 @@ const routes: Routes = [
     component: AccomodationAddRateComponent
   },
   {
-    path: 'amenity',
-    component: AmenityComponent
+    path: 'Amenity-Type',
+    component: AmenityTypeComponent
   },
   {
     path: 'amenity-penalty',

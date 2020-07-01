@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AmenityComponent } from './amenity.component';
+import { AmenityTypeComponent } from './amenity-type.component';
 
-describe('AmenityComponent', () => {
-  let component: AmenityComponent;
-  let fixture: ComponentFixture<AmenityComponent>;
+describe('AmenityTypeComponent', () => {
+  let component: AmenityTypeComponent;
+  let fixture: ComponentFixture<AmenityTypeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AmenityComponent ]
+      declarations: [ AmenityTypeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AmenityComponent);
+    fixture = TestBed.createComponent(AmenityTypeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

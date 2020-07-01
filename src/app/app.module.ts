@@ -16,7 +16,6 @@ import { AddActivityComponent } from './modals/activity/add-activity/add-activit
 import { UpdateActivityComponent } from './modals/activity/update-activity/update-activity.component';
 import { DeleteActivityComponent } from './modals/activity/delete-activity/delete-activity.component';
 import { SimplebarAngularModule } from 'simplebar-angular';
-import { AmenityComponent } from './pages/amenity/amenity.component';
 import { AddAmenityComponent } from './modals/amenity/add-amenity/add-amenity.component';
 import { UpdateAmenityComponent } from './modals/amenity/update-amenity/update-amenity.component';
 import { DeleteAmenityComponent } from './modals/amenity/delete-amenity/delete-amenity.component';
@@ -131,6 +130,13 @@ import { UpdateAccomodationAddRateConfirmationComponent } from './modals/accomod
 import { UpdateAccomodationAddRateComponent } from './modals/accomodation-add-rate/update-accomodation-add-rate/update-accomodation-add-rate.component';
 import { DeleteAccomodationAddRateComponent } from './modals/accomodation-add-rate/delete-accomodation-add-rate/delete-accomodation-add-rate.component';
 import { ViewAccomodationAddRateComponent } from './modals/accomodation-add-rate/view-accomodation-add-rate/view-accomodation-add-rate.component';
+import { AmenityTypeComponent } from './pages/amenity-type/amenity-type.component';
+import { AddAmentityTypeComponent } from './modals/amenity-type/add-amentity-type/add-amentity-type.component';
+import { UpdateAmentityTypeComponent } from './modals/amenity-type/update-amentity-type/update-amentity-type.component';
+import { UpdateAmentityTypeConfirmationComponent } from './modals/amenity-type/update-amentity-type-confirmation/update-amentity-type-confirmation.component';
+import { AddAmentityTypeConfirmationComponent } from './modals/amenity-type/add-amentity-type-confirmation/add-amentity-type-confirmation.component';
+import { DeleteAmentityTypeConfirmationComponent } from './modals/amenity-type/delete-amentity-type-confirmation/delete-amentity-type-confirmation.component';
+import { ViewAmentityTypeConfirmationComponent } from './modals/amenity-type/view-amentity-type-confirmation/view-amentity-type-confirmation.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -144,7 +150,6 @@ import { ViewAccomodationAddRateComponent } from './modals/accomodation-add-rate
     AddActivityComponent,
     UpdateActivityComponent,
     DeleteActivityComponent,
-    AmenityComponent,
     AddAmenityComponent,
     UpdateAmenityComponent,
     DeleteAmenityComponent,
@@ -256,7 +261,14 @@ import { ViewAccomodationAddRateComponent } from './modals/accomodation-add-rate
     UpdateAccomodationAddRateConfirmationComponent,
     UpdateAccomodationAddRateComponent,
     DeleteAccomodationAddRateComponent,
-    ViewAccomodationAddRateComponent
+    ViewAccomodationAddRateComponent,
+    AmenityTypeComponent,
+    AddAmentityTypeComponent,
+    UpdateAmentityTypeComponent,
+    UpdateAmentityTypeConfirmationComponent,
+    AddAmentityTypeConfirmationComponent,
+    DeleteAmentityTypeConfirmationComponent,
+    ViewAmentityTypeConfirmationComponent
   ],
   entryComponents: [
     AddParkComponent,
