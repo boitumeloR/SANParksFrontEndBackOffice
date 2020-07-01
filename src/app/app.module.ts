@@ -137,6 +137,13 @@ import { ViewAmenityComponent } from './modals/amenity/view-amenity/view-amenity
 import { AddAmenityComponent } from './modals/amenity/add-amenity/add-amenity.component';
 import { UpdateAmenityComponent } from './modals/amenity/update-amenity/update-amenity.component';
 import { DeleteAmenityComponent } from './modals/amenity/delete-amenity/delete-amenity.component';
+import { AmenityPenaltyComponent } from './pages/amenity-penalty/amenity-penalty.component';
+import { AddAmenityPenaltyComponent } from './modals/amenity-penalty/add-amenity-penalty/add-amenity-penalty.component';
+import { AddAmenityPenaltyConfirmationComponent } from './modals/amenity-penalty/add-amenity-penalty-confirmation/add-amenity-penalty-confirmation.component';
+import { UpdateAmenityPenaltyConfirmationComponent } from './modals/amenity-penalty/update-amenity-penalty-confirmation/update-amenity-penalty-confirmation.component';
+import { UpdateAmenityPenaltyComponent } from './modals/amenity-penalty/update-amenity-penalty/update-amenity-penalty.component';
+import { ViewAmenityPenaltyComponent } from './modals/amenity-penalty/view-amenity-penalty/view-amenity-penalty.component';
+import { DeleteAmenityPenaltyComponent } from './modals/amenity-penalty/delete-amenity-penalty/delete-amenity-penalty.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -268,7 +275,14 @@ import { DeleteAmenityComponent } from './modals/amenity/delete-amenity/delete-a
     ViewAmenityComponent,
     AddAmenityComponent,
     UpdateAmenityComponent,
-    DeleteAmenityComponent
+    DeleteAmenityComponent,
+    AmenityPenaltyComponent,
+    AddAmenityPenaltyComponent,
+    AddAmenityPenaltyConfirmationComponent,
+    UpdateAmenityPenaltyConfirmationComponent,
+    UpdateAmenityPenaltyComponent,
+    ViewAmenityPenaltyComponent,
+    DeleteAmenityPenaltyComponent
   ],
   entryComponents: [
     AddParkComponent,
