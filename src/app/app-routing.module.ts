@@ -21,6 +21,8 @@ import { AccomodationAddRateComponent } from './pages/accomodation-add-rate/acco
 import { AmenityTypeComponent } from './pages/amenity-type/amenity-type.component';
 import { AmenityComponent } from './pages/amenity/amenity.component';
 import { AmenityPenaltyComponent } from './pages/amenity-penalty/amenity-penalty.component';
+import { ActivityTypeComponent } from './pages/activity-type/activity-type.component';
+
 const routes: Routes = [
   {
     path: 'Park',
@@ -72,6 +74,10 @@ const routes: Routes = [
   {
     path: 'activity',
     component: ActivityComponent
+  },
+  {
+    path: 'Activity-Type',
+    component: ActivityTypeComponent
   },
   {
     path: 'Accomodation',

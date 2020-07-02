@@ -144,6 +144,13 @@ import { UpdateAmenityPenaltyConfirmationComponent } from './modals/amenity-pena
 import { UpdateAmenityPenaltyComponent } from './modals/amenity-penalty/update-amenity-penalty/update-amenity-penalty.component';
 import { ViewAmenityPenaltyComponent } from './modals/amenity-penalty/view-amenity-penalty/view-amenity-penalty.component';
 import { DeleteAmenityPenaltyComponent } from './modals/amenity-penalty/delete-amenity-penalty/delete-amenity-penalty.component';
+import { ActivityTypeComponent } from './pages/activity-type/activity-type.component';
+import { AddActivityTypeComponent } from './modals/activity-type/add-activity-type/add-activity-type.component';
+import { AddActivityTypeConfirmationComponent } from './modals/activity-type/add-activity-type-confirmation/add-activity-type-confirmation.component';
+import { UpdateActivityTypeConfirmationComponent } from './modals/activity-type/update-activity-type-confirmation/update-activity-type-confirmation.component';
+import { UpdateActivityTypeComponent } from './modals/activity-type/update-activity-type/update-activity-type.component';
+import { ViewActivityTypeComponent } from './modals/activity-type/view-activity-type/view-activity-type.component';
+import { DeleteActivityTypeComponent } from './modals/activity-type/delete-activity-type/delete-activity-type.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -282,7 +289,14 @@ import { DeleteAmenityPenaltyComponent } from './modals/amenity-penalty/delete-a
     UpdateAmenityPenaltyConfirmationComponent,
     UpdateAmenityPenaltyComponent,
     ViewAmenityPenaltyComponent,
-    DeleteAmenityPenaltyComponent
+    DeleteAmenityPenaltyComponent,
+    ActivityTypeComponent,
+    AddActivityTypeComponent,
+    AddActivityTypeConfirmationComponent,
+    UpdateActivityTypeConfirmationComponent,
+    UpdateActivityTypeComponent,
+    ViewActivityTypeComponent,
+    DeleteActivityTypeComponent
   ],
   entryComponents: [
     AddParkComponent,
