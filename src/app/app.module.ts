@@ -164,6 +164,13 @@ import { UpdateActivitySlotComponent } from './modals/activity-slot/update-activ
 import { AddActivityRateConfirmationComponent } from './modals/activity-rate/add-activity-rate-confirmation/add-activity-rate-confirmation.component';
 import { UpdateActivityRateConfirmationComponent } from './modals/activity-rate/update-activity-rate-confirmation/update-activity-rate-confirmation.component';
 import { ViewActivityRateComponent } from './modals/activity-rate/view-activity-rate/view-activity-rate.component';
+import { UserRoleComponent } from './pages/user-role/user-role.component';
+import { AddUserRoleComponent } from './modals/user-role/add-user-role/add-user-role.component';
+import { AddUserRoleConfirmationComponent } from './modals/user-role/add-user-role-confirmation/add-user-role-confirmation.component';
+import { UpdateUserRoleConfirmationComponent } from './modals/user-role/update-user-role-confirmation/update-user-role-confirmation.component';
+import { UpdateUserRoleComponent } from './modals/user-role/update-user-role/update-user-role.component';
+import { ViewUserRoleComponent } from './modals/user-role/view-user-role/view-user-role.component';
+import { DeleteUserRoleComponent } from './modals/user-role/delete-user-role/delete-user-role.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -322,7 +329,14 @@ import { ViewActivityRateComponent } from './modals/activity-rate/view-activity-
     UpdateActivitySlotComponent,
     AddActivityRateConfirmationComponent,
     UpdateActivityRateConfirmationComponent,
-    ViewActivityRateComponent
+    ViewActivityRateComponent,
+    UserRoleComponent,
+    AddUserRoleComponent,
+    AddUserRoleConfirmationComponent,
+    UpdateUserRoleConfirmationComponent,
+    UpdateUserRoleComponent,
+    ViewUserRoleComponent,
+    DeleteUserRoleComponent
   ],
   entryComponents: [
     AddParkComponent,
