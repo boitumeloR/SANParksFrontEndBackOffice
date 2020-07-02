@@ -161,6 +161,9 @@ import { UpdateActivitySlotConfirmationComponent } from './modals/activity-slot/
 import { ViewActivitySlotComponent } from './modals/activity-slot/view-activity-slot/view-activity-slot.component';
 import { DeleteActivitySlotComponent } from './modals/activity-slot/delete-activity-slot/delete-activity-slot.component';
 import { UpdateActivitySlotComponent } from './modals/activity-slot/update-activity-slot/update-activity-slot.component';
+import { AddActivityRateConfirmationComponent } from './modals/activity-rate/add-activity-rate-confirmation/add-activity-rate-confirmation.component';
+import { UpdateActivityRateConfirmationComponent } from './modals/activity-rate/update-activity-rate-confirmation/update-activity-rate-confirmation.component';
+import { ViewActivityRateComponent } from './modals/activity-rate/view-activity-rate/view-activity-rate.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -316,7 +319,10 @@ import { UpdateActivitySlotComponent } from './modals/activity-slot/update-activ
     UpdateActivitySlotConfirmationComponent,
     ViewActivitySlotComponent,
     DeleteActivitySlotComponent,
-    UpdateActivitySlotComponent
+    UpdateActivitySlotComponent,
+    AddActivityRateConfirmationComponent,
+    UpdateActivityRateConfirmationComponent,
+    ViewActivityRateComponent
   ],
   entryComponents: [
     AddParkComponent,

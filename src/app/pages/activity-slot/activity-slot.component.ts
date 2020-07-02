@@ -35,7 +35,7 @@ export class ActivitySlotComponent implements OnInit {
     const addActivitySlotTimeDialog = this.dialog.open(AddActivitySlotComponent,{disableClose: true});
   }
 
-  viewActivitySlot(accomodationType){
+  viewActivitySlot(activitySlot){
     const viewActivitySlotTimeDialog = this.dialog.open(ViewActivitySlotComponent);
   }
 }
