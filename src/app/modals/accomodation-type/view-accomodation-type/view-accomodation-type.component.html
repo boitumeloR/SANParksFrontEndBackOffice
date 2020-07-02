@@ -12,10 +12,10 @@
             <mat-label>Accomodation Type Name</mat-label>
             <input matInput value="Bungalow" disabled>
         </mat-form-field>
-        <div class="description">
-            <label>Accomodation Type Description</label>
-            <p>Single bedroom units with a bathroom. Some have communal kitchens while others have own kitchenettes with basic kitchen equipment. Some bungalows have perimeter or river views, while others have been upgraded to luxury status.</p>
-        </div>
+        <mat-form-field appearance="fill">
+            <mat-label>Accomodation Type Description</mat-label>
+            <textarea cdkTextareaAutosize matInput #input maxlength="300" value="Single bedroom units with a bathroom. Some have communal kitchens while others have own kitchenettes with basic kitchen equipment. Some bungalows have perimeter or river views, while others have been upgraded to luxury status."></textarea>
+        </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Number of Beds</mat-label>
             <input matInput value="3" disabled>

@@ -1,0 +1,13 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Create Activity Type </h2>
+  <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+        <p>Are you sure you want to create this activity type ?</p>
+    </div>
+    
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="true" color="primary">Create Type</button>
+  </mat-dialog-actions>
+</div>
