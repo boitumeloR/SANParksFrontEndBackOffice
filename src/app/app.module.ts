@@ -11,10 +11,6 @@ import { MainNavComponent } from './subcomponents/main-nav/main-nav.component';
 import { AddParkComponent } from './modals/park/add-park/add-park.component';
 import { UpdateParkComponent } from './modals/park/update-park/update-park.component';
 import { DeleteParkComponent } from './modals/park/delete-park/delete-park.component';
-import { ActivityComponent } from './pages/activity/activity.component';
-import { AddActivityComponent } from './modals/activity/add-activity/add-activity.component';
-import { UpdateActivityComponent } from './modals/activity/update-activity/update-activity.component';
-import { DeleteActivityComponent } from './modals/activity/delete-activity/delete-activity.component';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { ActivityRateComponent } from './pages/activity-rate/activity-rate.component';
 import { AddActivityRateComponent } from './modals/activity-rate/add-activity-rate/add-activity-rate.component';
@@ -151,6 +147,13 @@ import { UpdateActivityTypeConfirmationComponent } from './modals/activity-type/
 import { UpdateActivityTypeComponent } from './modals/activity-type/update-activity-type/update-activity-type.component';
 import { ViewActivityTypeComponent } from './modals/activity-type/view-activity-type/view-activity-type.component';
 import { DeleteActivityTypeComponent } from './modals/activity-type/delete-activity-type/delete-activity-type.component';
+import { AddActivityConfirmationComponent } from './modals/activity/add-activity-confirmation/add-activity-confirmation.component';
+import { UpdateActivityConfirmationComponent } from './modals/activity/update-activity-confirmation/update-activity-confirmation.component';
+import { AddActivityComponent } from './modals/activity/add-activity/add-activity.component';
+import { ViewActivityComponent } from './modals/activity/view-activity/view-activity.component';
+import { UpdateActivityComponent } from './modals/activity/update-activity/update-activity.component';
+import { ActivityComponent } from './pages/activity/activity.component';
+import { DeleteActivityComponent } from './modals/activity/delete-activity/delete-activity.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -160,10 +163,6 @@ import { DeleteActivityTypeComponent } from './modals/activity-type/delete-activ
     AddParkComponent,
     UpdateParkComponent,
     DeleteParkComponent,
-    ActivityComponent,
-    AddActivityComponent,
-    UpdateActivityComponent,
-    DeleteActivityComponent,
     ActivityRateComponent,
     AddActivityRateComponent,
     UpdateActivityRateComponent,
@@ -296,15 +295,19 @@ import { DeleteActivityTypeComponent } from './modals/activity-type/delete-activ
     UpdateActivityTypeConfirmationComponent,
     UpdateActivityTypeComponent,
     ViewActivityTypeComponent,
-    DeleteActivityTypeComponent
+    DeleteActivityTypeComponent,
+    AddActivityConfirmationComponent,
+    UpdateActivityConfirmationComponent,
+    ViewActivityComponent,
+    AddActivityComponent,
+    UpdateActivityComponent,
+    ActivityComponent,
+    DeleteActivityComponent
   ],
   entryComponents: [
     AddParkComponent,
     UpdateParkComponent,
     DeleteParkComponent,
-    AddActivityComponent,
-    UpdateActivityComponent,
-    DeleteActivityComponent,
     AddParkGateComponent
   ],
   imports: [
