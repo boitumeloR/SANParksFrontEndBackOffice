@@ -191,12 +191,12 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Check In
+              User
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option>
-              Hello World
+            <mat-list-option [routerLink]="[ '/User-Role']">
+              User Role
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>

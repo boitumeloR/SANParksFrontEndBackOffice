@@ -23,6 +23,7 @@ import { AmenityPenaltyComponent } from './pages/amenity-penalty/amenity-penalty
 import { ActivityTypeComponent } from './pages/activity-type/activity-type.component';
 import { ActivitySlotComponent } from './pages/activity-slot/activity-slot.component';
 import { ActivityRateComponent } from './pages/activity-rate/activity-rate.component';
+import { UserRoleComponent } from './pages/user-role/user-role.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -114,6 +115,10 @@ const routes: Routes = [
   {
     path: 'Activity-Rate',
     component: ActivityRateComponent
+  },
+  {
+    path: 'User-Role',
+    component: UserRoleComponent
   }
 ];
 
