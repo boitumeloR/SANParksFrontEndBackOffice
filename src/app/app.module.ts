@@ -154,6 +154,13 @@ import { ViewActivityComponent } from './modals/activity/view-activity/view-acti
 import { UpdateActivityComponent } from './modals/activity/update-activity/update-activity.component';
 import { ActivityComponent } from './pages/activity/activity.component';
 import { DeleteActivityComponent } from './modals/activity/delete-activity/delete-activity.component';
+import { ActivitySlotComponent } from './pages/activity-slot/activity-slot.component';
+import { AddActivitySlotComponent } from './modals/activity-slot/add-activity-slot/add-activity-slot.component';
+import { AddActivitySlotConfirmationComponent } from './modals/activity-slot/add-activity-slot-confirmation/add-activity-slot-confirmation.component';
+import { UpdateActivitySlotConfirmationComponent } from './modals/activity-slot/update-activity-slot-confirmation/update-activity-slot-confirmation.component';
+import { ViewActivitySlotComponent } from './modals/activity-slot/view-activity-slot/view-activity-slot.component';
+import { DeleteActivitySlotComponent } from './modals/activity-slot/delete-activity-slot/delete-activity-slot.component';
+import { UpdateActivitySlotComponent } from './modals/activity-slot/update-activity-slot/update-activity-slot.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -302,7 +309,14 @@ import { DeleteActivityComponent } from './modals/activity/delete-activity/delet
     AddActivityComponent,
     UpdateActivityComponent,
     ActivityComponent,
-    DeleteActivityComponent
+    DeleteActivityComponent,
+    ActivitySlotComponent,
+    AddActivitySlotComponent,
+    AddActivitySlotConfirmationComponent,
+    UpdateActivitySlotConfirmationComponent,
+    ViewActivitySlotComponent,
+    DeleteActivitySlotComponent,
+    UpdateActivitySlotComponent
   ],
   entryComponents: [
     AddParkComponent,

@@ -22,7 +22,7 @@ import { AmenityTypeComponent } from './pages/amenity-type/amenity-type.componen
 import { AmenityComponent } from './pages/amenity/amenity.component';
 import { AmenityPenaltyComponent } from './pages/amenity-penalty/amenity-penalty.component';
 import { ActivityTypeComponent } from './pages/activity-type/activity-type.component';
-
+import { ActivitySlotComponent } from './pages/activity-slot/activity-slot.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -78,6 +78,10 @@ const routes: Routes = [
   {
     path: 'Activity-Type',
     component: ActivityTypeComponent
+  },
+  {
+    path: 'Activity-Slot',
+    component: ActivitySlotComponent
   },
   {
     path: 'Accomodation',
