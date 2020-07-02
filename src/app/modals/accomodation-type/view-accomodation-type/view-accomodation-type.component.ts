@@ -16,9 +16,9 @@ export class ViewAccomodationTypeComponent implements OnInit {
   }
 
   updateAccomodationType(){
-    const updateAccomodationTypeConfirmationDialog = this.dialog.open(UpdateAccomodationTypeComponent,{disableClose: true})
+    const updateAccomodationTypeDialog = this.dialog.open(UpdateAccomodationTypeComponent,{disableClose: true})
   }
   deleteAccomodationType(){
-    const deleteAccomodationTypeConfirmationTypeDialog = this.dialog.open(DeleteAccomodationTypeComponent);
+    const deleteAccomodationTypeTypeDialog = this.dialog.open(DeleteAccomodationTypeComponent);
   }
 }

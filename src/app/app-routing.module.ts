@@ -72,7 +72,7 @@ const routes: Routes = [
     component: AddParkComponent
   },
   {
-    path: 'activity',
+    path: 'Activity',
     component: ActivityComponent
   },
   {
