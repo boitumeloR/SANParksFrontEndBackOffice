@@ -10,16 +10,16 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Wildcard Cluster Name</mat-label>
-            <input matInput value="SANParks Cluster" disabled>
+            <input matInput value="SANParks Cluster" readonly>
         </mat-form-field>
-        <div class="description">
-            <label>Wildcard Cluster Description</label>
-            <p>Access to all 3 of SANParks National Parks in South Africa</p>
-        </div>
-        <div class="description">
-            <label>Parks In Cluster</label>
-            <p>Addo Elephant National Park, Kruger National Park, Table Mountain National Park</p>
-        </div>
+        <mat-form-field appearance="fill">
+            <mat-label>Wildcard Cluster Description</mat-label>
+            <textarea cdkTextareaAutosize matInput  readonly value="Access to all 3 of SANParks National Parks in South Africa"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Parks In Cluster</mat-label>
+            <textarea cdkTextareaAutosize matInput  readonly value="Addo Elephant National Park, Kruger National Park, Table Mountain National Park"></textarea>
+        </mat-form-field>
       </div>
       
     </mat-dialog-content>

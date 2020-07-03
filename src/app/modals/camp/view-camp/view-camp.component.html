@@ -9,26 +9,26 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Name</mat-label>
-            <input matInput value="Letaba" disabled>
+            <input matInput value="Letaba" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Camp Type</mat-label>
-            <input matInput value="Main Rest Camp" disabled>
+            <input matInput value="Main Rest Camp" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Park</mat-label>
-            <input matInput value="Kruger National Park" disabled>
+            <input matInput value="Kruger National Park" readonly>
             <mat-hint>Park in which this camp is.</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Camp Location</mat-label>
-            <input matInput value="S 23 51' 4" disabled>
+            <input matInput value="S 23 51' 4" readonly>
             <mat-hint>Camp GPS Co-Ordinates</mat-hint>
         </mat-form-field>
-        <div class="description" >
-            <label>Camp Description</label>
-            <p>A green and thriving oasis, Letaba Camp offers comfortable accommodation in Kruger National Park with excellent Elephant and bird viewing opportunities.</p>
-        </div>
+        <mat-form-field appearance="fill">
+            <mat-label>Camp Description</mat-label>
+            <textarea cdkTextareaAutosize matInput  readonly value="A green and thriving oasis, Letaba Camp offers comfortable accommodation in Kruger National Park with excellent Elephant and bird viewing opportunities."></textarea>
+        </mat-form-field>
       </div>
       
     </mat-dialog-content>

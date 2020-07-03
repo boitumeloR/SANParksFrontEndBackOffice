@@ -10,12 +10,12 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Wildcard Category Name</mat-label>
-            <input matInput value="Individual" disabled>
+            <input matInput value="Individual" readonly>
         </mat-form-field>
-        <div class="description">
-            <label>Wildcard Category Description</label>
-            <p>This is only valid for one member.</p>
-        </div>
+        <mat-form-field appearance="fill">
+            <mat-label>Wildcard Category Description</mat-label>
+            <textarea cdkTextareaAutosize matInput  readonly value="This is only valid for one member."></textarea>
+        </mat-form-field>
       </div>
       
     </mat-dialog-content>
