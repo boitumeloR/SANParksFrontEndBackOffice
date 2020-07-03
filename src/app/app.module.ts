@@ -171,6 +171,13 @@ import { UpdateUserRoleConfirmationComponent } from './modals/user-role/update-u
 import { UpdateUserRoleComponent } from './modals/user-role/update-user-role/update-user-role.component';
 import { ViewUserRoleComponent } from './modals/user-role/view-user-role/view-user-role.component';
 import { DeleteUserRoleComponent } from './modals/user-role/delete-user-role/delete-user-role.component';
+import { EmployeeComponent } from './pages/employee/employee.component';
+import { AddEmployeeComponent } from './modals/employee/add-employee/add-employee.component';
+import { AddEmployeeConfirmationComponent } from './modals/employee/add-employee-confirmation/add-employee-confirmation.component';
+import { UpdateEmployeeConfirmationComponent } from './modals/employee/update-employee-confirmation/update-employee-confirmation.component';
+import { UpdateEmployeeComponent } from './modals/employee/update-employee/update-employee.component';
+import { DeleteEmployeeComponent } from './modals/employee/delete-employee/delete-employee.component';
+import { ViewEmployeeComponent } from './modals/employee/view-employee/view-employee.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -336,7 +343,14 @@ import { DeleteUserRoleComponent } from './modals/user-role/delete-user-role/del
     UpdateUserRoleConfirmationComponent,
     UpdateUserRoleComponent,
     ViewUserRoleComponent,
-    DeleteUserRoleComponent
+    DeleteUserRoleComponent,
+    EmployeeComponent,
+    AddEmployeeComponent,
+    AddEmployeeConfirmationComponent,
+    UpdateEmployeeConfirmationComponent,
+    UpdateEmployeeComponent,
+    DeleteEmployeeComponent,
+    ViewEmployeeComponent
   ],
   entryComponents: [
     AddParkComponent,

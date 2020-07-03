@@ -24,6 +24,7 @@ import { ActivityTypeComponent } from './pages/activity-type/activity-type.compo
 import { ActivitySlotComponent } from './pages/activity-slot/activity-slot.component';
 import { ActivityRateComponent } from './pages/activity-rate/activity-rate.component';
 import { UserRoleComponent } from './pages/user-role/user-role.component';
+import { EmployeeComponent } from './pages/employee/employee.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -119,6 +120,10 @@ const routes: Routes = [
   {
     path: 'User-Role',
     component: UserRoleComponent
+  },
+  {
+    path: 'Employee',
+    component: EmployeeComponent
   }
 ];
 
