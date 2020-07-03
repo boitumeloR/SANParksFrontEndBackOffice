@@ -11,27 +11,27 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
           <mat-label>Park Gate Name</mat-label>
-          <input matInput value="Orpen Gate" disabled>
+          <input matInput value="Orpen Gate" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Park </mat-label>
-          <input matInput value="Kruger National Park" disabled>
+          <input matInput value="Kruger National Park" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Park Gate Limit</mat-label>
-          <input matInput type="number" value="150" disabled>
+          <input matInput type="number" value="150" readonly>
           <mat-hint>The maximum amount of people in a park</mat-hint>
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill">
           <mat-label>Park Gate Location</mat-label>
-          <input matInput value="24.5762° S, 31.0579° E" disabled>
+          <input matInput value="24.5762° S, 31.0579° E" readonly>
           <mat-hint>Park GPS Co-Ordinates</mat-hint>
         </mat-form-field>
-          <div class="description">
-            <label>Park Gate Description</label>
-            <p>Orpen Gate rests on the edge of a band of what is known as sweetveld that stretches in a band from east to west across Kruger, and the reason for the predominance of game to the area</p>
-          </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Park Gate Description</mat-label>
+          <textarea cdkTextareaAutosize matInput  readonly value="Orpen Gate rests on the edge of a band of what is known as sweetveld that stretches in a band from east to west across Kruger, and the reason for the predominance of game to the area"></textarea>
+        </mat-form-field>
       </div>
       
     </mat-dialog-content>
