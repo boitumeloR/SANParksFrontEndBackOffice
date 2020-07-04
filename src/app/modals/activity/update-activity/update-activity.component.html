@@ -38,7 +38,7 @@
             </div>
             </mat-dialog-content>
             <mat-dialog-actions align="end">
-                <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+                <button mat-raised-button mat-dialog-close color="warn" (click)="confirmCancel()">Cancel</button>
                 <button mat-raised-button color="primary" matStepperNext>Next</button>
             </mat-dialog-actions>
         </form>
@@ -88,7 +88,7 @@
             </mat-accordion>
         </form>
         <mat-dialog-actions align="end">
-            <button mat-raised-button color="warn" matStepperPrevious> Back</button>
+            <button mat-raised-button color="warn" (click)="confirmCancel()"> Cancel</button>
             <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="updateActivity()">Update Activity</button>
         </mat-dialog-actions>
     </mat-step>

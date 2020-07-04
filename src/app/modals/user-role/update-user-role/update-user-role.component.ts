@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import {UpdateUserRoleConfirmationComponent} from 'src/app/modals/user-role/update-user-role-confirmation/update-user-role-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
 @Component({
@@ -15,5 +17,9 @@ export class UpdateUserRoleComponent implements OnInit {
 
   updateUserRole(){
     const updateUserRoleConfirmationDialog = this.dialog.open(UpdateUserRoleConfirmationComponent)
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

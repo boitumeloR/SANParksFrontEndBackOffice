@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import {AddWildcardClusterConfirmationComponent} from 'src/app/modals/wildcard-cluster/add-wildcard-cluster-confirmation/add-wildcard-cluster-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -17,5 +18,9 @@ export class AddWildcardClusterComponent implements OnInit {
 
   addWildcardCluster(){
     const addWildcardClusterConfirmationDialog = this.dialog.open(AddWildcardClusterConfirmationComponent);
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

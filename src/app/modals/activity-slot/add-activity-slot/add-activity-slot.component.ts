@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import {AddActivitySlotConfirmationComponent} from 'src/app/modals/activity-slot/add-activity-slot-confirmation/add-activity-slot-confirmation.component'
 @Component({
   selector: 'app-add-activity-slot',
@@ -15,5 +16,9 @@ export class AddActivitySlotComponent implements OnInit {
 
   addSlotTime(){
     const addSlotTimeConfirmationDialog = this.dialog.open(AddActivitySlotConfirmationComponent);
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

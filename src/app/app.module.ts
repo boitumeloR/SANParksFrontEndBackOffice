@@ -178,6 +178,7 @@ import { UpdateEmployeeConfirmationComponent } from './modals/employee/update-em
 import { UpdateEmployeeComponent } from './modals/employee/update-employee/update-employee.component';
 import { DeleteEmployeeComponent } from './modals/employee/delete-employee/delete-employee.component';
 import { ViewEmployeeComponent } from './modals/employee/view-employee/view-employee.component';
+import { CancelAlertComponent } from './modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -350,7 +351,8 @@ import { ViewEmployeeComponent } from './modals/employee/view-employee/view-empl
     UpdateEmployeeConfirmationComponent,
     UpdateEmployeeComponent,
     DeleteEmployeeComponent,
-    ViewEmployeeComponent
+    ViewEmployeeComponent,
+    CancelAlertComponent
   ],
   entryComponents: [
     AddParkComponent,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import {AddAccomodationAddRateConfirmationComponent} from 'src/app/modals/accomodation-add-rate/add-accomodation-add-rate-confirmation/add-accomodation-add-rate-confirmation.component';
 import {MatDialog} from '@angular/material/dialog'
 @Component({
@@ -15,5 +16,9 @@ export class AddAccomodationAddRateComponent implements OnInit {
 
   addAccomodationBaseRate(){
     const addAccomodationAddRateConfirmation = this.dialog.open(AddAccomodationAddRateConfirmationComponent);
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }
