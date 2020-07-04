@@ -1,5 +1,5 @@
 
-<h2 mat-dialog-title>Add Activity Rate</h2>
+<h2 mat-dialog-title>Create Activity Rate</h2>
 <mat-horizontal-stepper [linear] #stepper>
     <mat-step [stepControl]="selectActivityForm">
         <form [formControl]="selectActivityForm">
@@ -111,7 +111,7 @@
         </form>
         <mat-dialog-actions align="end">
             <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
-            <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="addActivityRate()">Add Rate</button>
+            <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="addActivityRate()">Create</button>
         </mat-dialog-actions>
     </mat-step>
 </mat-horizontal-stepper>
