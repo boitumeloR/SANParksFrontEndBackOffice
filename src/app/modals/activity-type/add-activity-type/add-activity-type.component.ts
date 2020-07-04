@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import { AddActivityTypeConfirmationComponent} from 'src/app/modals/activity-type/add-activity-type-confirmation/add-activity-type-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
 @Component({
@@ -15,5 +16,9 @@ export class AddActivityTypeComponent implements OnInit {
 
   addActivityType(){
     const addActivityTypeConfirmationDialog = this.dialog.open(AddActivityTypeConfirmationComponent)
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

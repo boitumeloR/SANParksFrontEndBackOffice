@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import { UpdateWildcardCategoryConfirmationComponent } from 'src/app/modals/wildcard-category/update-wildcard-category-confirmation/update-wildcard-category-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
 @Component({
@@ -15,5 +17,9 @@ export class UpdateWildcardCategoryComponent implements OnInit {
 
   updateWildcardCategory(){
     const updateWildcardCategoryConfirmationDialog = this.dialog.open(UpdateWildcardCategoryConfirmationComponent)
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

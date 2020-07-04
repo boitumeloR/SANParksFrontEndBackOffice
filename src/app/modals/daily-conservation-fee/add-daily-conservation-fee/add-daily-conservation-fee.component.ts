@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import {AddDailyConservationFeeConfirmationComponent} from 'src/app/modals/daily-conservation-fee/add-daily-conservation-fee-confirmation/add-daily-conservation-fee-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
 @Component({
@@ -15,5 +16,9 @@ export class AddDailyConservationFeeComponent implements OnInit {
   
   addDailyConservationFee(){
     const addDailyConservationFeeConfirmation = this.dialog.open(AddDailyConservationFeeConfirmationComponent);
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

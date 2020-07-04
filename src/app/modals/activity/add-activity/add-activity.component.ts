@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {MatDialog} from '@angular/material/dialog'
+import {MatDialog} from '@angular/material/dialog';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import {AddActivityConfirmationComponent} from 'src/app/modals/activity/add-activity-confirmation/add-activity-confirmation.component'
 
 @Component({
@@ -19,5 +20,9 @@ export class AddActivityComponent implements OnInit {
 
   addActivity(){
     const addActivityConfirmationDialog = this.dialog.open(AddActivityConfirmationComponent)
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import { UpdateAmenityConfirmationComponent } from 'src/app/modals/amenity/update-amenity-confirmation/update-amenity-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
@@ -18,5 +19,9 @@ export class UpdateAmenityComponent implements OnInit {
 
   updateAmenity(){
     const updateAmenityConfirmationDialog = this.dialog.open(UpdateAmenityConfirmationComponent)
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

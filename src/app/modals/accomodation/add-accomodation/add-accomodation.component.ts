@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import {AddAccomodationConfirmationComponent} from 'src/app/modals/accomodation/add-accomodation-confirmation/add-accomodation-confirmation.component';
-import {MatDialog} from '@angular/material/dialog'
+import {MatDialog} from '@angular/material/dialog';
 @Component({
   selector: 'app-add-accomodation',
   templateUrl: './add-accomodation.component.html',
@@ -15,5 +16,9 @@ export class AddAccomodationComponent implements OnInit {
 
   addAccomdation(){
     const addAccomodationConfirmation = this.dialog.open(AddAccomodationConfirmationComponent);
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

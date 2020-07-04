@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import {AddAmentityTypeConfirmationComponent} from 'src/app/modals/amenity-type/add-amentity-type-confirmation/add-amentity-type-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -16,5 +17,9 @@ export class AddAmentityTypeComponent implements OnInit {
 
   addAmenityType(){
     const addCampDialog = this.dialog.open(AddAmentityTypeConfirmationComponent)
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

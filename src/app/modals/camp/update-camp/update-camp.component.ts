@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import {UpdateCampConfirmationComponent} from 'src/app/modals/camp/update-camp-confirmation/update-camp-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -13,7 +14,12 @@ export class UpdateCampComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   updateCamp(){
     const udpateCampDialog = this.dialog.open(UpdateCampConfirmationComponent)
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

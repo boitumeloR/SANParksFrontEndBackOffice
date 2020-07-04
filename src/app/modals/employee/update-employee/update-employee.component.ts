@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import {UpdateEmployeeConfirmationComponent} from 'src/app/modals/employee/update-employee-confirmation/update-employee-confirmation.component';
 @Component({
   selector: 'app-update-employee',
@@ -18,5 +19,9 @@ export class UpdateEmployeeComponent implements OnInit {
 
   updateEmployee(){
     const updateEmployeeConfirmationDialog = this.dialog.open(UpdateEmployeeConfirmationComponent);
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

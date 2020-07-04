@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import {AddParkConfirmationComponent} from 'src/app/modals/park/add-park-confirmation/add-park-confirmation.component';
 import {MatDialog} from '@angular/material/dialog'
 @Component({
@@ -15,5 +16,9 @@ export class AddParkComponent implements OnInit {
   }
   addPark(){
     const addParkConfirmationDiag = this.dialog.open(AddParkConfirmationComponent);
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

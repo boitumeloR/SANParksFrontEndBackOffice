@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import {AddCampGateTimeConfirmationComponent} from 'src/app/modals/camp-gate-time/add-camp-gate-time-confirmation/add-camp-gate-time-confirmation.component';
 import {MatDialog} from '@angular/material/dialog'
 @Component({
@@ -15,5 +16,9 @@ export class AddCampGateTimeComponent implements OnInit {
 
   addCampGateTime(){
     const addCampGateTimeConfirmation = this.dialog.open(AddCampGateTimeConfirmationComponent);
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

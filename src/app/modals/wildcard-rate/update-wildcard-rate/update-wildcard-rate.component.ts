@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import {UpdateWildcardRateConfirmationComponent} from 'src/app/modals/wildcard-rate/update-wildcard-rate-confirmation/update-wildcard-rate-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
 @Component({
@@ -15,5 +16,9 @@ export class UpdateWildcardRateComponent implements OnInit {
 
   updateWildcardRate(){
     const updateWildCardRateConfirmation = this.dialog.open(UpdateWildcardRateConfirmationComponent);
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }

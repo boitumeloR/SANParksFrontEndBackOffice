@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import { AddAmenityPenaltyConfirmationComponent } from 'src/app/modals/amenity-penalty/add-amenity-penalty-confirmation/add-amenity-penalty-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
@@ -19,5 +20,9 @@ export class AddAmenityPenaltyComponent implements OnInit {
 
   addAmenityPenalty(){
     const addAmenityPenaltyConfirmationDialog = this.dialog.open(AddAmenityPenaltyConfirmationComponent)
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
   }
 }
