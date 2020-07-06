@@ -179,6 +179,78 @@ import { UpdateEmployeeComponent } from './modals/employee/update-employee/updat
 import { DeleteEmployeeComponent } from './modals/employee/delete-employee/delete-employee.component';
 import { ViewEmployeeComponent } from './modals/employee/view-employee/view-employee.component';
 import { CancelAlertComponent } from './modals/auxilliary-modals/cancel-alert/cancel-alert.component';
+import { AddAccomodationSuccessfulComponent } from './modals/accomodation/add-accomodation-successful/add-accomodation-successful.component';
+import { UpdateAccomodationSuccessfulComponent } from './modals/accomodation/update-accomodation-successful/update-accomodation-successful.component';
+import { DeleteAccomodationSuccessfulComponent } from './modals/accomodation/delete-accomodation-successful/delete-accomodation-successful.component';
+import { DeleteAccomodationAddRateSuccessfulComponent } from './modals/accomodation-add-rate/delete-accomodation-add-rate-successful/delete-accomodation-add-rate-successful.component';
+import { UpdateAccomodationAddRateSuccessfulComponent } from './modals/accomodation-add-rate/update-accomodation-add-rate-successful/update-accomodation-add-rate-successful.component';
+import { AddAccomodationAddRateSuccessfulComponent } from './modals/accomodation-add-rate/add-accomodation-add-rate-successful/add-accomodation-add-rate-successful.component';
+import { AddAccomodationBaseRateSuccessfulComponent } from './modals/accomodation-base-rate/add-accomodation-base-rate-successful/add-accomodation-base-rate-successful.component';
+import { UpdateAccomodationBaseRateSuccessfulComponent } from './modals/accomodation-base-rate/update-accomodation-base-rate-successful/update-accomodation-base-rate-successful.component';
+import { DeleteAccomodationBaseRateSuccessfulComponent } from './modals/accomodation-base-rate/delete-accomodation-base-rate-successful/delete-accomodation-base-rate-successful.component';
+import { AddAccomodationTypeSuccessfulComponent } from './modals/accomodation-type/add-accomodation-type-successful/add-accomodation-type-successful.component';
+import { UpdateAccomodationTypeSuccessfulComponent } from './modals/accomodation-type/update-accomodation-type-successful/update-accomodation-type-successful.component';
+import { DeleteAccomodationTypeSuccessfulComponent } from './modals/accomodation-type/delete-accomodation-type-successful/delete-accomodation-type-successful.component';
+import { DeleteActivitySuccessfulComponent } from './modals/activity/delete-activity-successful/delete-activity-successful.component';
+import { UpdateActivitySuccessfulComponent } from './modals/activity/update-activity-successful/update-activity-successful.component';
+import { AddActivitySuccessfulComponent } from './modals/activity/add-activity-successful/add-activity-successful.component';
+import { UpdateActivityRateSuccessfulComponent } from './modals/activity-rate/update-activity-rate-successful/update-activity-rate-successful.component';
+import { DeleteActivityRateSuccessfulComponent } from './modals/activity-rate/delete-activity-rate-successful/delete-activity-rate-successful.component';
+import { DeleteActivitySlotSuccessfulComponent } from './modals/activity-slot/delete-activity-slot-successful/delete-activity-slot-successful.component';
+import { UpdateActivitySlotSuccessfulComponent } from './modals/activity-slot/update-activity-slot-successful/update-activity-slot-successful.component';
+import { AddActivitySlotSuccessfulComponent } from './modals/activity-slot/add-activity-slot-successful/add-activity-slot-successful.component';
+import { UpdateActivityTypeSuccessfulComponent } from './modals/activity-type/update-activity-type-successful/update-activity-type-successful.component';
+import { AddActivityTypeSuccessfulComponent } from './modals/activity-type/add-activity-type-successful/add-activity-type-successful.component';
+import { DeleteActivityTypeSuccessfulComponent } from './modals/activity-type/delete-activity-type-successful/delete-activity-type-successful.component';
+import { DeleteAmenitySuccessfulComponent } from './modals/amenity/delete-amenity-successful/delete-amenity-successful.component';
+import { AddAmenitySuccessfulComponent } from './modals/amenity/add-amenity-successful/add-amenity-successful.component';
+import { UpdateAmenitySuccessfulComponent } from './modals/amenity/update-amenity-successful/update-amenity-successful.component';
+import { AddAmenityPenaltySuccessfulComponent } from './modals/amenity-penalty/add-amenity-penalty-successful/add-amenity-penalty-successful.component';
+import { DeleteAmenityPenaltySuccessfulComponent } from './modals/amenity-penalty/delete-amenity-penalty-successful/delete-amenity-penalty-successful.component';
+import { UpdateAmenityPenaltySuccessfulComponent } from './modals/amenity-penalty/update-amenity-penalty-successful/update-amenity-penalty-successful.component';
+import { AddAmenityTypeSuccessfulComponent } from './modals/amenity-type/add-amenity-type-successful/add-amenity-type-successful.component';
+import { DeleteAmenityTypeSuccessfulComponent } from './modals/amenity-type/delete-amenity-type-successful/delete-amenity-type-successful.component';
+import { UpdateAmenityTypeSuccessfulComponent } from './modals/amenity-type/update-amenity-type-successful/update-amenity-type-successful.component';
+import { AddActivityRateSuccessfulComponent } from './modals/activity-rate/add-activity-rate-successful/add-activity-rate-successful.component';
+import { UpdateCampSuccessfulComponent } from './modals/camp/update-camp-successful/update-camp-successful.component';
+import { AddCampSuccessfulComponent } from './modals/camp/add-camp-successful/add-camp-successful.component';
+import { DeleteCampSuccessfulComponent } from './modals/camp/delete-camp-successful/delete-camp-successful.component';
+import { DeleteCampGateTimeSuccessfulComponent } from './modals/camp-gate-time/delete-camp-gate-time-successful/delete-camp-gate-time-successful.component';
+import { AddCampGateTimeSuccessfulComponent } from './modals/camp-gate-time/add-camp-gate-time-successful/add-camp-gate-time-successful.component';
+import { UpdateCampGateTimeSuccessfulComponent } from './modals/camp-gate-time/update-camp-gate-time-successful/update-camp-gate-time-successful.component';
+import { UpdateCampTypeSuccessfulComponent } from './modals/camp-type/update-camp-type-successful/update-camp-type-successful.component';
+import { AddCampTypeSuccessfulComponent } from './modals/camp-type/add-camp-type-successful/add-camp-type-successful.component';
+import { DeleteCampTypeSuccessfulComponent } from './modals/camp-type/delete-camp-type-successful/delete-camp-type-successful.component';
+import { DeleteDailyConservationFeeSuccessfulComponent } from './modals/daily-conservation-fee/delete-daily-conservation-fee-successful/delete-daily-conservation-fee-successful.component';
+import { AddDailyConservationFeeSuccessfulComponent } from './modals/daily-conservation-fee/add-daily-conservation-fee-successful/add-daily-conservation-fee-successful.component';
+import { UpdateDailyConservationFeeSuccessfulComponent } from './modals/daily-conservation-fee/update-daily-conservation-fee-successful/update-daily-conservation-fee-successful.component';
+import { UpdateEmployeeSuccessfulComponent } from './modals/employee/update-employee-successful/update-employee-successful.component';
+import { AddEmployeeSuccessfulComponent } from './modals/employee/add-employee-successful/add-employee-successful.component';
+import { AddParkSuccessfulComponent } from './modals/park/add-park-successful/add-park-successful.component';
+import { DeleteParkSuccessfulComponent } from './modals/park/delete-park-successful/delete-park-successful.component';
+import { UpdateParkSuccessfulComponent } from './modals/park/update-park-successful/update-park-successful.component';
+import { AddParkGateSuccessfulComponent } from './modals/park-gate/add-park-gate-successful/add-park-gate-successful.component';
+import { DeleteParkGateSuccessfulComponent } from './modals/park-gate/delete-park-gate-successful/delete-park-gate-successful.component';
+import { UpdateParkGateSuccessfulComponent } from './modals/park-gate/update-park-gate-successful/update-park-gate-successful.component';
+import { AddParkGateTimeSuccessfulComponent } from './modals/park-gate-time/add-park-gate-time-successful/add-park-gate-time-successful.component';
+import { UpdateParkGateTimeSuccessfulComponent } from './modals/park-gate-time/update-park-gate-time-successful/update-park-gate-time-successful.component';
+import { DelteParkGateTimeSuccessfulComponent } from './modals/park-gate-time/delte-park-gate-time-successful/delte-park-gate-time-successful.component';
+import { DelteSeasonSuccessfulComponent } from './modals/season/delte-season-successful/delte-season-successful.component';
+import { AddSeasonSuccessfulComponent } from './modals/season/add-season-successful/add-season-successful.component';
+import { UpdateSeasonSuccessfulComponent } from './modals/season/update-season-successful/update-season-successful.component';
+import { UpdateUserRoleSuccessfulComponent } from './modals/user-role/update-user-role-successful/update-user-role-successful.component';
+import { AddUserRoleSuccessfulComponent } from './modals/user-role/add-user-role-successful/add-user-role-successful.component';
+import { DeleteUserRoleSuccessfulComponent } from './modals/user-role/delete-user-role-successful/delete-user-role-successful.component';
+import { DeleteWildcardCategorySuccessfulComponent } from './modals/wildcard-category/delete-wildcard-category-successful/delete-wildcard-category-successful.component';
+import { AddWildcardCategorySuccessfulComponent } from './modals/wildcard-category/add-wildcard-category-successful/add-wildcard-category-successful.component';
+import { UpdateWildcardCategorySuccessfulComponent } from './modals/wildcard-category/update-wildcard-category-successful/update-wildcard-category-successful.component';
+import { UpdateWildcardClusterSuccessfulComponent } from './modals/wildcard-cluster/update-wildcard-cluster-successful/update-wildcard-cluster-successful.component';
+import { AddWildcardClusterSuccessfulComponent } from './modals/wildcard-cluster/add-wildcard-cluster-successful/add-wildcard-cluster-successful.component';
+import { DeleteWildcardClusterSuccessfulComponent } from './modals/wildcard-cluster/delete-wildcard-cluster-successful/delete-wildcard-cluster-successful.component';
+import { DeleteWildcardRateSuccessfulComponent } from './modals/wildcard-rate/delete-wildcard-rate-successful/delete-wildcard-rate-successful.component';
+import { AddWildcardRateSuccessfulComponent } from './modals/wildcard-rate/add-wildcard-rate-successful/add-wildcard-rate-successful.component';
+import { UpdateWildcardRateSuccessfulComponent } from './modals/wildcard-rate/update-wildcard-rate-successful/update-wildcard-rate-successful.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -352,7 +424,78 @@ import { CancelAlertComponent } from './modals/auxilliary-modals/cancel-alert/ca
     UpdateEmployeeComponent,
     DeleteEmployeeComponent,
     ViewEmployeeComponent,
-    CancelAlertComponent
+    CancelAlertComponent,
+    AddAccomodationSuccessfulComponent,
+    UpdateAccomodationSuccessfulComponent,
+    DeleteAccomodationSuccessfulComponent,
+    DeleteAccomodationAddRateSuccessfulComponent,
+    UpdateAccomodationAddRateSuccessfulComponent,
+    AddAccomodationAddRateSuccessfulComponent,
+    AddAccomodationBaseRateSuccessfulComponent,
+    UpdateAccomodationBaseRateSuccessfulComponent,
+    DeleteAccomodationBaseRateSuccessfulComponent,
+    AddAccomodationTypeSuccessfulComponent,
+    UpdateAccomodationTypeSuccessfulComponent,
+    DeleteAccomodationTypeSuccessfulComponent,
+    DeleteActivitySuccessfulComponent,
+    UpdateActivitySuccessfulComponent,
+    AddActivitySuccessfulComponent,
+    UpdateActivityRateSuccessfulComponent,
+    DeleteActivityRateSuccessfulComponent,
+    DeleteActivitySlotSuccessfulComponent,
+    UpdateActivitySlotSuccessfulComponent,
+    AddActivitySlotSuccessfulComponent,
+    UpdateActivityTypeSuccessfulComponent,
+    AddActivityTypeSuccessfulComponent,
+    DeleteActivityTypeSuccessfulComponent,
+    DeleteAmenitySuccessfulComponent,
+    AddAmenitySuccessfulComponent,
+    UpdateAmenitySuccessfulComponent,
+    AddAmenityPenaltySuccessfulComponent,
+    DeleteAmenityPenaltySuccessfulComponent,
+    UpdateAmenityPenaltySuccessfulComponent,
+    AddAmenityTypeSuccessfulComponent,
+    DeleteAmenityTypeSuccessfulComponent,
+    UpdateAmenityTypeSuccessfulComponent,
+    AddActivityRateSuccessfulComponent,
+    UpdateCampSuccessfulComponent,
+    AddCampSuccessfulComponent,
+    DeleteCampSuccessfulComponent,
+    DeleteCampGateTimeSuccessfulComponent,
+    AddCampGateTimeSuccessfulComponent,
+    UpdateCampGateTimeSuccessfulComponent,
+    UpdateCampTypeSuccessfulComponent,
+    AddCampTypeSuccessfulComponent,
+    DeleteCampTypeSuccessfulComponent,
+    DeleteDailyConservationFeeSuccessfulComponent,
+    AddDailyConservationFeeSuccessfulComponent,
+    UpdateDailyConservationFeeSuccessfulComponent,
+    UpdateEmployeeSuccessfulComponent,
+    AddEmployeeSuccessfulComponent,
+    AddParkSuccessfulComponent,
+    DeleteParkSuccessfulComponent,
+    UpdateParkSuccessfulComponent,
+    AddParkGateSuccessfulComponent,
+    DeleteParkGateSuccessfulComponent,
+    UpdateParkGateSuccessfulComponent,
+    AddParkGateTimeSuccessfulComponent,
+    UpdateParkGateTimeSuccessfulComponent,
+    DelteParkGateTimeSuccessfulComponent,
+    DelteSeasonSuccessfulComponent,
+    AddSeasonSuccessfulComponent,
+    UpdateSeasonSuccessfulComponent,
+    UpdateUserRoleSuccessfulComponent,
+    AddUserRoleSuccessfulComponent,
+    DeleteUserRoleSuccessfulComponent,
+    DeleteWildcardCategorySuccessfulComponent,
+    AddWildcardCategorySuccessfulComponent,
+    UpdateWildcardCategorySuccessfulComponent,
+    UpdateWildcardClusterSuccessfulComponent,
+    AddWildcardClusterSuccessfulComponent,
+    DeleteWildcardClusterSuccessfulComponent,
+    DeleteWildcardRateSuccessfulComponent,
+    AddWildcardRateSuccessfulComponent,
+    UpdateWildcardRateSuccessfulComponent
   ],
   entryComponents: [
     AddParkComponent,

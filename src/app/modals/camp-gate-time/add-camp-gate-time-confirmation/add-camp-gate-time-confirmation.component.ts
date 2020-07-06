@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {AddCampGateTimeSuccessfulComponent} from 'src/app/modals/camp-gate-time/add-camp-gate-time-successful/add-camp-gate-time-successful.component';
 
 @Component({
   selector: 'app-add-camp-gate-time-confirmation',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddCampGateTimeConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulAddCampGateTime(){
+    const addCampGateTimeSuccessfulDialog = this.dialog.open(AddCampGateTimeSuccessfulComponent);
+  }
 }

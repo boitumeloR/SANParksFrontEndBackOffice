@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {AddWildcardRateSuccessfulComponent} from 'src/app/modals/wildcard-rate/add-wildcard-rate-successful/add-wildcard-rate-successful.component';
+
 
 @Component({
   selector: 'app-add-wildcard-rate-confirmation',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddWildcardRateConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulAddWildcardRate(){
+    const addWildcardRateSuccessfulDialog = this.dialog.open(AddWildcardRateSuccessfulComponent);
+  }
 }

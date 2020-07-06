@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import { DeleteUserRoleSuccessfulComponent } from 'src/app/modals/user-role/delete-user-role-successful/delete-user-role-successful.component';
 
 @Component({
   selector: 'app-delete-user-role',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeleteUserRoleComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulDeleteUserRole(){
+    const deleteUserRoleSuccessfulDialog = this.dialog.open(DeleteUserRoleSuccessfulComponent);
+  }
 }

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {UpdateAccomodationBaseRateSuccessfulComponent} from 'src/app/modals/accomodation-base-rate/update-accomodation-base-rate-successful/update-accomodation-base-rate-successful.component';
+
 @Component({
   selector: 'app-update-accomodation-base-rate-confirmation',
   templateUrl: './update-accomodation-base-rate-confirmation.component.html',
@@ -6,10 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateAccomodationBaseRateConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulUpdateAccomodationBaseRate(){
+    const updateAccomodationBaseRateSuccessfulDialog = this.dialog.open(UpdateAccomodationBaseRateSuccessfulComponent);
+  }
  
 }

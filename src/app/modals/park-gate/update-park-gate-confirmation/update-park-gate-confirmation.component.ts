@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {UpdateParkGateSuccessfulComponent} from 'src/app/modals/park-gate/update-park-gate-successful/update-park-gate-successful.component';
+
 
 @Component({
   selector: 'app-update-park-gate-confirmation',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateParkGateConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulUpdateParkGate(){
+    const updateParkGateSuccessfulDialog = this.dialog.open(UpdateParkGateSuccessfulComponent);
+  }
 }

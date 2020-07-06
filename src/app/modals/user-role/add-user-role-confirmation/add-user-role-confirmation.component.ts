@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {AddUserRoleSuccessfulComponent} from 'src/app/modals/user-role/add-user-role-successful/add-user-role-successful.component';
 
 @Component({
   selector: 'app-add-user-role-confirmation',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddUserRoleConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
-}
+  successfulAddUserRole(){
+    const addUserRoleSuccessfulDialog = this.dialog.open(AddUserRoleSuccessfulComponent);
+  }
+} 

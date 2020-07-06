@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {AddAmenityPenaltySuccessfulComponent} from 'src/app/modals/amenity-penalty/add-amenity-penalty-successful/add-amenity-penalty-successful.component';
 
 @Component({
   selector: 'app-add-amenity-penalty-confirmation',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddAmenityPenaltyConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulAddAmenityPenalty(){
+    const addAmenityPenaltySuccessfulDialog = this.dialog.open(AddAmenityPenaltySuccessfulComponent);
+  }
 }
