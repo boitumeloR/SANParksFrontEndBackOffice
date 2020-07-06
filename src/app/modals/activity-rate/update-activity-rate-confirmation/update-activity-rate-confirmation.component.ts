@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import { UpdateActivityRateSuccessfulComponent} from 'src/app/modals/activity-rate/update-activity-rate-successful/update-activity-rate-successful.component';
 
 @Component({
   selector: 'app-update-activity-rate-confirmation',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateActivityRateConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulUpdateActivityRate(){
+    const updateActivityRateSuccessfulDialog = this.dialog.open(UpdateActivityRateSuccessfulComponent);
+  }
 }

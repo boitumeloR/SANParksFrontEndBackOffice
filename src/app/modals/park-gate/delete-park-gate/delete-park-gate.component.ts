@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import { DeleteParkGateSuccessfulComponent } from 'src/app/modals/park-gate/delete-park-gate-successful/delete-park-gate-successful.component';
 
 @Component({
   selector: 'app-delete-park-gate',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeleteParkGateComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
-
+  
+  successfulDeleteParkGate(){
+    const deleteParkGateSuccessfulDialog = this.dialog.open(DeleteParkGateSuccessfulComponent);
+  }
 }

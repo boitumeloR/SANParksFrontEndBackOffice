@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {UpdateWildcardClusterSuccessfulComponent} from 'src/app/modals/wildcard-cluster/update-wildcard-cluster-successful/update-wildcard-cluster-successful.component';
 
 @Component({
   selector: 'app-update-wildcard-cluster-confirmation',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateWildcardClusterConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulUpdateWildcardCluster(){
+    const updateWildcardClusterSuccessfulDialog = this.dialog.open(UpdateWildcardClusterSuccessfulComponent);
+  }
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {UpdateActivitySuccessfulComponent } from 'src/app/modals/activity/update-activity-successful/update-activity-successful.component';
 
 @Component({
   selector: 'app-update-activity-confirmation',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateActivityConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulUpdateActivity(){
+    const updateActivitySuccessfulDialog = this.dialog.open(UpdateActivitySuccessfulComponent);
+  }
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {UpdateCampSuccessfulComponent} from 'src/app/modals/camp/update-camp-successful/update-camp-successful.component';
 
 @Component({
   selector: 'app-update-camp-confirmation',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateCampConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulUpdateCamp(){
+    const updateCampSuccessfulDialog = this.dialog.open(UpdateCampSuccessfulComponent);
+  }
 }

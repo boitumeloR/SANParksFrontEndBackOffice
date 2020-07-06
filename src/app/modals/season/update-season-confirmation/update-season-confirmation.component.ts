@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {UpdateSeasonSuccessfulComponent} from 'src/app/modals/season/update-season-successful/update-season-successful.component';
 
 @Component({
   selector: 'app-update-season-confirmation',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateSeasonConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulUpdateSeason(){
+    const updateSeasonSuccessfulDialog = this.dialog.open(UpdateSeasonSuccessfulComponent);
+  }
 }

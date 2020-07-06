@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import { DeleteWildcardCategorySuccessfulComponent } from 'src/app/modals/wildcard-category/delete-wildcard-category-successful/delete-wildcard-category-successful.component';
 
 @Component({
   selector: 'app-delete-wildcard-category',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeleteWildcardCategoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulDeleteWildcardCategory(){
+    const deleteWildcardCategorySuccessfulDialog = this.dialog.open(DeleteWildcardCategorySuccessfulComponent);
+  }
 }

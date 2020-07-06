@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {AddEmployeeSuccessfulComponent} from 'src/app/modals/employee/add-employee-successful/add-employee-successful.component';
+
 
 @Component({
   selector: 'app-add-employee-confirmation',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddEmployeeConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
-}
+  successfulAddEmployee(){
+    const addDailyConservationFeeSuccessfulDialog = this.dialog.open(AddEmployeeSuccessfulComponent);
+  }
+} 

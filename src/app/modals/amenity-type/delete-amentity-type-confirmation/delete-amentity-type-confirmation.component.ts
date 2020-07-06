@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import { DeleteAmenityTypeSuccessfulComponent } from 'src/app/modals/amenity-type/delete-amenity-type-successful/delete-amenity-type-successful.component';
 
 @Component({
   selector: 'app-delete-amentity-type-confirmation',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeleteAmentityTypeConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
-
+  successfulDeleteAmenityType(){
+    const deleteAmenityTypeSuccessfulDialog = this.dialog.open(DeleteAmenityTypeSuccessfulComponent);
+  }
 }

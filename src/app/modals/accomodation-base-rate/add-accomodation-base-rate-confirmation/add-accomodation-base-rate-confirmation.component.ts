@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {AddAccomodationBaseRateSuccessfulComponent} from 'src/app/modals/accomodation-base-rate/add-accomodation-base-rate-successful/add-accomodation-base-rate-successful.component';
 
 @Component({
   selector: 'app-add-accomodation-base-rate-confirmation',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddAccomodationBaseRateConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulAddAccomodationBaseRate(){
+    const addAccomodationBaseRateSuccessfulDialog = this.dialog.open(AddAccomodationBaseRateSuccessfulComponent);
+  }
 }

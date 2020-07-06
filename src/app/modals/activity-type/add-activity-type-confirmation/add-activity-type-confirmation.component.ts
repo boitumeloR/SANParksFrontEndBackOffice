@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {AddActivityTypeSuccessfulComponent} from 'src/app/modals/activity-type/add-activity-type-successful/add-activity-type-successful.component';
 
 @Component({
   selector: 'app-add-activity-type-confirmation',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddActivityTypeConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
-
+  successfulAddActivityType(){
+    const addActivityTypeSuccessfulDialog = this.dialog.open(AddActivityTypeSuccessfulComponent);
+  }
 }

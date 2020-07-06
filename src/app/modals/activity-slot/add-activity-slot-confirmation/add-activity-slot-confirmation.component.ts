@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {AddActivitySlotSuccessfulComponent} from 'src/app/modals/activity-slot/add-activity-slot-successful/add-activity-slot-successful.component';
 
 @Component({
   selector: 'app-add-activity-slot-confirmation',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddActivitySlotConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulAddActivitySlot(){
+    const addActivitySlotSuccessfulDialog = this.dialog.open(AddActivitySlotSuccessfulComponent);
+  }
 }
