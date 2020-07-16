@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddEmployeeSuccessfulComponent} from 'src/app/modals/employee/add-employee-successful/add-employee-successful.component';
-
+import {AddEmployeeUnsuccessfulComponent} from 'src/app/modals/employee/add-employee-unsuccessful/add-employee-unsuccessful.component';
 
 @Component({
   selector: 'app-add-employee-confirmation',
@@ -17,5 +17,9 @@ export class AddEmployeeConfirmationComponent implements OnInit {
 
   successfulAddEmployee(){
     const addDailyConservationFeeSuccessfulDialog = this.dialog.open(AddEmployeeSuccessfulComponent);
+  }
+
+  unsuccessfulAddEmployee(){
+    const addDailyConservationFeeUnsuccessfulDialog = this.dialog.open(AddEmployeeUnsuccessfulComponent);
   }
 } 
