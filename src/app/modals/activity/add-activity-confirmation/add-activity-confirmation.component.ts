@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddActivitySuccessfulComponent} from 'src/app/modals/activity/add-activity-successful/add-activity-successful.component';
-
+import {AddActivityUnsuccessfulComponent} from 'src/app/modals/activity/add-activity-unsuccessful/add-activity-unsuccessful.component';
 @Component({
   selector: 'app-add-activity-confirmation',
   templateUrl: './add-activity-confirmation.component.html',
@@ -16,5 +16,9 @@ export class AddActivityConfirmationComponent implements OnInit {
 
   successfulAddActivity(){
     const addActivitySuccessfulDialog = this.dialog.open(AddActivitySuccessfulComponent);
+  }
+
+  unsuccessfulAddActivity(){
+    const addActivityUnsuccessfulDialog = this.dialog.open(AddActivityUnsuccessfulComponent);
   }
 }

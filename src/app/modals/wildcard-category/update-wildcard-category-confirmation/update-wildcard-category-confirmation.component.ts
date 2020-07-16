@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {UpdateWildcardCategorySuccessfulComponent} from 'src/app/modals/wildcard-category/update-wildcard-category-successful/update-wildcard-category-successful.component';
+import {UpdateWildcardCategoryUnsuccessfulComponent} from 'src/app/modals/wildcard-category/update-wildcard-category-unsuccessful/update-wildcard-category-unsuccessful.component';
 
 @Component({
   selector: 'app-update-wildcard-category-confirmation',
@@ -16,5 +17,9 @@ export class UpdateWildcardCategoryConfirmationComponent implements OnInit {
 
   successfulUpdateWildcardCategory(){
     const updateWildcardCategorySuccessfulDialog = this.dialog.open(UpdateWildcardCategorySuccessfulComponent);
+  }
+
+  unsuccessfulUpdateWildcardCategory(){
+    const updateWildcardCategoryUnsuccessfulDialog = this.dialog.open(UpdateWildcardCategoryUnsuccessfulComponent);
   }
 }

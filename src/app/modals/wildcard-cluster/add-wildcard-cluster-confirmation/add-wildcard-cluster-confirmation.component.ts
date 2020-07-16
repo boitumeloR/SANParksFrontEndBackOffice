@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddWildcardClusterSuccessfulComponent} from 'src/app/modals/wildcard-cluster/add-wildcard-cluster-successful/add-wildcard-cluster-successful.component';
+import {AddWildcardClusterUnsuccessfulComponent} from 'src/app/modals/wildcard-cluster/add-wildcard-cluster-unsuccessful/add-wildcard-cluster-unsuccessful.component';
 
 @Component({
   selector: 'app-add-wildcard-cluster-confirmation',
@@ -16,5 +17,9 @@ export class AddWildcardClusterConfirmationComponent implements OnInit {
 
   successfulAddWildcardCluster(){
     const addWildcardClusterSuccessfulDialog = this.dialog.open(AddWildcardClusterSuccessfulComponent);
+  }
+
+  unsuccessfulAddWildcardCluster(){
+    const addWildcardClusterUnsuccessfulDialog = this.dialog.open(AddWildcardClusterUnsuccessfulComponent);
   }
 }

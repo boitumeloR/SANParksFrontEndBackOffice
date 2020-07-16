@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddAccomodationTypeSuccessfulComponent} from 'src/app/modals/accomodation-type/add-accomodation-type-successful/add-accomodation-type-successful.component';
+import {AddAccomodationTypeUnsuccessfulComponent} from 'src/app/modals/accomodation-type/add-accomodation-type-unsuccessful/add-accomodation-type-unsuccessful.component';
 
 @Component({
   selector: 'app-add-accomodation-type-confirmation',
@@ -16,5 +17,9 @@ export class AddAccomodationTypeConfirmationComponent implements OnInit {
 
   successfulAddAccomodationType(){
     const addAccomodationTypeSuccessfulDialog = this.dialog.open(AddAccomodationTypeSuccessfulComponent);
+  }
+
+  unsuccessfulAddAccomodationType(){
+    const addAccomodationTypeUnsuccessfulDialog = this.dialog.open(AddAccomodationTypeUnsuccessfulComponent);
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { DeleteWildcardClusterSuccessfulComponent } from 'src/app/modals/wildcard-cluster/delete-wildcard-cluster-successful/delete-wildcard-cluster-successful.component';
-
+import { DeleteWildcardClusterUnsuccessfulComponent } from 'src/app/modals/wildcard-cluster/delete-wildcard-cluster-unsuccessful/delete-wildcard-cluster-unsuccessful.component';
 
 @Component({
   selector: 'app-delete-wildcard-cluster',
@@ -17,5 +17,9 @@ export class DeleteWildcardClusterComponent implements OnInit {
 
   successfulDeleteWildcardCluster(){
     const deleteWildcardClusterSuccessfulDialog = this.dialog.open(DeleteWildcardClusterSuccessfulComponent);
+  }
+
+  unsuccessfulDeleteWildcardCluster(){
+    const deleteWildcardClusterUnsuccessfulDialog = this.dialog.open(DeleteWildcardClusterUnsuccessfulComponent);
   }
 }

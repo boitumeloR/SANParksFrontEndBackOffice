@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddCampTypeSuccessfulComponent} from 'src/app/modals/camp-type/add-camp-type-successful/add-camp-type-successful.component';
+import {AddCampTypeUnsuccessfulComponent} from 'src/app/modals/camp-type/add-camp-type-unsuccessful/add-camp-type-unsuccessful.component';
 
 @Component({
   selector: 'app-add-camp-type-confirmation',
@@ -16,5 +17,9 @@ export class AddCampTypeConfirmationComponent implements OnInit {
 
   successfulAddCampType(){
     const addCampTypeSuccessfulDialog = this.dialog.open(AddCampTypeSuccessfulComponent);
+  }
+
+  unsuccessfulAddCampType(){
+    const addCampTypeUnsuccessfulDialog = this.dialog.open(AddCampTypeUnsuccessfulComponent);
   }
 }

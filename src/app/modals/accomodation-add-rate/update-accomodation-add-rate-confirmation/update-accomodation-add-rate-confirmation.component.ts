@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {UpdateAccomodationAddRateSuccessfulComponent} from 'src/app/modals/accomodation-add-rate/update-accomodation-add-rate-successful/update-accomodation-add-rate-successful.component';
+import {UpdateAccomodationAddRateUnsuccessfulComponent} from 'src/app/modals/accomodation-add-rate/update-accomodation-add-rate-unsuccessful/update-accomodation-add-rate-unsuccessful.component';
 
 @Component({
   selector: 'app-update-accomodation-add-rate-confirmation',
@@ -17,4 +18,9 @@ export class UpdateAccomodationAddRateConfirmationComponent implements OnInit {
   successfulUpdateAccomodationAddRate(){
     const updateAccomodationAddRateSuccessfulDialog = this.dialog.open(UpdateAccomodationAddRateSuccessfulComponent);
   }
+
+  unsuccessfulUpdateAccomodationAddRate(){
+    const updateAccomodationAddRateUnsuccessfulDialog = this.dialog.open(UpdateAccomodationAddRateUnsuccessfulComponent);
+  }
+
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { DeleteAccomodationTypeSuccessfulComponent} from 'src/app/modals/accomodation-type/delete-accomodation-type-successful/delete-accomodation-type-successful.component';
+import { DeleteAccomodationTypeUnsuccessfulComponent} from 'src/app/modals/accomodation-type/delete-accomodation-type-unsuccessful/delete-accomodation-type-unsuccessful.component';
 
 @Component({
   selector: 'app-delete-accomodation-type',
@@ -16,5 +17,9 @@ export class DeleteAccomodationTypeComponent implements OnInit {
 
   successfulDeleteAccomodationType(){
     const deleteAccomodationTypeSuccessfulDialog = this.dialog.open(DeleteAccomodationTypeSuccessfulComponent);
+  }
+
+  unsuccessfulDeleteAccomodationType(){
+    const deleteAccomodationTypeUnsuccessfulDialog = this.dialog.open(DeleteAccomodationTypeUnsuccessfulComponent);
   }
 }
