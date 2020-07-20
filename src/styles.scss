@@ -68,7 +68,7 @@ body {
       }
       */
       ::-webkit-scrollbar{
-        width: 7px;
+        width: 8px;
         margin: 0;
         padding: 0;
       }
@@ -76,6 +76,11 @@ body {
       ::-webkit-scrollbar-thumb {
         background-color: rgb(160, 160, 160);
         border-radius: 17px;
+        transition: ease-in 0.5s;
+      }
+
+      ::-webkit-scrollbar:hover {
+        width: 7px;
       }
 }
 
