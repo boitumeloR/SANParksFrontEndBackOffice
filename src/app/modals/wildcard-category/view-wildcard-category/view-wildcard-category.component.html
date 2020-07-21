@@ -1,0 +1,26 @@
+
+<div class="dialog">
+  
+    <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
+        <mat-icon>close</mat-icon>
+    </button>
+    <h2 mat-dialog-title>View Wildcard Category</h2>
+  
+    <mat-dialog-content appearance="mat-typography">
+      <div class="example-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Wildcard Category Name</mat-label>
+            <input matInput value="Individual" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Wildcard Category Description</mat-label>
+            <textarea cdkTextareaAutosize matInput  readonly value="This is only valid for one member."></textarea>
+        </mat-form-field>
+      </div>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button [mat-dialog-close] color="primary" (click)="updateWildcardCategory()">Update</button>
+        <button mat-raised-button [mat-dialog-close]="true" color="warn" (click)="deleteWildcardCategory()">Delete</button>
+    </mat-dialog-actions>
+<div>

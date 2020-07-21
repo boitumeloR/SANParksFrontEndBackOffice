@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-
+import {FormGroup} from '@angular/forms';
+import { MatDialog} from '@angular/material/dialog';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
+import {UpdateActivityConfirmationComponent} from 'src/app/modals/activity/update-activity-confirmation/update-activity-confirmation.component';
 @Component({
   selector: 'app-update-activity',
   templateUrl: './update-activity.component.html',
@@ -8,20 +10,19 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 })
 export class UpdateActivityComponent implements OnInit {
 
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  basicActivityDetails: FormGroup;
+  campsAvailableAt: FormGroup;
 
-  parks = new FormControl();
-  parkList: string[] = ['Kruger National Park', 'Addo Elephant Park', 'Table Mountain Park'];
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.firstFormGroup = this.formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
   }
 
+  updateActivity(){
+    const updateActivityConfirmationDialog = this.dialog.open(UpdateActivityConfirmationComponent);
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
+  }
 }

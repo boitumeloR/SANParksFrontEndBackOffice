@@ -1,128 +1,118 @@
-<h2 mat-dialog-title>Create Activity Rate Details</h2>
-<mat-horizontal-stepper linear #stepper>
-    <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
-        <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Enter Accommodation Type Details</ng-template>
-        <mat-form-field appearance="fill">
-          <mat-label>Activity Type</mat-label>
-          <mat-select>
-            <mat-option value="option">Option</mat-option>
-            <mat-option value="option">Option</mat-option>
-            <mat-option value="option">Option</mat-option>
-            <mat-option value="option">Option</mat-option>
-          </mat-select>
-      </mat-form-field> 
-          <mat-form-field>
-            <mat-label>Activity</mat-label>
-            <mat-select>
-              <mat-option value="option">Option</mat-option>
-              <mat-option value="option">Option</mat-option>
-              <mat-option value="option">Option</mat-option>
-              <mat-option value="option">Option</mat-option>
-            </mat-select>
+
+<h2 mat-dialog-title>Create Activity Rate</h2>
+<mat-horizontal-stepper [linear] #stepper>
+    <mat-step [stepControl]="selectActivityForm">
+        <form [formControl]="selectActivityForm">
+            <ng-template matStepLabel>Select Activity</ng-template>
+            <mat-dialog-content appearance="mat-typography">
+            <div class="example-container">
+            <mat-form-field appearance="fill">
+                <mat-label>Park</mat-label>
+                <mat-select>
+                    <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
+                    <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
+                    <mat-option value="Kruger National Park">Kruger National Park</mat-option>
+                </mat-select>
+                <mat-hint>Park in which activity is</mat-hint>
+            </mat-form-field>  
+            <mat-form-field appearance="fill"> <!--Populated based on the selected Park-->
+                <mat-label>Camp</mat-label>
+                <mat-select>
+                    <mat-option value="Addo">Addo</mat-option>
+                    <mat-option value="Spekboom">Spekboom</mat-option>
+                    <mat-option value="Matyholweni">Matyholweni</mat-option>           
+                </mat-select>
+                <mat-hint>Camp in which activity is</mat-hint>
+            </mat-form-field>  
+            <mat-form-field appearance="fill">
+                <mat-label>Activity Type</mat-label>
+                <mat-select>
+                    <mat-option value="Sunset Drive">Sunset Drive</mat-option>
+                    <mat-option value="Night Drive">Night Drive</mat-option>
+                    <mat-option value="Hiking">Hiking</mat-option>
+                </mat-select>
+                <mat-hint>This is the activty type of the activity</mat-hint>
             </mat-form-field> 
-            <mat-form-field>
-              <mat-label>Rate Type</mat-label>
-              <mat-select [(value)] = "selected" formControlName="firstCtrl" required>
-                  <mat-option *ngFor="let item of rateTypes" [value]="item.ID">{{item.Name}}</mat-option>
-              </mat-select>
-              </mat-form-field> 
-   
+            <mat-form-field appearance="fill">
+                <mat-label>Activity</mat-label>
+                <mat-select>
+                    <mat-option value="1 Hour Drive">1 Hour Drive</mat-option>
+                    <mat-option value="2 Hour Drive">2 Hour Drive</mat-option>
+                    <mat-option value="4 Hour Drive">4 Hour Drive</mat-option>
+                </mat-select>
+                <mat-hint>Select an activity to assign a rate</mat-hint>
+            </mat-form-field>
+            </div>
+            </mat-dialog-content>
             <mat-dialog-actions align="end">
-            <button mat-button mat-dialog-close color="warn">Cancel</button>
-            <button mat-button matStepperNext color="primary" (click)="print()">Next</button>
+                <button mat-raised-button mat-dialog-close color="warn" (click)="confirmCancel()">Cancel</button>
+                <button mat-raised-button color="primary" matStepperNext>Next</button>
             </mat-dialog-actions>
-        <div>
-        </div>
         </form>
     </mat-step>
-    <mat-step>
-        <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Add Rate Amounts &amp; Save</ng-template>
-        <mat-dialog-content>
-          <span [ngSwitch]="selected">
-          <p *ngSwitchCase="0">
-            <mat-form-field class="example-full-width">
-              <mat-label>Adult Rate</mat-label>
-              <span matPrefix>R &nbsp;</span>
-              <input type="number" matInput placeholder="1000">
-            </mat-form-field>
-              <mat-form-field class="example-full-width">
-                <mat-label>Child Rate</mat-label>
-                <span matPrefix>R &nbsp;</span>
-                <input type="number" matInput placeholder="1000">
-              </mat-form-field>
-
-            <mat-form-field>
-                <mat-label>Date Effective</mat-label>
-                <input matInput type="date">
-            </mat-form-field>
-          </p>
-          <p *ngSwitchCase="1">
-            <mat-form-field class="example-full-width">
-              <mat-label>Rate Per Hut</mat-label>
-              <span matPrefix>R &nbsp;</span>
-              <input type="number" matInput placeholder="1000">
-            </mat-form-field>
-
-            <mat-form-field>
-                <mat-label>Date Effective</mat-label>
-                <input matInput type="date">
-            </mat-form-field>
-          </p>
-          <p *ngSwitchCase="2">
-            <mat-form-field class="example-full-width">
-              <mat-label>With Bike</mat-label>
-              <span matPrefix>R &nbsp;</span>
-              <input type="number" matInput placeholder="1000">
-            </mat-form-field>
-              <mat-form-field class="example-full-width">
-                <mat-label>No Bike</mat-label>
-                <span matPrefix>R &nbsp;</span>
-                <input type="number" matInput placeholder="1000">
-              </mat-form-field>
-
-            <mat-form-field>
-                <mat-label>Date Effective</mat-label>
-                <input matInput type="date">
-            </mat-form-field>
-          </p>
-          <p *ngSwitchCase="3">
-            <mat-form-field class="example-full-width">
-              <mat-label>Rate Per Person</mat-label>
-              <span matPrefix>R &nbsp;</span>
-              <input type="number" matInput placeholder="1000">
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Date Effective</mat-label>
-                <input matInput type="date">
-            </mat-form-field>
-          </p>
-          <p *ngSwitchCase="4">
-            <mat-form-field class="example-full-width">
-              <mat-label>Rate Per Vehicle</mat-label>
-              <span matPrefix>R &nbsp;</span>
-              <input type="number" matInput placeholder="1000">
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Date Effective</mat-label>
-                <input matInput type="date">
-            </mat-form-field>
-          </p>
-          <p *ngSwitchDefault>
-            Hello
-          </p>
-          </span>
-        </mat-dialog-content>
+    <mat-step [stepControl]="activityRateDetails">
+        <form [formControl]="activityRateDetails">
+            <ng-template matStepLabel>Activity Rate Details</ng-template> <!--Need to read the narraitve to understand how rate type influences this rate-->
+            <mat-dialog-content appearance="mat-typography">
+            <div class="example-container">
+                <mat-form-field appearance="fill">
+                    <mat-label>Rate Type</mat-label>
+                    <mat-select>
+                        <mat-option value="Drive">Drive</mat-option>
+                        <mat-option value="Mountain Biking">Mountain Biking</mat-option>
+                        <mat-option value="Swimming">Swimming</mat-option>
+                    </mat-select>
+                    <mat-hint>Select a rate type</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill"> 
+                    <mat-label>Adult Rate</mat-label>
+                    <input matInput>
+                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Child Rate</mat-label>
+                    <input matInput>
+                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Vehicle Amount</mat-label>
+                    <input matInput>
+                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Hut Amount</mat-label>
+                    <input matInput>
+                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Person Amount</mat-label>
+                    <input matInput>
+                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Bike Amount</mat-label>
+                    <input matInput>
+                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>No Bike Amount</mat-label>
+                    <input matInput>
+                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Date Effective</mat-label>
+                    <input matInput [matDatepicker]="dateEffective">
+                    <mat-datepicker-toggle matSuffix [for]="dateEffective"></mat-datepicker-toggle>
+                    <mat-datepicker #dateEffective color="primary"></mat-datepicker>
+                    <mat-hint>Date from which to apply this activity rate.</mat-hint>
+                </mat-form-field>
+            </div>
+            </mat-dialog-content>
+        </form>
         <mat-dialog-actions align="end">
-          <button mat-button matStepperPrevious>Go Back</button>
-          <button mat-button mat-dialog-close color="warn">Cancel</button>
-          <button mat-button [mat-dialog-close]="true" color="primary" cdkFocusInitial>Save Rate</button>
-      </mat-dialog-actions>
-        </form>
+            <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
+            <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="addActivityRate()">Create</button>
+        </mat-dialog-actions>
     </mat-step>
-    <!--ON dev-->
-    </mat-horizontal-stepper>
-
+</mat-horizontal-stepper>
   
-

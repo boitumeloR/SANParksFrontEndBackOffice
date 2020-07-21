@@ -1,0 +1,44 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Create Camp </h2>
+  <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Camp Type Name</mat-label>
+        <input matInput>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Camp Type</mat-label>
+        <mat-select>
+            <mat-option value="Camp Site">Camp Site</mat-option>
+            <mat-option value="Satellite Camp">Satellite Camp</mat-option>
+            <mat-option value="Bushveld Camps">Bushveld Camps</mat-option>
+        </mat-select>
+    </mat-form-field> 
+      <mat-form-field appearance="fill">
+        <mat-label>Park</mat-label>
+        <mat-select>
+            <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
+            <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
+            <mat-option value="Kruger National Park">Kruger National Park</mat-option>
+        </mat-select>
+        <mat-hint>Park in which this camp is.</mat-hint>
+    </mat-form-field> 
+      <mat-form-field hintLabel="Max 300 characters" appearance="fill">
+        <mat-label>Camp  Description</mat-label>
+        <textarea matInput #input maxlength="300"></textarea>
+        <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Camp Location</mat-label>
+        <input matInput>
+        <mat-hint>Enter GPS Co-Ordinates</mat-hint>
+      </mat-form-field>
+    </div>
+    
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn" (click)="confirmCancel()">Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="addCamp()">Create</button>
+  </mat-dialog-actions>
+  </div>
+  

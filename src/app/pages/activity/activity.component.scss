@@ -1,15 +1,11 @@
-table {
-    width: 100%;
-    margin-top: 20px;
-    td {
-        width: 3%;
-    }
-}
-
 h1 {
     margin-top: 2%;
     margin-bottom: 2%;
     font-size: 50px;
+}
+table {
+    margin-top: 20px;
+    width: 100%;
 }
 
 #addBtn {
@@ -19,4 +15,8 @@ h1 {
 }
 button {
     float: right;
+}
+
+td {
+    width: auto;
 }

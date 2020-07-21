@@ -1,31 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
-import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
+import {FormGroup} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
+import {AddActivityConfirmationComponent} from 'src/app/modals/activity/add-activity-confirmation/add-activity-confirmation.component'
 
 @Component({
   selector: 'app-add-activity',
   templateUrl: './add-activity.component.html',
-  styleUrls: ['./add-activity.component.scss'],
-  providers: [{
-    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
-  }]
+  styleUrls: ['./add-activity.component.scss']
 })
 export class AddActivityComponent implements OnInit {
 
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-
-  parks = new FormControl();
-  parkList: string[] = ['Kruger National Park', 'Addo Elephant Park', 'Table Mountain Park'];
-  constructor(private formBuilder: FormBuilder) { }
+  basicActivityDetails: FormGroup;
+  campsAvailableAt: FormGroup
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.firstFormGroup = this.formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
   }
 
+  addActivity(){
+    const addActivityConfirmationDialog = this.dialog.open(AddActivityConfirmationComponent)
+  }
+
+  confirmCancel(){
+    const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
+  }
 }

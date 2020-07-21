@@ -1,0 +1,26 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Update User Role</h2>
+  <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+      <mat-form-field appearance="fill">
+        <mat-label>User Role Name</mat-label>
+        <input matInput value="Camp Reception">
+      </mat-form-field>
+      <mat-form-field hintLabel="Max 300 characters" appearance="fill">
+        <mat-label>User Role Description</mat-label>
+        <textarea matInput #input maxlength="300" cdkTextareaAutosize value="A receptionist is an employee taking an office or administrative support position. The work is usually performed in a waiting area such as a lobby or front office desk of an organization or business."></textarea>
+        <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
+      </mat-form-field>
+    </div>
+    
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn" (click)="confirmCancel()">Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="updateUserRole()">Update</button>
+  </mat-dialog-actions>
+  </div>
+  
+  
+  
+  
+  

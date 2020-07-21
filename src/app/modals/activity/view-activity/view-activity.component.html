@@ -1,0 +1,39 @@
+
+<div class="dialog">
+  
+    <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
+        <mat-icon>close</mat-icon>
+    </button>
+    <h2 mat-dialog-title>View Activity</h2>
+  
+    <mat-dialog-content appearance="mat-typography">
+      <div class="example-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Activity Type </mat-label>
+            <input matInput value="Sunset Drive" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Activtiy Description</mat-label>
+            <textarea readonly cdkTextareaAutosize matInput value="2 Hour Drive"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Maximum Capacity</mat-label>
+            <input matInput value="15" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Minimum Age</mat-label>
+            <input matInput value="13" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Maximum Age</mat-label>
+            <input matInput value="80" readonly>
+        </mat-form-field>
+        <!--I am thinking of using a tree to display which camps this is available at-->
+      </div>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button [mat-dialog-close] color="primary" (click)="updateActivity()">Update</button>
+        <button mat-raised-button [mat-dialog-close]="true" color="warn" (click)="deleteActivity()">Delete</button>
+    </mat-dialog-actions>
+<div>

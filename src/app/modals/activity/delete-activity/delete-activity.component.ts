@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import { DeleteActivitySuccessfulComponent} from 'src/app/modals/activity/delete-activity-successful/delete-activity-successful.component';
+import { DeleteActivityUnsuccessfulComponent} from 'src/app/modals/activity/delete-activity-unsuccessful/delete-activity-unsuccessful.component';
 
 @Component({
   selector: 'app-delete-activity',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeleteActivityComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  successfulDeleteActivity(){
+    const deleteActivitySuccessfulDialog = this.dialog.open(DeleteActivitySuccessfulComponent);
+  }
+
+  unsuccessfulDeleteActivity(){
+    const deleteActivityUnsuccessfulDialog = this.dialog.open(DeleteActivityUnsuccessfulComponent);
+  }
 }

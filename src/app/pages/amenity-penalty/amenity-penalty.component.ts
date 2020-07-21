@@ -1,39 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit,ViewChild } from '@angular/core';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
 import { AddAmenityPenaltyComponent } from 'src/app/modals/amenity-penalty/add-amenity-penalty/add-amenity-penalty.component';
-import { UpdateAmenityComponent } from 'src/app/modals/amenity/update-amenity/update-amenity.component';
-import { DeleteAmenityPenaltyComponent } from 'src/app/modals/amenity-penalty/delete-amenity-penalty/delete-amenity-penalty.component';
-import { UpdateAmenityPenaltyComponent } from 'src/app/modals/amenity-penalty/update-amenity-penalty/update-amenity-penalty.component';
+import { ViewAmenityPenaltyComponent } from 'src/app/modals/amenity-penalty/view-amenity-penalty/view-amenity-penalty.component';
+import {MatDialog} from '@angular/material/dialog'; 
 
 export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  camp: string;
+  accomodationType: string;
+  unitNumber: string;
+  dateEffective: string;
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
+  { camp: 'Addo',accomodationType: 'Camp Site (CK6P)',unitNumber: '107',dateEffective:'01/01/2020'},
+  { camp: 'Rhenosterkop Rest Camp',accomodationType:'Bungalow BA3', unitNumber: '52',dateEffective:'01/03/2019'},
+  { camp: 'Boulders Bush Lodge',accomodationType:'Bungalow BA3U',unitNumber: '14',dateEffective:'	01/01/2018'}
 ];
 
 @Component({
@@ -43,7 +24,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AmenityPenaltyComponent implements OnInit {
 
-  displayedColumns: string[] = ['accommodation-type', 'amenity-description',  'penalty-amount', 'date-effective', 'Actions'];
+  displayedColumns: string[] = ['camp','accomodationType','unitNumber','dateEffective','view'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -53,20 +34,12 @@ export class AmenityPenaltyComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  addPenalty() {
-    const dialogRef = this.dialog.open(AddAmenityPenaltyComponent, {disableClose: true});
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+  
+  addAmenityPenalty(){
+    const addAmenityPenaltyDialog = this.dialog.open(AddAmenityPenaltyComponent,{disableClose: true});
   }
 
-  updatePenalty(rate) {
-    const dialogRef = this.dialog.open(UpdateAmenityPenaltyComponent);
+  viewAmenityPenalty(amenityPenalty){
+    const viewAmenityDialog = this.dialog.open(ViewAmenityPenaltyComponent);
   }
-
-  deletePenalty(rate) {
-    const dialogRef = this.dialog.open(DeleteAmenityPenaltyComponent);
-  }
-
 }
