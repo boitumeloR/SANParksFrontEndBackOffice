@@ -321,6 +321,8 @@ import { DeleteWildcardClusterUnsuccessfulComponent } from './modals/wildcard-cl
 import { DeleteWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/delete-wildcard-rate-unsuccessful/delete-wildcard-rate-unsuccessful.component';
 import { UpdateWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/update-wildcard-rate-unsuccessful/update-wildcard-rate-unsuccessful.component';
 import { AddWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/add-wildcard-rate-unsuccessful/add-wildcard-rate-unsuccessful.component';
+import { CheckInParkComponent } from './pages/check-in-park/check-in-park.component';
+import { ParkGateCountComponent } from './subcomponents/park-gate-count/park-gate-count.component';
 
 @NgModule({
   declarations: [
@@ -637,7 +639,9 @@ import { AddWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/add
     DeleteWildcardClusterUnsuccessfulComponent,
     DeleteWildcardRateUnsuccessfulComponent,
     UpdateWildcardRateUnsuccessfulComponent,
-    AddWildcardRateUnsuccessfulComponent
+    AddWildcardRateUnsuccessfulComponent,
+    CheckInParkComponent,
+    ParkGateCountComponent
   ],
   entryComponents: [
     AddParkComponent,
