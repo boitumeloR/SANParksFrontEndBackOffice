@@ -1,0 +1,56 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Update Camp Gate Time</h2> <!--Populated with current gate time data on load-->
+    <form [formGroup]="updateCampGateTimeForm">
+    <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+    <mat-form-field appearance="fill">
+        <mat-label>Park</mat-label>
+        <mat-select formControlName="park">
+            <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
+            <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
+            <mat-option value="Kruger National Park">Kruger National Park</mat-option>
+        </mat-select>
+    </mat-form-field>  
+    <mat-form-field appearance="fill">
+        <mat-label>Camp</mat-label>
+        <mat-select formControlName="camp">
+            <mat-option value="Addo">Addo</mat-option>
+            <mat-option value="Spekboom">Spekboom</mat-option>
+            <mat-option value="Matyholweni">Matyholweni</mat-option>
+        </mat-select>
+    </mat-form-field>  
+    <mat-form-field appearance="fill">
+        <mat-label>Season</mat-label>
+        <mat-select formControlName="season">
+            <mat-option value="High">High</mat-option>
+            <mat-option value="Shoulder">Shoulder</mat-option>
+            <mat-option value="Low">Low</mat-option>
+        </mat-select>
+        <mat-hint>This is the season that is associated to this gate time.</mat-hint>
+    </mat-form-field> 
+    <mat-form-field appearance="fill">
+        <mat-label>Gate Opening Time</mat-label>
+        <input matInput aria-label="Park gate opening time" [ngxTimepicker]="gateOpenTime" [format]="24" formControlName="openTime" readonly>
+        <ngx-material-timepicker #gateOpenTime [theme]="clockTheme"></ngx-material-timepicker>
+        <mat-hint>Gate opening time in 24hr format</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Gate Closing Time</mat-label>
+        <input matInput aria-label="Park gate closing time" [ngxTimepicker]="gateCloseTime" [format]="24" formControlName="closeTime" readonly >
+        <ngx-material-timepicker #gateCloseTime [theme]="clockTheme"></ngx-material-timepicker>
+        <mat-hint>Gate closing time in 24hr format</mat-hint>
+    </mat-form-field>
+    </div>  
+    </mat-dialog-content>
+    
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="updateCampGateTime()">Update</button>
+    </mat-dialog-actions>
+    </form>
+    </div>
+      
+      
+      
+      
+      

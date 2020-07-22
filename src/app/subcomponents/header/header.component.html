@@ -33,6 +33,18 @@
             <mat-list-option [routerLink]="['/Park']">
               Park
             </mat-list-option>
+            <mat-list-option [routerLink]="[ '/Park-Gate']">
+              Park Gate
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/Park-Gate-Time']">
+              Park Gate Time
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/Daily-Conservation-Fee']">
+              Daily Conservation Fee
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/Season']">
+              Season
+            </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>
         <mat-divider></mat-divider>
@@ -43,9 +55,19 @@
               Camp
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <mat-selection-list #shoes [multiple]="false">
+          <mat-selection-list #shoes [multiple]="false" [routerLink]=" ['/Camp-Type']">
             <mat-list-option>
-              Hello World
+              Camp Type
+            </mat-list-option>
+          </mat-selection-list>
+          <mat-selection-list #shoes [multiple]="false" [routerLink]=" ['/Camp']">
+            <mat-list-option>
+              Camp 
+            </mat-list-option>
+          </mat-selection-list>
+          <mat-selection-list #shoes [multiple]="false" [routerLink]=" ['/Camp-Gate-Time']">
+            <mat-list-option>
+              Camp Gate Time
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>
@@ -60,16 +82,16 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option>
+            <mat-list-option [routerLink]="[ '/Accomodation']">
               Accommodation
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/accommodation-type']">
+            <mat-list-option [routerLink]="[ '/Accomodation-Type']">
               Accommodation Type
             </mat-list-option>
-            <mat-list-option [routerLink] = "[ '/base-rate' ]">
+            <mat-list-option [routerLink] = "[ '/Accomodation-Base-Rate' ]">
               Base Rates
             </mat-list-option>
-            <mat-list-option [routerLink] = "[ '/add-rate' ]">
+            <mat-list-option [routerLink] = "[ '/Accomodation-Add-Rate' ]">
               Add Rates
             </mat-list-option>
           </mat-selection-list>
@@ -85,16 +107,13 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/amenity']">
+            <mat-list-option [routerLink]="[ '/Amenity']">
               Amenity
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/']">
+            <mat-list-option [routerLink]="[ '/Amenity-Type']">
               Amenity Type
             </mat-list-option>
-            <mat-list-option [routerLink] = "[ '/' ]">
-              Amenity Status
-            </mat-list-option>
-            <mat-list-option [routerLink] = "[ '/amenity-penalty' ]">
+            <mat-list-option [routerLink] = "[ '/Amenity-Penalty' ]">
               Amenity Penalty
             </mat-list-option>
           </mat-selection-list>
@@ -107,19 +126,22 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/activity']">
+            <mat-list-option [routerLink]="[ '/Activity']">
               Activity
             </mat-list-option>
-            <mat-list-option>
+            <mat-list-option [routerLink]="[ '/Activity-Type']">
               Activity Type
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/activity-rate']">
-              Activity Rates
+            <mat-list-option [routerLink]="[ '/Activity-Slot']">
+              Activity Slot
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/Activity-Rate']">
+              Activity Rate
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>
 
-        <mat-divider></mat-divider>
+       <!-- <mat-divider></mat-divider>
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -140,7 +162,7 @@
               Check Availability
             </mat-list-option>
           </mat-selection-list>
-        </mat-expansion-panel>
+        </mat-expansion-panel> -->
         <mat-divider></mat-divider>
         <mat-expansion-panel>
           <mat-expansion-panel-header>
@@ -149,8 +171,14 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option>
-              Hello World
+            <mat-list-option [routerLink]="[ '/Wildcard-Cluster']">
+              Wildcard Cluster
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/Wildcard-Category']">
+              Wildcard Category
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/Wildcard-Rate']">
+              Wildcard Rate
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>
@@ -160,12 +188,15 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Check In
+              User
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option>
-              Hello World
+            <mat-list-option [routerLink]="[ '/User-Role']">
+              User Role
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/Employee']">
+              Employee
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>

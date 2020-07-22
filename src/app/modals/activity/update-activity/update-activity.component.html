@@ -1,102 +1,97 @@
+<button id="alignCloseRight" mat-icon-button align="end" color="warn" (click)="confirmCancel()" aria-label="Cancel">
+    <mat-icon>close</mat-icon>
+</button>
 <h2 mat-dialog-title>Update Activity</h2>
-<mat-horizontal-stepper linear #stepper>
-    <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
-        <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Enter Activity Details</ng-template>
-        <mat-form-field appearance="fill">
-            <mat-label>Activity Type</mat-label>
-            <mat-select required>
-                <mat-option value="option">Option</mat-option>
-                <mat-option value="option">Option</mat-option>
-                <mat-option value="option">Option</mat-option>
-                <mat-option value="option">Option</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Name</mat-label>
-            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Activity Description</mat-label>
-            <textarea matInput #input maxlength="100" required></textarea>
-            <mat-hint>{{input.value?.length || 0}}/100</mat-hint>
-            </mat-form-field>
-            <mat-form-field>
-            <mat-label>Activity Max Capacity</mat-label>
-            <input matInput placeholder="12" formControlName="firstCtrl" type="number" required>
-            </mat-form-field>
-            <mat-form-field>
-            <mat-label>Minimum Age</mat-label>
-            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" type="number" required>
-            </mat-form-field>
-            <mat-form-field>
-            <mat-label>Maximum Age</mat-label>
-            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" type="number" required>
-            </mat-form-field>
-
-            <mat-form-field>
-            <mat-label>Update Parks to Avail Activity</mat-label>
-            <mat-select [formControl]="parks" multiple>
-                <mat-option *ngFor="let park of parkList" [value]="park">{{park}}</mat-option>
-            </mat-select>
-            </mat-form-field>   
+<mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="basicActivityDetails">
+        <form [formControl]="basicActivityDetails" [formGroup]="basicActivityDetails">
+            <ng-template matStepLabel>Activity Details</ng-template>
+            <mat-dialog-content appearance="mat-typography">
+            <div class="example-container">
+                <mat-form-field appearance="fill"> <!--Populated with all activity types-->
+                    <mat-label>Activity Type</mat-label>
+                    <mat-select formControlName="activityType">
+                        <mat-option value="Sunset Drive">Sunset Drive</mat-option>
+                        <mat-option value="Night Drive">Night Drive</mat-option>
+                        <mat-option value="Hiking">Hiking</mat-option>
+                    </mat-select>
+                    <mat-hint>The associated activity type</mat-hint>
+                </mat-form-field> 
+                <mat-form-field hintLabel="Max 300 characters" appearance="fill">
+                    <mat-label>Activity Description</mat-label>
+                    <textarea cdkTextareaAutosize matInput #input maxlength="300" formControlName="activityDescription" ></textarea>
+                    <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Maximum Capacity</mat-label>
+                    <input matInput type="number" formControlName="maximumCapacity">
+                    <mat-hint>The number of people allowed for this activity</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Minimum Age</mat-label>
+                    <input matInput type="number" formControlName="minimumAge">
+                    <mat-hint>Minimum age required for this activity</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Maximum Age</mat-label>
+                    <input matInput type="number" formControlName="maximumAge">
+                    <mat-hint>Maximum age required for this activity</mat-hint>
+                </mat-form-field>
+            </div>
+            </mat-dialog-content>
             <mat-dialog-actions align="end">
-            <button mat-button mat-dialog-close color="warn">Cancel</button>
-            <button mat-button matStepperNext color="primary">Next</button>
+                <button mat-raised-button color="primary" (click)="stepperNext()">Next</button>
             </mat-dialog-actions>
-        <div>
-        </div>
         </form>
     </mat-step>
-    <mat-step>
-        <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Update Activity In Camps</ng-template>
-        <mat-accordion>
+    <mat-step [stepControl]="campsAvailableAt">
+        <form [formControl]="campsAvailableAt">
+            <ng-template matStepLabel>Select Camps</ng-template>
+            <mat-accordion>
             <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  Kruger National Park
-                </mat-panel-title>
-                <mat-panel-description>
-                  Select Camps To Include Activity
-                </mat-panel-description>
-              </mat-expansion-panel-header>
-          
-                <mat-checkbox >Berg - En Dal Rest Camp</mat-checkbox>
-                <br>
-                <mat-checkbox >Berg - En Dal Rest Camp</mat-checkbox>
-                <br>
-                <mat-checkbox >Berg - En Dal Rest Camp</mat-checkbox>
-                <br>
-                <mat-checkbox >Berg - En Dal Rest Camp</mat-checkbox>
+                <mat-expansion-panel-header>
+                    Addo Elephant National Park
+                </mat-expansion-panel-header>
+                <section>
+                    <mat-checkbox>Addo</mat-checkbox>
+                    <br>
+                    <mat-checkbox>Spekboom</mat-checkbox>
+                    <br>
+                    <mat-checkbox>Kabouga</mat-checkbox>
+                    <br>
+                    <mat-checkbox>Nyathi</mat-checkbox>
+                </section>
             </mat-expansion-panel>
             <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-expansion-panel-header>
                     Kruger National Park
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    Select Camps To Include Activity
-                  </mat-panel-description>
-              </mat-expansion-panel-header>
-              <p>I'm visible because I am open</p>
+                </mat-expansion-panel-header>
+                <section>
+                    <mat-checkbox>Crocodile Bridge</mat-checkbox>
+                    <br>
+                    <mat-checkbox>Letaba</mat-checkbox>
+                    <br>
+                    <mat-checkbox>Lower Sabie</mat-checkbox>
+                    <br>
+                    <mat-checkbox>Boulders Bush Lodge</mat-checkbox>
+                </section>
             </mat-expansion-panel>
-          </mat-accordion>
-          <mat-dialog-actions>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-          </mat-dialog-actions>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Tankwa Karoo National Park
+                </mat-expansion-panel-header>
+                <section>
+                    <mat-checkbox>Tankwa Karoo Rest Camp</mat-checkbox>
+                    <br>
+                    <mat-checkbox>Elandsberg Rest Camp</mat-checkbox>
+                </section>
+            </mat-expansion-panel>
+            </mat-accordion>
         </form>
-    </mat-step>
-    <mat-step>
-        <ng-template matStepLabel>Save Activity</ng-template>
-        <mat-dialog-actions align="start">
-        <button mat-button matStepperPrevious>Go Back</button>
-        <button mat-button mat-dialog-close color="warn">Cancel</button>
-        <button mat-button [mat-dialog-close]="true" color="primary" cdkFocusInitial>Save Activity</button>
+        <mat-dialog-actions align="end">
+            <button mat-raised-button color="warn" matStepperPrevious >Previous</button>
+            <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="updateActivity()">Update</button>
         </mat-dialog-actions>
     </mat-step>
-    </mat-horizontal-stepper>
-
+</mat-horizontal-stepper>
   
-

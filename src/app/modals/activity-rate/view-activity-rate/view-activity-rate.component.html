@@ -1,0 +1,76 @@
+<div class="dialog">
+    <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
+  
+      <mat-icon>close</mat-icon>
+    </button>
+    <h2 mat-dialog-title>View Activity Rate</h2>
+  
+    <mat-dialog-content appearance="mat-typography">
+      <div class="example-container">
+        <mat-form-field appearance="fill">
+            <mat-label> Park</mat-label>
+            <input matInput value="Addo Elephant National Park" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Camp</mat-label>
+            <input matInput value="Matyholweni" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Activity Type</mat-label>
+            <input matInput value="Sunset Drive" readonly>               
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Activity  </mat-label>
+            <input matInput value="2 Hour Drive" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label> Rate Type </mat-label>
+            <input matInput value="Drive" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label> Adult Rate </mat-label>
+            <input matInput value="R300" readonly>
+            <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label> Child Rate </mat-label>
+            <input matInput value="R120" readonly>
+            <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label> Vehicle Amount </mat-label>
+            <input matInput value="R400" readonly>
+            <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label> Hut Amount </mat-label>
+            <input matInput value="R650" readonly>
+            <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label> Person Amount </mat-label>
+            <input matInput value="R100" readonly>
+            <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label> Bike Amount </mat-label>
+            <input matInput value="R200" readonly>
+            <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label> No Bike Amount </mat-label>
+            <input matInput value="R350" readonly>
+            <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label> Date Effective </mat-label>
+            <input matInput value="01/06/2020" readonly>
+        </mat-form-field>
+      </div>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button [mat-dialog-close] color="primary" (click)="updateActivityRate()">Update</button>
+        <button mat-raised-button [mat-dialog-close]="true" color="warn" (click)="deleteActivityRate()">Delete</button>
+    </mat-dialog-actions>
+<div>

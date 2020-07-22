@@ -1,34 +1,36 @@
 <div class="dialog">
-  <h2 mat-dialog-title>Add Park</h2>
-<mat-dialog-content appearance="mat-typography">
+<h2 mat-dialog-title>Create Park</h2>
+<form [formGroup]="addParkForm">
+  <mat-dialog-content appearance="mat-typography">
   <div class="example-container">
     <mat-form-field appearance="fill">
       <mat-label>Park Name</mat-label>
-      <input matInput>
+      <input matInput formControlName="parkName">
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Park Limit</mat-label>
-      <input matInput type="number">
+      <input matInput type="number" formControlName="parkLimit">
       <mat-hint>The maximum amount of people in a park</mat-hint>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
       <mat-label>Park Location</mat-label>
-      <input matInput>
+      <input matInput formControlName="parkLocation">
       <mat-hint>Enter GPS Co-Ordinates</mat-hint>
     </mat-form-field>
     <mat-form-field hintLabel="Max 300 characters" appearance="fill">
       <mat-label>Park Description</mat-label>
-      <textarea matInput #input maxlength="300"></textarea>
+      <textarea matInput #input maxlength="300" cdkTextareaAutosize formControlName="parkDescription"></textarea>
       <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
     </mat-form-field>
   </div>
   
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
-  <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="addPark()">Add Park</button>
+  <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="addPark()">Create</button>
 </mat-dialog-actions>
+</form>
 </div>
 
 

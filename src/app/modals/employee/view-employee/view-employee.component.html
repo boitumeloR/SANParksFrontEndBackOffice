@@ -1,0 +1,64 @@
+
+<div class="dialog">
+  
+    <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
+        <mat-icon>close</mat-icon>
+    </button>
+    <h2 mat-dialog-title>View Employee</h2>
+  
+    <mat-dialog-content appearance="mat-typography">
+      <div class="example-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput value="Robyn Sancha" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Surname</mat-label>
+            <input matInput value="Pillay" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Identity Number</mat-label>
+            <input matInput value="9805274927963" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Cellphone Number</mat-label>
+            <input matInput value="0789456572" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Work Number</mat-label>
+            <input matInput value="0125804913" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Email Address</mat-label>
+            <input matInput value="robynpillay@sanparks.co.za" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Address Line 1</mat-label>
+            <textarea cdkTextareaAutosize matInput value="1066 Burnett Street, The Fields" readonly></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Address Line 2</mat-label>
+            <textarea matInput cdkTextareaAutosize value="Hatfield, Pretoria" readonly></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Postal Code</mat-label>
+            <input matInput value="0128" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Park</mat-label>
+            <input matInput value="Addo Elephant National Park" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>User Role</mat-label>
+            <input matInput value="Camp Reception" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Employment Status</mat-label>
+            <input matInput value="Active" readonly>
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button [mat-dialog-close] color="primary" (click)="updateEmployee()">Update</button>
+    </mat-dialog-actions>
+<div>

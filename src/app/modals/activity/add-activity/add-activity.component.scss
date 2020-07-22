@@ -1,14 +1,9 @@
-.mat-form-field {
-    margin-top: 16px;
+mat-form-field {
     display: block;
-    width: 70%;
-    margin: 0 auto;
+    width: 300px;
+    margin-bottom: 20px;
 }
-.mat-dialog-content {
-    height: 99%;
-}
-:host ::ng-deep {
-    .mat-horizontal-stepper-header-container {
-      position: inherit;
-    }
+
+#alignCloseRight{
+    float: right;
 }

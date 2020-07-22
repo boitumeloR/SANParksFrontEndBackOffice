@@ -1,0 +1,42 @@
+
+<div class="dialog">
+    <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
+  
+      <mat-icon>close</mat-icon>
+    </button>
+    <h2 mat-dialog-title>View Daily Conservation Fee</h2>
+  
+    <mat-dialog-content appearance="mat-typography">
+      <div class="example-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Park</mat-label>
+            <input matInput value="Agulhas National Park" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Region</mat-label>
+            <input matInput value="Domestic" readonly>
+            <mat-hint>Region that a citizen is from.</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Child Rate</mat-label>
+            <input matInput value="100" readonly>
+            <mat-hint>Rate quoted in South African Rands (ZAR)</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Adult Rate</mat-label>
+            <input matInput value="250" readonly>
+            <mat-hint>Rate quoted in South African Rands (ZAR)</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Date Effective</mat-label>
+            <input matInput value="01/01/2020" readonly>
+            <mat-hint>Date from which this conservation fee applies</mat-hint>
+        </mat-form-field>
+      </div>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button [mat-dialog-close] color="primary" (click)="updateDailyConservationFee()">Update</button>
+        <button mat-raised-button [mat-dialog-close]="true" color="warn" (click)="deleteDailyConservationFee()">Delete</button>
+    </mat-dialog-actions>
+<div>

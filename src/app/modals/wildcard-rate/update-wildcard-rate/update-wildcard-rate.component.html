@@ -1,0 +1,47 @@
+<div class="dialog">
+  <h2 mat-dialog-title>Update Wildcard Rate</h2><!--To be populated with current values-->
+  <form [formGroup]="updateWildcardRateForm">
+  <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Wildcard Cluster</mat-label>
+        <mat-select formControlName="wildcardCluster">
+            <mat-option value="All Parks Cluster">All Parks Cluster</mat-option>
+            <mat-option value="Msinsi Cluster">Msinsi Cluster</mat-option>
+            <mat-option value="SANParks Cluster">SANParks Cluster</mat-option>
+        </mat-select>
+      </mat-form-field> 
+      <mat-form-field appearance="fill">
+        <mat-label>Wildcard Category</mat-label>
+        <mat-select formControlName="wildcardCategory">
+            <mat-option value="Individual">Individual</mat-option>
+            <mat-option value="Couple">Couple</mat-option>
+            <mat-option value="Family">Family</mat-option>
+        </mat-select>
+      </mat-form-field> 
+      <mat-form-field appearance="fill">
+        <mat-label>Wildcard Rate</mat-label>
+        <input matInput formControlName="wildcardRate" type="number">
+        <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Date Effective</mat-label>
+        <input matInput [matDatepicker]="dateEffective" formControlName="dateEffective" readonly>
+        <mat-datepicker-toggle matSuffix [for]="dateEffective"></mat-datepicker-toggle>
+        <mat-datepicker #dateEffective color="primary"></mat-datepicker>
+        <mat-hint>Date from which to apply this wildcard rate.</mat-hint>
+      </mat-form-field>
+    </div>
+    
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="updateWildcardRate()">Update </button>
+  </mat-dialog-actions>
+  </form>
+</div>
+  
+  
+  
+  
+  

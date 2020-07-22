@@ -1,0 +1,29 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Update Wildcard Cluster</h2> <!--To be populate with current data-->
+    <form [formGroup]="updateWildcardClusterForm">
+    <mat-dialog-content appearance="mat-typography">
+        <div class="example-container">
+            <mat-form-field appearance="fill">
+                <mat-label>Wildcard Cluster Name</mat-label>
+                <input matInput formControlName="wildcardClusterName">
+                </mat-form-field>
+            <mat-form-field hintLabel="Max 300 characters" appearance="fill">
+                <mat-label>Wildcard Cluster Description</mat-label>
+                <textarea matInput #input maxlength="300" cdkTextareaAutosize formControlName="wildcardClusterDescription"></textarea>
+                <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Select Parks In Cluster</mat-label>
+                <mat-select multiple formControlName="parksInCluster">
+                    <mat-option *ngFor="let park of listOfParks">{{park.parkName}}</mat-option>
+                </mat-select>
+            </mat-form-field>   
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="updateWildcardCluster()">Update</button>
+    </mat-dialog-actions>
+</form>
+</div>
+  

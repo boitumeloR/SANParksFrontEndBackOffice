@@ -1,0 +1,19 @@
+<div class="dialog">
+  <h2 mat-dialog-title>Create Amenity Type </h2>
+  <form [formGroup]="addAmenityTypeForm">
+  <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Amenity Type Name</mat-label>
+        <input matInput formControlName="amenityTypeName">
+      </mat-form-field>      
+    </div>
+    
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="addAmenityType()">Create</button>
+  </mat-dialog-actions>
+  </form>
+</div>
+  

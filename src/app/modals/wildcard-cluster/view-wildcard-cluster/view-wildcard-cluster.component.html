@@ -1,0 +1,30 @@
+
+<div class="dialog">
+  
+    <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
+        <mat-icon>close</mat-icon>
+    </button>
+    <h2 mat-dialog-title>View Wildcard Cluster</h2>
+  
+    <mat-dialog-content appearance="mat-typography">
+      <div class="example-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Wildcard Cluster Name</mat-label>
+            <input matInput value="SANParks Cluster" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Wildcard Cluster Description</mat-label>
+            <textarea cdkTextareaAutosize matInput  readonly value="Access to all 3 of SANParks National Parks in South Africa"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Parks In Cluster</mat-label>
+            <textarea cdkTextareaAutosize matInput  readonly value="Addo Elephant National Park, Kruger National Park, Table Mountain National Park"></textarea>
+        </mat-form-field>
+      </div>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button [mat-dialog-close] color="primary" (click)="updateWildcardCluster()">Update</button>
+        <button mat-raised-button [mat-dialog-close]="true" color="warn" (click)="deleteWildcardCluster()">Delete</button>
+    </mat-dialog-actions>
+<div>

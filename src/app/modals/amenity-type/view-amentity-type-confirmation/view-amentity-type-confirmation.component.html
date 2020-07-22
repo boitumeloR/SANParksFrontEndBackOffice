@@ -1,0 +1,21 @@
+
+<div class="dialog">
+    <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
+    <mat-icon>close</mat-icon>
+    </button>
+    <h2 mat-dialog-title>View Amenity Type </h2>
+  
+    <mat-dialog-content appearance="mat-typography">
+      <div class="example-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Amenity Type Name</mat-label>
+            <input matInput value="Fridge" readonly>
+        </mat-form-field>
+      </div>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button [mat-dialog-close] color="primary" (click)="updateAmenityType()">Update</button>
+        <button mat-raised-button [mat-dialog-close]="true" color="warn" (click)="deleteAmenityType()">Delete</button>
+    </mat-dialog-actions>
+<div>

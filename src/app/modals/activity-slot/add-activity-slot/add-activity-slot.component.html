@@ -1,0 +1,75 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Create Activity Slot</h2>
+    <form [formGroup]="addActivitySlot">
+    <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+    <mat-form-field appearance="fill">
+        <mat-label>Park</mat-label>
+        <mat-select formControlName="park">
+            <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
+            <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
+            <mat-option value="Kruger National Park">Kruger National Park</mat-option>
+        </mat-select>
+        <mat-hint>Park in which activity is</mat-hint>
+    </mat-form-field>  
+    <mat-form-field appearance="fill"> <!--Populated based on the selected Park-->
+        <mat-label>Camp</mat-label>
+        <mat-select formControlName="camp">
+            <mat-option value="Addo">Addo</mat-option>
+            <mat-option value="Spekboom">Spekboom</mat-option>
+            <mat-option value="Matyholweni">Matyholweni</mat-option>           
+        </mat-select>
+        <mat-hint>Camp in which activity is</mat-hint>
+    </mat-form-field>  
+    <mat-form-field appearance="fill">
+        <mat-label>Activity Type</mat-label>
+        <mat-select formControlName="activityType">
+            <mat-option value="Sunset Drive">Sunset Drive</mat-option>
+            <mat-option value="Night Drive">Night Drive</mat-option>
+            <mat-option value="Hiking">Hiking</mat-option>
+        </mat-select>
+        <mat-hint>This is the activty type of the activity</mat-hint>
+    </mat-form-field> 
+    <mat-form-field appearance="fill">
+        <mat-label>Activity</mat-label>
+        <mat-select formControlName="activity">
+            <mat-option value="1 Hour Drive">1 Hour Drive</mat-option>
+            <mat-option value="2 Hour Drive">2 Hour Drive</mat-option>
+            <mat-option value="4 Hour Drive">4 Hour Drive</mat-option>
+        </mat-select>
+        <mat-hint>Select an activity to assign a slot time</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Slot Time</mat-label>
+        <input matInput aria-label="Park gate opening time" [ngxTimepicker]="slotTime" [format]="24" formControlName="slotTime" readonly>
+        <ngx-material-timepicker #slotTime [theme]="clockTheme"></ngx-material-timepicker>
+        <mat-hint>Activtiy Slot Time</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="startDate" formControlName="startDate" readonly>
+        <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+        <mat-datepicker #startDate color="primary"></mat-datepicker>
+        <mat-hint>Date from which this activity slot is available.</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>End Date</mat-label>
+        <input matInput [matDatepicker]="endDate" formControlName="endDate" readonly>
+        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+        <mat-datepicker #endDate color="primary"></mat-datepicker>
+        <mat-hint>Date until this activity slot is available.</mat-hint>
+    </mat-form-field>
+    </div>  
+    </mat-dialog-content>
+    
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="addSlotTime()">Create</button>
+    </mat-dialog-actions>
+    </form>
+    </div>
+      
+      
+      
+      
+      

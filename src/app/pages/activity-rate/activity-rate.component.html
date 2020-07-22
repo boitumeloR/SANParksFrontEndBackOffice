@@ -1,63 +1,39 @@
-
-<h1>Activity Rate</h1>
-<h3>Filter:</h3>
+<h1>Activity Rate </h1>
 <div class="example-container">
-    <mat-form-field appearance="fill">
-        <mat-label>Activity Type</mat-label>
-        <mat-select>
-          <mat-option value="option">Option</mat-option>
-          <mat-option value="option">Option</mat-option>
-          <mat-option value="option">Option</mat-option>
-          <mat-option value="option">Option</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label>Activity</mat-label>
-        <mat-select>
-          <mat-option value="option">Option</mat-option>
-          <mat-option value="option">Option</mat-option>
-          <mat-option value="option">Option</mat-option>
-          <mat-option value="option">Option</mat-option>
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field hintLabel="Max 100 characters" appearance="fill">
+    <mat-label>Keyword Filter</mat-label>
+    <input matInput #input maxlength="100" placeholder="Ex. 2 Hour Drive">
+    <mat-hint>&nbsp; {{input.value?.length || 0}}/100</mat-hint>
+  </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Amount Search</mat-label>
-      <input matInput >
-    </mat-form-field>
-  <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="addRate()">
+  <button mat-fab color="primary" aria-label="Add accomodation type " (click)="addActivityRate()">
     <mat-icon>add</mat-icon>
   </button>
+
 </div>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
-  
-      <!-- Position Column -->
-      <ng-container matColumnDef="activity">
-        <th mat-header-cell *matHeaderCellDef> Activity Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      <!-- Camp Column -->
+      <ng-container matColumnDef="camp">
+        <th mat-header-cell *matHeaderCellDef> Camp</th>
+        <td mat-cell *matCellDef="let element"> {{element.camp}} </td>
       </ng-container>
-  
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="date-effective">
-        <th mat-header-cell *matHeaderCellDef> Date Effective </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+       <!--Activity Type-->
+       <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> Activity Type</th>
+        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+      </ng-container> 
+      <!--Activity Description-->
+      <ng-container matColumnDef="activityDescription">
+        <th mat-header-cell *matHeaderCellDef> Activity Description</th>
+        <td mat-cell *matCellDef="let element"> {{element.activityDescription}} </td>
       </ng-container>
-
-      <ng-container matColumnDef="symbol3">
-        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-      </ng-container>
-
-      <!-- Actions Column -->
-      <ng-container matColumnDef="Actions">
-        <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <!-- View Column -->
+      <ng-container matColumnDef="view"> <!--We should look at the table for this and activity slot-->
+        <th mat-header-cell *matHeaderCellDef> View Rate </th>
         <td mat-cell *matCellDef="let element"> 
-         <!-- <a mat-button (click)="updateRate(element)">
-            <mat-icon>edit</mat-icon>
-          </a> -->
-          <a mat-button (click)="updateRate(element)">
-            <mat-icon>build</mat-icon>
+          <a mat-button (click)="viewActivityRate(element)">
+            <mat-icon>visibility</mat-icon>
           </a>
         </td>
       </ng-container>
@@ -68,7 +44,3 @@
   
     <mat-paginator [pageSizeOptions]="[5, 8, 20]" showFirstLastButtons></mat-paginator>
   </div>
-
-
-
-

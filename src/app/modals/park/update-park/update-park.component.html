@@ -1,32 +1,34 @@
 <div class="dialog">
-    <h2 mat-dialog-title>Update Park</h2>
+  <h2 mat-dialog-title>Update Park</h2>
+  <form [formGroup]="updateParkForm">
   <mat-dialog-content appearance="mat-typography">
     <div class="example-container">
       <mat-form-field appearance="fill">
         <mat-label>Park Name</mat-label>
-        <input matInput value="Addo Elephant National Park">
+        <input matInput formControlName="parkName">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Park Limit</mat-label>
-        <input matInput type="number" value="150">
+        <input matInput type="number" formControlName="parkLimit">
         <mat-hint>The maximum amount of people in a park</mat-hint>
       </mat-form-field>
       <br>
       <mat-form-field appearance="fill">
         <mat-label>Park Location</mat-label>
-        <input matInput value="S 33° 26' 40">
+        <input matInput formControlName="parkLocation">
         <mat-hint>GPS Co-Ordinates</mat-hint>
       </mat-form-field>
       <mat-form-field hintLabel="Max 300 characters" appearance="fill">
         <mat-label>Park Description</mat-label>
-        <textarea matInput #input maxlength="300" value="Addo Elephant National Park is a diverse wildlife conservation park situated close to Port Elizabeth in South Africa and is one of the country's 20 national parks. It currently ranks third in size after Kruger National Park and the Kgalagadi Transfrontier Park."></textarea>
+        <textarea matInput #input maxlength="300" cdkTextareaAutosize formControlName="parkDescription" ></textarea>
         <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
       </mat-form-field>
     </div>
     
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
-    <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial color="primary" (click)="updatePark()">Update Park</button>
+    <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
+    <button mat-raised-button cdkFocusInitial color="primary" (click)="updatePark()">Update</button>
   </mat-dialog-actions>
-  </div>
+  </form>
+</div>

@@ -1,0 +1,46 @@
+<div class="dialog">
+  <h2 mat-dialog-title>Update Camp </h2> <!--Populated on load with current data associatd to the camp-->
+  <form [formGroup]="updateCampForm">
+  <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Camp Type Name</mat-label>
+        <input matInput formControlName="campName">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Camp Type</mat-label>
+        <mat-select formControlName="campType">
+            <mat-option value="Camp Site">Camp Site</mat-option>
+            <mat-option value="Satellite Camp">Satellite Camp</mat-option>
+            <mat-option value="Bushveld Camps">Bushveld Camps</mat-option>
+        </mat-select>
+    </mat-form-field> 
+      <mat-form-field appearance="fill">
+        <mat-label>Park</mat-label>
+        <mat-select formControlName="park">
+            <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
+            <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
+            <mat-option value="Kruger National Park">Kruger National Park</mat-option>
+        </mat-select>
+        <mat-hint>Park in which this camp is.</mat-hint>
+    </mat-form-field> 
+      <mat-form-field hintLabel="Max 300 characters" appearance="fill">
+        <mat-label>Camp  Description</mat-label>
+        <textarea matInput #input maxlength="300" cdkTextareaAutosize formControlName="campDescription"></textarea>
+        <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Camp Location</mat-label>
+        <input matInput formControlName="campLocation">
+        <mat-hint>Enter GPS Co-Ordinates</mat-hint>
+      </mat-form-field>
+    </div>
+    
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="updateCamp()">Update</button>
+  </mat-dialog-actions>
+  </form>
+  </div>
+  

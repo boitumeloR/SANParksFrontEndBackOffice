@@ -1,0 +1,43 @@
+
+<h1>Camp</h1>
+<div class="example-container">
+  <mat-form-field hintLabel="Max 100 characters" appearance="fill">
+    <mat-label>Keyword Filter</mat-label>
+    <input matInput #input maxlength="100" placeholder="Ex. Letaba">
+    <mat-hint>&nbsp; {{input.value?.length || 0}}/100</mat-hint>
+  </mat-form-field>
+
+  <button mat-fab color="primary" aria-label="Add camp " (click)="addCamp()">
+    <mat-icon>add</mat-icon>
+  </button>
+
+</div>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+      <!-- Camp Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Camp Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+      <!--Park Column-->
+      <ng-container matColumnDef="park">
+        <th mat-header-cell *matHeaderCellDef> Park </th>
+        <td mat-cell *matCellDef="let element"> {{element.park}} </td>
+      </ng-container>
+
+      <!-- View Column -->
+      <ng-container matColumnDef="view">
+        <th mat-header-cell *matHeaderCellDef> View Camp</th>
+        <td mat-cell *matCellDef="let element"> 
+          <a mat-button (click)="viewCamp(element)">
+            <mat-icon>visibility</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 8, 20]" showFirstLastButtons></mat-paginator>
+  </div>

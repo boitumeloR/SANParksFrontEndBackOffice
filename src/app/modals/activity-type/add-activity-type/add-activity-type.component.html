@@ -1,0 +1,19 @@
+<div class="dialog">
+  <h2 mat-dialog-title>Create Activity Type </h2>
+  <form [formGroup]="addActivityTypes">
+  <mat-dialog-content appearance="mat-typography">
+  <div class="example-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description">
+    </mat-form-field>      
+  </div>
+    
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="addActivityType()">Create</button>
+  </mat-dialog-actions>
+  </form>
+</div>
+  

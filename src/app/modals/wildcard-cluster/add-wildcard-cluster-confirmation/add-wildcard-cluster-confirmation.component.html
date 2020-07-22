@@ -1,0 +1,13 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Confirmation Required</h2>
+  <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+        <p>Are you sure you want to create this wildcard cluster?</p>
+    </div>
+    
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn" (click)="unsuccessfulAddWildcardCluster()">No</button>
+    <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="successfulAddWildcardCluster()">Yes</button>
+  </mat-dialog-actions>
+</div>
