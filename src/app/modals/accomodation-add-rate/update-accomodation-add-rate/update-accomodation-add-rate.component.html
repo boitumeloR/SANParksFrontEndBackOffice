@@ -1,10 +1,11 @@
 <div class="dialog">
     <h2 mat-dialog-title>Update Accomodation Add Rate</h2>
+    <form [formGroup]="updateAccomodationRateForm">
     <mat-dialog-content appearance="mat-typography">
     <div class="example-container">
     <mat-form-field appearance="fill"> <!--Populated based on the selected Park-->
         <mat-label>Accomodation Type</mat-label>
-        <mat-select>
+        <mat-select formControlName="accomodationType">
             <mat-option value="Camp Site (CK6P)">Camp Site (CK6P)</mat-option>
             <mat-option value="Bungalow BA3">Bungalow BA3</mat-option>
             <mat-option value="Bungalow BA3U">Bungalow BA3U</mat-option>
@@ -12,17 +13,17 @@
     </mat-form-field>  
     <mat-form-field appearance="fill">
         <mat-label>Adult Rate</mat-label>
-        <input matInput value="R200">
+        <input matInput formControlName="adultRate" type="number">
         <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Child Rate</mat-label>
-        <input matInput value="R100">
+        <input matInput formControlName="childRate" type="number">
         <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Date Effective</mat-label>
-        <input matInput [matDatepicker]="dateEffective">
+        <input matInput [matDatepicker]="dateEffective" formControlName="dateEffective" readonly>
         <mat-datepicker-toggle matSuffix [for]="dateEffective"></mat-datepicker-toggle>
         <mat-datepicker #dateEffective color="primary"></mat-datepicker>
         <mat-hint>Date from which to apply this add rate.</mat-hint>
@@ -31,9 +32,10 @@
     </mat-dialog-content>
     
     <mat-dialog-actions align="end">
-        <button mat-raised-button mat-dialog-close color="warn" (click)="confirmCancel()">Cancel</button>
-        <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="updateAccomodationAddRate()">Update</button>
+        <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
+        <button mat-raised-button  color="primary" (click)="updateAccomodationAddRate()">Update</button>
     </mat-dialog-actions>
+    </form>
 </div>
       
       
