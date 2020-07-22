@@ -5,16 +5,30 @@ import {MatDialog} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
+import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 @Component({
   selector: 'app-update-park-gate-time',
   templateUrl: './update-park-gate-time.component.html',
   styleUrls: ['./update-park-gate-time.component.scss']
 })
 export class UpdateParkGateTimeComponent implements OnInit {
+  clockTheme: NgxMaterialTimepickerTheme = {
+    container: {
+        bodyBackgroundColor: '#fff',
+        buttonColor: '#388e3c'
+    },
+    dial: {
+        dialBackgroundColor: '#388e3c',
+    },
+    clockFace: {
+        clockFaceBackgroundColor: '#fff',
+        clockHandColor: '#388e3c',
+        clockFaceTimeInactiveColor: '#388e3c'
+    }
+  };
   updateParkGateTimeForm: FormGroup;
   constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
     private dialogRef: MatDialogRef<UpdateParkGateTimeComponent>) { }
-
   ngOnInit(): void {
     this.updateParkGateTimeForm = this.formBuilder.group({
       park: ['', Validators.required],

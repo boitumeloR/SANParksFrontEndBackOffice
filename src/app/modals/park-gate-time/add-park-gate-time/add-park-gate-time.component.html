@@ -31,14 +31,18 @@
 </mat-form-field> 
 <mat-form-field appearance="fill">
     <mat-label>Gate Opening Time</mat-label>
+
     <input matInput aria-label="Park gate opening time" formControlName="gateOpeningTime" [ngxTimepicker]="gateOpenTime" [format]="24"  readonly>
-    <ngx-material-timepicker #gateOpenTime></ngx-material-timepicker>
+    <ngx-material-timepicker #gateOpenTime [theme]="clockTheme"></ngx-material-timepicker>
+
     <mat-hint>Gate opening time in 24hr format</mat-hint>
 </mat-form-field>
 <mat-form-field appearance="fill">
     <mat-label>Gate Closing Time</mat-label>
+
     <input matInput aria-label="Park gate closing time" formControlName="gateClosingTime" [ngxTimepicker]="gateCloseTime" [format]="24"  readonly>
-    <ngx-material-timepicker #gateCloseTime></ngx-material-timepicker>
+    <ngx-material-timepicker #gateCloseTime [theme]="clockTheme"></ngx-material-timepicker>
+
     <mat-hint>Gate closing time in 24hr format</mat-hint>
 </mat-form-field>
 </div>  
