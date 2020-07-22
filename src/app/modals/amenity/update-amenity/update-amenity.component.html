@@ -1,12 +1,15 @@
+<button id="alignCloseRight" mat-icon-button align="end" color="warn" (click)="confirmCancel()" aria-label="Cancel">
+    <mat-icon>close</mat-icon>
+</button>
 <h2 mat-dialog-title>Update Amenity</h2>
-<mat-horizontal-stepper [linear] #stepper>
+<mat-horizontal-stepper [linear]="true" #stepper>
     <mat-step [stepControl]="amenityLocation">
-        <form [formControl]="amenityLocation">
+        <form [formControl]="amenityLocation" [formGroup]="amenityLocation">
             <ng-template matStepLabel>Amenity Location</ng-template>
             <mat-dialog-content appearance="mat-typography">
                 <mat-form-field appearance="fill">
                     <mat-label>Park</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="park">
                         <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
                         <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
                         <mat-option value="Kruger National Park">Kruger National Park</mat-option>
@@ -15,7 +18,7 @@
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected Park-->
                     <mat-label>Camp</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="camp">
                         <mat-option value="Addo">Addo</mat-option>
                         <mat-option value="Spekboom">Spekboom</mat-option>
                         <mat-option value="Matyholweni">Matyholweni</mat-option>
@@ -24,7 +27,7 @@
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected camp, show acc types in camp -->
                     <mat-label>Accomodation Type</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="accomodationType">
                         <mat-option value="	Camp Site (CK6P)">Camp Site (CK6P)</mat-option>
                         <mat-option value="Bungalow BA3">Bungalow BA3</mat-option>
                         <mat-option value="Bungalow BA3U">Bungalow BA3U</mat-option>
@@ -33,7 +36,7 @@
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected acc type, show unit number of acc in this camp-->
                     <mat-label>Unit Number</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="unitNumber">
                         <mat-option value="107">107</mat-option>
                         <mat-option value="52">52</mat-option>
                         <mat-option value="14">14</mat-option>
@@ -42,18 +45,17 @@
                 </mat-form-field> 
             </mat-dialog-content>
             <mat-dialog-actions align="end">
-                <button mat-raised-button mat-dialog-close color="warn" (click)="confirmCancel()">Cancel</button>
-                <button mat-raised-button color="primary" matStepperNext>Next</button>
+                <button mat-raised-button color="primary" (click)="stepperNext()">Next</button>
             </mat-dialog-actions>
         </form>
     </mat-step>
     <mat-step [stepControl]="amenityDetails">
-        <form [formControl]="amenityDetails">
+        <form [formControl]="amenityDetails" [formGroup]="amenityDetails">
             <ng-template matStepLabel>Amenity Details</ng-template>
             <mat-dialog-content appearance="mat-typography">
                 <mat-form-field appearance="fill">  
                     <mat-label>Amenity Type</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="amenityType">
                         <mat-option value="Fridge">Fridge</mat-option>
                         <mat-option value="Stove">Stove</mat-option>
                         <mat-option value="Television">Television</mat-option>
@@ -61,12 +63,12 @@
                 </mat-form-field>
                 <mat-form-field hintLabel="Max 300 characters" appearance="fill">
                     <mat-label>Amenity Description</mat-label>
-                    <textarea cdkTextareaAutosize matInput #input maxlength="300" value="KIC 220L"></textarea>
+                    <textarea cdkTextareaAutosize matInput #input maxlength="300" formControlName="amenityDescription"></textarea>
                     <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
                 </mat-form-field>
                 <mat-form-field appearance="fill"> 
                     <mat-label>Amenity Status</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="amenityStatus">
                         <mat-option value="Working">Working</mat-option>
                         <mat-option value="Under Repair">Under Repair</mat-option>
                         <mat-option value="Broken">Broken</mat-option>
@@ -76,8 +78,8 @@
             </mat-dialog-content>
         </form>
         <mat-dialog-actions align="end">
-            <button mat-raised-button  color="warn" mat-dialog-close (click)="confirmCancel()">Cancel</button>
-            <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="updateAmenity()">Update</button>
+            <button mat-raised-button  color="warn" matStepperPrevious >Previous</button>
+            <button mat-raised-button color="primary" (click)="updateAmenity()">Update</button>
         </mat-dialog-actions>
     </mat-step>
 </mat-horizontal-stepper>

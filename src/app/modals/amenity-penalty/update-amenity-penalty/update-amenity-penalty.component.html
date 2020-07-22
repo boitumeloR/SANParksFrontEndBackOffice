@@ -1,12 +1,15 @@
+<button id="alignCloseRight" mat-icon-button align="end" color="warn" (click)="confirmCancel()" aria-label="Cancel">
+    <mat-icon>close</mat-icon>
+</button>
 <h2 mat-dialog-title>Update Amenity Penalty</h2>
-<mat-horizontal-stepper [linear] #stepper>
+<mat-horizontal-stepper [linear]="true" #stepper>
     <mat-step [stepControl]="selectAmenity">
-        <form [formControl]="selectAmenity">
+        <form [formControl]="selectAmenity" [formGroup]="selectAmenity">
             <ng-template matStepLabel>Select An Amenity</ng-template>
             <mat-dialog-content appearance="mat-typography">
                 <mat-form-field appearance="fill">
                     <mat-label>Park</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="park">
                         <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
                         <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
                         <mat-option value="Kruger National Park">Kruger National Park</mat-option>
@@ -15,7 +18,7 @@
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected Park-->
                     <mat-label>Camp</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="camp">
                         <mat-option value="Addo">Addo</mat-option>
                         <mat-option value="Spekboom">Spekboom</mat-option>
                         <mat-option value="Matyholweni">Matyholweni</mat-option>
@@ -24,7 +27,7 @@
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected camp, show acc types in camp -->
                     <mat-label>Accomodation Type</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="accomodationType">
                         <mat-option value="	Camp Site (CK6P)">Camp Site (CK6P)</mat-option>
                         <mat-option value="Bungalow BA3">Bungalow BA3</mat-option>
                         <mat-option value="Bungalow BA3U">Bungalow BA3U</mat-option>
@@ -33,7 +36,7 @@
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected acc type, show unit number of acc in this camp-->
                     <mat-label>Unit Number</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="unitNumber">
                         <mat-option value="107">107</mat-option>
                         <mat-option value="52">52</mat-option>
                         <mat-option value="14">14</mat-option>
@@ -42,7 +45,7 @@
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected unit number and the amenity within this unit-->
                     <mat-label>Amenity</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="amenity">
                         <mat-option value="KIC 220L">KIC 220L</mat-option>
                         <mat-option value="Samsung Smart Tv">Samsung Smart Tv</mat-option>
                         <mat-option value="Braai Area">Braai Area</mat-option>
@@ -51,23 +54,22 @@
                 </mat-form-field> 
             </mat-dialog-content>
             <mat-dialog-actions align="end">
-                <button mat-raised-button mat-dialog-close color="warn" (click)="confirmCancel()">Cancel</button>
-                <button mat-raised-button color="primary" matStepperNext>Next</button>
+                <button mat-raised-button color="primary" (click)="stepperNext()">Next</button>
             </mat-dialog-actions>
         </form>
     </mat-step>
     <mat-step [stepControl]="amenityPenalty">
-        <form [formControl]="amenityPenalty">
+        <form [formControl]="amenityPenalty" [formGroup]="amenityPenalty">
             <ng-template matStepLabel>Assign Penalty</ng-template>
             <mat-dialog-content appearance="mat-typography">
                 <mat-form-field appearance="fill">
                     <mat-label>Amenity Penalty</mat-label>
-                    <input matInput value="R200">
+                    <input matInput formControlName="amenityPenalty" type="number">
                     <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Date Effective</mat-label>
-                    <input matInput [matDatepicker]="dateEffective">
+                    <input matInput [matDatepicker]="dateEffective" formControlName="dateEffective" readonly>
                     <mat-datepicker-toggle matSuffix [for]="dateEffective"></mat-datepicker-toggle>
                     <mat-datepicker #dateEffective color="primary"></mat-datepicker>
                     <mat-hint>Date from which to apply this penalty.</mat-hint>
@@ -75,8 +77,8 @@
             </mat-dialog-content>
         </form>
         <mat-dialog-actions align="end">
-            <button mat-raised-button  color="warn" (click)="confirmCancel()" >Cancel</button>
-            <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="updateAmenityPenalty()">Update</button>
+            <button mat-raised-button  color="warn" matStepperPrevious>Previous</button>
+            <button mat-raised-button color="primary" (click)="updateAmenityPenalty()">Update</button>
         </mat-dialog-actions>
     </mat-step>
 </mat-horizontal-stepper>
