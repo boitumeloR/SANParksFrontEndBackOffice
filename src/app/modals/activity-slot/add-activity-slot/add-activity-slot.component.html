@@ -42,7 +42,7 @@
     <mat-form-field appearance="fill">
         <mat-label>Slot Time</mat-label>
         <input matInput aria-label="Park gate opening time" [ngxTimepicker]="slotTime" [format]="24" formControlName="slotTime" readonly>
-        <ngx-material-timepicker #slotTime></ngx-material-timepicker>
+        <ngx-material-timepicker #slotTime [theme]="clockTheme"></ngx-material-timepicker>
         <mat-hint>Activtiy Slot Time</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="fill">

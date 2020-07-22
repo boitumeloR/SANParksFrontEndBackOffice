@@ -6,6 +6,7 @@ import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
 import {MatDialog} from '@angular/material/dialog';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+
 @Component({
   selector: 'app-add-park-gate-time',
   templateUrl: './add-park-gate-time.component.html',
@@ -25,7 +26,7 @@ export class AddParkGateTimeComponent implements OnInit {
         clockHandColor: '#388e3c',
         clockFaceTimeInactiveColor: '#388e3c'
     }
-};
+  };
   addParkGateTimeForm: FormGroup;
   constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
     private dialogRef: MatDialogRef<AddParkGateTimeComponent>) { }

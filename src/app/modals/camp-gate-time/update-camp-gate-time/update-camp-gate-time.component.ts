@@ -5,12 +5,28 @@ import {MatDialog} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
+import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+
 @Component({
   selector: 'app-update-camp-gate-time',
   templateUrl: './update-camp-gate-time.component.html',
   styleUrls: ['./update-camp-gate-time.component.scss']
 })
 export class UpdateCampGateTimeComponent implements OnInit {
+  clockTheme: NgxMaterialTimepickerTheme = {
+    container: {
+        bodyBackgroundColor: '#fff',
+        buttonColor: '#388e3c'
+    },
+    dial: {
+        dialBackgroundColor: '#388e3c',
+    },
+    clockFace: {
+        clockFaceBackgroundColor: '#fff',
+        clockHandColor: '#388e3c',
+        clockFaceTimeInactiveColor: '#388e3c'
+    }
+  };
   updateCampGateTimeForm: FormGroup;
   constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
     private dialogRef: MatDialogRef<UpdateCampGateTimeComponent>) { }
