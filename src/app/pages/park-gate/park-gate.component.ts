@@ -7,13 +7,14 @@ import {MatDialog} from '@angular/material/dialog';
 
 export interface PeriodicElement {
   name: string;
+  park: string;
   location: string;
 
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Orpen Gate',location: '24.5762° S, 31.0579° E'},
-  {name: 'Phalaborwa Gate', location: '23.9457° S, 31.1648° E'},
-  {name: 'Malelane Gate', location: '25.4618° S, 31.5329° E'},
+  { name: 'Orpen Gate',park: "Kruger National Park",location: '24.5762° S, 31.0579° E'},
+  {name: 'Matyholweni Entrance Gate', park: "Addo Elephant National Park", location: '33.4057 S 25.4744 E'},
+  {name: 'Malelane Gate', park: "Kruger National Park", location: '25.4618° S, 31.5329° E'},
 ];
 @Component({
   selector: 'app-park-gate',
@@ -24,7 +25,7 @@ export class ParkGateComponent implements OnInit {
 
   constructor(private dialog: MatDialog) { }
 
-  displayedColumns: string[] = ['name','location','view'];
+  displayedColumns: string[] = ['name','park','location','view'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

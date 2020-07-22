@@ -1,14 +1,16 @@
-
+<button id="alignCloseRight" mat-icon-button align="end" color="warn" (click)="confirmCancel()" aria-label="Cancel">
+    <mat-icon>close</mat-icon>
+</button>
 <h2 mat-dialog-title>Create Activity</h2>
-<mat-horizontal-stepper [linear] #stepper>
+<mat-horizontal-stepper [linear]="true" #stepper>
     <mat-step [stepControl]="basicActivityDetails">
-        <form [formControl]="basicActivityDetails">
+        <form [formControl]="basicActivityDetails" [formGroup]="basicActivityDetails">
             <ng-template matStepLabel>Activity Details</ng-template>
             <mat-dialog-content appearance="mat-typography">
             <div class="example-container">
                 <mat-form-field appearance="fill"> <!--Populated with all activity types-->
                     <mat-label>Activity Type</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="activityType">
                         <mat-option value="Sunset Drive">Sunset Drive</mat-option>
                         <mat-option value="Night Drive">Night Drive</mat-option>
                         <mat-option value="Hiking">Hiking</mat-option>
@@ -17,29 +19,28 @@
                 </mat-form-field> 
                 <mat-form-field hintLabel="Max 300 characters" appearance="fill">
                     <mat-label>Activity Description</mat-label>
-                    <textarea cdkTextareaAutosize matInput #input maxlength="300"></textarea>
+                    <textarea cdkTextareaAutosize matInput #input maxlength="300" formControlName="activityDescription"></textarea>
                     <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Maximum Capacity</mat-label>
-                    <input matInput type="number">
+                    <input matInput type="number" formControlName="maximumCapacity">
                     <mat-hint>The number of people allowed for this activity</mat-hint>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Minimum Age</mat-label>
-                    <input matInput type="number">
+                    <input matInput type="number" formControlName="minimumAge">
                     <mat-hint>Minimum age required for this activity</mat-hint>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Maximum Age</mat-label>
-                    <input matInput type="number">
+                    <input matInput type="number" formControlName="maximumAge">
                     <mat-hint>Maximum age required for this activity</mat-hint>
                 </mat-form-field>
             </div>
             </mat-dialog-content>
             <mat-dialog-actions align="end">
-                <button mat-raised-button mat-dialog-close color="warn" (click)="confirmCancel()">Cancel</button>
-                <button mat-raised-button color="primary" matStepperNext>Next</button>
+                <button mat-raised-button color="primary" (click)="stepperNext()">Next</button>
             </mat-dialog-actions>
         </form>
     </mat-step>
@@ -47,7 +48,7 @@
         <form [formControl]="campsAvailableAt">
             <ng-template matStepLabel>Select Camps</ng-template>
             <mat-accordion>
-            <mat-expansion-panel>
+            <mat-expansion-panel> <!--At least one should be selected validation is needed-->
                 <mat-expansion-panel-header>
                     Addo Elephant National Park
                 </mat-expansion-panel-header>
@@ -88,7 +89,7 @@
             </mat-accordion>
         </form>
         <mat-dialog-actions align="end">
-            <button mat-raised-button color="warn" (click)="confirmCancel()"> Cancel</button>
+            <button mat-raised-button color="warn" matStepperPrevious> Previous</button>
             <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="addActivity()">Create</button>
         </mat-dialog-actions>
     </mat-step>

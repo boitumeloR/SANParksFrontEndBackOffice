@@ -20,7 +20,7 @@ import { ViewParkComponent } from './modals/park/view-park/view-park.component';
 import {UpdateParkConfirmationComponent} from 'src/app/modals/park/update-park-confirmation/update-park-confirmation.component';
 import { AddParkConfirmationComponent } from './modals/park/add-park-confirmation/add-park-confirmation.component';
 import { AddParkGateComponent } from './modals/park-gate/add-park-gate/add-park-gate.component';
-import {ParkGateComponent} from './pages/park-gate/park-gate.component'
+import {ParkGateComponent} from './pages/park-gate/park-gate.component';
 import {AddParkGateConfirmationComponent} from 'src/app/modals/park-gate/add-park-gate-confirmation/add-park-gate-confirmation.component';
 import {ViewParkGateComponent} from 'src/app/modals/park-gate/view-park-gate/view-park-gate.component';
 import {UpdateParkGateComponent} from 'src/app/modals/park-gate/update-park-gate/update-park-gate.component';
@@ -176,7 +176,6 @@ import { AddEmployeeComponent } from './modals/employee/add-employee/add-employe
 import { AddEmployeeConfirmationComponent } from './modals/employee/add-employee-confirmation/add-employee-confirmation.component';
 import { UpdateEmployeeConfirmationComponent } from './modals/employee/update-employee-confirmation/update-employee-confirmation.component';
 import { UpdateEmployeeComponent } from './modals/employee/update-employee/update-employee.component';
-import { DeleteEmployeeComponent } from './modals/employee/delete-employee/delete-employee.component';
 import { ViewEmployeeComponent } from './modals/employee/view-employee/view-employee.component';
 import { CancelAlertComponent } from './modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import { AddAccomodationSuccessfulComponent } from './modals/accomodation/add-accomodation-successful/add-accomodation-successful.component';
@@ -321,7 +320,8 @@ import { DeleteWildcardClusterUnsuccessfulComponent } from './modals/wildcard-cl
 import { DeleteWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/delete-wildcard-rate-unsuccessful/delete-wildcard-rate-unsuccessful.component';
 import { UpdateWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/update-wildcard-rate-unsuccessful/update-wildcard-rate-unsuccessful.component';
 import { AddWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/add-wildcard-rate-unsuccessful/add-wildcard-rate-unsuccessful.component';
-
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatStepper} from '@angular/material/stepper';
 @NgModule({
   declarations: [
     AppComponent,
@@ -493,7 +493,6 @@ import { AddWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/add
     AddEmployeeConfirmationComponent,
     UpdateEmployeeConfirmationComponent,
     UpdateEmployeeComponent,
-    DeleteEmployeeComponent,
     ViewEmployeeComponent,
     CancelAlertComponent,
     AddAccomodationSuccessfulComponent,
@@ -656,7 +655,7 @@ import { AddWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/add
     NgxMaterialTimepickerModule,
     MatNativeDateModule
   ],
-  providers: [],
+  providers: [MatSnackBar,MatStepper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
