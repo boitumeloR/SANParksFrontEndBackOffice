@@ -5,12 +5,28 @@ import {AddActivitySlotConfirmationComponent} from 'src/app/modals/activity-slot
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
+import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+
 @Component({
   selector: 'app-add-activity-slot',
   templateUrl: './add-activity-slot.component.html',
   styleUrls: ['./add-activity-slot.component.scss']
 })
 export class AddActivitySlotComponent implements OnInit {
+    clockTheme: NgxMaterialTimepickerTheme = {
+    container: {
+        bodyBackgroundColor: '#fff',
+        buttonColor: '#388e3c'
+    },
+    dial: {
+        dialBackgroundColor: '#388e3c',
+    },
+    clockFace: {
+        clockFaceBackgroundColor: '#fff',
+        clockHandColor: '#388e3c',
+        clockFaceTimeInactiveColor: '#388e3c'
+    }
+  };
   addActivitySlot: FormGroup;
   constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
     private dialogRef: MatDialogRef<AddActivitySlotComponent>) { }
