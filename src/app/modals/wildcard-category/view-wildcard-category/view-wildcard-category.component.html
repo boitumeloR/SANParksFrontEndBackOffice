@@ -16,6 +16,16 @@
             <mat-label>Wildcard Category Description</mat-label>
             <textarea cdkTextareaAutosize matInput  readonly value="This is only valid for one member."></textarea>
         </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Adult Limit</mat-label>
+            <input matInput value="2" readonly>
+            <mat-hint>The maximum number of adults for this category</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Child Limit</mat-label>
+            <input matInput value="5" readonly>
+            <mat-hint>The maximum number of children for this category</mat-hint>
+        </mat-form-field>
       </div>
       
     </mat-dialog-content>

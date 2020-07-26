@@ -176,7 +176,6 @@ import { AddEmployeeComponent } from './modals/employee/add-employee/add-employe
 import { AddEmployeeConfirmationComponent } from './modals/employee/add-employee-confirmation/add-employee-confirmation.component';
 import { UpdateEmployeeConfirmationComponent } from './modals/employee/update-employee-confirmation/update-employee-confirmation.component';
 import { UpdateEmployeeComponent } from './modals/employee/update-employee/update-employee.component';
-import { DeleteEmployeeComponent } from './modals/employee/delete-employee/delete-employee.component';
 import { ViewEmployeeComponent } from './modals/employee/view-employee/view-employee.component';
 import { CancelAlertComponent } from './modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import { AddAccomodationSuccessfulComponent } from './modals/accomodation/add-accomodation-successful/add-accomodation-successful.component';
@@ -328,6 +327,8 @@ import { PreBookedCheckInComponent } from './pages/pre-booked-check-in/pre-booke
 import { SuccessModalComponent } from './modals/auxilliary-modals/success-modal/success-modal.component';
 import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.component';
 
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatStepper} from '@angular/material/stepper';
 @NgModule({
   declarations: [
     AppComponent,
@@ -499,7 +500,6 @@ import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.compo
     AddEmployeeConfirmationComponent,
     UpdateEmployeeConfirmationComponent,
     UpdateEmployeeComponent,
-    DeleteEmployeeComponent,
     ViewEmployeeComponent,
     CancelAlertComponent,
     AddAccomodationSuccessfulComponent,
@@ -668,7 +668,7 @@ import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.compo
     NgxMaterialTimepickerModule,
     MatNativeDateModule
   ],
-  providers: [],
+  providers: [MatSnackBar,MatStepper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
