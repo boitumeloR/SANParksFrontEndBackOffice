@@ -1,0 +1,145 @@
+<app-park-gate-count></app-park-gate-count>
+<h1>Checkout Park Gate</h1>
+
+<div class="book-form">
+    <div class="example-container">
+        <mat-form-field hintLabel="Max 10 characters" appearance="fill">
+          <mat-label>Booking Reference Number</mat-label>
+          <input matInput #input maxlength="10" placeholder="Ex. Nougat">
+          <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field hintLabel="Max 10 characters" appearance="fill">
+            <mat-label>ID Number</mat-label>
+            <input matInput #input maxlength="10" placeholder="Ex. Nougat">
+            <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+        </mat-form-field>
+            <button mat-raised-button color="primary">Search Booking</button>
+    </div>
+</div>
+
+<mat-list>
+    <div mat-subheader> Booking Details</div>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Reference Number: 23
+      </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+      Park: Kruger National Park
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Camp: Skukuza
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Accommodation Type:  Chalet
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Stay Dates: 21 February to 22 February
+    </mat-list-item>
+        <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Number of Guests: 4
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <div mat-subheader>Client Details</div>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Mr Boitumelo Rampete
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Client ID: 99999999999999
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Client Email Address: b@san.com
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Client Cell Number: 073343542345
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Client Age: 21
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        <Address>22 Morning Road Pretoria 00002</Address>
+    </mat-list-item>
+  </mat-list>
+
+<h1>Guests</h1>
+<div class="example-container">
+</div>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Guest Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Season Column-->
+      <ng-container matColumnDef="surname">
+        <th mat-header-cell *matHeaderCellDef> Guest Surname</th>
+        <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Guest ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+      </ng-container>
+      <!-- Actions Column -->
+      <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef> Guest Age</th>
+        <td mat-cell *matCellDef="let element"> 
+            {{element.age}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef> Guest Country</th>
+        <td mat-cell *matCellDef="let element"> 
+            {{element.country}}
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 8, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <div class="radios">
+    <label id="example-radio-group-label">Late Checkout?</label>
+    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
+      <mat-radio-button class="example-radio-button" value="1">
+          Yes
+      </mat-radio-button>
+      <mat-radio-button  class="example-radio-button" value="2">
+        No
+      </mat-radio-button>
+    </mat-radio-group>
+</div>
+
+<div class="radios">
+    <label id="example-radio-group-label">Check Out Success?</label>
+<mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
+  <mat-radio-button class="example-radio-button" value="1">
+      Yes
+  </mat-radio-button>
+  <mat-radio-button  class="example-radio-button" value="2">
+    No
+  </mat-radio-button>
+</mat-radio-group>
+</div>
+
+<div class="submit">
+    <button mat-raised-button color="warn" (click)="Cancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="Submit()">Submit</button>
+</div>

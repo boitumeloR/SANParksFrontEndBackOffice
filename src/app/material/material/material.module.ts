@@ -17,10 +17,12 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatRadioModule} from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
 @NgModule({
   declarations: [],
   imports: [
+    MatRadioModule,
     MatDatepickerModule,
     MatCheckboxModule,
     MatStepperModule,
@@ -42,6 +44,7 @@ import {MatCardModule} from '@angular/material/card';
     MatCardModule
   ],
   exports: [
+    MatRadioModule,
     MatDatepickerModule,
     MatCheckboxModule,
     MatStepperModule,

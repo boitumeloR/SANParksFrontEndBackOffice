@@ -200,6 +200,24 @@
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>
+
+        <mat-divider></mat-divider>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Check - In
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option [routerLink]="[ '/checkInPark']">
+              Check In Park
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/checkOutPark']">
+              Check Out Park
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
       </div>       
   </mat-sidenav>
     <mat-sidenav-content>

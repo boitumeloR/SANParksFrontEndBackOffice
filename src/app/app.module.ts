@@ -320,6 +320,13 @@ import { DeleteWildcardClusterUnsuccessfulComponent } from './modals/wildcard-cl
 import { DeleteWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/delete-wildcard-rate-unsuccessful/delete-wildcard-rate-unsuccessful.component';
 import { UpdateWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/update-wildcard-rate-unsuccessful/update-wildcard-rate-unsuccessful.component';
 import { AddWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/add-wildcard-rate-unsuccessful/add-wildcard-rate-unsuccessful.component';
+import { CheckInParkComponent } from './pages/check-in-park/check-in-park.component';
+import { ParkGateCountComponent } from './subcomponents/park-gate-count/park-gate-count.component';
+import { UnannouncedCheckInComponent } from './pages/unannounced-check-in/unannounced-check-in.component';
+import { PreBookedCheckInComponent } from './pages/pre-booked-check-in/pre-booked-check-in.component';
+import { SuccessModalComponent } from './modals/auxilliary-modals/success-modal/success-modal.component';
+import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.component';
+
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatStepper} from '@angular/material/stepper';
 @NgModule({
@@ -636,7 +643,13 @@ import {MatStepper} from '@angular/material/stepper';
     DeleteWildcardClusterUnsuccessfulComponent,
     DeleteWildcardRateUnsuccessfulComponent,
     UpdateWildcardRateUnsuccessfulComponent,
-    AddWildcardRateUnsuccessfulComponent
+    AddWildcardRateUnsuccessfulComponent,
+    CheckInParkComponent,
+    ParkGateCountComponent,
+    UnannouncedCheckInComponent,
+    PreBookedCheckInComponent,
+    SuccessModalComponent,
+    CheckoutParkComponent
   ],
   entryComponents: [
     AddParkComponent,
