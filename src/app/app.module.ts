@@ -329,6 +329,7 @@ import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.compo
 
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatStepper} from '@angular/material/stepper';
+import { CheckoutListComponent } from './pages/checkout-list/checkout-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -649,7 +650,8 @@ import {MatStepper} from '@angular/material/stepper';
     UnannouncedCheckInComponent,
     PreBookedCheckInComponent,
     SuccessModalComponent,
-    CheckoutParkComponent
+    CheckoutParkComponent,
+    CheckoutListComponent
   ],
   entryComponents: [
     AddParkComponent,

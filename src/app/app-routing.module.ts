@@ -29,6 +29,7 @@ import { CheckInParkComponent } from './pages/check-in-park/check-in-park.compon
 import { UnannouncedCheckInComponent } from './pages/unannounced-check-in/unannounced-check-in.component';
 import { PreBookedCheckInComponent } from './pages/pre-booked-check-in/pre-booked-check-in.component';
 import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.component';
+import { CheckoutListComponent } from './pages/checkout-list/checkout-list.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -149,6 +150,10 @@ const routes: Routes = [
   {
     path: 'checkOutPark',
     component: CheckoutParkComponent
+  },
+  {
+    path: 'checkOutList',
+    component: CheckoutListComponent
   }
 ];
 
