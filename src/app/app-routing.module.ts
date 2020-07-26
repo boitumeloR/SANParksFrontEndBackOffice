@@ -26,6 +26,7 @@ import { ActivityRateComponent } from './pages/activity-rate/activity-rate.compo
 import { UserRoleComponent } from './pages/user-role/user-role.component';
 import { EmployeeComponent } from './pages/employee/employee.component';
 import { CheckInParkComponent } from './pages/check-in-park/check-in-park.component';
+import { UnannouncedCheckInComponent } from './pages/unannounced-check-in/unannounced-check-in.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -134,6 +135,10 @@ const routes: Routes = [
   {
     path: 'checkInPark',
     component: CheckInParkComponent
+  },
+  {
+    path: 'UnannoucedCheckIn',
+    component: UnannouncedCheckInComponent
   }
 ];
 

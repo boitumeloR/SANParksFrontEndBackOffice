@@ -60,6 +60,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     LayoutModule,
     MatListModule,
     MatDialogModule
+
   ]
 })
 export class MaterialModule { }

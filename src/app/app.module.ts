@@ -323,6 +323,8 @@ import { UpdateWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/
 import { AddWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/add-wildcard-rate-unsuccessful/add-wildcard-rate-unsuccessful.component';
 import { CheckInParkComponent } from './pages/check-in-park/check-in-park.component';
 import { ParkGateCountComponent } from './subcomponents/park-gate-count/park-gate-count.component';
+import { UnannouncedCheckInComponent } from './pages/unannounced-check-in/unannounced-check-in.component';
+import { PreBookedCheckInComponent } from './pages/pre-booked-check-in/pre-booked-check-in.component';
 
 @NgModule({
   declarations: [
@@ -641,7 +643,9 @@ import { ParkGateCountComponent } from './subcomponents/park-gate-count/park-gat
     UpdateWildcardRateUnsuccessfulComponent,
     AddWildcardRateUnsuccessfulComponent,
     CheckInParkComponent,
-    ParkGateCountComponent
+    ParkGateCountComponent,
+    UnannouncedCheckInComponent,
+    PreBookedCheckInComponent
   ],
   entryComponents: [
     AddParkComponent,
