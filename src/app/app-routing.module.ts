@@ -27,6 +27,8 @@ import { UserRoleComponent } from './pages/user-role/user-role.component';
 import { EmployeeComponent } from './pages/employee/employee.component';
 import { CheckInParkComponent } from './pages/check-in-park/check-in-park.component';
 import { UnannouncedCheckInComponent } from './pages/unannounced-check-in/unannounced-check-in.component';
+import { PreBookedCheckInComponent } from './pages/pre-booked-check-in/pre-booked-check-in.component';
+import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -137,8 +139,16 @@ const routes: Routes = [
     component: CheckInParkComponent
   },
   {
-    path: 'UnannoucedCheckIn',
+    path: 'unannouncedCheckIn',
     component: UnannouncedCheckInComponent
+  },
+  {
+    path: 'preBookedCheckIn',
+    component: PreBookedCheckInComponent
+  },
+  {
+    path: 'checkOutPark',
+    component: CheckoutParkComponent
   }
 ];
 

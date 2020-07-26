@@ -325,6 +325,8 @@ import { CheckInParkComponent } from './pages/check-in-park/check-in-park.compon
 import { ParkGateCountComponent } from './subcomponents/park-gate-count/park-gate-count.component';
 import { UnannouncedCheckInComponent } from './pages/unannounced-check-in/unannounced-check-in.component';
 import { PreBookedCheckInComponent } from './pages/pre-booked-check-in/pre-booked-check-in.component';
+import { SuccessModalComponent } from './modals/auxilliary-modals/success-modal/success-modal.component';
+import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.component';
 
 @NgModule({
   declarations: [
@@ -645,7 +647,9 @@ import { PreBookedCheckInComponent } from './pages/pre-booked-check-in/pre-booke
     CheckInParkComponent,
     ParkGateCountComponent,
     UnannouncedCheckInComponent,
-    PreBookedCheckInComponent
+    PreBookedCheckInComponent,
+    SuccessModalComponent,
+    CheckoutParkComponent
   ],
   entryComponents: [
     AddParkComponent,
