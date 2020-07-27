@@ -29,6 +29,10 @@ import { CheckInParkComponent } from './pages/check-in-park/check-in-park.compon
 import { UnannouncedCheckInComponent } from './pages/unannounced-check-in/unannounced-check-in.component';
 import { PreBookedCheckInComponent } from './pages/pre-booked-check-in/pre-booked-check-in.component';
 import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.component';
+import { CheckoutListComponent } from './pages/checkout-list/checkout-list.component';
+import { ChecInAccommodationComponent } from './pages/chec-in-accommodation/chec-in-accommodation.component';
+import { AssignAccComponent } from './pages/assign-acc/assign-acc.component';
+import { CheckInActivityComponent } from './pages/check-in-activity/check-in-activity.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -149,6 +153,22 @@ const routes: Routes = [
   {
     path: 'checkOutPark',
     component: CheckoutParkComponent
+  },
+  {
+    path: 'checkOutList',
+    component: CheckoutListComponent
+  },
+  {
+    path: 'checkInAccommodation',
+    component: ChecInAccommodationComponent
+  },
+  {
+    path: 'assignAccommodation',
+    component: AssignAccComponent
+  },
+  {
+    path: 'checkInActivity',
+    component: CheckInActivityComponent
   }
 ];
 
