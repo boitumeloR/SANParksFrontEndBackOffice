@@ -327,9 +327,15 @@ import { PreBookedCheckInComponent } from './pages/pre-booked-check-in/pre-booke
 import { SuccessModalComponent } from './modals/auxilliary-modals/success-modal/success-modal.component';
 import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.component';
 
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatStepper} from '@angular/material/stepper';
 import { CheckoutListComponent } from './pages/checkout-list/checkout-list.component';
+import { ChecInAccommodationComponent } from './pages/chec-in-accommodation/chec-in-accommodation.component';
+import { AssignAccComponent } from './pages/assign-acc/assign-acc.component';
+import {ChartModule} from 'angular2-chartjs';
+import { ConfirmModalComponent } from './modals/auxilliary-modals/confirm-modal/confirm-modal.component';
+import { CheckInActivityComponent } from './pages/check-in-activity/check-in-activity.component';
+import { AddEquipmentComponent } from './modals/add-equipment/add-equipment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -651,7 +657,13 @@ import { CheckoutListComponent } from './pages/checkout-list/checkout-list.compo
     PreBookedCheckInComponent,
     SuccessModalComponent,
     CheckoutParkComponent,
-    CheckoutListComponent
+    CheckoutListComponent,
+    ChecInAccommodationComponent,
+    AssignAccComponent,
+    ConfirmModalComponent,
+    CheckInActivityComponent,
+    AddEquipmentComponent,
+
   ],
   entryComponents: [
     AddParkComponent,
@@ -660,6 +672,8 @@ import { CheckoutListComponent } from './pages/checkout-list/checkout-list.compo
     AddParkGateComponent
   ],
   imports: [
+    MatSnackBarModule,
+    ChartModule,
     SimplebarAngularModule,
     ReactiveFormsModule,
     FormsModule,
@@ -670,7 +684,7 @@ import { CheckoutListComponent } from './pages/checkout-list/checkout-list.compo
     NgxMaterialTimepickerModule,
     MatNativeDateModule
   ],
-  providers: [MatSnackBar,MatStepper],
+  providers: [MatSnackBarModule, MatStepper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

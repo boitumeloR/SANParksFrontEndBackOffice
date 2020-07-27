@@ -1,0 +1,62 @@
+.book-form {
+    margin: 0 auto;
+    text-align: center;
+    padding: 40px;
+    border-radius: 10px;
+    width: 60%;
+    height: auto;
+    background-color: rgb(245, 245, 245);
+    mat-form-field {
+        margin: 0 auto;
+        display: block;
+        width: 300px;
+    }
+}
+  .radios {
+      margin: 0 auto;
+      text-align: center;
+  }
+  .example-radio-button {
+    margin: 5px;
+    display: inline-block;
+  }
+
+  .submit {
+      float: right;
+  }
+h1 {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    font-size: 50px;
+}
+table {
+    margin-top: 20px;
+    width: 100%;
+}
+.check {
+    text-align: center;
+    margin: 0 auto;
+    width: 60%;
+}
+#addBtn {
+    margin-top: 30px;
+    margin-left: auto;
+    display: inline-block;
+}
+.add {
+    float: right;
+}
+
+td {
+    width: auto;
+}
+
+.radios {
+    margin: 0 auto;
+    text-align: center;
+    button {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+    }
+}
