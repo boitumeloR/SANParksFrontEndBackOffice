@@ -1,0 +1,34 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Add Equipment </h2>
+    <form>
+    <mat-dialog-content appearance="mat-typography">
+      <div class="example-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Participant</mat-label>
+            <mat-select>
+                <mat-option value="Camp Site">Tumi</mat-option>
+                <mat-option value="Satellite Camp">Robyn </mat-option>
+                <mat-option value="Bushveld Camps">Jade </mat-option>
+            </mat-select>
+        </mat-form-field> 
+
+        <mat-form-field appearance="fill">
+          <mat-label>Equipment</mat-label>
+          <mat-select formControlName="park">
+              <mat-option value="Addo Elephant National Park">Bike</mat-option>
+          </mat-select>
+        </mat-form-field> 
+        <mat-form-field appearance="fill">
+          <mat-label>Price</mat-label>
+          <input matInput disabled value="R200.00">
+        </mat-form-field>
+      </div>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-raised-button color="warn" (click)="Cancel()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="Add()">Create</button>
+    </mat-dialog-actions>
+    </form>
+    </div>
+    
