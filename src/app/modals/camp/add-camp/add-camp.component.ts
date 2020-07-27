@@ -12,8 +12,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddCampComponent implements OnInit {
   addCampForm: FormGroup;
-  constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<AddCampComponent>) { }
+  constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
+              private dialogRef: MatDialogRef<AddCampComponent>) { }
 
   ngOnInit(): void {
     this.addCampForm = this.formBuilder.group({
@@ -21,7 +21,7 @@ export class AddCampComponent implements OnInit {
       campType : ['', Validators.required],
       park : ['', Validators.required],
       campDescription : ['', Validators.required],
-      campLocation: ['',Validators.required]
+      campLocation: ['', Validators.required]
     });
   }
 
@@ -38,7 +38,7 @@ export class AddCampComponent implements OnInit {
   confirmCancel(){
       const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
       confirmCancelDialog.afterClosed().subscribe(result => {
-        if(result == true){
+        if (result === true){
           this.dialogRef.close();
         }
       });

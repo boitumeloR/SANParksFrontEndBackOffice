@@ -1,0 +1,106 @@
+<app-park-gate-count></app-park-gate-count>
+<h1>Unannounced Check In</h1>
+<div class="check">
+    <button mat-raised-button color="primary" >Search Client </button>
+    <button mat-raised-button color="accent" >Register Client </button>
+    <button mat-raised-button color="primary" >Make Payment </button>
+    <button mat-raised-button color="accent" >Make Booking </button>
+</div>
+
+<mat-list>
+    <div mat-subheader>Booking Details</div>
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+      Park: Kruger National Park
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Date: 21 February 2020
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Check In Time: 14:00
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Guest Number: 3
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <div mat-subheader>Client Details</div>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Mr Boitumelo Rampete
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        ID:99999999999999
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Email Address: b@san.com
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        Cellphone: 073343542345
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        <Address>22 Morning Road</Address>
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon></mat-icon>
+        03000
+    </mat-list-item>
+  </mat-list>
+
+<h1>Guests</h1>
+<div class="example-container">
+
+  <button mat-fab color="primary" aria-label="Add season" class="add" (click)="addSeason()">
+    <mat-icon>add</mat-icon>
+  </button>
+
+</div>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Guest Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Season Column-->
+      <ng-container matColumnDef="surname">
+        <th mat-header-cell *matHeaderCellDef> Guest Surname</th>
+        <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Guest ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+      </ng-container>
+      <!-- Actions Column -->
+      <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef> Guest Age</th>
+        <td mat-cell *matCellDef="let element"> 
+            {{element.age}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef> Guest Country</th>
+        <td mat-cell *matCellDef="let element"> 
+            {{element.country}}
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 8, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <div class="check">
+    <button mat-raised-button color="primary">Generate QR Code </button>
+</div>

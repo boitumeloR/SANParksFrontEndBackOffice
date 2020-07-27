@@ -320,8 +320,22 @@ import { DeleteWildcardClusterUnsuccessfulComponent } from './modals/wildcard-cl
 import { DeleteWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/delete-wildcard-rate-unsuccessful/delete-wildcard-rate-unsuccessful.component';
 import { UpdateWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/update-wildcard-rate-unsuccessful/update-wildcard-rate-unsuccessful.component';
 import { AddWildcardRateUnsuccessfulComponent } from './modals/wildcard-rate/add-wildcard-rate-unsuccessful/add-wildcard-rate-unsuccessful.component';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { CheckInParkComponent } from './pages/check-in-park/check-in-park.component';
+import { ParkGateCountComponent } from './subcomponents/park-gate-count/park-gate-count.component';
+import { UnannouncedCheckInComponent } from './pages/unannounced-check-in/unannounced-check-in.component';
+import { PreBookedCheckInComponent } from './pages/pre-booked-check-in/pre-booked-check-in.component';
+import { SuccessModalComponent } from './modals/auxilliary-modals/success-modal/success-modal.component';
+import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.component';
+
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatStepper} from '@angular/material/stepper';
+import { CheckoutListComponent } from './pages/checkout-list/checkout-list.component';
+import { ChecInAccommodationComponent } from './pages/chec-in-accommodation/chec-in-accommodation.component';
+import { AssignAccComponent } from './pages/assign-acc/assign-acc.component';
+import {ChartModule} from 'angular2-chartjs';
+import { ConfirmModalComponent } from './modals/auxilliary-modals/confirm-modal/confirm-modal.component';
+import { CheckInActivityComponent } from './pages/check-in-activity/check-in-activity.component';
+import { AddEquipmentComponent } from './modals/add-equipment/add-equipment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -636,7 +650,20 @@ import {MatStepper} from '@angular/material/stepper';
     DeleteWildcardClusterUnsuccessfulComponent,
     DeleteWildcardRateUnsuccessfulComponent,
     UpdateWildcardRateUnsuccessfulComponent,
-    AddWildcardRateUnsuccessfulComponent
+    AddWildcardRateUnsuccessfulComponent,
+    CheckInParkComponent,
+    ParkGateCountComponent,
+    UnannouncedCheckInComponent,
+    PreBookedCheckInComponent,
+    SuccessModalComponent,
+    CheckoutParkComponent,
+    CheckoutListComponent,
+    ChecInAccommodationComponent,
+    AssignAccComponent,
+    ConfirmModalComponent,
+    CheckInActivityComponent,
+    AddEquipmentComponent,
+
   ],
   entryComponents: [
     AddParkComponent,
@@ -645,6 +672,8 @@ import {MatStepper} from '@angular/material/stepper';
     AddParkGateComponent
   ],
   imports: [
+    MatSnackBarModule,
+    ChartModule,
     SimplebarAngularModule,
     ReactiveFormsModule,
     FormsModule,
@@ -655,7 +684,7 @@ import {MatStepper} from '@angular/material/stepper';
     NgxMaterialTimepickerModule,
     MatNativeDateModule
   ],
-  providers: [MatSnackBar,MatStepper],
+  providers: [MatSnackBarModule, MatStepper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
