@@ -275,6 +275,31 @@
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>
+        <mat-divider></mat-divider>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Reporting
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option [routerLink]="[ '/weeklyBooking']">
+              Weekly Booking Report
+            </mat-list-option>
+            <br>
+            <mat-list-option [routerLink]="[ '/wildcardMembership']">
+              Wildcard Membership Report
+            </mat-list-option>
+            <br>
+            <mat-list-option [routerLink]="[ '/parkPerform']">
+              Park Performance Report
+            </mat-list-option>
+            <br>
+            <mat-list-option [routerLink]="[ '/bookingCheckin']">
+              Booking vs Check In Report
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
       </div>       
   </mat-sidenav>
     <mat-sidenav-content>

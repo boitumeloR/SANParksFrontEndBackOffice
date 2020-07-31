@@ -353,6 +353,10 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { AssignAccommodationComponent } from './modals/auxilliary-modals/assign-accommodation/assign-accommodation.component';
 import { CheckoutCampComponent } from './pages/checkout-camp/checkout-camp.component';
 import { UnassignAccComponent } from './unassign-acc/unassign-acc.component';
+import { ParkPerformanceComponent } from './pages/reports/park-performance/park-performance.component';
+import { WeeklyBookingComponent } from './pages/reports/weekly-booking/weekly-booking.component';
+import { WildcardReportComponent } from './pages/reports/wildcard-report/wildcard-report.component';
+import { BookingCheckinComponent } from './pages/reports/booking-checkin/booking-checkin.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -698,6 +702,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AssignAccommodationComponent,
     CheckoutCampComponent,
     UnassignAccComponent,
+    ParkPerformanceComponent,
+    WeeklyBookingComponent,
+    WildcardReportComponent,
+    BookingCheckinComponent,
   ],
   entryComponents: [
     AddParkComponent,
