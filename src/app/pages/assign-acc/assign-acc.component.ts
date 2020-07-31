@@ -30,12 +30,23 @@ export class AssignAccComponent implements OnInit {
       disableClose: true,
       data: {successMessage: 'You have successfully checked in'}
     });
+  }
+
+  CheckIn() {
+    const successDialog = this.dialog.open(SuccessModalComponent, {
+      disableClose: true,
+      data: {successMessage: 'You have successfully checked in'}
+    });
     successDialog.afterClosed().subscribe(res => {
       this.router.navigateByUrl('checkInAccommodation');
     });
   }
-
   Cancel() {
-
+    const successDialog = this.dialog.open(CancelAlertComponent, {
+      disableClose: true
+    });
+    successDialog.afterClosed().subscribe(res => {
+      this.router.navigateByUrl('checkInAccommodation');
+    });
   }
 }
