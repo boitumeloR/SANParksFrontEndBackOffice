@@ -127,6 +127,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "SANParksFrontEndBackOffice"
+    }
+  },
+  "defaultProject": "SANParksFrontEndBackOffice",
+  "cli": {
+    "analytics": false
+  }
 }
