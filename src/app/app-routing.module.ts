@@ -39,6 +39,10 @@ import { CardOptionComponent } from './pages/card-option/card-option.component';
 import { AvailabilityComponent } from './pages/availability/availability.component';
 import { CheckoutCampComponent } from './pages/checkout-camp/checkout-camp.component';
 import { UnassignAccComponent } from './unassign-acc/unassign-acc.component';
+import { ParkPerformanceComponent } from './pages/reports/park-performance/park-performance.component';
+import { WeeklyBookingComponent } from './pages/reports/weekly-booking/weekly-booking.component';
+import { WildcardReportComponent } from './pages/reports/wildcard-report/wildcard-report.component';
+import { BookingCheckinComponent } from './pages/reports/booking-checkin/booking-checkin.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -199,6 +203,22 @@ const routes: Routes = [
   {
     path: 'unassignAcc',
     component: UnassignAccComponent
+  },
+  {
+    path: 'parkPerform',
+    component: ParkPerformanceComponent
+  },
+  {
+    path: 'weeklyBooking',
+    component: WeeklyBookingComponent
+  },
+  {
+    path: 'wildcardMembership',
+    component: WildcardReportComponent,
+  },
+  {
+    path: 'bookingCheckin',
+    component: BookingCheckinComponent
   }
 ];
 

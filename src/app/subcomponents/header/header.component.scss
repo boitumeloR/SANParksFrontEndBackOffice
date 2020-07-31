@@ -29,7 +29,10 @@ mat-toolbar {
       margin-right: 2%;
     }
 }
-
+.mat-list-item {
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
 // Burger menu (responsive)
 #burger {
     display: inline-block;
