@@ -37,6 +37,7 @@ import { SearchBookingsComponent } from './pages/search-bookings/search-bookings
 import { PayOptionComponent } from './pages/pay-option/pay-option.component';
 import { CardOptionComponent } from './pages/card-option/card-option.component';
 import { AvailabilityComponent } from './pages/availability/availability.component';
+import { CheckoutCampComponent } from './pages/checkout-camp/checkout-camp.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -189,6 +190,10 @@ const routes: Routes = [
   {
     path: 'availableResults',
     component: AvailabilityComponent
+  },
+  {
+    path: 'checkoutCamp',
+    component: CheckoutCampComponent
   }
 ];
 
