@@ -1,29 +1,29 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
 import { AddParkComponent } from 'src/app/modals/park/add-park/add-park.component';
-import {MatDialog} from '@angular/material/dialog';
 import { ViewParkComponent } from 'src/app/modals/park/view-park/view-park.component';
 
-
-
 export interface PeriodicElement {
+  clientID: string;
   name: string;
-
+  surname: string;
+  bookingReference: string;
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Addo Elephant National Park'},
-  {name: 'Golden Gates Highlands National Park'},
-  {name: 'Kruger National Park'},
+  { clientID: '99999999999', name: 'Boitumelo', surname: 'Rampete', bookingReference: '2244'},
+  { clientID: '99999999999', name: 'Boitumelo', surname: 'Rampete', bookingReference: '2244'},
+  { clientID: '99999999999', name: 'Boitumelo', surname: 'Rampete', bookingReference: '2244'},
 ];
 @Component({
-  selector: 'app-park',
-  templateUrl: './park.component.html',
-  styleUrls: ['./park.component.scss']
+  selector: 'app-search-bookings',
+  templateUrl: './search-bookings.component.html',
+  styleUrls: ['./search-bookings.component.scss']
 })
-export class ParkComponent implements OnInit {
+export class SearchBookingsComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'view'];
+  displayedColumns: string[] = ['clientid', 'name', 'surname', 'reference', 'view'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -34,7 +34,7 @@ export class ParkComponent implements OnInit {
   }
 
   addPark() {
-    const dialogRef = this.dialog.open(AddParkComponent,{disableClose: true});
+    const dialogRef = this.dialog.open(AddParkComponent, {disableClose: true});
     // disableclose restricts the user from just clicking on the backdrop then the modal closes,
     // use it when entering info in a modal, so the user doesnt lose data they've
     //  been entering if they click outside the modal
@@ -46,7 +46,4 @@ export class ParkComponent implements OnInit {
   ViewPark(park) {
     const dialogRef = this.dialog.open(ViewParkComponent);
   }
-
-
-
 }

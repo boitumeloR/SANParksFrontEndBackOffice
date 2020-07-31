@@ -1,6 +1,23 @@
 <h1>Assign Accommodation</h1>
-<chart class="chart" type="horizontalBar" [data]="chartData" [options]="options"></chart>
+<mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>Assign Accommodation</mat-card-title>
+      <mat-card-subtitle>Accommodation Type: Bungalow CK6P</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+        <mat-form-field appearance="fill">
+            <mat-label>Available Accommodations</mat-label>
+            <mat-select [formControl]="toppings" multiple>
+              <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="warn" (click)="Cancel()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="Submit()">Assign Accommodation</button>
+    </mat-card-actions>
+  </mat-card>
 <div class="submit">
-    <button mat-raised-button color="warn" (click)="Cancel()">Cancel</button>
-    <button mat-raised-button color="primary" (click)="Submit()">Assign Accommodation</button>
+
 </div>
