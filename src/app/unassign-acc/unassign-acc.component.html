@@ -1,13 +1,13 @@
-<h1>Assign Accommodation</h1>
+<h1>Checkout Accommodation</h1>
 <mat-card class="example-card">
     <mat-card-header>
-      <mat-card-title>Assign Accommodation</mat-card-title>
+      <mat-card-title>Checkout Accommodation</mat-card-title>
       <mat-card-subtitle>Accommodation Type: Bungalow CK6P</mat-card-subtitle>
     </mat-card-header>
     
     <mat-card-content>
         <mat-form-field appearance="fill">
-            <mat-label>Available Accommodations</mat-label>
+            <mat-label>Checked In Accommodations    </mat-label>
             <mat-select [formControl]="toppings" multiple>
               <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
             </mat-select>
@@ -19,13 +19,13 @@
 
   <mat-card class="example-card">
     <mat-card-header>
-      <mat-card-title>Assign Accommodation</mat-card-title>
+      <mat-card-title>Checkout Accommodation</mat-card-title>
       <mat-card-subtitle>Accommodation Type: Campsite P4P</mat-card-subtitle>
     </mat-card-header>
     
     <mat-card-content>
         <mat-form-field appearance="fill">
-            <mat-label>Available Accommodations</mat-label>
+            <mat-label>Checked In Accommodations</mat-label>
             <mat-select [formControl]="toppings" multiple>
               <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
             </mat-select>
@@ -37,13 +37,13 @@
 
   <mat-card class="example-card">
     <mat-card-header>
-      <mat-card-title>Assign Accommodation</mat-card-title>
+      <mat-card-title>Checkout Accommodation</mat-card-title>
       <mat-card-subtitle>Accommodation Type: Chalet 54P</mat-card-subtitle>
     </mat-card-header>
     
     <mat-card-content>
         <mat-form-field appearance="fill">
-            <mat-label>Available Accommodations</mat-label>
+            <mat-label>Checked In Accommodations</mat-label>
             <mat-select [formControl]="toppings" multiple>
               <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
             </mat-select>
@@ -54,5 +54,5 @@
   </mat-card>
 <div class="submit">
     <button mat-raised-button color="warn" (click)="Cancel()">Cancel</button>   
-    <button mat-raised-button color="primary" (click)="CheckIn()">Check In</button>
+    <button mat-raised-button color="primary" (click)="Checkout()">Check Out</button>
 </div>

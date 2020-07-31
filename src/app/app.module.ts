@@ -352,6 +352,7 @@ import bootstrapPlugin from '@fullcalendar/bootstrap';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { AssignAccommodationComponent } from './modals/auxilliary-modals/assign-accommodation/assign-accommodation.component';
 import { CheckoutCampComponent } from './pages/checkout-camp/checkout-camp.component';
+import { UnassignAccComponent } from './unassign-acc/unassign-acc.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -696,6 +697,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AvailabilityComponent,
     AssignAccommodationComponent,
     CheckoutCampComponent,
+    UnassignAccComponent,
   ],
   entryComponents: [
     AddParkComponent,

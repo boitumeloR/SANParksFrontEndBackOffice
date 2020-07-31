@@ -38,6 +38,7 @@ import { PayOptionComponent } from './pages/pay-option/pay-option.component';
 import { CardOptionComponent } from './pages/card-option/card-option.component';
 import { AvailabilityComponent } from './pages/availability/availability.component';
 import { CheckoutCampComponent } from './pages/checkout-camp/checkout-camp.component';
+import { UnassignAccComponent } from './unassign-acc/unassign-acc.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -194,6 +195,10 @@ const routes: Routes = [
   {
     path: 'checkoutCamp',
     component: CheckoutCampComponent
+  },
+  {
+    path: 'unassignAcc',
+    component: UnassignAccComponent
   }
 ];
 
