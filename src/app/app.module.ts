@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from './material/material/material.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -327,6 +327,7 @@ import { PreBookedCheckInComponent } from './pages/pre-booked-check-in/pre-booke
 import { SuccessModalComponent } from './modals/auxilliary-modals/success-modal/success-modal.component';
 import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.component';
 
+import { NgxStripeModule } from 'ngx-stripe';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatStepper} from '@angular/material/stepper';
 import { CheckoutListComponent } from './pages/checkout-list/checkout-list.component';
@@ -336,7 +337,32 @@ import {ChartModule} from 'angular2-chartjs';
 import { ConfirmModalComponent } from './modals/auxilliary-modals/confirm-modal/confirm-modal.component';
 import { CheckInActivityComponent } from './pages/check-in-activity/check-in-activity.component';
 import { AddEquipmentComponent } from './modals/add-equipment/add-equipment.component';
+import { SearchBookingsComponent } from './pages/search-bookings/search-bookings.component';
+import { PayOptionComponent } from './pages/pay-option/pay-option.component';
+import { CashPaymentComponent } from './pages/cash-payment/cash-payment.component';
+import { CardOptionComponent } from './pages/card-option/card-option.component';
+import { environment } from 'src/environments/environment';
+import { AvailabilityComponent } from './pages/availability/availability.component';
+import { FullCalendarModule } from '@fullcalendar/angular'; // the main connector. must go first
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import bootstrapPlugin from '@fullcalendar/bootstrap';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { AssignAccommodationComponent } from './modals/auxilliary-modals/assign-accommodation/assign-accommodation.component';
+import { CheckoutCampComponent } from './pages/checkout-camp/checkout-camp.component';
+
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin,
+  timeGridPlugin,
+  listPlugin,
+  bootstrapPlugin
+]);
+
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
     HeaderComponent,
@@ -663,7 +689,13 @@ import { AddEquipmentComponent } from './modals/add-equipment/add-equipment.comp
     ConfirmModalComponent,
     CheckInActivityComponent,
     AddEquipmentComponent,
-
+    SearchBookingsComponent,
+    PayOptionComponent,
+    CashPaymentComponent,
+    CardOptionComponent,
+    AvailabilityComponent,
+    AssignAccommodationComponent,
+    CheckoutCampComponent,
   ],
   entryComponents: [
     AddParkComponent,
@@ -672,6 +704,7 @@ import { AddEquipmentComponent } from './modals/add-equipment/add-equipment.comp
     AddParkGateComponent
   ],
   imports: [
+    NgxStripeModule.forRoot(environment.stripeKey),
     MatSnackBarModule,
     ChartModule,
     SimplebarAngularModule,

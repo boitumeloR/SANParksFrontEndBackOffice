@@ -58,6 +58,10 @@
         <mat-icon mat-list-icon></mat-icon>
         <Address>Address: 22 Morning Road Pretoria 00002</Address>
     </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+      Wildcard Membership: Yes
+  </mat-list-item>
   </mat-list>
 <h1>Activities</h1>
 <div class="mat-elevation-z8">
@@ -162,6 +166,15 @@
   </mat-radio-button>
 </mat-radio-group>
 <button mat-raised-button color="accent">Make Payment</button>
+<label id="example-radio-group-label">Checked in Successfully?</label>
+<mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
+  <mat-radio-button class="example-radio-button" value="1">
+      Yes
+  </mat-radio-button>
+  <mat-radio-button  class="example-radio-button" value="2">
+    No
+  </mat-radio-button>
+</mat-radio-group>
 </div>
 <div class="submit">
     <button mat-raised-button color="warn" (click)="Cancel()">Cancel</button>

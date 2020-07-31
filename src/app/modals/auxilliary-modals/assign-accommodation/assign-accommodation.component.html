@@ -1,0 +1,30 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Assign Accommodation </h2>
+  <mat-dialog-content appearance="mat-typography">
+    <mat-list>
+        <div mat-subheader> Booking Details</div>
+        <mat-list-item>
+            Accommodation Name: Bungalow CK6P
+          </mat-list-item>
+          <mat-list-item>
+            Client: Mr Boitumelo Rampete
+          </mat-list-item>
+
+    </mat-list>
+    <div class="radios">
+        <label id="example-radio-group-label">Assign Accommodation/s to the client?</label><br>
+    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
+      <mat-radio-button class="example-radio-button" value="1">
+          Yes
+      </mat-radio-button>
+      <mat-radio-button  class="example-radio-button" value="2">
+        No
+      </mat-radio-button>
+    </mat-radio-group>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button [mat-dialog-close]="true" color="warn">Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="true" (click)="Assigned()" color="primary">Assigned</button>
+  </mat-dialog-actions>
+</div>

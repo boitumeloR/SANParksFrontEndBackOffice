@@ -6,9 +6,9 @@ import { CancelAlertComponent } from 'src/app/modals/auxilliary-modals/cancel-al
 import { SuccessModalComponent } from 'src/app/modals/auxilliary-modals/success-modal/success-modal.component';
 
 const ELEMENT_DATA: any[] = [
-  { name: 'Tumi', surname: 'Rampete', ID: '99999999999', age: 22, country: 'South Africa', paid: true},
-  { name: 'Jade', surname: 'Arumugam', ID: '99999999999', age: 22, country: 'South Africa', paid: true},
-  { name: 'Robyn', surname: 'Pillay', ID: '999999999999', age: 22, country: 'South Africa',  paid: false},
+  { name: 'Tumi', surname: 'Rampete', ID: '99999999999', age: 22, country: 'South Africa', paid: 'Yes'},
+  { name: 'Jade', surname: 'Arumugam', ID: '99999999999', age: 22, country: 'South Africa', paid: 'No'},
+  { name: 'Robyn', surname: 'Pillay', ID: '999999999999', age: 22, country: 'South Africa',  paid: 'Dependent'},
 ];
 @Component({
   selector: 'app-pre-booked-check-in',

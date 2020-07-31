@@ -33,6 +33,10 @@ import { CheckoutListComponent } from './pages/checkout-list/checkout-list.compo
 import { ChecInAccommodationComponent } from './pages/chec-in-accommodation/chec-in-accommodation.component';
 import { AssignAccComponent } from './pages/assign-acc/assign-acc.component';
 import { CheckInActivityComponent } from './pages/check-in-activity/check-in-activity.component';
+import { SearchBookingsComponent } from './pages/search-bookings/search-bookings.component';
+import { PayOptionComponent } from './pages/pay-option/pay-option.component';
+import { CardOptionComponent } from './pages/card-option/card-option.component';
+import { AvailabilityComponent } from './pages/availability/availability.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -169,6 +173,22 @@ const routes: Routes = [
   {
     path: 'checkInActivity',
     component: CheckInActivityComponent
+  },
+  {
+    path: 'searchBookings',
+    component: SearchBookingsComponent
+  },
+  {
+    path: 'payOption',
+    component: PayOptionComponent
+  },
+  {
+    path: 'cardOption',
+    component: CardOptionComponent
+  },
+  {
+    path: 'availableResults',
+    component: AvailabilityComponent
   }
 ];
 

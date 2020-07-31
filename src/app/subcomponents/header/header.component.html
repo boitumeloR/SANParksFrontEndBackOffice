@@ -206,6 +206,41 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
+              Booking
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option [routerLink]="[ '/availableResults']">
+              Make Booking 
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/searchBookings']">
+              Search Bookings
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+
+        <mat-divider></mat-divider>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Payments
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option [routerLink]="[ '/checkInPark']">
+              Pay Inspection Penalty
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/checkOutPark']">
+              Pay Vehicle Penalty
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+
+        <mat-divider></mat-divider>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
               Park Check - In
             </mat-panel-title>
           </mat-expansion-panel-header>
