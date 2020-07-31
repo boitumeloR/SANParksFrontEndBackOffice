@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { CancelAlertComponent } from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import { SuccessModalComponent } from 'src/app/modals/auxilliary-modals/success-modal/success-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 const ELEMENT_DATA: any[] = [
   { name: 'Tumi', surname: 'Rampete', ID: '99999999999', age: 22, country: 'South Africa', paid: true},
@@ -18,7 +19,7 @@ const ELEMENT_DATA: any[] = [
 })
 export class CheckoutCampComponent implements OnInit {
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private router: Router) { }
 
   displayedColumns: string[] = ['name', 'surname', 'id', 'age', 'country'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
@@ -43,9 +44,6 @@ export class CheckoutCampComponent implements OnInit {
   }
 
   Submit() {
-    const submitDialog = this.dialog.open(SuccessModalComponent, {
-      disableClose: true,
-      data: {successMessage: 'You have successfully checked out!'}
-    });
+    this.router.navigateByUrl('unassignAcc');
   }
 }

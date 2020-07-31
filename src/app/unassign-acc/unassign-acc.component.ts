@@ -31,13 +31,13 @@ export class UnassignAccComponent implements OnInit {
     });
   }
 
-  CheckIn() {
+  Checkout() {
     const successDialog = this.dialog.open(SuccessModalComponent, {
       disableClose: true,
-      data: {successMessage: 'You have successfully checked in'}
+      data: {successMessage: 'You have successfully checked out'}
     });
     successDialog.afterClosed().subscribe(res => {
-      this.router.navigateByUrl('checkInAccommodation');
+      this.router.navigateByUrl('');
     });
   }
   Cancel() {
