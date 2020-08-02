@@ -16,10 +16,10 @@ export class AddEmployeeConfirmationComponent implements OnInit {
   }
 
   successfulAddEmployee(){
-    const addDailyConservationFeeSuccessfulDialog = this.dialog.open(AddEmployeeSuccessfulComponent);
+    const addEmployeeSuccessfulDialog = this.dialog.open(AddEmployeeSuccessfulComponent);
   }
 
   unsuccessfulAddEmployee(){
-    const addDailyConservationFeeUnsuccessfulDialog = this.dialog.open(AddEmployeeUnsuccessfulComponent);
+    const addEmployeeUnsuccessfulDialog = this.dialog.open(AddEmployeeUnsuccessfulComponent);
   }
 } 
