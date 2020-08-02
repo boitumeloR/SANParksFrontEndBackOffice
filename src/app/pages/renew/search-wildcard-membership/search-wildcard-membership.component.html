@@ -1,0 +1,104 @@
+
+<form [formGroup]="searchWildcardMembershipForm">
+    <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>Search Wildcard Membership</mat-card-title>
+          <mat-card-subtitle>Please provide a wildcard number.</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="example-container">
+                <mat-form-field appearance="fill">
+                    <mat-label>Wildcard Number</mat-label>
+                    <input matInput formControlName="wildcardNumber">
+                    <mat-hint>Search by wildcard by number</mat-hint>
+                </mat-form-field>             
+            </div>    
+        <mat-card-actions align="end">
+          <button mat-raised-button color="primary" (click)="searchWildcardMembership()">Search</button>
+        </mat-card-actions>
+      </mat-card-content>
+      </mat-card>
+    </form>
+    <br>
+    <mat-card class="centerDiv" *ngIf="wildcardFound">
+    <mat-card-content>
+    <div class="dialog">
+      <form>
+        <h2 mat-dialog-title>Wildcard Details</h2>
+        <mat-dialog-content appearance="mat-typography">
+        <div class="example-container">
+          <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput value="Jade Delene Arumugan" readonly>
+            <mat-hint>Client whom is the main member</mat-hint>
+          </mat-form-field>   
+          <mat-form-field appearance="fill">
+            <mat-label>Idenity Number</mat-label>
+            <input matInput value="9811255614085" readonly>
+          </mat-form-field>   
+          <mat-form-field appearance="fill">
+            <mat-label>Email Address</mat-label>
+            <input matInput value="jadedelene@gmail.com" readonly>
+            <mat-hint>Email address for communication purposes.</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Wildcard Category</mat-label>
+            <input matInput value="Couple" readonly>
+            <mat-hint>Associated wildcard category</mat-hint>
+          </mat-form-field>    
+          <mat-form-field appearance="fill">
+            <mat-label>Wildcard Cluster</mat-label>
+            <input matInput value="Msini Cluster" readonly>
+            <mat-hint>Associated wildcard cluster</mat-hint>
+          </mat-form-field> 
+          <mat-form-field appearance="fill">
+            <mat-label>Expiry Date</mat-label>
+            <input matInput value="19/02/2021" readonly>
+            <mat-hint>Date of wildcard expiry</mat-hint>
+          </mat-form-field>  
+          <mat-form-field appearance="fill">
+            <mat-label>Wildcard Status</mat-label>
+            <input matInput value="Pending" readonly>
+            <mat-hint>Status of the wildcard</mat-hint>
+          </mat-form-field> 
+          <mat-accordion >
+            <mat-expansion-panel>
+                <mat-expansion-panel-header> 
+                    Dependent 1
+                </mat-expansion-panel-header>
+                <section>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Name</mat-label>
+                        <input matInput value="Blessing Thulani" readonly>
+                      </mat-form-field> 
+                      <mat-form-field appearance="fill">
+                        <mat-label>Surname</mat-label>
+                        <input matInput value="Makumbila" readonly>
+                      </mat-form-field> 
+                      <mat-form-field appearance="fill">
+                        <mat-label>Idenity Code</mat-label>
+                        <input matInput value="9846975040987" readonly>   
+                      </mat-form-field> 
+                      <mat-form-field appearance="fill">
+                        <mat-label>Cellphone Number</mat-label>
+                        <input matInput value="0445299759" readonly>                 
+                      </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Email Address</mat-label>
+                        <input matInput value="btmakumbila@gmail.com" readonly>               
+                      </mat-form-field>
+                </section>
+            </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        </mat-dialog-content>  
+        <br> 
+        <mat-dialog-actions align="end">
+            <button mat-raised-button color="warn" (click)="updateWildcard()">Update</button>
+            <button mat-raised-button color="primary" (click)="renewWildcard()">Renew</button>
+        </mat-dialog-actions> 
+      </form>
+    </div>
+    </mat-card-content>
+    </mat-card>
+    

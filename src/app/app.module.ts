@@ -357,6 +357,22 @@ import { ParkPerformanceComponent } from './pages/reports/park-performance/park-
 import { WeeklyBookingComponent } from './pages/reports/weekly-booking/weekly-booking.component';
 import { WildcardReportComponent } from './pages/reports/wildcard-report/wildcard-report.component';
 import { BookingCheckinComponent } from './pages/reports/booking-checkin/booking-checkin.component';
+import { ClientComponent } from './pages/client/client.component';
+import { AddClientComponent } from './modals/client/add-client/add-client.component';
+import { AddClientConfirmationComponent } from './modals/client/add-client-confirmation/add-client-confirmation.component';
+import { AddClientSuccessfulComponent } from './modals/client/add-client-successful/add-client-successful.component';
+import { AddClientUnsuccesfulComponent } from './modals/client/add-client-unsuccesful/add-client-unsuccesful.component';
+import { ViewClientComponent } from './modals/client/view-client/view-client.component';
+import { UpdateClientComponent } from './modals/client/update-client/update-client.component';
+import { UpdateClientConfirmationComponent } from './modals/client/update-client-confirmation/update-client-confirmation.component';
+import { UpdateClientSuccessfulComponent } from './modals/client/update-client-successful/update-client-successful.component';
+import { UpdateClientUnsuccessfulComponent } from './modals/client/update-client-unsuccessful/update-client-unsuccessful.component';
+import { PurchaseWildcardComponent } from './pages/Purchase Wildcard/purchase-wildcard/purchase-wildcard.component';
+import { PurchaseWildcardConfirmationComponent } from './pages/Purchase Wildcard/purchase-wildcard-confirmation/purchase-wildcard-confirmation.component';
+import { SuccessfulWildcardPurchaseComponent } from './pages/Purchase Wildcard/successful-wildcard-purchase/successful-wildcard-purchase.component';
+import { SearchWildcardMembershipComponent } from './pages/renew/search-wildcard-membership/search-wildcard-membership.component';
+import { RenewWildcardMembershipComponent } from './pages/renew/renew-wildcard-membership/renew-wildcard-membership.component';
+import { UpdateWildcardStatusConfirmationComponent } from './pages/renew/update-wildcard-status-confirmation/update-wildcard-status-confirmation.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -706,6 +722,22 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     WeeklyBookingComponent,
     WildcardReportComponent,
     BookingCheckinComponent,
+    ClientComponent,
+    AddClientComponent,
+    AddClientConfirmationComponent,
+    AddClientSuccessfulComponent,
+    AddClientUnsuccesfulComponent,
+    ViewClientComponent,
+    UpdateClientComponent,
+    UpdateClientConfirmationComponent,
+    UpdateClientSuccessfulComponent,
+    UpdateClientUnsuccessfulComponent,
+    PurchaseWildcardComponent,
+    PurchaseWildcardConfirmationComponent,
+    SuccessfulWildcardPurchaseComponent,
+    SearchWildcardMembershipComponent,
+    RenewWildcardMembershipComponent,
+    UpdateWildcardStatusConfirmationComponent,
   ],
   entryComponents: [
     AddParkComponent,
