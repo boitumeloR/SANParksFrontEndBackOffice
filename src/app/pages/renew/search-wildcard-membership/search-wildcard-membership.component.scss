@@ -1,0 +1,44 @@
+mat-card-content {
+    padding-right: 25px;
+    padding-left: 25px;
+ }
+ 
+ mat-card{
+     width: auto;
+     height: auto;
+     display: inline-block;
+ }
+ .mat-card-title{
+     margin: 0 auto;
+     text-align: center;
+ }
+
+ mat-expansion-panel{
+    display: block;
+    width: 300px;
+    margin-bottom: 20px;
+    .mat-form-field{
+        width: 250px;
+    }
+ }
+
+ mat-form-field {
+     display: block;
+     width: 300px;
+     margin-bottom: 20px;
+ }
+ 
+ h2{
+     text-align: center;
+ }
+ 
+ mat-card-header{
+     position: relative;
+     margin-right: auto;
+     margin-left: auto;
+ }
+ 
+ button{
+     float: right;
+     margin-left: 15px;
+ }

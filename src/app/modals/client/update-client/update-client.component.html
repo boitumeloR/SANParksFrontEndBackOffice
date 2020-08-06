@@ -1,0 +1,70 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Update Client</h2>
+    <form [formGroup]="updateClientForm">
+      <mat-dialog-content appearance="mat-typography">
+        <div class="example-container">    
+            <mat-form-field appearance="fill">
+                <mat-label>Title</mat-label>
+                <mat-select formControlName="title">
+                    <mat-option value="Mr">Mr</mat-option>
+                    <mat-option value="Mrs">Mrs</mat-option>
+                    <mat-option value="Miss">Miss</mat-option>
+                </mat-select>
+            </mat-form-field>            
+            <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Surname</mat-label>
+                <input matInput formControlName="surname">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Country</mat-label>
+                <mat-select formControlName="country">
+                    <mat-option value="South Africa">South Africa</mat-option>
+                    <mat-option value="Mozambique">Mozambique</mat-option>
+                    <mat-option value="Swaziland">Swaziland</mat-option>
+                </mat-select>
+            </mat-form-field>         
+            <mat-form-field appearance="fill">
+                <mat-label>Identity Number</mat-label>
+                <input matInput formControlName="identityNumber">
+                <mat-hint>Provide a valid identity number</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Cellphone Number</mat-label>
+                <input matInput formControlName="cellphoneNumber">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Email Address</mat-label>
+                <input matInput formControlName="emailAddress">
+            </mat-form-field>
+            <mat-form-field hintLabel="Max 200 characters" appearance="fill">
+                <mat-label>Address Line 1</mat-label>
+                <textarea matInput maxlength="200" cdkTextareaAutosize formControlName="addressLine1" #addressLine1></textarea>
+                <mat-hint>&nbsp; {{addressLine1.value.length}}/200</mat-hint>
+            </mat-form-field>
+            <mat-form-field hintLabel="Max 200 characters"appearance="fill">
+                <mat-label>Address Line 2</mat-label>
+                <textarea matInput maxlength="200" formControlName="addressLine2" #addressLine2 cdkTextareaAutosize ></textarea>
+                <mat-hint>&nbsp;{{addressLine2.value.length}}/200</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Postal Code</mat-label>
+                <input matInput formControlName="postalCode">
+            </mat-form-field>
+        </div>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="updateClient()">Update</button>
+    </mat-dialog-actions>
+    </form>
+    </div>
+    
+    
+    
+    
+    

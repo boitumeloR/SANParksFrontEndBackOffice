@@ -180,6 +180,12 @@
             <mat-list-option [routerLink]="[ '/Wildcard-Rate']">
               Wildcard Rate
             </mat-list-option>
+            <mat-list-option [routerLink]="[ '/Purhase-Wildcard']">
+              Purhase Wildcard
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/Search-Wildcard-Membership']">
+              Wildcard Membership
+            </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>
 
@@ -197,6 +203,44 @@
             </mat-list-option>
             <mat-list-option [routerLink]="[ '/Employee']">
               Employee
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/Client']">
+              Client
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+
+        <mat-divider></mat-divider>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Booking
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option [routerLink]="[ '/availableResults']">
+              Make Booking 
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/searchBookings']">
+              Search Bookings
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+
+        <mat-divider></mat-divider>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Payments
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option [routerLink]="[ '/checkInPark']">
+              Pay Inspection Penalty
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/checkOutPark']">
+              Pay Vehicle Penalty
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>
@@ -234,6 +278,34 @@
             </mat-list-option>
             <mat-list-option [routerLink]="[ '/checkOutList']">
               Generate Checkout List
+            </mat-list-option>
+            <mat-list-option [routerLink]="[ '/checkoutCamp']">
+              Checkout Camp
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+        <mat-divider></mat-divider>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Reporting
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option [routerLink]="[ '/weeklyBooking']">
+              Weekly Booking Report
+            </mat-list-option>
+            <br>
+            <mat-list-option [routerLink]="[ '/wildcardMembership']">
+              Wildcard Membership Report
+            </mat-list-option>
+            <br>
+            <mat-list-option [routerLink]="[ '/parkPerform']">
+              Park Performance Report
+            </mat-list-option>
+            <br>
+            <mat-list-option [routerLink]="[ '/bookingCheckin']">
+              Booking vs Check In Report
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>

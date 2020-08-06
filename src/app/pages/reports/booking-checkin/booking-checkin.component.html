@@ -1,0 +1,45 @@
+<h1>Bookings vs. Check In Report</h1>
+<mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>Parameters</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+        <mat-form-field appearance="fill">
+            <mat-label>Park</mat-label>
+            <mat-select>
+              <mat-option>Kruger National Park</mat-option>
+              <mat-option>Kruger National Park</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Camp</mat-label>
+            <mat-select>
+              <mat-option>Skukuza Rest Camp</mat-option>
+              <mat-option>Skukuza Rest Camp</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="picker2">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+          </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="Submit()">Generate</button>
+    </mat-card-actions>
+  </mat-card>   
+  <div class="send">
+    <button mat-raised-button color="primary">Send Report</button>
+</div>
+
+<iframe src="assets/images/BookingVsCheckIn.pdf" frameborder="0" height="100%" width="100%"></iframe>

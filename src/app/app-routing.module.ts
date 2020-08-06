@@ -33,6 +33,20 @@ import { CheckoutListComponent } from './pages/checkout-list/checkout-list.compo
 import { ChecInAccommodationComponent } from './pages/chec-in-accommodation/chec-in-accommodation.component';
 import { AssignAccComponent } from './pages/assign-acc/assign-acc.component';
 import { CheckInActivityComponent } from './pages/check-in-activity/check-in-activity.component';
+import { SearchBookingsComponent } from './pages/search-bookings/search-bookings.component';
+import { PayOptionComponent } from './pages/pay-option/pay-option.component';
+import { CardOptionComponent } from './pages/card-option/card-option.component';
+import { AvailabilityComponent } from './pages/availability/availability.component';
+import { CheckoutCampComponent } from './pages/checkout-camp/checkout-camp.component';
+import { UnassignAccComponent } from './unassign-acc/unassign-acc.component';
+import { ParkPerformanceComponent } from './pages/reports/park-performance/park-performance.component';
+import { WeeklyBookingComponent } from './pages/reports/weekly-booking/weekly-booking.component';
+import { WildcardReportComponent } from './pages/reports/wildcard-report/wildcard-report.component';
+import { BookingCheckinComponent } from './pages/reports/booking-checkin/booking-checkin.component';
+import {ClientComponent} from './pages/client/client.component';
+import {PurchaseWildcardComponent} from './pages/Purchase Wildcard/purchase-wildcard/purchase-wildcard.component';
+import {SearchWildcardMembershipComponent} from './pages/renew/search-wildcard-membership/search-wildcard-membership.component'
+
 const routes: Routes = [
   {
     path: 'Park',
@@ -169,6 +183,58 @@ const routes: Routes = [
   {
     path: 'checkInActivity',
     component: CheckInActivityComponent
+  },
+  {
+    path: 'searchBookings',
+    component: SearchBookingsComponent
+  },
+  {
+    path: 'payOption',
+    component: PayOptionComponent
+  },
+  {
+    path: 'cardOption',
+    component: CardOptionComponent
+  },
+  {
+    path: 'availableResults',
+    component: AvailabilityComponent
+  },
+  {
+    path: 'checkoutCamp',
+    component: CheckoutCampComponent
+  },
+  {
+    path: 'unassignAcc',
+    component: UnassignAccComponent
+  },
+  {
+    path: 'parkPerform',
+    component: ParkPerformanceComponent
+  },
+  {
+    path: 'weeklyBooking',
+    component: WeeklyBookingComponent
+  },
+  {
+    path: 'wildcardMembership',
+    component: WildcardReportComponent,
+  },
+  {
+    path: 'bookingCheckin',
+    component: BookingCheckinComponent
+  },
+  {
+    path: 'Client',
+    component: ClientComponent
+  },
+  {
+    path: 'Purhase-Wildcard',
+    component: PurchaseWildcardComponent
+  },
+  {
+    path: 'Search-Wildcard-Membership',
+    component: SearchWildcardMembershipComponent
   }
 ];
 

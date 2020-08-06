@@ -45,7 +45,6 @@ export class ParkComponent implements OnInit {
 
   ViewPark(park) {
     const dialogRef = this.dialog.open(ViewParkComponent);
-   
   }
 
 
