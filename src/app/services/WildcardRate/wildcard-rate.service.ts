@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { dateSelectionJoinTransformer } from '@fullcalendar/core';
 
 export interface WildcardRate {
   WildcardRateID: number,
   WildcardClusterID: number,
   WildcardCategoryID: number,
-  RateAmount: CurrencyPipe,
+  RateAmount: DecimalPipe,
   DateEffective: Date,
   
 }
