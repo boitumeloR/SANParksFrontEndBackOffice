@@ -4,8 +4,15 @@ import { HttpClient } from '@angular/common/http';
 
 
 export interface Park {
-  ParkName: string;
-  ParkLocation: string;
+  ParkID: number,
+  ParkName: string,
+  ParkLocation: string,
+  ParkDescription: string
+}
+
+export interface ParkDropdown {
+  ParkID: number,
+  ParkName: string
 }
 
 @Injectable({
