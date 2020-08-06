@@ -24,4 +24,20 @@ export class ParkService {
   GetWhatever(park, service) {
     return this.http.get(`${service}/api/Booking`);
   }
+
+  CreatePark(Park, link){
+
+  }
+
+  ReadPark(link){
+
+  }
+
+  UpdatePark(Park, link){
+
+  }
+
+  DeletePark(ParkID){
+
+  }
 }
