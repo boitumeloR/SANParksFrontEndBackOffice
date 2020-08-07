@@ -5,12 +5,12 @@ import { DateRange } from '@fullcalendar/core';
 
 
 export interface CampGateTime{
-  CampGateTimeID: Number,
-  CampID: Number,
-  CampOpenTime: TimeRanges,
-  CampCloseTime: TimeRanges,
-  startDate: DateRange,
-  endDate: DateRange
+  CampGateTimeID: Number;
+  CampID: Number;
+  CampOpenTime: TimeRanges;
+  CampCloseTime: TimeRanges;
+  startDate: DateRange;
+  endDate: DateRange;
 }
 
 @Injectable({

@@ -3,12 +3,12 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 
 export interface Activity{
-  ActivityID: Number,
-  ActivityTypeID: Number,
-  ActivityDescription: string,
-  ActivityMaxCapacity: Number,
-  AgeMin:Number,
-  AgeMax:Number,
+  ActivityID: Number;
+  ActivityTypeID: Number;
+  ActivityDescription: string;
+  ActivityMaxCapacity: Number;
+  AgeMin:Number;
+  AgeMax:Number;
 }
 
 export interface ActivityDropDown{

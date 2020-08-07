@@ -3,19 +3,17 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 
 export interface AmenityPenalty{
-  PenaltyID: Number,
-  AmenityID: Number,
-  AccommodationTypeID: Number,
-  AccommodationID: Number,
-  UnitNumber: Number,
-  CampID: Number,
-  AmenityStatusID: Number,
-  AmenityDescription: string,
-  AmenityPenaltyAmount: Number,
-  DateEffective: Date
+  PenaltyID: Number;
+  AmenityID: Number;
+  AccommodationTypeID: Number;
+  AccommodationID: Number;
+  UnitNumber: Number;
+  CampID: Number;
+  AmenityStatusID: Number;
+  AmenityDescription: string;
+  AmenityPenaltyAmount: Number;
+  DateEffective: Date;
 }
-
-
 
 @Injectable({
   providedIn: 'root'

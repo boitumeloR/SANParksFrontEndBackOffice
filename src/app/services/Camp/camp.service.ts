@@ -3,17 +3,17 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service'
 
 export interface Camp{
-  CampID: Number,
-  ParkID: Number,
-  CampTypeID: Number,
-  CampDescription: string,
-  CampLocation: string,
-  CampName: string
+  CampID: Number;
+  ParkID: Number;
+  CampTypeID: Number;
+  CampDescription: string;
+  CampLocation: string;
+  CampName: string;
 }
 
 export interface CampDropDown{
-  CampID: Number,
-  CampName: string
+  CampID: Number;
+  CampName: string;
 }
 
 @Injectable({

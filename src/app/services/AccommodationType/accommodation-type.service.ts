@@ -3,13 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 
 export interface AccommodationType{
-  AccommodationTypeID: Number,
-  AccTypeName: string,
-  AccTypeDescription: string,
-  NumBeds: number,
-  NumBaths: number,
-  AdultLimit: number,
- ChildLimit: number
+  AccommodationTypeID: Number;
+  AccTypeName: string;
+  AccTypeDescription: string;
+  NumBeds: number;
+  NumBaths: number;
+  AdultLimit: number;
+ ChildLimit: number;
 }
 
 export interface AccommodationTypeDropDown{

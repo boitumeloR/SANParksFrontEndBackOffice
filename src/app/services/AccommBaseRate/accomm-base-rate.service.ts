@@ -3,12 +3,12 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service'
 
 export interface AccommodationTypeBaseRate{
-  BaseRateID: Number,
-  AccomodationTypeID: Number,
-  CampID: Number,
-  BaseRateAmount : Number,
- StartDate: Date,
- EndDate: Date
+  BaseRateID: Number;
+  AccomodationTypeID: Number;
+  CampID: Number;
+  BaseRateAmount : Number;
+ StartDate: Date;
+ EndDate: Date;
  
  }
  
