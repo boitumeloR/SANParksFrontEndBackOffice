@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {GlobalService} from '../Global/global.service'
+import {GlobalService} from '../Global/global.service';
 
 export interface Accommodation{
-  AccommodationID: Number;
-  UnitNumber: Number;
-  AccomodationTypeID: Number;
-  CampID: Number;
+  AccommodationID: number;
+  UnitNumber: number;
+  AccomodationTypeID: number;
+  CampID: number;
 }
 
 
@@ -15,19 +15,18 @@ export interface Accommodation{
 })
 export class AccommodationService {
 
-  constructor(private global: GlobalService ,private http:HttpClient ) { }
+  constructor(private global: GlobalService , private http: HttpClient ) { }
 
-  createAccommodation (Accommodation, link){
-
-  }
-  readAccommodation (link){
+  createAccommodation(Accommodation, link){
 
   }
-  updateAccommodation (updatedAccommodation, link){  
+  readAccommodation(link){
 
   }
-  deleteAccommodation (AccommodationID, link){
-    
+  updateAccommodation(updatedAccommodation, link){
+
+  }
+  deleteAccommodation(AccommodationID, link){
   }
 
 }

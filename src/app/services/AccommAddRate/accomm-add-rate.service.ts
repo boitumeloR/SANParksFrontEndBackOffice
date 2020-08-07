@@ -3,10 +3,10 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service'
 
 export interface AccommodationTypeAddRate{
-  AddRateID: Number;
-  AccomodationTypeID: Number;
-  AdultRateAmount: Number;
-  ChildRateAmount : Number;
+  AddRateID: number;
+  AccomodationTypeID: number;
+  AdultRateAmount: number;
+  ChildRateAmount: number;
  DateEffective: Date;
  }
 
@@ -15,19 +15,17 @@ export interface AccommodationTypeAddRate{
 })
 export class AccommAddRateService {
 
-  constructor(private global: GlobalService ,private http:HttpClient) { }
+  constructor(private global: GlobalService , private http: HttpClient) { }
 
-  createAccommodationTypeAddRate (AccommodationTypeAddRate, link){
-
-  }
-  readAccommodationTypeAddRate (link){
+  createAccommodationTypeAddRate(AccommodationTypeAddRate, link){
 
   }
-  updateAccommodationTypeAddRate (updatedAccommodationTypeAddRate, link){  
+  readAccommodationTypeAddRate(link){
 
   }
-  deleteAccommodationTypeAddRate (AddRateID, link){
-    
+  updateAccommodationTypeAddRate(updatedAccommodationTypeAddRate, link){
+  }
+  deleteAccommodationTypeAddRate(AddRateID, link){
 
 }
 }

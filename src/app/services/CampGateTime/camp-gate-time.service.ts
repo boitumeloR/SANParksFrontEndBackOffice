@@ -5,8 +5,8 @@ import { DateRange } from '@fullcalendar/core';
 
 
 export interface CampGateTime{
-  CampGateTimeID: Number;
-  CampID: Number;
+  CampGateTimeID: number;
+  CampID: number;
   CampOpenTime: TimeRanges;
   CampCloseTime: TimeRanges;
   startDate: DateRange;
@@ -18,7 +18,7 @@ export interface CampGateTime{
 })
 export class CampGateTimeService {
 
-  constructor(private global: GlobalService ,private http:HttpClient ) { }
+  constructor(private global: GlobalService , private http: HttpClient ) { }
   createCampGateTime(CampGateTime, link){
 
   }

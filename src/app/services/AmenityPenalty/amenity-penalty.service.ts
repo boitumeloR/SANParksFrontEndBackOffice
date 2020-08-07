@@ -3,15 +3,15 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 
 export interface AmenityPenalty{
-  PenaltyID: Number;
-  AmenityID: Number;
-  AccommodationTypeID: Number;
-  AccommodationID: Number;
-  UnitNumber: Number;
-  CampID: Number;
-  AmenityStatusID: Number;
+  PenaltyID: number;
+  AmenityID: number;
+  AccommodationTypeID: number;
+  AccommodationID: number;
+  UnitNumber: number;
+  CampID: number;
+  AmenityStatusID: number;
   AmenityDescription: string;
-  AmenityPenaltyAmount: Number;
+  AmenityPenaltyAmount: number;
   DateEffective: Date;
 }
 
@@ -20,18 +20,18 @@ export interface AmenityPenalty{
 })
 export class AmenityPenaltyService {
 
-  constructor(private global: GlobalService ,private http:HttpClient) { }
+  constructor(private global: GlobalService , private http: HttpClient) { }
 
   createAmenityPenalty(AmenityPenalty, link){
 
   }
-  readAmenityPenalty (link){
+  readAmenityPenalty(link){
 
   }
-  updateAmenityPenalty (updatedAmenityPenalty, link){  
+  updateAmenityPenalty(updatedAmenityPenalty, link){
 
   }
-  deleteAmenityPenalty (PenaltyID, link){
+  deleteAmenityPenalty(PenaltyID, link){
 
   }
 

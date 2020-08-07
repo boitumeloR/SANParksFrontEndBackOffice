@@ -3,12 +3,12 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 
 export interface ActivityType{
-  ActivityTypeID: Number;
+  ActivityTypeID: number;
   ActivityTypeDescription: string;
 }
 
 export interface ActivityTypeDropDown{
-  ActivityTypeID: Number;
+  ActivityTypeID: number;
   ActivityTypeDescription: string;
 }
 
@@ -18,18 +18,18 @@ export interface ActivityTypeDropDown{
 })
 export class ActivityTypeService {
 
-  constructor(private global: GlobalService ,private http:HttpClient) { }
+  constructor(private global: GlobalService , private http: HttpClient) { }
 
   createActivityType(ActivityType, link){
 
   }
-  readActivityType (link){
+  readActivityType(link){
 
   }
-  updateActivityType(updatedActivityType, link){  
+  updateActivityType(updatedActivityType, link){
 
   }
-  deleteActivityType (ActivityTypeID, link){
+  deleteActivityType(ActivityTypeID, link){
 
   }
 

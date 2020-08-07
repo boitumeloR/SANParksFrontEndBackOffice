@@ -3,17 +3,17 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 
 export interface ActivityRate{
-  ActivityRateID: Number;
-  ActivityID: Number;
-  CampID: Number;
-  RateTypeID: Number;
-  AdultRateAmount:Number;
-  ChildRateAmount:Number;
-  VehicleAmount: Number;
-  HutAmount: Number;
-  PersonAmount: Number;
-  BikeAmount: Number;
-  NoBikeAmount: Number;
+  ActivityRateID: number;
+  ActivityID: number;
+  CampID: number;
+  RateTypeID: number;
+  AdultRateAmount: number;
+  ChildRateAmount: number;
+  VehicleAmount: number;
+  HutAmount: number;
+  PersonAmount: number;
+  BikeAmount: number;
+  NoBikeAmount: number;
   startDate: Date;
   endDate: Date;
 }
@@ -23,18 +23,18 @@ export interface ActivityRate{
 })
 export class ActivityRateService {
 
-  constructor(private global: GlobalService ,private http:HttpClient) { }
+  constructor(private global: GlobalService , private http: HttpClient) { }
 
   createActivityRate(ActivityRate, link){
 
   }
-  readActivityRate (link){
+  readActivityRate(link){
 
   }
-  updateActivityRate(updatedActivityRate, link){  
+  updateActivityRate(updatedActivityRate, link){
 
   }
-  deleteActivityRate (ActivityRateID, link){
+  deleteActivityRate(ActivityRateID, link){
 
   }
 

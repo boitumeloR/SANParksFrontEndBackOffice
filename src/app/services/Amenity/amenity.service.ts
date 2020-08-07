@@ -3,14 +3,14 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 
 export interface Amenity{
-  PenaltyID: Number;
-  AmenityID: Number;
-  AmenityTypeID: Number;
-  AccommodationTypeID: Number;
-  AccommodationID: Number;
-  UnitNumber: Number;
-  CampID: Number;
-  AmenityStatusID: Number;
+  PenaltyID: number;
+  AmenityID: number;
+  AmenityTypeID: number;
+  AccommodationTypeID: number;
+  AccommodationID: number;
+  UnitNumber: number;
+  CampID: number;
+  AmenityStatusID: number;
   AmenityDescription: string;
 }
 
@@ -19,17 +19,17 @@ export interface Amenity{
 })
 export class AmenityService {
 
-  constructor(private global: GlobalService ,private http:HttpClient) { }
+  constructor(private global: GlobalService , private http: HttpClient) { }
   createAmenity(Amenity, link){
 
   }
-  readAmenity (link){
+  readAmenity(link){
 
   }
-  updateAmenity (updatedAmenity, link){  
+  updateAmenity(updatedAmenity, link){
 
   }
-  deleteAmenity (AmenityID, link){
+  deleteAmenity(AmenityID, link){
 
   }
 

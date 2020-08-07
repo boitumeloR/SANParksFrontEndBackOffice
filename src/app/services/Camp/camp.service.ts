@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {GlobalService} from '../Global/global.service'
+import {GlobalService} from '../Global/global.service';
 
 export interface Camp{
-  CampID: Number;
-  ParkID: Number;
-  CampTypeID: Number;
+  CampID: number;
+  ParkID: number;
+  CampTypeID: number;
   CampDescription: string;
   CampLocation: string;
   CampName: string;
 }
 
 export interface CampDropDown{
-  CampID: Number;
+  CampID: number;
   CampName: string;
 }
 
@@ -21,7 +21,7 @@ export interface CampDropDown{
 })
 export class CampService {
 
-  constructor(private global: GlobalService ,private http:HttpClient ) { }
+  constructor(private global: GlobalService , private http: HttpClient ) { }
 
   createCamp(Camp, link){
 

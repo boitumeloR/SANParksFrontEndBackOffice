@@ -3,12 +3,12 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 
 export interface AmenityType{
-  AmenityTypeID: Number;
+  AmenityTypeID: number;
   AmenityTypeName: string;
 }
 
 export interface AmenityTypeDropDown{
-  AmenityTypeID: Number;
+  AmenityTypeID: number;
   AmenityTypeName: string;
 }
 
@@ -17,18 +17,18 @@ export interface AmenityTypeDropDown{
 })
 export class AmenityTypeService {
 
-  constructor(private global: GlobalService ,private http:HttpClient) { }
+  constructor(private global: GlobalService , private http: HttpClient) { }
 
   createAmenityType(AmenityType, link){
 
   }
-  readAmenityType (link){
+  readAmenityType(link){
 
   }
-  updateAmenityType (updatedAmenityType, link){  
+  updateAmenityType(updatedAmenityType, link){
 
   }
-  deleteAmenityType (AmenityTypeID, link){
+  deleteAmenityType(AmenityTypeID, link){
 
   }
 

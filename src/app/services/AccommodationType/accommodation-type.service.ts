@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 
 export interface AccommodationType{
-  AccommodationTypeID: Number;
+  AccommodationTypeID: number;
   AccTypeName: string;
   AccTypeDescription: string;
   NumBeds: number;
@@ -13,8 +13,8 @@ export interface AccommodationType{
 }
 
 export interface AccommodationTypeDropDown{
-  AccommodationTypeID: Number,
-  AccTypeName: string
+  AccommodationTypeID: number;
+  AccTypeName: string;
 }
 
 @Injectable({
@@ -22,19 +22,17 @@ export interface AccommodationTypeDropDown{
 })
 export class AccommodationTypeService {
 
-  constructor(private global: GlobalService ,private http:HttpClient ) { }
+  constructor(private global: GlobalService , private http: HttpClient ) { }
 
   createAccommodationType(AccommodationType, link){
 
   }
-  readAccommodationType (link){
+  readAccommodationType(link){
 
   }
-  updateAccommodationType (updatedAccommodationType, link){  
-
+  updateAccommodationType(updatedAccommodationType, link){
   }
-  deleteAccommodationType (AccommodationTypeID, link){
-    
-  }
+  deleteAccommodationType(AccommodationTypeID, link){
+    }
 
 }
