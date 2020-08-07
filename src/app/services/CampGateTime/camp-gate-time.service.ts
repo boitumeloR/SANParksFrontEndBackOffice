@@ -19,7 +19,7 @@ export interface CampGateTime{
 export class CampGateTimeService {
 
   constructor(private global: GlobalService ,private http:HttpClient ) { }
-  createCampGateTime(campGateTime, link){
+  createCampGateTime(CampGateTime, link){
 
   }
   readCampgateTime(link){
@@ -28,7 +28,7 @@ export class CampGateTimeService {
   updateCampGateTime(updatedCampGateTime, link){
 
   }
-  deleteCampGateTime(campGateTimeID, link){
+  deleteCampGateTime(CampGateTimeID, link){
 
 }
 }

@@ -23,7 +23,7 @@ export class CampService {
 
   constructor(private global: GlobalService ,private http:HttpClient ) { }
 
-  createCamp(camp, link){
+  createCamp(Camp, link){
 
   }
   readCamp(link){
@@ -32,7 +32,7 @@ export class CampService {
   updateCamp(updatedCamp, link){
 
   }
-  deleteCamp(campID, link){
+  deleteCamp(CampID, link){
 
 }
 }
