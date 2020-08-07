@@ -3,17 +3,17 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 
 export interface Activity{
-  ActivityID: Number;
-  ActivityTypeID: Number;
+  ActivityID: number;
+  ActivityTypeID: number;
   ActivityDescription: string;
-  ActivityMaxCapacity: Number;
-  AgeMin:Number;
-  AgeMax:Number;
+  ActivityMaxCapacity: number;
+  AgeMin: number;
+  AgeMax: number;
 }
 
 export interface ActivityDropDown{
-  ActivityID: Number,
-  ActivityDescription: string
+  ActivityID: number;
+  ActivityDescription: number;
 }
 
 @Injectable({
@@ -21,18 +21,18 @@ export interface ActivityDropDown{
 })
 export class ActivityService {
 
-  constructor(private global: GlobalService ,private http:HttpClient) { }
+  constructor(private global: GlobalService , private http: HttpClient) { }
 
   createActivity(Activity, link){
 
   }
-  readActivity (link){
+  readActivity(link){
 
   }
-  updateActivity(updatedActivity, link){  
+  updateActivity(updatedActivity, link){
 
   }
-  deleteActivity (ActivityID, link){
+  deleteActivity(ActivityID, link){
 
   }
 
