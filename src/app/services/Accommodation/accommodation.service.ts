@@ -3,10 +3,10 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service'
 
 export interface Accommodation{
-  AccommodationID: Number,
-  UnitNumber: Number,
-  AccomodationTypeID: Number,
-  CampID: Number
+  AccommodationID: Number;
+  UnitNumber: Number;
+  AccomodationTypeID: Number;
+  CampID: Number;
 }
 
 

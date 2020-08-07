@@ -3,13 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 
 export interface ActivityType{
-  ActivityTypeID: Number,
-  ActivityTypeDescription: string,
+  ActivityTypeID: Number;
+  ActivityTypeDescription: string;
 }
 
 export interface ActivityTypeDropDown{
-  ActivityTypeID: Number,
-  ActivityTypeDescription: string
+  ActivityTypeID: Number;
+  ActivityTypeDescription: string;
 }
 
 

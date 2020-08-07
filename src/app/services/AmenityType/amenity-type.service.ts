@@ -3,13 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 
 export interface AmenityType{
-  AmenityTypeID: Number,
-  AmenityTypeName: string,
+  AmenityTypeID: Number;
+  AmenityTypeName: string;
 }
 
 export interface AmenityTypeDropDown{
-  AmenityTypeID: Number,
-  AmenityTypeName: string
+  AmenityTypeID: Number;
+  AmenityTypeName: string;
 }
 
 @Injectable({
