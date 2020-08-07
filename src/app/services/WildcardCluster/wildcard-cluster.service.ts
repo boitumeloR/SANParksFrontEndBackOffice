@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export interface WildcardCluster {
-  WildcardClusterID: number,
-  WildcardClusterDescription: string,
-  WildcardClusterName: string,
-  
+  WildcardClusterID: number;
+  WildcardClusterDescription: string;
+  WildcardClusterName: string;
 }
 
-//used in CategoryCluster, ParkCluster
+// used in CategoryCluster, ParkCluster
 export interface WildcardClusterDropDown {
-  WildcardClusterID: number,
-  WildcardClusterName: string,
+  WildcardClusterID: number;
+  WildcardClusterName: string;
 }
 
 @Injectable({
@@ -38,3 +37,4 @@ export class WildcardClusterService {
   }
 }
 
+// I want to see if this works
