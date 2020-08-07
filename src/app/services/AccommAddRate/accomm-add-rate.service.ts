@@ -26,7 +26,7 @@ export class AccommAddRateService {
   updateAccommodationTypeAddRate (updatedAccommodationTypeAddRate, link){  
 
   }
-  deleteAccommodationTypeAddRate (BaseRateID, link){
+  deleteAccommodationTypeAddRate (AddRateID, link){
     
 
 }
