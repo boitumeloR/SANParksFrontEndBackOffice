@@ -29,9 +29,7 @@ export class ParkService {
   }
 
   ReadPark(link): Observable<Park[]>{
-    return this.http.get<Park[]>(`${link}/api/Park/getPark`).pipe(map(result => {
-      result.ParkName;
-    }))
+    return this.http.get<Park[]>(`${link}/api/Park/getPark`);
   }
 
   UpdatePark(Park, link){

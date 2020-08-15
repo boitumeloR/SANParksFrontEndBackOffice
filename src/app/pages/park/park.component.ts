@@ -21,8 +21,7 @@ export class ParkComponent implements OnInit {
   park$: Observable<Park[]> ;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog, private parkService: ParkService, private globalService: GlobalService
-              ) { }
+  constructor(private dialog: MatDialog, private parkService: ParkService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.getParks();
@@ -31,7 +30,7 @@ export class ParkComponent implements OnInit {
   getParks(): void{
     this.park$ = this.parkService.ReadPark(this.globalService.GetServer());
     this.park$.subscribe(data => {
-      this.dataSource = data.ParkName;
+      this.dataSource = data;
     });
   }
   addPark() {
@@ -44,9 +43,5 @@ export class ParkComponent implements OnInit {
   ViewPark(park) {
     localStorage.setItem('park', JSON.stringify(park));
     const dialogRef = this.dialog.open(ViewParkComponent);
-
-  //  this.dialogRefUpdate.afterClosed().subscribe(result => {
-  //      this.getParks();
-  //  });
   }
 }

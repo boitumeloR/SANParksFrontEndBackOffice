@@ -9,6 +9,7 @@ import { Park, ParkService } from 'src/app/services/Park/park.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import {UpdateParkSuccessfulComponent} from 'src/app/modals/park/update-park-successful/update-park-successful.component';
 import {UpdateParkUnsuccessfulComponent} from 'src/app/modals/park/update-park-unsuccessful/update-park-unsuccessful.component';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-update-park',
   templateUrl: './update-park.component.html',
@@ -17,6 +18,8 @@ import {UpdateParkUnsuccessfulComponent} from 'src/app/modals/park/update-park-u
 export class UpdateParkComponent implements OnInit {
   updateParkForm: FormGroup;
   park: Park;
+
+  parks$: Observable<Park[]>;
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<UpdateParkComponent>, private parkService: ParkService,
               private globalService: GlobalService) { }
@@ -57,6 +60,7 @@ export class UpdateParkComponent implements OnInit {
             }
             else{
              const updateParkSuccessfulDialog = this.dialog.open(UpdateParkSuccessfulComponent);
+             this.parks$ = this.parkService.ReadPark(this.globalService.GetServer());
             }
           });
         }
