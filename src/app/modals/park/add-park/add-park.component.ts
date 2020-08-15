@@ -6,8 +6,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Park, ParkService } from 'src/app/services/Park/park.service';
-import { GlobalService } from 'src/app/services/global.service';
-
+import { GlobalService } from 'src/app/services/Global/global.service';
+import {AddParkSuccessfulComponent} from 'src/app/modals/park/add-park-successful/add-park-successful.component';
+import {AddParkUnsuccessfulComponent} from 'src/app/modals/park/add-park-unsuccessful/add-park-unsuccessful.component';
 @Component({
   selector: 'app-add-park',
   templateUrl: './add-park.component.html',
@@ -46,7 +47,14 @@ export class AddParkComponent implements OnInit {
             ParkLongitude: this.addParkForm.get('parkLongitude').value,
             ParkDescription: this.addParkForm.get('parkDescription').value
           };
-           this.parkService.CreatePark(newPark, this.globalService.GetServer());
+           this.parkService.CreatePark(newPark, this.globalService.GetServer()).subscribe((addResult: any) => {
+            if (addResult.Error){
+             const addParkUnsuccessfulDialog = this.dialog.open(AddParkUnsuccessfulComponent);
+            }
+            else{
+             const addParkSuccessfulDialog = this.dialog.open(AddParkSuccessfulComponent);
+            }
+          });
         }
       });
     }

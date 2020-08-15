@@ -7,7 +7,8 @@ import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Park, ParkService } from 'src/app/services/Park/park.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
-
+import {UpdateParkSuccessfulComponent} from 'src/app/modals/park/update-park-successful/update-park-successful.component';
+import {UpdateParkUnsuccessfulComponent} from 'src/app/modals/park/update-park-unsuccessful/update-park-unsuccessful.component';
 @Component({
   selector: 'app-update-park',
   templateUrl: './update-park.component.html',
@@ -50,7 +51,14 @@ export class UpdateParkComponent implements OnInit {
             ParkLongitude: this.updateParkForm.get('parkLongitude').value,
             ParkDescription: this.updateParkForm.get('parkDescription').value
           };
-           this.parkService.UpdatePark(park, this.globalService.GetServer());
+           this.parkService.UpdatePark(park, this.globalService.GetServer()).subscribe((updateResult: any) => {
+            if (updateResult.Error){
+             const updateParkUnsuccessfulDialog = this.dialog.open(UpdateParkUnsuccessfulComponent);
+            }
+            else{
+             const updateParkSuccessfulDialog = this.dialog.open(UpdateParkSuccessfulComponent);
+            }
+          });
         }
       });
     }

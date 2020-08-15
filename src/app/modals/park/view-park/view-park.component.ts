@@ -3,8 +3,9 @@ import {UpdateParkComponent} from 'src/app/modals/park/update-park/update-park.c
 import {DeleteParkComponent} from 'src/app/modals/park/delete-park/delete-park.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Park, ParkService } from 'src/app/services/Park/park.service';
-import { GlobalService } from 'src/app/services/global.service';
-
+import { GlobalService } from 'src/app/services/Global/global.service';
+import { DeleteParkSuccessfulComponent } from 'src/app/modals/park/delete-park-successful/delete-park-successful.component';
+import { DeleteParkUnsuccessfulComponent } from 'src/app/modals/park/delete-park-unsuccessful/delete-park-unsuccessful.component';
 @Component({
   selector: 'app-view-park',
   templateUrl: './view-park.component.html',
@@ -25,7 +26,14 @@ export class ViewParkComponent implements OnInit {
     const deleteParkConfirmation =  this.dialog.open(DeleteParkComponent);
     deleteParkConfirmation.afterClosed().subscribe(result => {
       if (result === true){
-        this.parkService.DeletePark(this.park.ParkID, this.globalService.GetServer());
+        this.parkService.DeletePark(this.park.ParkID, this.globalService.GetServer()).subscribe((deleteResult: any) => {
+          if (deleteResult.Error){
+            const deleteParkUnsuccessfulDialog = this.dialog.open(DeleteParkUnsuccessfulComponent);
+          }
+          else{
+            const deleteParkSuccessfulDialog = this.dialog.open(DeleteParkSuccessfulComponent);
+          }
+        });
       }
     });
   }

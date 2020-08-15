@@ -3,8 +3,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { AddAccomodationComponent } from 'src/app/modals/accomodation/add-accomodation/add-accomodation.component';
 import { ViewAccomodationComponent } from 'src/app/modals/accomodation/view-accomodation/view-accomodation.component';
-import {MatDialog} from '@angular/material/dialog'; 
-import { GlobalService } from 'src/app/services/global.service';
+import {MatDialog} from '@angular/material/dialog';
 import { ParkService, Park } from 'src/app/services/Park/park.service';
 
 export interface PeriodicElement {
@@ -24,19 +23,18 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AccomodationComponent implements OnInit {
 
-  displayedColumns: string[] = ['unitNumber','accomodationType','camp','view'];
+  displayedColumns: string[] = ['unitNumber', 'accomodationType', 'camp', 'view'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   park: Park;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog, private server: GlobalService, private parkServ: ParkService) { }
+  constructor(private dialog: MatDialog, private parkServ: ParkService) { }
 
   ngOnInit(): void {
-    
   }
 
   addAccomodation(){
-    const addAccomodationDialog = this.dialog.open(AddAccomodationComponent,{disableClose: true});
+    const addAccomodationDialog = this.dialog.open(AddAccomodationComponent, {disableClose: true});
   }
   viewAccomodation(accomodation){
     const viewAccomodationDialog = this.dialog.open(ViewAccomodationComponent);

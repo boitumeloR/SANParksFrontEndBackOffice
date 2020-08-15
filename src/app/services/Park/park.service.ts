@@ -1,15 +1,8 @@
 import { Injectable } from '@angular/core';
-import {GlobalService} from '../global.service';
+import {GlobalService} from 'src/app/services/Global/global.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable , Subject} from 'rxjs';
-import { tap} from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
-import {AddParkSuccessfulComponent} from 'src/app/modals/park/add-park-successful/add-park-successful.component';
-import {AddParkUnsuccessfulComponent} from 'src/app/modals/park/add-park-unsuccessful/add-park-unsuccessful.component';
-import {UpdateParkSuccessfulComponent} from 'src/app/modals/park/update-park-successful/update-park-successful.component';
-import {UpdateParkUnsuccessfulComponent} from 'src/app/modals/park/update-park-unsuccessful/update-park-unsuccessful.component';
-import { DeleteParkSuccessfulComponent } from 'src/app/modals/park/delete-park-successful/delete-park-successful.component';
-import { DeleteParkUnsuccessfulComponent } from 'src/app/modals/park/delete-park-unsuccessful/delete-park-unsuccessful.component';
+import { Observable } from 'rxjs';
+
 export interface Park {
   ParkID: number;
   ParkName: string;
@@ -28,53 +21,24 @@ export interface ParkDropdown {
   providedIn: 'root'
 })
 export class ParkService {
-  constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog) { }
+  constructor(private global: GlobalService, private http: HttpClient) { }
 
-  private refresh = new Subject<void>();
-  get requestReferesh(){
-    return this.refresh;
-  }
 
   CreatePark(Park, link){
-    return this.http.post('https://localhost:44371/api/Park/CreatePark', Park).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
-      if (addResult.Error){
-       const addParkUnsuccessfulDialog = this.dialog.open(AddParkUnsuccessfulComponent);
-      }
-      else{
-       const addParkSuccessfulDialog = this.dialog.open(AddParkSuccessfulComponent);
-      }
-    });
+    return this.http.post(`${link}/api/Park/CreatePark`, Park);
   }
 
-  ReadPark(link){
-     return this.http.get('https://localhost:44371/api/Park/getPark');
+  ReadPark(link): Observable<Park[]>{
+    return this.http.get<Park[]>(`${link}/api/Park/getPark`).pipe(map(result => {
+      result.ParkName;
+    }))
   }
 
   UpdatePark(Park, link){
-    return this.http.post('https://localhost:44371/api/Park/UpdatePark', Park).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
-      if (updateResult.Error){
-       const updateParkUnsuccessfulDialog = this.dialog.open(UpdateParkUnsuccessfulComponent);
-      }
-      else{
-       const updateParkSuccessfulDialog = this.dialog.open(UpdateParkSuccessfulComponent);
-      }
-    });
+    return this.http.post(`${link}/api/Park/UpdatePark`, Park);
   }
 
   DeletePark(ParkID, link){
-    return this.http.delete(`https://localhost:44371/api/Park/DeletePark?parkID=${ParkID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((deleteResult: any) => {
-      if (deleteResult.Error){
-        const deleteParkUnsuccessfulDialog = this.dialog.open(DeleteParkUnsuccessfulComponent);
-      }
-      else{
-        const deleteParkSuccessfulDialog = this.dialog.open(DeleteParkSuccessfulComponent);
-      }
-    });
+    return this.http.delete(`${link}/api/Park/DeletePark?parkID=${ParkID}`);
   }
 }
