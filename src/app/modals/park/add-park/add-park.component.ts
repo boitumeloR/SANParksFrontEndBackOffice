@@ -9,6 +9,8 @@ import { Park, ParkService } from 'src/app/services/Park/park.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import {AddParkSuccessfulComponent} from 'src/app/modals/park/add-park-successful/add-park-successful.component';
 import {AddParkUnsuccessfulComponent} from 'src/app/modals/park/add-park-unsuccessful/add-park-unsuccessful.component';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-park',
   templateUrl: './add-park.component.html',
@@ -18,6 +20,7 @@ export class AddParkComponent implements OnInit {
   addParkForm: FormGroup;
   newPark: Park;
 
+  parks$: Observable<any>;
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<AddParkComponent>, private parkService: ParkService, private globalService: GlobalService) { }
 

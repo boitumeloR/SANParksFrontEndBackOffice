@@ -18,7 +18,7 @@ export class ParkComponent implements OnInit {
 
   displayedColumns: string[] = ['ParkName', 'view'];
   dataSource: any;
-  park$: Observable<Park[]> ;
+  park$: Observable<any> ;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private parkService: ParkService, private globalService: GlobalService) { }
@@ -30,7 +30,7 @@ export class ParkComponent implements OnInit {
   getParks(): void{
     this.park$ = this.parkService.ReadPark(this.globalService.GetServer());
     this.park$.subscribe(data => {
-      this.dataSource = data;
+      this.dataSource = data.Parks;
     });
   }
   addPark() {

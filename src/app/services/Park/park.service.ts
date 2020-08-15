@@ -28,8 +28,8 @@ export class ParkService {
     return this.http.post(`${link}/api/Park/CreatePark`, Park);
   }
 
-  ReadPark(link): Observable<Park[]>{
-    return this.http.get<Park[]>(`${link}/api/Park/getPark`);
+  ReadPark(link): Observable<any>{
+    return this.http.get<any>(`${link}/api/Park/getPark`);
   }
 
   UpdatePark(Park, link){
