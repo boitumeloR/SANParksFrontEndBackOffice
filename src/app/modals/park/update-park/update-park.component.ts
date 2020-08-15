@@ -61,6 +61,7 @@ export class UpdateParkComponent implements OnInit {
             else{
              const updateParkSuccessfulDialog = this.dialog.open(UpdateParkSuccessfulComponent);
              this.parks$ = this.parkService.ReadPark(this.globalService.GetServer());
+             this.parks$.subscribe();
             }
           });
         }
