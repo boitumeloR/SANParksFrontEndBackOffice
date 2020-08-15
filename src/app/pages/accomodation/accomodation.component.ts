@@ -32,8 +32,7 @@ export class AccomodationComponent implements OnInit {
   constructor(private dialog: MatDialog, private server: GlobalService, private parkServ: ParkService) { }
 
   ngOnInit(): void {
-    const serv = this.server.GetServer();
-    this.parkServ.GetWhatever({tumi: 'Boitumelo'}, serv);
+    
   }
 
   addAccomodation(){
