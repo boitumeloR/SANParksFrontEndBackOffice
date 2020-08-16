@@ -3,7 +3,7 @@ import {UpdateParkComponent} from 'src/app/modals/park/update-park/update-park.c
 import {DeleteParkComponent} from 'src/app/modals/park/delete-park/delete-park.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Park, ParkService } from 'src/app/services/Park/park.service';
-import { GlobalService } from 'src/app/services/global.service';
+import {GlobalService} from 'src/app/services/Global/global.service';
 
 @Component({
   selector: 'app-view-park',

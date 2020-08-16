@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {GlobalService} from '../global.service';
+import {GlobalService} from 'src/app/services/Global/global.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable , Subject} from 'rxjs';
 import { tap} from 'rxjs/operators';
@@ -36,7 +36,7 @@ export class ParkService {
   }
 
   CreatePark(Park, link){
-    return this.http.post('https://localhost:44371/api/Park/CreatePark', Park).pipe( tap(
+    return this.http.post(`${link}/api/Park/CreatePark`, Park).pipe( tap(
       () => {this.refresh.next(); }
     )).subscribe((addResult: any) => {
       if (addResult.Error){
@@ -49,11 +49,11 @@ export class ParkService {
   }
 
   ReadPark(link){
-     return this.http.get('https://localhost:44371/api/Park/getPark');
+     return this.http.get(`${link}/api/Park/getPark`);
   }
 
   UpdatePark(Park, link){
-    return this.http.post('https://localhost:44371/api/Park/UpdatePark', Park).pipe( tap(
+    return this.http.post(`${link}/api/Park/UpdatePark`, Park).pipe( tap(
       () => {this.refresh.next(); }
     )).subscribe((updateResult: any) => {
       if (updateResult.Error){
@@ -66,7 +66,7 @@ export class ParkService {
   }
 
   DeletePark(ParkID, link){
-    return this.http.delete(`https://localhost:44371/api/Park/DeletePark?parkID=${ParkID}`).pipe( tap(
+    return this.http.delete(`${link}/api/Park/DeletePark?parkID=${ParkID}`).pipe( tap(
       () => {this.refresh.next(); }
     )).subscribe((deleteResult: any) => {
       if (deleteResult.Error){

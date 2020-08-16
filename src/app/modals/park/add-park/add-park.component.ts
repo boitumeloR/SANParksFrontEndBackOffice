@@ -6,7 +6,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Park, ParkService } from 'src/app/services/Park/park.service';
-import { GlobalService } from 'src/app/services/global.service';
+import {GlobalService} from 'src/app/services/Global/global.service';
 
 @Component({
   selector: 'app-add-park',
