@@ -4,18 +4,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import { AddParkGateComponent } from 'src/app/modals/park-gate/add-park-gate/add-park-gate.component';
 import { ViewParkGateComponent } from 'src/app/modals/park-gate/view-park-gate/view-park-gate.component';
 import {MatDialog} from '@angular/material/dialog';
+import { ParkGateService } from 'src/app/services/ParkGate/park-gate.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
 
-export interface PeriodicElement {
-  name: string;
-  park: string;
-  location: string;
-
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Orpen Gate',park: "Kruger National Park",location: '24.5762° S, 31.0579° E'},
-  {name: 'Matyholweni Entrance Gate', park: "Addo Elephant National Park", location: '33.4057 S 25.4744 E'},
-  {name: 'Malelane Gate', park: "Kruger National Park", location: '25.4618° S, 31.5329° E'},
-];
 @Component({
   selector: 'app-park-gate',
   templateUrl: './park-gate.component.html',
@@ -23,25 +14,30 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class ParkGateComponent implements OnInit {
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private parkGateService: ParkGateService, private globalService: GlobalService) { }
 
-  displayedColumns: string[] = ['name','park','location','view'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['ParkGateName', 'ParkName', 'ParkGateMax', 'view'];
+  dataSource;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.parkGateService.requestReferesh.subscribe(() => {this.getParkGates(); });
+    this.getParkGates();
   }
 
   addParkGate(){
-    const addParkGateDialog =  this.dialog.open(AddParkGateComponent,{disableClose: true});
-
-    addParkGateDialog.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    const addParkGateDialog =  this.dialog.open(AddParkGateComponent, {disableClose: true});
   }
 
   viewParkGate(parkGate){
+    localStorage.setItem('parkGate', JSON.stringify(parkGate));
     const viewParkGateDialog = this.dialog.open(ViewParkGateComponent);
+  }
+
+  getParkGates(){
+    this.parkGateService.ReadParkGate(this.globalService.GetServer()).subscribe((result: any) => {
+      this.dataSource = new MatTableDataSource(result.ParkGates);
+      this.dataSource.paginator = this.paginator;
+    });
   }
 }

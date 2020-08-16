@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {GlobalService} from 'src/app/services/Global/global.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable , Subject} from 'rxjs';
+import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import {AddParkSuccessfulComponent} from 'src/app/modals/park/add-park-successful/add-park-successful.component';
