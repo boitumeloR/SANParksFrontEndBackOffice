@@ -5,7 +5,7 @@ import { AddParkComponent } from 'src/app/modals/park/add-park/add-park.componen
 import {MatDialog} from '@angular/material/dialog';
 import { ViewParkComponent } from 'src/app/modals/park/view-park/view-park.component';
 import { ParkService, Park } from 'src/app/services/Park/park.service';
-import { GlobalService } from 'src/app/services/global.service';
+import {GlobalService} from 'src/app/services/Global/global.service';
 
 @Component({
   selector: 'app-park',
