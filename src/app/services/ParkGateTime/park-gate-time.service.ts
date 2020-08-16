@@ -3,16 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Time } from '@angular/common';
 
 export interface ParkGateTime {
-  PTimeID: number,
-  ParkGateID: number,
-  ParkOpenTime: TimeRanges,
-  ParkCloseTime: TimeRanges, 
-  StartDate: Date,
-  EndDate: Date,
+  PTimeID: number;
+  ParkGateID: number;
+  ParkOpenTime: TimeRanges;
+  ParkCloseTime: TimeRanges;
+  StartDate: Date;
+  EndDate: Date;
 }
-//SeasonParkGateTime
+// SeasonParkGateTime
 export interface ParkGateTimeDropDown {
-  PTimeID: number,
+  PTimeID: number;
 }
 
 @Injectable({

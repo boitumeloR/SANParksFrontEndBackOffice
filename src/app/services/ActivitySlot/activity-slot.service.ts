@@ -4,16 +4,16 @@ import { Time } from '@angular/common';
 import { DateRange } from '@fullcalendar/core';
 
 export interface ActivitySlot {
-  ActivitySlotID: number,
-  ActivityID: number,
-  CampID: number,
-  SlotTime: TimeRanges,
-  StartDate: Date,
-  EndDate: Date,
+  ActivitySlotID: number;
+  ActivityID: number;
+  CampID: number;
+  SlotTime: TimeRanges;
+  StartDate: Date;
+  EndDate: Date;
 }
-//used in ActivityDate
+// Used in ActivityDate
 export interface ActivitySlotDropDown {
-  ActivitySlotID: number,
+  ActivitySlotID: number;
 }
 
 @Injectable({

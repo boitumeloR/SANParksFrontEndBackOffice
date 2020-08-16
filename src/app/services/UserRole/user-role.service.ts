@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export interface UserRole {
-  UserRoleID: number,
-  UserRoleName: string,
-  UserRoleDescription: string,
+  UserRoleID: number;
+  UserRoleName: string;
+  UserRoleDescription: string;
 }
 export interface UserRoleDropDown {
-  UserRoleID: number,
-  UserRoleName: string,
+  UserRoleID: number;
+  UserRoleName: string;
 }
 
 @Injectable({

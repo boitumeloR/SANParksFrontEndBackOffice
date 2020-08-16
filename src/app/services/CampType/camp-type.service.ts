@@ -2,15 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export interface CampType {
-  CampTypeID: number,
-  CampTypeDescription: string,
-  CampTypeName: string,
- 
+  CampTypeID: number;
+  CampTypeDescription: string;
+  CampTypeName: string;
 }
-//Camp
+// Camp
 export interface CampTypeDropDown {
-  CampTypeID: number,
-  CampTypeName: string,
+  CampTypeID: number;
+  CampTypeName: string;
 }
 
 @Injectable({
