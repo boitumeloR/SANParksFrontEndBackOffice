@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export interface Season {
-  SeasonID: number,
-  SeasonName: string,
-  StartDate: Date,
-  EndDate: Date,
+  SeasonID: number;
+  SeasonName: string;
+  StartDate: Date;
+  EndDate: Date;
 }
-//SeasonDate, SeasonParkGateTime, SeasonCampGateTime, BaseRateSeason
+// SeasonDate, SeasonParkGateTime, SeasonCampGateTime, BaseRateSeason
 export interface SeasonDropDown {
-  SeasonID: number,
-  SeasonName: string,
+  SeasonID: number;
+  SeasonName: string;
 }
 
 @Injectable({
@@ -31,6 +31,4 @@ export class SeasonService {
   UpdateSeason(Season, link){
 
   }
-
- 
 }

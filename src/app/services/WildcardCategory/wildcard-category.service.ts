@@ -2,18 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export interface WildcardCategory {
-  WildcardCategoryID: number,
-  CategoryDescription: string,
-  CategoryName: string,
-  ChildLimit: number,
-  AdultLimit: number,
-  
+  WildcardCategoryID: number;
+  CategoryDescription: string;
+  CategoryName: string;
+  ChildLimit: number;
+  AdultLimit: number;
 }
 
-//used in CategoryCluster
+// Used in CategoryCluster
 export interface WildcardCategoryDropDown {
-  WildcardCategoryID: number,
-  CategoryName: string,
+  WildcardCategoryID: number;
+  CategoryName: string;
 }
 
 @Injectable({
