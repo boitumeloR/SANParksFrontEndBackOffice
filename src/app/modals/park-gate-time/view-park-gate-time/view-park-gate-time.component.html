@@ -4,27 +4,27 @@
   
       <mat-icon>close</mat-icon>
     </button>
-    <h2 mat-dialog-title>View Park Gate</h2>
+    <h2 mat-dialog-title>View Park Gate Time</h2>
   
     <mat-dialog-content appearance="mat-typography">
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Park Gate</mat-label>
-            <input matInput value="Orpen Gate" readonly>
+            <input matInput value="{{parkGateTime.ParkGateName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Season</mat-label>
-            <input matInput value="High" readonly>
+            <input matInput value="{{parkGateTime.SeasonName}}" readonly>
             <mat-hint>This is the season that is associated to this gate time.</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Opening Time</mat-label>
-            <input matInput value="06:30" readonly>
+            <input matInput value="{{parkGateTime.ParkOpenTime}}" readonly>
             <mat-hint>Gate opening time in 24hr format</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Closing Time</mat-label>
-            <input matInput value="17:30" readonly>
+            <input matInput value="{{parkGateTime.ParkCloseTime}}" readonly>
             <mat-hint>Gate closing time in 24hr format</mat-hint>
         </mat-form-field>
       </div>

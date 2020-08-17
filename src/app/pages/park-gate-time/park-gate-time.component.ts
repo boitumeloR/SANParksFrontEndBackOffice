@@ -4,44 +4,40 @@ import {MatTableDataSource} from '@angular/material/table';
 import { AddParkGateTimeComponent } from 'src/app/modals/park-gate-time/add-park-gate-time/add-park-gate-time.component';
 import { ViewParkGateTimeComponent } from 'src/app/modals/park-gate-time/view-park-gate-time/view-park-gate-time.component';
 import {MatDialog} from '@angular/material/dialog';
+import { ParkGateTimeService } from 'src/app/services/ParkGateTime/park-gate-time.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
 
-export interface PeriodicElement {
-  name: string;
-  season: string;
-
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Orpen Gate',season: 'High'},
-  {name: 'Phalaborwa Gate', season: 'Shoulder'},
-  {name: 'Malelane Gate', season: 'Low'},
-];
 @Component({
   selector: 'app-park-gate-time',
   templateUrl: './park-gate-time.component.html',
   styleUrls: ['./park-gate-time.component.scss']
 })
 export class ParkGateTimeComponent implements OnInit {
+  dataSource;
+  constructor(private dialog: MatDialog, private parkGateTimeService: ParkGateTimeService, private globalService: GlobalService) { }
 
-  constructor(private dialog: MatDialog) { }
-
-  displayedColumns: string[] = ['name','season','view'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['ParkGateName', 'SeasonName', 'view'];
+ 
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.parkGateTimeService.requestReferesh.subscribe(() => {this.getParkGateTime(); });
+    this.getParkGateTime();
   }
   addParkGateTime(){
-    const addParkGateTimeDialog =  this.dialog.open(AddParkGateTimeComponent,{disableClose: true});
-
-    
-    addParkGateTimeDialog.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    const addParkGateTimeDialog =  this.dialog.open(AddParkGateTimeComponent, {disableClose: true});
   }
 
   viewParkGateTime(gateTime){
+    localStorage.setItem('parkGateTime', JSON.stringify(gateTime));
     const viewParkGateTimeDialog =  this.dialog.open(ViewParkGateTimeComponent);
+  }
+
+  getParkGateTime(){
+    this.parkGateTimeService.ReadParkGateTime(this.globalService.GetServer()).subscribe((result: any) => {
+      this.dataSource = new MatTableDataSource(result.ParkGateTime);
+      this.dataSource.paginator = this.paginator;
+    });
   }
 }

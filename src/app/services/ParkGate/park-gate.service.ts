@@ -80,4 +80,8 @@ export class ParkGateService {
       }
     });
   }
+
+  GetParkGatesForAPark(parkID, link){
+    return this.http.get(`${link}/api/parkGate/getParkGateForPark?parkID=${parkID}`);
+  }
 }
