@@ -1,7 +1,7 @@
 <button id="alignCloseRight" mat-icon-button align="end" color="warn" (click)="confirmCancel()" aria-label="Cancel">
     <mat-icon>close</mat-icon>
 </button>
-<h2 mat-dialog-title>Update Accomodation Type</h2>
+<h2 mat-dialog-title>Update Accommodation Type</h2>
 <mat-horizontal-stepper [linear]="true" #stepper>
     <mat-step [stepControl]="basicUpdateAccomodationTypeDetails">
         <form [formControl]="basicUpdateAccomodationTypeDetails" [formGroup]="basicUpdateAccomodationTypeDetails">
@@ -9,11 +9,11 @@
             <mat-dialog-content appearance="mat-typography">
             <div class="example-container">
                 <mat-form-field appearance="fill">
-                    <mat-label>Accomodation Type Name</mat-label>
+                    <mat-label>Accommodation Type Name</mat-label>
                     <input matInput value="Bungalow" formControlName="accomodationType">
                 </mat-form-field>
                 <mat-form-field hintLabel="Max 300 characters" appearance="fill">
-                    <mat-label>Accomodation Type Description</mat-label>
+                    <mat-label>Accommodation Type Description</mat-label>
                     <textarea  cdkTextareaAutosize matInput #input maxlength="300" formControlName="accomodationTypeDescription" ></textarea>
                     <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
                 </mat-form-field>
