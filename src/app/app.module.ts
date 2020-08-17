@@ -373,8 +373,7 @@ import { SuccessfulWildcardPurchaseComponent } from './pages/Purchase Wildcard/s
 import { SearchWildcardMembershipComponent } from './pages/renew/search-wildcard-membership/search-wildcard-membership.component';
 import { RenewWildcardMembershipComponent } from './pages/renew/renew-wildcard-membership/renew-wildcard-membership.component';
 import { UpdateWildcardStatusConfirmationComponent } from './pages/renew/update-wildcard-status-confirmation/update-wildcard-status-confirmation.component';
-
-
+import { HttpClientModule } from '@angular/common/http';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -758,7 +757,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     BrowserAnimationsModule,
     MaterialModule,
     NgxMaterialTimepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    HttpClientModule
   ],
   providers: [MatSnackBarModule, MatStepper],
   bootstrap: [AppComponent]
