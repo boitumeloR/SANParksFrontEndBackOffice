@@ -1,28 +1,28 @@
 <mat-toolbar color = "primary">
   <!--[ngClass]="{'open': opened}"-->
-    <div id="burger" #burger (click)="toggleBurger()">
+    <div id="burger" #burger (click)="toggleBurger()" fxShow="true" fxHide.lt-md="true">
         <span></span> 
         <span></span>
         <span></span>
     </div>
     <img src="assets/images/logo-white.png" alt="" class="logo">
     <div class="login">
-      <a mat-raised-button color="primary" id="login" target="_blank">
+      <a mat-raised-button color="primary" id="dash" target="_blank">
         Dashboard
         <mat-icon>trending_up</mat-icon>
       </a>
 
-      <a mat-raised-button color="primary" id="login" target="_blank">
-        Boitumelo
+      <a mat-raised-button color="primary" id="login" target="_blank"  style="margin-left:10px;">
         <mat-icon>account_circle</mat-icon>
         Admin
       </a>
     </div>
 </mat-toolbar>
 
-<mat-sidenav-container class="example-container" color="primary">
-    <mat-sidenav [(opened)] = "opened" mode="side" color = "primary" data-simplebar data-simplebar-auto-hide="true">
-      <div class="links">
+
+<mat-sidenav-container fxFlexFill class="example-container" color="primary">
+    <mat-sidenav [(opened)] ="opened" mode="over" color = "primary" data-simplebar data-simplebar-auto-hide="true" fxLayout="column" >
+      <div fxLayout class="links">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -311,7 +311,7 @@
         </mat-expansion-panel>
       </div>       
   </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content fxFlexFill>
         <ng-content>
 
         </ng-content>

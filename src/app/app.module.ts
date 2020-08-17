@@ -374,6 +374,7 @@ import { SearchWildcardMembershipComponent } from './pages/renew/search-wildcard
 import { RenewWildcardMembershipComponent } from './pages/renew/renew-wildcard-membership/renew-wildcard-membership.component';
 import { UpdateWildcardStatusConfirmationComponent } from './pages/renew/update-wildcard-status-confirmation/update-wildcard-status-confirmation.component';
 
+
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,

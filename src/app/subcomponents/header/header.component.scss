@@ -19,6 +19,7 @@ mat-menu {
 }
 mat-toolbar {
     height: 11%;
+    width:100%;
     position: sticky;
     top: 0;
     z-index: 5;
@@ -26,7 +27,7 @@ mat-toolbar {
     box-shadow: 0 2px 6px 1px rgba(0,0,0,.4);
     .login {
       margin-left: auto;
-      margin-right: 2%;
+      
     }
 }
 .mat-list-item {
@@ -152,4 +153,15 @@ mat-toolbar {
           border-radius: 12px;
       }
   }
+  @media screen and (max-width: 500px) {
 
+    #login{
+     display:none;
+    }
+  }
+  @media screen and (max-width: 290px) {
+
+    #dash{
+     display:none;
+    }
+  }
