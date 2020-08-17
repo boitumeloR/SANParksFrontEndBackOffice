@@ -8,6 +8,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { ParkService, ParkDropdown } from 'src/app/services/Park/park.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { ParkGate, ParkGateService } from 'src/app/services/ParkGate/park-gate.service';
+
 @Component({
   selector: 'app-add-park-gate',
   templateUrl: './add-park-gate.component.html',
@@ -15,7 +16,7 @@ import { ParkGate, ParkGateService } from 'src/app/services/ParkGate/park-gate.s
 })
 export class AddParkGateComponent implements OnInit {
   addParkGateForm: FormGroup;
-  parkDropDown: ParkDropdown;
+  parkDropDown;
   newParKGate: ParkGate;
 
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,

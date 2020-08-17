@@ -25,7 +25,7 @@ export class SeasonService {
   }
 
   ReadSeason(link){
-
+    return this.http.get(`${link}/api/season/getSeason`);
   }
 
   UpdateSeason(Season, link){
