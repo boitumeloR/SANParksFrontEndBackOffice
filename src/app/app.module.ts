@@ -374,6 +374,7 @@ import { SearchWildcardMembershipComponent } from './pages/renew/search-wildcard
 import { RenewWildcardMembershipComponent } from './pages/renew/renew-wildcard-membership/renew-wildcard-membership.component';
 import { UpdateWildcardStatusConfirmationComponent } from './pages/renew/update-wildcard-status-confirmation/update-wildcard-status-confirmation.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -760,7 +761,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatNativeDateModule,
     HttpClientModule
   ],
-  providers: [MatSnackBarModule, MatStepper],
+  providers: [MatSnackBarModule, MatStepper, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

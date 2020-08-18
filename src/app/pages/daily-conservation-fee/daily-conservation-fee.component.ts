@@ -4,17 +4,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import { AddDailyConservationFeeComponent } from 'src/app/modals/daily-conservation-fee/add-daily-conservation-fee/add-daily-conservation-fee.component';
 import { ViewDailyConservationFeeComponent } from 'src/app/modals/daily-conservation-fee/view-daily-conservation-fee/view-daily-conservation-fee.component';
 import {MatDialog} from '@angular/material/dialog';
-export interface PeriodicElement {
-  name: string;
-  dateEffective: string;
-  region: string
-
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Agulhas National Park',dateEffective: "01/01/2020",region: "Domestic"},
-  {name: 'Agulhas National Park', dateEffective: '01/03/2019',region: "SADC"},
-  {name: 'Agulhas National Park', dateEffective: '01/01/2018',region: "International"},
-];
+import { DailyConservationFeeService } from 'src/app/services/DailyConservationFee/daily-conservation-fee.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
 
 @Component({
   selector: 'app-daily-conservation-fee',
@@ -23,20 +14,30 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class DailyConservationFeeComponent implements OnInit {
 
-  displayedColumns: string[] = ['name','dateEffective','region','view'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['name', 'dateEffective', 'endDate', 'region', 'view'];
+  dataSource;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private dailyConservationFeeService: DailyConservationFeeService,
+              private globalService: GlobalService) { }
 
   ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.dailyConservationFeeService.requestReferesh.subscribe(() => {this.getDailyConservationFee(); });
+    this.getDailyConservationFee();
   }
   viewDailyConservationFee(dailyConservationFee){
+    localStorage.setItem('dailyConservationFee', JSON.stringify(dailyConservationFee));
     const viewDailyConservationFeeDialog = this.dialog.open(ViewDailyConservationFeeComponent);
   }
 
   addDailyConservationFee(){
     const addDailyConservationFeeDialog = this.dialog.open(AddDailyConservationFeeComponent);
+  }
+
+  getDailyConservationFee(){
+    this.dailyConservationFeeService.ReadDailyConservationFee(this.globalService.GetServer()).subscribe((result: any) => {
+      this.dataSource = result.DaliyConservationFees;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 }
