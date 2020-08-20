@@ -4,15 +4,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import { AddCampTypeComponent } from 'src/app/modals/camp-type/add-camp-type/add-camp-type.component';
 import { ViewCampTypeComponent } from 'src/app/modals/camp-type/view-camp-type/view-camp-type.component';
 import {MatDialog} from '@angular/material/dialog';
+import { CampType, CampTypeService } from 'src/app/services/CampType/camp-type.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
 
-export interface PeriodicElement {
-  name: string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Camp Site'},
-  { name: 'Satellite Camp'},
-  { name: 'Bushveld Camps'},
-];
 @Component({
   selector: 'app-camp-type',
   templateUrl: './camp-type.component.html',
@@ -20,22 +14,31 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class CampTypeComponent implements OnInit {
 
-  displayedColumns: string[] = ['name','view'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['CampTypeName', 'view'];
+  dataSource;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private campTypeService: CampTypeService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.campTypeService.requestReferesh.subscribe(() => {this.getCampType(); });
+    this.getCampType();
   }
 
   addCampType(){
-    const addCampTypeDialog =  this.dialog.open(AddCampTypeComponent,{disableClose:true});
+    const addCampTypeDialog =  this.dialog.open(AddCampTypeComponent, {disableClose: true});
   }
 
   viewCampType(campType){
-    const viewCampTypeDialog = this.dialog.open(ViewCampTypeComponent);
+    localStorage.setItem('campType', JSON.stringify(campType));
+    const addCampTypeDialog = this.dialog.open(ViewCampTypeComponent);
+  }
+
+  getCampType(){
+    this.campTypeService.ReadCampType(this.globalService.GetServer()).subscribe((result: any) => {
+      this.dataSource = new MatTableDataSource(result.CampTypes);
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
 }
