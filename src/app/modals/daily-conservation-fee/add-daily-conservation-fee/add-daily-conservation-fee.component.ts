@@ -60,7 +60,7 @@ export class AddDailyConservationFeeComponent implements OnInit {
             DateEffective: this.addDailyConservationFeeForm.get('dateEffective').value,
             EndDate: this.addDailyConservationFeeForm.get('endDate').value,
           };
-          
+
           this.dailyConservationFeeService.CreateDailyConservationFee(newDailyConservationFee, this.globalService.GetServer());
         }
       });
