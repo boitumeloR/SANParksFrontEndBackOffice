@@ -10,16 +10,16 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Season Name</mat-label>
-            <input matInput value="High" readonly>
+            <input matInput [value]="season.SeasonName" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Start Date</mat-label>
-            <input matInput value="01/01/2020" readonly>
+            <input matInput [value]="season.StartDate" readonly>
             <mat-hint>Start date for this season</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>End Date</mat-label>
-            <input matInput value="30/04/2020" readonly>
+            <input matInput [value]="season.EndDate" readonly>
             <mat-hint>End date for this season</mat-hint>
         </mat-form-field>
     </div>
@@ -27,6 +27,6 @@
     </mat-dialog-content>
     <mat-dialog-actions align="end">
         <button mat-raised-button [mat-dialog-close] color="primary" (click)="updateSeason()">Update</button>
-        <button mat-raised-button [mat-dialog-close]="true" color="warn" (click)="deleteSeason()">Delete</button>
+        <!--<button mat-raised-button [mat-dialog-close]="true" color="warn" (click)="deleteSeason()">Delete</button> -->
     </mat-dialog-actions>
 <div>
