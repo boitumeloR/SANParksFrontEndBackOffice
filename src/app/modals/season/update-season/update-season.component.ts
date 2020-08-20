@@ -62,7 +62,7 @@ export class UpdateSeasonComponent implements OnInit {
   confirmCancel(){
     const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
     confirmCancelDialog.afterClosed().subscribe(result => {
-      if (result == true){
+      if (result === true){
         this.dialogRef.close();
       }
     });
