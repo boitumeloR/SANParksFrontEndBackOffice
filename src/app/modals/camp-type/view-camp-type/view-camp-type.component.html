@@ -9,12 +9,12 @@
     <mat-dialog-content appearance="mat-typography">
       <div class="example-container">
         <mat-form-field appearance="fill">
-            <mat-label>Name</mat-label>
-            <input matInput value="Camp Site (CK6P)" readonly>
+            <mat-label>Camp Type Name</mat-label>
+            <input matInput value="{{campType.CampTypeName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Description</mat-label>
-          <textarea cdkTextareaAutosize matInput  readonly value="A campsite is a designated space allocated to the visitor, for the purposes of parking a caravan, or erecting a tent, along with the parking of the visitors vehicle,allowing up to 6 people per site."></textarea>
+          <textarea cdkTextareaAutosize matInput value="{{campType.CampTypeDescription}}" readonly></textarea>
         </mat-form-field>
       </div>
       

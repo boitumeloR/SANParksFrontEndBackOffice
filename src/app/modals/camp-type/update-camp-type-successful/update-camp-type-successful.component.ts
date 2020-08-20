@@ -11,5 +11,4 @@ export class UpdateCampTypeSuccessfulComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
