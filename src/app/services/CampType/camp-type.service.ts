@@ -24,7 +24,7 @@ export class CampTypeService {
   }
 
   ReadCampType(link){
-
+    return this.http.get(`${link}/api/campType/getCampType`)
   }
 
   UpdateCampType(CampType, link){

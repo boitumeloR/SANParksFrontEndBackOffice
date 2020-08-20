@@ -10,25 +10,25 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Park</mat-label>
-            <input matInput value="Addo Elephant National Park" readonly>
+            <input matInput value="{{campGateTime.ParkName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Camp</mat-label>
-            <input matInput value="Matyholweni" readonly>
+            <input matInput value="{{campGateTime.CampName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Season</mat-label>
-            <input matInput value="High" readonly>
+            <input matInput value="{{campGateTime.SeasonName}}" readonly>
             <mat-hint>This is the season that is associated to this gate time.</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Opening Time</mat-label>
-            <input matInput value="06:30" readonly>
+            <input matInput value="{{campGateTime.CampOpenTime}}" readonly>
             <mat-hint>Gate opening time in 24hr format</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Closing Time</mat-label>
-            <input matInput value="17:30" readonly>
+            <input matInput value="{{campGateTime.CampCloseTime}}" readonly>
             <mat-hint>Gate closing time in 24hr format</mat-hint>
         </mat-form-field>
       </div>
