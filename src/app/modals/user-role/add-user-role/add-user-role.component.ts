@@ -5,6 +5,8 @@ import {AddUserRoleConfirmationComponent} from 'src/app/modals/user-role/add-use
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
+import { GlobalService } from 'src/app/services/Global/global.service';
+import { UserRoleService, UserRole} from 'src/app/services/UserRole/user-role.service';
 @Component({
   selector: 'app-add-user-role',
   templateUrl: './add-user-role.component.html',
@@ -12,8 +14,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddUserRoleComponent implements OnInit {
   addUserRoleForm: FormGroup;
-  constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<AddUserRoleComponent>) { }
+  newUserRole: UserRole;
+
+  constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
+              // tslint:disable-next-line: max-line-length
+              private dialogRef: MatDialogRef<AddUserRoleComponent>, private userRoleService: UserRoleService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.addUserRoleForm = this.formBuilder.group({
@@ -23,26 +28,36 @@ export class AddUserRoleComponent implements OnInit {
   }
 
   addUserRole(){
-    if(this.addUserRoleForm.invalid){
+    if (this.addUserRoleForm.invalid){
       this.displayValidationError();
     }
     else{
       this.dialogRef.close();
       const addUserRoleConfirmationDialog = this.dialog.open(AddUserRoleConfirmationComponent);
+
+      addUserRoleConfirmationDialog.afterClosed().subscribe( result => {
+        if (result === true){
+           const newUserRole = {
+            UserRoleName: this.addUserRoleForm.get('userRoleName').value,
+            UserRoleDescription: this.addUserRoleForm.get('userRoleDescription').value
+          };
+           this.userRoleService.CreateUserRole(newUserRole, this.globalService.GetServer());
+        }
+      });
     }
   }
 
   confirmCancel(){
     const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
     confirmCancelDialog.afterClosed().subscribe(result => {
-      if(result == true){
+      if (result === true){
         this.dialogRef.close();
       }
     });
   }
-  
+
   displayValidationError() {
-    this.validationErrorSnackBar.open("The entered details are not in the correct format. Please try again.", "OK", {
+    this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }
