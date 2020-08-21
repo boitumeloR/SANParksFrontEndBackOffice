@@ -5,15 +5,6 @@ import { AddAmentityTypeComponent } from 'src/app/modals/amenity-type/add-amenti
 import { ViewAmentityTypeConfirmationComponent } from 'src/app/modals/amenity-type/view-amentity-type-confirmation/view-amentity-type-confirmation.component';
 import {MatDialog} from '@angular/material/dialog'; 
 
-
-export interface PeriodicElement {
-  name: string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Fridge'},
-  { name: 'Television'},
-  { name: 'Stove'}
-];
 @Component({
   selector: 'app-amenity-type',
   templateUrl: './amenity-type.component.html',
@@ -21,8 +12,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AmenityTypeComponent implements OnInit {
 
-  displayedColumns: string[] = ['name','view'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['AmenityTypeName', 'view'];
+  dataSource;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog) { }

@@ -13,7 +13,6 @@ import {GlobalService} from 'src/app/services/Global/global.service';
   styleUrls: ['./park.component.scss']
 })
 export class ParkComponent implements OnInit {
-
   displayedColumns: string[] = ['ParkName', 'view'];
   dataSource;
 
