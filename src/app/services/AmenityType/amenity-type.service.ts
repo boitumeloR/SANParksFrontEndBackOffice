@@ -16,7 +16,6 @@ export interface AmenityTypeDropDown{
   providedIn: 'root'
 })
 export class AmenityTypeService {
-
   constructor(private global: GlobalService , private http: HttpClient) { }
 
   createAmenityType(AmenityType, link){
