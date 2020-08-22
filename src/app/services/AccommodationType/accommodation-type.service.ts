@@ -33,6 +33,9 @@ export class AccommodationTypeService {
   updateAccommodationType(updatedAccommodationType, link){
   }
   deleteAccommodationType(AccommodationTypeID, link){
-    }
+  }
+  getAccomomodationTypesForCamp(campID, link){
+    return this.http.get(`${link}/api/accommodationType/getAccommodationTypeForCamp?campID=${campID}`);
+  }
 
 }

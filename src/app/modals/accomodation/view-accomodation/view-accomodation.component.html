@@ -9,23 +9,23 @@
     <mat-dialog-content appearance="mat-typography">
       <div class="example-container">
         <mat-form-field appearance="fill">
-            <mat-label>Unit Number</mat-label>
-            <input matInput value="107" readonly>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Accommodation Type</mat-label>
-            <input matInput value="Camp Site (CK6P)" readonly>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Park</mat-label>
-            <input matInput value="Addo Elephant National Park" readonly>
+          <mat-label>Park</mat-label>
+            <input matInput value="{{accommodation.ParkName}}" readonly>
             <mat-hint>Park in which this accomodation is.</mat-hint>        
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Camp</mat-label>
-            <input matInput value="Letaba" readonly>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+          <mat-label>Camp</mat-label>
+            <input matInput value="{{accommodation.Camp}}" readonly>
             <mat-hint>Camp in which this accommodation is.</mat-hint>
-        </mat-form-field>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Unit Number</mat-label>
+            <input matInput value="{{accommodation.UnitNumber}}" readonly>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Accommodation Type</mat-label>
+            <input matInput value="{{accommodation.AccomodationType}}" readonly>
+          </mat-form-field>      
       </div>
       
     </mat-dialog-content>
