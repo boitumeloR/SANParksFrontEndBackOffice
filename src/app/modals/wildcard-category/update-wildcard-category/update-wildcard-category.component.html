@@ -5,30 +5,31 @@
         <div class="example-container">
             <mat-form-field appearance="fill">
                 <mat-label>Wildcard Category Name</mat-label>
-                <input matInput formControlName="wildcardCategoryName">
+                <input matInput formControlName="WildcardCategoryName">
                 </mat-form-field>
             <mat-form-field hintLabel="Max 300 characters" appearance="fill">
                 <mat-label>Wildcard Category Description</mat-label>
-                <textarea matInput #input maxlength="300" cdkTextareaAutosize formControlName="wildcardCategoryDescription"></textarea>
+                <textarea matInput #input maxlength="300" cdkTextareaAutosize formControlName="WildcardCategoryDescription"></textarea>
                 <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Adult Limit</mat-label>
-                <mat-select formControlName="adultLimit">
-                    <mat-option value="1">1</mat-option>
-                    <mat-option value="2">2</mat-option>
+                <mat-select formControlName="AdultLimit">
+                    <mat-option [value]="1">1</mat-option>
+                    <mat-option [value]="2">2</mat-option>
                 </mat-select>
                 <mat-hint>The maximum number of adults for this category</mat-hint>
               </mat-form-field> 
               <mat-form-field appearance="fill">
                 <mat-label>Child Limit</mat-label>
-                <mat-select formControlName="childLimit">
-                    <mat-option value="1">1</mat-option>
-                    <mat-option value="2">2</mat-option>
-                    <mat-option value="3">3</mat-option>
-                    <mat-option value="4">4</mat-option>
-                    <mat-option value="5">5</mat-option>
-                    <mat-option value="6">6</mat-option>
+                <mat-select formControlName="ChildLimit">
+                    <mat-option [value]="0">0</mat-option>
+                    <mat-option [value]="1">1</mat-option>
+                    <mat-option [value]="2">2</mat-option>
+                    <mat-option [value]="3">3</mat-option>
+                    <mat-option [value]="4">4</mat-option>
+                    <mat-option [value]="5">5</mat-option>
+                    <mat-option [value]="6">6</mat-option>
                 </mat-select>
                 <mat-hint>The maximum number of children for this category</mat-hint>
               </mat-form-field> 
