@@ -17,7 +17,7 @@ activityType: ActivityType;
     this.activityType = JSON.parse(localStorage.getItem('activityType'));
   }
   updateActivityType(){
-    const updateCampDialog = this.dialog.open(UpdateActivityTypeComponent,{disableClose: true});
+    const updateCampDialog = this.dialog.open(UpdateActivityTypeComponent, {disableClose: true});
   }
 
   deleteActivityType(){

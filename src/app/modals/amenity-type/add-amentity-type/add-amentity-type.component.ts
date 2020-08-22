@@ -5,6 +5,10 @@ import {MatDialog} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
+import { AmenityType } from 'src/app/services/AmenityType/amenity-type.service';
+import { AmenityTypeService } from 'src/app/services/AmenityType/amenity-type.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
+
 
 @Component({
   selector: 'app-add-amentity-type',
@@ -13,8 +17,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddAmentityTypeComponent implements OnInit {
   addAmenityTypeForm: FormGroup;
-  constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<AddAmentityTypeComponent>) { }
+  newAmenityType: AmenityType;
+
+  constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
+              private dialogRef: MatDialogRef<AddAmentityTypeComponent>,
+              private amenityTypeService: AmenityTypeService, private globalService: GlobalService ) { }
 
   ngOnInit(): void {
     this.addAmenityTypeForm = this.formBuilder.group({
@@ -23,26 +30,34 @@ export class AddAmentityTypeComponent implements OnInit {
   }
 
   addAmenityType(){
-    if(this.addAmenityTypeForm.invalid){
+    if (this.addAmenityTypeForm.invalid){
       this.displayValidationError();
     }
     else{
       this.dialogRef.close();
-      const addCampDialog = this.dialog.open(AddAmentityTypeConfirmationComponent)
+      const addAmenityTypeConfirmationDialog = this.dialog.open(AddAmentityTypeConfirmationComponent);
+      addAmenityTypeConfirmationDialog.afterClosed().subscribe( result => {
+        if (result === true){
+           const newAmenityType = {
+            AmenityTypeName: this.addAmenityTypeForm.get('amenityTypeName').value
+          };
+           this.amenityTypeService.createAmenityType(newAmenityType, this.globalService.GetServer());
+        }
+      });
     }
   }
 
   confirmCancel(){
     const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
     confirmCancelDialog.afterClosed().subscribe(result => {
-      if(result == true){
+      if (result === true){
         this.dialogRef.close();
       }
     });
   }
-  
+
   displayValidationError() {
-    this.validationErrorSnackBar.open("The entered details are not in the correct format. Please try again.", "OK", {
+    this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }
