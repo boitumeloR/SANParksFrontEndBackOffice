@@ -29,7 +29,7 @@ export class UpdateActivityTypeComponent implements OnInit {
   }
 
   updateActivityType(){
-    if(this.updateActivityTypes.invalid){
+    if (this.updateActivityTypes.invalid){
       this.displayValidationError();
     }
     else{

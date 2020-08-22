@@ -20,7 +20,7 @@ export class ActivityTypeComponent implements OnInit {
   constructor(private dialog: MatDialog, private activityTypeService: ActivityTypeService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
-    this.activityTypeService.requestReferesh.subscribe(() => {this.getActivityTypes();});
+    this.activityTypeService.requestReferesh.subscribe(() => {this.getActivityTypes(); });
     this.getActivityTypes();
   }
 
