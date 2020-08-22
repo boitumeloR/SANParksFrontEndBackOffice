@@ -21,7 +21,7 @@ export class ViewCampComponent implements OnInit {
   }
 
   updateCamp(){
-    const updateCampDialog = this.dialog.open(UpdateCampComponent,{disableClose: true});
+    const updateCampDialog = this.dialog.open(UpdateCampComponent, {disableClose: true});
   }
 
   deleteCamp(){
