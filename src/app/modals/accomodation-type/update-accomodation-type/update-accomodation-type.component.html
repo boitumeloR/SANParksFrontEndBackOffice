@@ -10,7 +10,7 @@
             <div class="example-container">
                 <mat-form-field appearance="fill">
                     <mat-label>Accommodation Type Name</mat-label>
-                    <input matInput value="Bungalow" formControlName="accomodationType">
+                    <input matInput formControlName="accomodationType">
                 </mat-form-field>
                 <mat-form-field hintLabel="Max 300 characters" appearance="fill">
                     <mat-label>Accommodation Type Description</mat-label>
@@ -42,48 +42,19 @@
             </mat-dialog-actions>
         </form>
     </mat-step>
-    <mat-step [stepControl]="udpateCampsForAccomodationType">
-        <form [formControl]="udpateCampsForAccomodationType" [formGroup]="udpateCampsForAccomodationType">
+    <mat-step [stepControl]="campsForAccomodationType">
+        <form [formControl]="campsForAccomodationType" [formGroup]="campsForAccomodationType">
             <ng-template matStepLabel>Select Camps</ng-template>
             <mat-accordion>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    Addo Elephant National Park
-                </mat-expansion-panel-header>
-                <section>
-                    <mat-checkbox>Addo</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Spekboom</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Kabouga</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Nyathi</mat-checkbox>
-                </section>
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    Kruger National Park
-                </mat-expansion-panel-header>
-                <section>
-                    <mat-checkbox>Crocodile Bridge</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Letaba</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Lower Sabie</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Boulders Bush Lodge</mat-checkbox>
-                </section>
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    Tankwa Karoo National Park
-                </mat-expansion-panel-header>
-                <section>
-                    <mat-checkbox>Tankwa Karoo Rest Camp</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Elandsberg Rest Camp</mat-checkbox>
-                </section>
-            </mat-expansion-panel>
+                <mat-expansion-panel *ngFor="let park of parkWithCamps">
+                    <mat-expansion-panel-header> <!--Should have at least one selection-->
+                        {{park.ParkName}}
+                    </mat-expansion-panel-header>
+                    <section *ngFor="let camp of park.listOfCamps">                        
+                        <mat-checkbox type="checkbox" [value]="camp" id="{{camp.CampID}}" (change)="onChange($event)">{{camp.CampName}}</mat-checkbox>
+                        <br>
+                    </section>
+                </mat-expansion-panel> 
             </mat-accordion>
         </form>
         <mat-dialog-actions align="end">
@@ -115,4 +86,3 @@
         </form>
     </mat-step>
 </mat-horizontal-stepper>
-  
