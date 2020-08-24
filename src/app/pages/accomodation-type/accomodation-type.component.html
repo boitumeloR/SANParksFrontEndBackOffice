@@ -16,14 +16,14 @@
       <!-- Camp Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Accommodation Type Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.AccTypeName}} </td>
       </ng-container> 
 
       <!-- View Column -->
       <ng-container matColumnDef="view">
         <th mat-header-cell *matHeaderCellDef> View Accommodation Type </th>
         <td mat-cell *matCellDef="let element"> 
-          <a mat-button (click)="viewAccomodationTpe(element)">
+          <a mat-button (click)="viewAccomodationType(element)">
             <mat-icon>visibility</mat-icon>
           </a>
         </td>

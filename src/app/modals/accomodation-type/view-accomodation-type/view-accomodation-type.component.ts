@@ -9,14 +9,15 @@ import {MatDialog} from '@angular/material/dialog';
   styleUrls: ['./view-accomodation-type.component.scss']
 })
 export class ViewAccomodationTypeComponent implements OnInit {
-
+  accommodationType;
   constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.accommodationType = JSON.parse(localStorage.getItem('accommodationType'));
   }
 
   updateAccomodationType(){
-    const updateAccomodationTypeDialog = this.dialog.open(UpdateAccomodationTypeComponent,{disableClose: true})
+    const updateAccomodationTypeDialog = this.dialog.open(UpdateAccomodationTypeComponent, {disableClose: true});
   }
   deleteAccomodationType(){
     const deleteAccomodationTypeTypeDialog = this.dialog.open(DeleteAccomodationTypeComponent);

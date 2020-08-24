@@ -10,29 +10,28 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Accommodation Type Name</mat-label>
-            <input matInput value="Bungalow" readonly>
+            <input matInput value="{{accommodationType.AccTypeName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Accommodation Type Description</mat-label>
-            <textarea cdkTextareaAutosize matInput  readonly value="Single bedroom units with a bathroom. Some have communal kitchens while others have own kitchenettes with basic kitchen equipment. Some bungalows have perimeter or river views, while others have been upgraded to luxury status."></textarea>
+            <textarea cdkTextareaAutosize matInput  readonly value="{{accommodationType.AccTypeDescription}}"></textarea>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Number of Beds</mat-label>
-            <input matInput value="3" readonly>
+            <input matInput value="{{accommodationType.NumBeds}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Number of Baths</mat-label>
-            <input matInput value="2" readonly>
+            <input matInput value="{{accommodationType.NumBaths}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Adult Limit</mat-label>
-            <input matInput value="4" readonly>
+            <input matInput value="{{accommodationType.AdultLimit}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Child Limit</mat-label>
-            <input matInput value="2" readonly>
+            <input matInput value="{{accommodationType.ChildLimit}}" readonly>
         </mat-form-field>
-        <!--I am thinking of using a tree to display which camps this is available at-->
       </div>      
     </mat-dialog-content>
     <mat-dialog-actions align="end">
