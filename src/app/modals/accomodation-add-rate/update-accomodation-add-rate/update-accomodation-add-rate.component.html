@@ -6,9 +6,7 @@
     <mat-form-field appearance="fill"> <!--Populated based on the selected Park-->
         <mat-label>Accommodation Type</mat-label>
         <mat-select formControlName="accomodationType">
-            <mat-option value="Camp Site (CK6P)">Camp Site (CK6P)</mat-option>
-            <mat-option value="Bungalow BA3">Bungalow BA3</mat-option>
-            <mat-option value="Bungalow BA3U">Bungalow BA3U</mat-option>
+            <mat-option *ngFor="let accType of accommodationTypeDropDown" [value]="accType.AccommodationTypeID">{{accType.AccTypeName}}</mat-option>
         </mat-select>
     </mat-form-field>  
     <mat-form-field appearance="fill">
