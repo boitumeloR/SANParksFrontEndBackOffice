@@ -23,7 +23,7 @@ export interface AccommodationTypeAddRate{
 })
 export class AccommAddRateService {
 
-  constructor(private dialog: MatDialog , private http: HttpClient) { }
+  constructor(private dialog: MatDialog, private http: HttpClient) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -68,5 +68,5 @@ export class AccommAddRateService {
         const deleteAccomodationAddRateSuccessfulDialog = this.dialog.open(DeleteAccomodationAddRateSuccessfulComponent);
       }
     });
-}
+  }
 }

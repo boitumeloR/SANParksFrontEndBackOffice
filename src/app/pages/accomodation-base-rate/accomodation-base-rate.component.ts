@@ -3,18 +3,10 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { AddAccomodationBaseRateComponent } from 'src/app/modals/accomodation-base-rate/add-accomodation-base-rate/add-accomodation-base-rate.component';
 import { ViewAccomodationBaseRateComponent } from 'src/app/modals/accomodation-base-rate/view-accomodation-base-rate/view-accomodation-base-rate.component';
-import {MatDialog} from '@angular/material/dialog'; 
+import {MatDialog} from '@angular/material/dialog';
+import { AccommBaseRateService } from 'src/app/services/AccommBaseRate/accomm-base-rate.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
 
-export interface PeriodicElement {
-  rate: string;
-  accomodationType: string;
-  camp: string
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { accomodationType: 'Camp Site (CK6P)',camp: 'Letaba',rate: 'R300'},
-  { accomodationType: 'Bungalow BA3',camp: 'Rhenosterkop Rest Camp',rate: 'R450'},
-  { accomodationType: 'Bungalow BA3U',camp: 'Boulders Bush Lodge',rate: 'R250'}
-];
 @Component({
   selector: 'app-accomodation-base-rate',
   templateUrl: './accomodation-base-rate.component.html',
@@ -22,20 +14,31 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AccomodationBaseRateComponent implements OnInit {
 
-  displayedColumns: string[] = ['accomodationType','camp','rate','view'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['accomodationType', 'camp', 'rate', 'view'];
+  dataSource;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private accommodationTypeBaseRateService: AccommBaseRateService,
+              private globalService: GlobalService) { }
 
   ngOnInit(): void {
+    this.accommodationTypeBaseRateService.requestReferesh.subscribe(() => this.getAccommodationBaseRate());
+    this.getAccommodationBaseRate();
   }
 
   viewAccomodationBaseRate(baseRate){
+    localStorage.setItem('baseRate', JSON.stringify(baseRate));
     const viewAccomodationBaseRateDialog = this.dialog.open(ViewAccomodationBaseRateComponent);
   }
 
   addAccomodationBaseRate(){
-    const addAccomodationBaseRateDialog = this.dialog.open(AddAccomodationBaseRateComponent,{disableClose: true});
+    const addAccomodationBaseRateDialog = this.dialog.open(AddAccomodationBaseRateComponent, {disableClose: true});
+  }
+
+  getAccommodationBaseRate(){
+    this.accommodationTypeBaseRateService.readAccommodationTypeBaseRate(this.globalService.GetServer()).subscribe((result: any) => {
+      this.dataSource = result.BaseRates;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 }
