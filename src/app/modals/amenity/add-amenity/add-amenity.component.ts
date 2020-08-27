@@ -132,6 +132,6 @@ export class AddAmenityComponent implements OnInit {
     this.accommodationService.readAccommodationsForAccTypeCamp(accTypeID, this.campSelected, this.globalService.GetServer()).
     subscribe((result: any) => {
       this.unitNumberDropDown = result.Accomodations;
-      console.log(this.unitNumberDropDown);
-    });  }
+    });
+  }
 }

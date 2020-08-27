@@ -76,4 +76,8 @@ export class AmenityService {
   readAmenityStatus(link){
     return this.http.get(`${link}/api/amenity/getAmenityStatus`);
   }
+
+  readAmenityInUnit(unitNumber, campID, accTypeID, link){
+    return this.http.get(`${link}/api/amenity/getAmenitiesWithinUnit?unitNumber=${unitNumber}&accTypeID=${accTypeID}&campID=${campID}`);
+  }
 }
