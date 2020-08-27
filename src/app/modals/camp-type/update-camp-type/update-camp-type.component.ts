@@ -35,6 +35,7 @@ export class UpdateCampTypeComponent implements OnInit {
     else{
       this.dialogRef.close();
       const UpdateCampTypeConfirmation = this.dialog.open(UpdateCampTypeConfirmationComponent);
+
       UpdateCampTypeConfirmation.afterClosed().subscribe( result => {
         if (result === true){
            const campType = {
