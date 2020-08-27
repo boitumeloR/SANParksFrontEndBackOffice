@@ -73,5 +73,7 @@ export class AccommodationService {
       }
     });
   }
-
+  readAccommodationsForAccTypeCamp(accommodationTypeID, campID, link){
+    return this.http.get(`${link}/api/accommodation/getUnitNumbersForAccTypeCamp?accommodationTypeID=${accommodationTypeID}&campID=${campID}`);
+  }
 }
