@@ -9,42 +9,41 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Park</mat-label>
-            <input matInput value="Addo Elephant National Park" readonly>
+            <input matInput value="{{amenityPenalty.ParkName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Camp</mat-label>
-            <input matInput value="Addo" readonly>
+            <input matInput value="{{amenityPenalty.CampName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Accomodation Type</mat-label>
-            <input matInput value="Camp Site (CK6P)" readonly>
+            <input matInput value="{{amenityPenalty.AccommodationTypeName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Unit Number</mat-label>
-            <input matInput value="107" readonly>
+            <input matInput value="{{amenityPenalty.UnitNumber}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Amenity Type</mat-label>
-            <input matInput value="Fridge" readonly>
+            <input matInput value="{{amenityPenalty.AmenityTypeName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Amenity Status</mat-label>
-            <input matInput value="Working" readonly>
+            <input matInput value="{{amenityPenalty.AmenityStatusName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Amenity Description</mat-label>
-            <textarea cdkTextareaAutosize matInput  readonly value="KIC 220L"></textarea>
+            <textarea cdkTextareaAutosize matInput  readonly value="{{amenityPenalty.AmenityDescription}}"></textarea>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Amenity Penalty</mat-label>
-            <input matInput value="R200" readonly>
+            <input matInput value="{{amenityPenalty.AmenityPenaltyAmount}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Date Effective</mat-label>
-            <input matInput value="01/01/2020" readonly>
+            <input matInput value="{{amenityPenalty.DateEffective}}" readonly>
         </mat-form-field>
-      </div>
-      
+      </div>      
     </mat-dialog-content>
     <mat-dialog-actions align="end">
         <button mat-raised-button [mat-dialog-close] color="primary" (click)="updateAmenityPenalty()">Update</button>
