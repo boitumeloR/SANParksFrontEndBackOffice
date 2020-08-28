@@ -37,8 +37,8 @@ export class AccommodationTypeService {
     return this.refresh;
   }
 
-  createAccommodationType(AccommodationType, link){
-    return this.http.post(`${link}/api/accommodationType/createAccommodationType`, AccommodationType).pipe( tap(
+  createAccommodationType(accommodationType, link: string){
+    return this.http.post(`${link}/api/accommodationType/dummyFile`, accommodationType).pipe( tap(
       () => {this.refresh.next(); }
     )).subscribe((addResult: any) => {
       if (addResult.Error){

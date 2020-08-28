@@ -63,17 +63,17 @@
         </mat-dialog-actions>
     </mat-step>
     <mat-step [stepControl]="imagesAccomodationType">
-        <form [formControl]="imagesAccomodationType" [formGroup]="imagesAccomodationType">
+        <form [formControl]="imagesAccomodationType" [formGroup]="imagesAccomodationType" enctype="multipart/form-data">
         <ng-template matStepLabel>Provide Images</ng-template>
         <mat-dialog-content appearance="mat-typography">
-        <input class="inputFile" type="file" (change)="selectFile($event)" #fileInput formControlName="image">
+        <input class="inputFile" type="file" multiple (change)="selectFile($event)" #fileInput formControlName="image">
         <button mat-raised-button color="primary" (click)="fileInput.click()">Upload Image</button>
         <br>
         <div>
         <mat-card *ngFor="let image of accomodationTypesImages" >
             <img mat-card-image class="cardImage" [src]="image" alt="Accomodation type image.">
             <mat-card-actions>
-                <button mat-mini-fab color="warn">X</button>
+                <button mat-mini-fab color="warn" (click)="removeImage(image)">X</button>
             </mat-card-actions>
         </mat-card>
         </div>
