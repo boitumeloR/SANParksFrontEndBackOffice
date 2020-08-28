@@ -5,39 +5,22 @@
     <div class="example-container">
     <mat-form-field appearance="fill">
         <mat-label>Park</mat-label>
-        <mat-select formControlName="park">
-            <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
-            <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
-            <mat-option value="Kruger National Park">Kruger National Park</mat-option>
-        </mat-select>
-        <mat-hint>Park in which activity is</mat-hint>
+        <input matInput value="{{actvivitySlot.ParkName}}" readonly>        <mat-hint>Park in which activity is</mat-hint>
     </mat-form-field>  
     <mat-form-field appearance="fill"> <!--Populated based on the selected Park-->
         <mat-label>Camp</mat-label>
-        <mat-select formControlName="camp">
-            <mat-option value="Addo">Addo</mat-option>
-            <mat-option value="Spekboom">Spekboom</mat-option>
-            <mat-option value="Matyholweni">Matyholweni</mat-option>           
-        </mat-select>
+            <input matInput value="{{actvivitySlot.CampName}}" readonly>
         <mat-hint>Camp in which activity is</mat-hint>
     </mat-form-field>  
     <mat-form-field appearance="fill">
         <mat-label>Activity Type</mat-label>
-        <mat-select formControlName="activityType">
-            <mat-option value="Sunset Drive">Sunset Drive</mat-option>
-            <mat-option value="Night Drive">Night Drive</mat-option>
-            <mat-option value="Hiking">Hiking</mat-option>
-        </mat-select>
+            <input matInput value="{{actvivitySlot.ActivityType}}" readonly>
         <mat-hint>This is the activty type of the activity</mat-hint>
     </mat-form-field> 
     <mat-form-field appearance="fill">
         <mat-label>Activity</mat-label>
-        <mat-select formControlName="activity">
-            <mat-option value="1 Hour Drive">1 Hour Drive</mat-option>
-            <mat-option value="2 Hour Drive">2 Hour Drive</mat-option>
-            <mat-option value="4 Hour Drive">4 Hour Drive</mat-option>
-        </mat-select>
-        <mat-hint>Select an activity to assign a slot time</mat-hint>
+            <input matInput value="{{actvivitySlot.ActivityDescription}}" readonly>
+        <mat-hint>Activity to assign a slot time</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Slot Time</mat-label>

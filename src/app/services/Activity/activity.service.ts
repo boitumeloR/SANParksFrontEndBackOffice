@@ -36,4 +36,7 @@ export class ActivityService {
 
   }
 
+  getActivtyInSpecificCamp(campID, typeID, link){
+    return this.http.get(`${link}/api/activity/getActivityForCamp?campID=${campID}&activityTypeID=${typeID}`);
+  }
 }
