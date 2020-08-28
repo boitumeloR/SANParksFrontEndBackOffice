@@ -103,7 +103,7 @@ export class AddAccomodationTypeComponent implements OnInit {
             // ListOfAssociatedCamp: selectedCamps,
             ListOfAccommodationTypeImages: this.viewImages
           };
-
+          // append to formdata
           let formData = new FormData();
 
           formData.append('AccTypeName', newAccommodationType.AccTypeName);
@@ -113,10 +113,12 @@ export class AddAccomodationTypeComponent implements OnInit {
           formData.append('ChildLimit', newAccommodationType.ChildLimit);
           formData.append('AdultLimit', newAccommodationType.AdultLimit);
 
+          // camps have the same key
           selectedCamps.forEach((el) => {
             formData.append('ListOfAssociatedCamp', el.toString());
           });
 
+          // files to be read on the server
           this.viewImages.forEach((el: File, i) => {
             formData.append(`${i}`, el, el.name);
           });
@@ -171,22 +173,4 @@ export class AddAccomodationTypeComponent implements OnInit {
       console.log(this.accomodationTypesImages);
     }
   }
-
-
-  convertToByteArray(baseList: any[]) {
-    let toReturn = [];
-    baseList.forEach((el, i) => {
-      const binaryString = window.atob(el);
-      const len = binaryString.length;
-      let bytes = new Uint8Array(len);
-
-      for (let i = 0; i < len; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-      }
-      toReturn.push(bytes.buffer);
-    });
-
-    return toReturn;
-  }
 }
-
