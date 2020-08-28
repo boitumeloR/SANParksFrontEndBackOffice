@@ -20,7 +20,8 @@ export class AddAccomodationTypeComponent implements OnInit {
   campsForAccomodationType: FormGroup;
   imagesAccomodationType: FormGroup;
 
-  accomodationTypesImages = [];
+  accomodationTypesImages: any[] =  [];
+  viewImages: File[] = [];
   parkWithCamps;
 
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
@@ -90,7 +91,7 @@ export class AddAccomodationTypeComponent implements OnInit {
 
       addAccomodationTypeConfirmationDialog.afterClosed().subscribe(result => {
         if (result === true){
-          const selectedCamps = this.campsForAccomodationType.get('ListOfAssociatedCamp').value as FormArray;
+          const selectedCamps = this.campsForAccomodationType.get('ListOfAssociatedCamp').value as Array<number>;
 
           const newAccommodationType = {
             AccTypeName: this.basicAccomodationTypeDetails.get('accomodationType').value,
@@ -99,11 +100,30 @@ export class AddAccomodationTypeComponent implements OnInit {
             NumBaths: this.basicAccomodationTypeDetails.get('noOfBaths').value,
             AdultLimit: this.basicAccomodationTypeDetails.get('adultLimit').value,
             ChildLimit: this.basicAccomodationTypeDetails.get('childLimit').value,
-            ListOfAssociatedCamp: selectedCamps
-            // remember to send an image list as well
+            // ListOfAssociatedCamp: selectedCamps,
+            ListOfAccommodationTypeImages: this.viewImages
           };
 
-          this.accommodationTypeService.createAccommodationType(newAccommodationType, this.globalService.GetServer());
+          let formData = new FormData();
+
+          formData.append('AccTypeName', newAccommodationType.AccTypeName);
+          formData.append('AccTypeDescription', newAccommodationType.AccTypeDescription);
+          formData.append('NumBaths', newAccommodationType.NumBaths);
+          formData.append('NumBeds', newAccommodationType.NumBeds);
+          formData.append('ChildLimit', newAccommodationType.ChildLimit);
+          formData.append('AdultLimit', newAccommodationType.AdultLimit);
+
+          selectedCamps.forEach((el) => {
+            formData.append('ListOfAssociatedCamp', el.toString());
+          });
+
+          this.viewImages.forEach((el: File, i) => {
+            formData.append(`${i}`, el, el.name);
+          });
+
+          const arr = this.campsForAccomodationType.get('ListOfAssociatedCamp').value as Array<any>;
+
+          this.accommodationTypeService.createAccommodationType(formData, this.globalService.GetServer());
         }
       });
     }
@@ -130,13 +150,43 @@ export class AddAccomodationTypeComponent implements OnInit {
     });
   }
 
-  selectFile(event) { // We need to check to make sure it is an image. Use Mime
-    const reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = (_event) => {
-    const url = reader.result;
-    this.accomodationTypesImages.push(url);
-    };
+  removeImage(img): void {
+    const index = this.accomodationTypesImages.indexOf(img);
+    this.accomodationTypesImages.splice(index, 1);
+    this.viewImages.splice(index, 1);
+  }
+
+  selectFile(event): void { // We need to check to make sure it is an image. Use Mime
+    if (event.target.files) {
+      console.log(event);
+      Array.from(event.target.files).forEach((file: File, i) => {
+        this.viewImages.push(file);
+        const reader = new FileReader();
+        reader.readAsDataURL(event.target.files[i]);
+        reader.onload = (events) => {
+          // const url = reader.result;
+          this.accomodationTypesImages.push(reader.result);
+        };
+      });
+      console.log(this.accomodationTypesImages);
+    }
+  }
+
+
+  convertToByteArray(baseList: any[]) {
+    let toReturn = [];
+    baseList.forEach((el, i) => {
+      const binaryString = window.atob(el);
+      const len = binaryString.length;
+      let bytes = new Uint8Array(len);
+
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      toReturn.push(bytes.buffer);
+    });
+
+    return toReturn;
   }
 }
 
