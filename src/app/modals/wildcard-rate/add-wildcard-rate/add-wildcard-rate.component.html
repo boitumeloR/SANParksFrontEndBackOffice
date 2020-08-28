@@ -6,17 +6,13 @@
       <mat-form-field appearance="fill">
         <mat-label>Wildcard Cluster</mat-label>
         <mat-select formControlName="wildcardCluster">
-            <mat-option value="All Parks Cluster">All Parks Cluster</mat-option>
-            <mat-option value="Msinsi Cluster">Msinsi Cluster</mat-option>
-            <mat-option value="SANParks Cluster">SANParks Cluster</mat-option>
+            <mat-option *ngFor="let wildcardCluster of wildcardClusterDropdown" value="{{wildcardCluster.WildcardClusterID}}">{{wildcardCluster.WildcardName}}</mat-option>
         </mat-select>
       </mat-form-field> 
       <mat-form-field appearance="fill">
         <mat-label>Wildcard Category</mat-label>
         <mat-select formControlName="wildcardCategory">
-            <mat-option value="Individual">Individual</mat-option>
-            <mat-option value="Couple">Couple</mat-option>
-            <mat-option value="Family">Family</mat-option>
+          <mat-option *ngFor="let wildcardCategory of wildcardCategoryDropDown" value="{{wildcardCategory.WildcardCategoryID}}">{{wildcardCategory.WildcardCategoryName}}</mat-option>
         </mat-select>
       </mat-form-field> 
       <mat-form-field appearance="fill">

@@ -10,15 +10,15 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Wildcard Cluster Name</mat-label>
-            <input matInput value="SANParks Cluster" readonly>
+            <input matInput value="{{wildcardCluster.WildcardName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Wildcard Cluster Description</mat-label>
-            <textarea cdkTextareaAutosize matInput  readonly value="Access to all 3 of SANParks National Parks in South Africa"></textarea>
+            <textarea cdkTextareaAutosize matInput  readonly value="{{wildcardCluster.WildcardClusterDescription}}"></textarea>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Parks In Cluster</mat-label>
-            <textarea cdkTextareaAutosize matInput  readonly value="Addo Elephant National Park, Kruger National Park, Table Mountain National Park"></textarea>
+            <textarea cdkTextareaAutosize matInput  readonly value="{{parkAvailableAt}}"></textarea>
         </mat-form-field>
       </div>
       
