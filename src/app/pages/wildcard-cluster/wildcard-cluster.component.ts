@@ -1,18 +1,12 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { AddWildcardClusterComponent } from 'src/app/modals/wildcard-cluster/add-wildcard-cluster/add-wildcard-cluster.component';
 import { ViewWildcardClusterComponent } from 'src/app/modals/wildcard-cluster/view-wildcard-cluster/view-wildcard-cluster.component';
 import {MatDialog} from '@angular/material/dialog';
+import { WildcardClusterService } from 'src/app/services/WildcardCluster/wildcard-cluster.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
 
-export interface PeriodicElement {
-  name: string
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'SANParks Cluster'},
-  {name: 'Msinsi Cluster'},
-  {name: 'All Parks Cluster'},
-];
 
 @Component({
   selector: 'app-wildcard-cluster',
@@ -21,20 +15,28 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class WildcardClusterComponent implements OnInit {
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private wildcardClusterService: WildcardClusterService, private globalService: GlobalService) { }
 
-  displayedColumns: string[] = ['name','view'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['name', 'view'];
+  dataSource;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.wildcardClusterService.requestReferesh.subscribe(() => {this.getWildcardCluster(); });
+    this.getWildcardCluster();
   }
-
   addWildcardCluster(){
-    const addWildcardClusterDialog = this.dialog.open(AddWildcardClusterComponent,{disableClose: true});
+    const addWildcardClusterDialog = this.dialog.open(AddWildcardClusterComponent, {disableClose: true});
   }
   viewWildcardCluster(wildcardCluster){
+    localStorage.setItem('wildcardCluster', JSON.stringify(wildcardCluster));
     const viewWildcardClusterDialog = this.dialog.open(ViewWildcardClusterComponent);
+  }
+
+  getWildcardCluster(){
+    this.wildcardClusterService.ReadWildcardCluster(this.globalService.GetServer()).subscribe((result: any) => {
+      this.dataSource = new MatTableDataSource(result.WildcardClusters);
+      this.dataSource.paginator = this.paginator;
+    });
   }
 }

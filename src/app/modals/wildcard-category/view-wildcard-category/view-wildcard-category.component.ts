@@ -26,6 +26,7 @@ export class ViewWildcardCategoryComponent implements OnInit {
 
   deleteWildcardCategory(){
     const deleteWildcardCategoryDialog = this.dialog.open(DeleteWildcardCategoryComponent);
+
     deleteWildcardCategoryDialog.afterClosed().subscribe(result => {
       if (result === true){
         this.wildcardCategoryService.DeleteWildcardCategory(this.wildcardCategory.WildcardCategoryID, this.globalService.GetServer());
