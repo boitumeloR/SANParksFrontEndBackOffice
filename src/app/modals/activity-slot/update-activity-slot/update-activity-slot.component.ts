@@ -6,6 +6,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+import { ActivitySlotService } from 'src/app/services/ActivitySlot/activity-slot.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
 
 @Component({
   selector: 'app-update-activity-slot',
@@ -29,42 +31,61 @@ export class UpdateActivitySlotComponent implements OnInit {
   };
 
   updateActivitySlots: FormGroup;
-  constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<UpdateActivitySlotComponent>) { }
+  actvivitySlot;
+  startDate;
+  endDate;
+
+  constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
+              private dialogRef: MatDialogRef<UpdateActivitySlotComponent>, private activitySlotService: ActivitySlotService,
+              private globalService: GlobalService) { }
 
   ngOnInit(): void {
+    this.actvivitySlot = JSON.parse(localStorage.getItem('activitySlot'));
+
+    this.startDate = new Date(this.actvivitySlot.StartDate);
+    this.endDate = new Date(this.actvivitySlot.EndDate);
+
     this.updateActivitySlots = this.formBuilder.group({
-      park: ['', Validators.required],
-      camp : ['', Validators.required],
-      activityType : ['', Validators.required],
-      activity : ['', Validators.required],
-      slotTime: ['', Validators.required],
-      startDate : ['', Validators.required],
-      endDate: ['', Validators.required]
+      slotTime: [this.actvivitySlot.SlotTime, Validators.required],
+      startDate : [this.startDate, Validators.required],
+      endDate: [this.endDate, Validators.required]
     });
   }
 
   updateActivitySlot(){
-    if(this.updateActivitySlots.invalid){
+    if (this.updateActivitySlots.invalid){
       this.displayValidationError();
     }
     else{
       this.dialogRef.close();
       const updateActivitySlotConfirmationDialog = this.dialog.open(UpdateActivitySlotConfirmationComponent);
+
+      updateActivitySlotConfirmationDialog.afterClosed().subscribe(result => {
+        if (result === true){
+          const activitySlot = {
+            ActivitySlotID: this.actvivitySlot.ActivitySlotID,
+            SlotTime: this.updateActivitySlots.get('slotTime').value,
+            startDate: this.updateActivitySlots.get('startDate').value,
+            endDate: this.updateActivitySlots.get('endDate').value
+          };
+
+          this.activitySlotService.UpdateActivitySlot(activitySlot, this.globalService.GetServer());
+        }
+      });
     }
   }
 
   confirmCancel(){
     const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
     confirmCancelDialog.afterClosed().subscribe(result => {
-      if(result == true){
+      if (result === true){
         this.dialogRef.close();
       }
     });
   }
 
   displayValidationError() {
-    this.validationErrorSnackBar.open("The entered details are not in the correct format. Please try again.", "OK", {
+    this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }
