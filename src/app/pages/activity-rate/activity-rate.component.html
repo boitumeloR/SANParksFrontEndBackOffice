@@ -16,17 +16,21 @@
       <!-- Camp Column -->
       <ng-container matColumnDef="camp">
         <th mat-header-cell *matHeaderCellDef> Camp</th>
-        <td mat-cell *matCellDef="let element"> {{element.camp}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.CampName}} </td>
       </ng-container>
        <!--Activity Type-->
        <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef> Activity Type</th>
-        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.ActivityTypeDescription}} </td>
       </ng-container> 
       <!--Activity Description-->
       <ng-container matColumnDef="activityDescription">
         <th mat-header-cell *matHeaderCellDef> Activity Description</th>
-        <td mat-cell *matCellDef="let element"> {{element.activityDescription}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.ActivityDescription}} </td>
+      </ng-container>
+      <ng-container matColumnDef="dateEffective">
+        <th mat-header-cell *matHeaderCellDef> Date Effective</th>
+        <td mat-cell *matCellDef="let element"> {{element.DateEffective}} </td>
       </ng-container>
       <!-- View Column -->
       <ng-container matColumnDef="view"> <!--We should look at the table for this and activity slot-->

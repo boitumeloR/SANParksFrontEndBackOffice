@@ -52,6 +52,7 @@ export class AddActivitySlotComponent implements OnInit {
     this.activityTypeService.readActivityType(this.globalService.GetServer()).subscribe((result: any) => {
       this.activityTypeDropDown = result.ActivityTypes;
     });
+
     this.addActivitySlot = this.formBuilder.group({
       park: ['', Validators.required],
       camp : ['', Validators.required],
