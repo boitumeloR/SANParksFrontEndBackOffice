@@ -10,51 +10,51 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Name</mat-label>
-            <input matInput value="Robyn Sancha" readonly>
+            <input matInput value="{{employee.EmployeeName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Surname</mat-label>
-            <input matInput value="Pillay" readonly>
+            <input matInput value="{{employee.EmployeeSurname}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Identity Number</mat-label>
-            <input matInput value="9805274927963" readonly>
+            <input matInput value="{{employee.EmployeeIDNumber}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Cellphone Number</mat-label>
-            <input matInput value="0789456572" readonly>
+            <input matInput value="{{employee.EmployeeCellphone}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Work Number</mat-label>
-            <input matInput value="0125804913" readonly>
+            <input matInput value="{{employee.EmployeeWorkPhone}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Email Address</mat-label>
-            <input matInput value="robynpillay@sanparks.co.za" readonly>
+            <input matInput value="{{employee.EmployeeEmail}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Address Line 1</mat-label>
-            <textarea cdkTextareaAutosize matInput value="1066 Burnett Street, The Fields" readonly></textarea>
+            <textarea cdkTextareaAutosize matInput value="{{employee.EmployeeAddressLine1}}" readonly></textarea>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Address Line 2</mat-label>
-            <textarea matInput cdkTextareaAutosize value="Hatfield, Pretoria" readonly></textarea>
+            <textarea matInput cdkTextareaAutosize value="{{employee.EmployeeAddressLine2}}" readonly></textarea>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Postal Code</mat-label>
-            <input matInput value="0128" readonly>
+            <input matInput value="{{employee.EmployeePostalCode}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Park</mat-label>
-            <input matInput value="Addo Elephant National Park" readonly>
+            <input matInput value="{{employee.ParkName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>User Role</mat-label>
-            <input matInput value="Camp Reception" readonly>
+            <input matInput value="{{employee.UserRoleName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Employment Status</mat-label>
-            <input matInput value="Active" readonly>
+            <input matInput value="{{employee.EmploymentStatusName}}" readonly>
         </mat-form-field>
       </div>
     </mat-dialog-content>
