@@ -4,17 +4,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import { AddActivityRateComponent } from 'src/app/modals/activity-rate/add-activity-rate/add-activity-rate.component';
 import {MatDialog} from '@angular/material/dialog';
 import { ViewActivityRateComponent } from 'src/app/modals/activity-rate/view-activity-rate/view-activity-rate.component';
+import { GlobalService } from 'src/app/services/Global/global.service';
+import { ActivityRateService } from 'src/app/services/ActivityRate/activity-rate.service';
 
-export interface PeriodicElement {
-  camp: string;
-  type: string;
-  activityDescription: string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { camp: 'Matyholweni',type: 'Sunset Drive',activityDescription: '2 Hour Drive'},
-  { camp: 'Lower Sabie',type:'Night Drive', activityDescription: '3 Hour Drive'},
-  { camp: 'Sirheni',type:'Hiking',activityDescription: 'Bush Hike'}
-];
 @Component({
   selector: 'app-activity-rate',
   templateUrl: './activity-rate.component.html',
@@ -22,21 +14,32 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class ActivityRateComponent implements OnInit {
 
-  displayedColumns: string[] = ['camp','type','activityDescription', 'view'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['camp', 'type', 'activityDescription', 'dateEffective', 'view'];
+  dataSource;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
- 
-  constructor(private dialog: MatDialog) { }
+
+  constructor(private dialog: MatDialog, private activityRateService: ActivityRateService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
+    this.activityRateService.requestReferesh.subscribe(() => {this.getActivityRates(); });
+    this.getActivityRates();
+
   }
 
   addActivityRate(){
-    const addActivityRateDialog = this.dialog.open(AddActivityRateComponent,{disableClose: true});
+    const addActivityRateDialog = this.dialog.open(AddActivityRateComponent, {disableClose: true});
   }
 
   viewActivityRate(activityRate){
+    localStorage.setItem('activityRate', JSON.stringify(activityRate));
     const viewActivityRateDialog = this.dialog.open(ViewActivityRateComponent);
+  }
+
+  getActivityRates(){
+    this.activityRateService.readActivityRate(this.globalService.GetServer()).subscribe((result: any) => {
+      this.dataSource = new MatTableDataSource(result.ActivityRates);
+      this.dataSource.paginator = this.paginator;
+    });
   }
 }
