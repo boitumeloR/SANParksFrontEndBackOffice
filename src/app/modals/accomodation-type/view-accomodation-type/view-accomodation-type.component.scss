@@ -28,6 +28,24 @@ p {
         opacity: 0.6;
     }
 }
+
 #alignCloseRight{
     float: right;
+}
+
+mat-card{
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    margin: 15px;
+    margin-bottom: 25px;
+}
+
+mat-card img{
+    background-size: cover;
+}
+
+.imageHolder{
+    display: flex;
+    justify-content: center;
 }

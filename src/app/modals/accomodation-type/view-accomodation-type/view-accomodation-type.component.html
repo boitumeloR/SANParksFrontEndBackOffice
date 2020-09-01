@@ -32,6 +32,11 @@
             <mat-label>Child Limit</mat-label>
             <input matInput value="{{accommodationType.ChildLimit}}" readonly>
         </mat-form-field>
+        <div class="imageHolder">
+        <mat-card *ngFor="let image of listOfImages" >
+            <img mat-card-image class="cardImage" [src]="image" alt="Accomodation type image.">
+        </mat-card>
+        </div>
       </div>      
     </mat-dialog-content>
     <mat-dialog-actions align="end">

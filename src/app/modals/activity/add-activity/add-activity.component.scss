@@ -1,7 +1,34 @@
 mat-form-field {
     display: block;
-    width: 300px;
+    width: 375px;
     margin-bottom: 20px;
+}
+
+mat-card{
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    margin: 15px;
+    margin-bottom: 25px;
+}
+
+mat-card img{
+    object-fit: cover; 
+}
+
+mat-card button{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.inputFile{
+    display: none;
+}
+
+.example-container{
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #alignCloseRight{

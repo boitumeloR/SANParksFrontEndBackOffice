@@ -66,7 +66,7 @@
         <form [formControl]="imagesAccomodationType" [formGroup]="imagesAccomodationType" enctype="multipart/form-data">
         <ng-template matStepLabel>Provide Images</ng-template>
         <mat-dialog-content appearance="mat-typography">
-        <input class="inputFile" type="file" multiple (change)="selectFile($event)" #fileInput formControlName="image">
+        <input class="inputFile" type="file" accept='image/*' (change)="selectFile($event)" #fileInput formControlName="image">
         <button mat-raised-button color="primary" (click)="fileInput.click()">Upload Image</button>
         <br>
         <div>
