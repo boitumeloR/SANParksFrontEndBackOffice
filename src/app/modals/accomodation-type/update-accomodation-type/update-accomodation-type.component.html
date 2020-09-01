@@ -59,7 +59,7 @@
         </form>
         <mat-dialog-actions align="end">
             <button mat-raised-button color="warn" matStepperPrevious> Previous</button>
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
+            <button mat-raised-button color="primary" (click)="stepperToImageSelection()">Next</button>
         </mat-dialog-actions>
     </mat-step>
     <mat-step [stepControl]="imagesAccomodationType">
@@ -73,7 +73,7 @@
         <mat-card *ngFor="let image of accomodationTypesImages" >
             <img mat-card-image class="cardImage" [src]="image" alt="Accomodation type image.">
             <mat-card-actions>
-                <button mat-mini-fab color="warn">X</button>
+                <button mat-mini-fab color="warn" (click)="removeImage(image)">X</button>
             </mat-card-actions>
         </mat-card>
         </div>

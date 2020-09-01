@@ -4,16 +4,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import { AddActivityComponent } from 'src/app/modals/activity/add-activity/add-activity.component';
 import { ViewActivityComponent } from 'src/app/modals/activity/view-activity/view-activity.component';
 import {MatDialog} from '@angular/material/dialog';
+import { ActivityService } from 'src/app/services/Activity/activity.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
 
-export interface PeriodicElement {
-  type: string;
-  activityDescription: string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { type: 'Sunset Drive',activityDescription: '2 Hour Drive'},
-  { type:'Night Drive', activityDescription: '3 Hour Drive'},
-  { type:'Hiking',activityDescription: 'Bush Hike'}
-];
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
@@ -22,21 +15,31 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class ActivityComponent implements OnInit {
 
-  displayedColumns: string[] = ['type','activityDescription','view'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['type', 'activityDescription', 'view'];
+  dataSource;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private activityService: ActivityService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.activityService.requestReferesh.subscribe(() => this.getActivities());
+    this.getActivities();
+
   }
 
   addActivity(){
-    const addActivityDialog = this.dialog.open(AddActivityComponent,{disableClose: true});
+    const addActivityDialog = this.dialog.open(AddActivityComponent, {disableClose: true});
   }
 
   viewActivity(activity){
+    localStorage.setItem('activity', JSON.stringify(activity));
     const viewActivityDialog = this.dialog.open(ViewActivityComponent);
+  }
+
+  getActivities(){
+    this.activityService.readActivity(this.globalService.GetServer()).subscribe((result: any) => {
+      this.dataSource = result.Activities;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 }

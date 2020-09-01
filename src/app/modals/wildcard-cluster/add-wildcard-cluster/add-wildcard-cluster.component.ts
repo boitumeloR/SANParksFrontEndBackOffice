@@ -37,7 +37,6 @@ export class AddWildcardClusterComponent implements OnInit {
 
     if (event.checked) {
       parksForCluster.push(new FormControl(event.source.value));
-      console.log(parksForCluster);
     }
     else {
       const i = parksForCluster.controls.findIndex(x => x.value === event.source.value);

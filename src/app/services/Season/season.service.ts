@@ -33,7 +33,6 @@ export class SeasonService {
   }
 
   CreateSeason(Season, link){
-    console.log(Season);
     this.http.post(`${link}/api/season/createSeason`, Season).pipe( tap(
       () => {this.refresh.next(); }
     )).subscribe((addResult: any) => {

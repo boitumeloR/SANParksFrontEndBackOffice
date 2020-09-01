@@ -43,7 +43,7 @@ export class AddAccomodationTypeComponent implements OnInit {
     });
 
     this.campsForAccomodationType = this.formBuilder.group({
-      ListOfAssociatedCamp: this.formBuilder.array([])
+      ListOfAssociatedCamp: this.formBuilder.array([], [Validators.required])
     });
 
     this.imagesAccomodationType = this.formBuilder.group({
@@ -74,7 +74,7 @@ export class AddAccomodationTypeComponent implements OnInit {
 
   stepperToImageSelection(){
     if (this.campsForAccomodationType.invalid){
-       this.displayValidationError();
+       this.displayCampNeeded();
      }
      else{
       this.myStepper.next();
@@ -100,11 +100,11 @@ export class AddAccomodationTypeComponent implements OnInit {
             NumBaths: this.basicAccomodationTypeDetails.get('noOfBaths').value,
             AdultLimit: this.basicAccomodationTypeDetails.get('adultLimit').value,
             ChildLimit: this.basicAccomodationTypeDetails.get('childLimit').value,
-            // ListOfAssociatedCamp: selectedCamps,
+            ListOfAssociatedCamp: selectedCamps,
             ListOfAccommodationTypeImages: this.viewImages
           };
-          // append to formdata
-          let formData = new FormData();
+
+          const formData = new FormData();
 
           formData.append('AccTypeName', newAccommodationType.AccTypeName);
           formData.append('AccTypeDescription', newAccommodationType.AccTypeDescription);
@@ -113,12 +113,10 @@ export class AddAccomodationTypeComponent implements OnInit {
           formData.append('ChildLimit', newAccommodationType.ChildLimit);
           formData.append('AdultLimit', newAccommodationType.AdultLimit);
 
-          // camps have the same key
-          selectedCamps.forEach((el) => {
-            formData.append('ListOfAssociatedCamp', el.toString());
+          selectedCamps.forEach((el: any) => {
+            formData.append('ListOfAssociatedCamp', el.CampID.toString());
           });
 
-          // files to be read on the server
           this.viewImages.forEach((el: File, i) => {
             formData.append(`${i}`, el, el.name);
           });
@@ -146,8 +144,14 @@ export class AddAccomodationTypeComponent implements OnInit {
     });
   }
 
+  displayCampNeeded() {
+    this.validationErrorSnackBar.open('Please select a camp this accommodation type.', 'OK', {
+      duration: 2000,
+    });
+  }
+
   displayImageNeeded() {
-    this.validationErrorSnackBar.open('Please upload images for this accomodation type.', 'OK', {
+    this.validationErrorSnackBar.open('Please upload images for this accommodation type.', 'OK', {
       duration: 2000,
     });
   }
@@ -158,19 +162,27 @@ export class AddAccomodationTypeComponent implements OnInit {
     this.viewImages.splice(index, 1);
   }
 
-  selectFile(event): void { // We need to check to make sure it is an image. Use Mime
-    if (event.target.files) {
-      console.log(event);
-      Array.from(event.target.files).forEach((file: File, i) => {
-        this.viewImages.push(file);
-        const reader = new FileReader();
-        reader.readAsDataURL(event.target.files[i]);
-        reader.onload = (events) => {
-          // const url = reader.result;
-          this.accomodationTypesImages.push(reader.result);
-        };
-      });
-      console.log(this.accomodationTypesImages);
+  selectFile(event): void {
+    if (this.viewImages.length === 3){
+      this.displayMaximumImageError();
     }
+    else{
+      if (event.target.files) {
+        Array.from(event.target.files).forEach((file: File, i) => {
+          this.viewImages.push(file);
+          const reader = new FileReader();
+          reader.readAsDataURL(event.target.files[i]);
+          reader.onload = (events) => {
+            this.accomodationTypesImages.push(reader.result);
+          };
+        });
+      }
+    }
+  }
+
+  displayMaximumImageError() {
+    this.validationErrorSnackBar.open('A maximum of 3 images is allowed.', 'OK', {
+      duration: 2000,
+    });
   }
 }

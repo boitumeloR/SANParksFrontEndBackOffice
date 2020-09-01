@@ -20,8 +20,8 @@ export class UpdateAccomodationTypeComponent implements OnInit {
   basicUpdateAccomodationTypeDetails: FormGroup;
   campsForAccomodationType: FormGroup;
   imagesAccomodationType: FormGroup;
-
   accomodationTypesImages = [];
+  viewImages: File[] = [];
   accommodationType;
   parkWithCamps;
 
@@ -35,6 +35,11 @@ export class UpdateAccomodationTypeComponent implements OnInit {
 
   ngOnInit(): void {
     this.accommodationType = JSON.parse(localStorage.getItem('accommodationType'));
+
+    this.accommodationType.ListOfImages.forEach(element => {
+      this.accomodationTypesImages.push('data:image/png;base64,' + element.ImageInBase64);
+      this.viewImages.push(element.ImageInBase64);
+    });
 
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkWithCamps = result.Parks;
@@ -50,7 +55,7 @@ export class UpdateAccomodationTypeComponent implements OnInit {
     });
 
     this.campsForAccomodationType = this.formBuilder.group({
-        ListOfAssociatedCamp: this.formBuilder.array([])
+        ListOfAssociatedCamp: this.formBuilder.array([], [Validators.required])
     });
 
     this.imagesAccomodationType = this.formBuilder.group({
@@ -58,8 +63,20 @@ export class UpdateAccomodationTypeComponent implements OnInit {
     });
   }
 
+   b64toBlob(dataURI) {
+    const dataWithPrefix = 'data:image/png;base64,' + dataURI;
+    const byteString = atob(dataWithPrefix.split(',')[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+
+    for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: 'image/png' });
+  }
+
   updateAccomodationType(){
-    if (this.imagesAccomodationType.invalid){
+    if (this.viewImages.length === 0){
       this.displayImageNeeded();
     }
     else{
@@ -68,7 +85,7 @@ export class UpdateAccomodationTypeComponent implements OnInit {
 
       updateAccomodationTypeConfirmationDialog.afterClosed().subscribe(result => {
         if (result === true){
-          const selectedCamps = this.campsForAccomodationType.get('ListOfAssociatedCamp').value as FormArray;
+          const selectedCamps = this.campsForAccomodationType.get('ListOfAssociatedCamp').value as Array<number>;
 
           const updateAccommodationType = {
             AccommodationTypeID: this.accommodationType.AccommodationTypeID,
@@ -78,11 +95,33 @@ export class UpdateAccomodationTypeComponent implements OnInit {
             NumBaths: this.basicUpdateAccomodationTypeDetails.get('noOfBaths').value,
             AdultLimit: this.basicUpdateAccomodationTypeDetails.get('adultLimit').value,
             ChildLimit: this.basicUpdateAccomodationTypeDetails.get('childLimit').value,
-            ListOfAssociatedCamp: selectedCamps
-            // remember to send an image list as well
+            ListOfAssociatedCamp: selectedCamps,
+            ListOfAccommodationTypeImages: this.viewImages
           };
 
-          this.accommodationTypeService.updateAccommodationType(updateAccommodationType, this.globalService.GetServer());
+          const formData = new FormData();
+          formData.append('AccommodationTypeID', updateAccommodationType.AccommodationTypeID);
+          formData.append('AccTypeName', updateAccommodationType.AccTypeName);
+          formData.append('AccTypeDescription', updateAccommodationType.AccTypeDescription);
+          formData.append('NumBaths', updateAccommodationType.NumBaths);
+          formData.append('NumBeds', updateAccommodationType.NumBeds);
+          formData.append('ChildLimit', updateAccommodationType.ChildLimit);
+          formData.append('AdultLimit', updateAccommodationType.AdultLimit);
+
+          selectedCamps.forEach((el: any) => {
+            formData.append('ListOfAssociatedCamp', el.CampID.toString());
+          });
+
+          this.viewImages.forEach((el: File, i) => {
+            if (el instanceof Blob){
+              formData.append(`${i}`, el, el.name);
+            }
+            else{
+              formData.append(`${i}`, this.b64toBlob(el), 'accTypeImage');
+            }
+          });
+
+          this.accommodationTypeService.updateAccommodationType(formData, this.globalService.GetServer());
         }
       });
     }
@@ -97,7 +136,7 @@ export class UpdateAccomodationTypeComponent implements OnInit {
     });
   }
 
-   displayValidationError() {
+  displayValidationError() {
     this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
@@ -111,9 +150,18 @@ export class UpdateAccomodationTypeComponent implements OnInit {
      }
    }
 
-   onChange(event) {
+   stepperToImageSelection(){
+    if (this.campsForAccomodationType.invalid){
+       this.displayCampNeeded();
+     }
+     else{
+      this.myStepper.next();
+     }
+   }
+
+  onChange(event) {
     const campsAvailableAt =  this.campsForAccomodationType.get('ListOfAssociatedCamp') as FormArray;
-    console.log(event.source.value)
+
     if (event.checked) {
       campsAvailableAt.push(new FormControl(event.source.value));
     }
@@ -130,18 +178,45 @@ export class UpdateAccomodationTypeComponent implements OnInit {
     });
   }
 
-  displayImageNeeded() {
-    this.validationErrorSnackBar.open('Please upload images for this accomodation type.', 'OK', {
+  displayCampNeeded() {
+    this.validationErrorSnackBar.open('Please select a camp this accommodation type.', 'OK', {
       duration: 2000,
     });
   }
 
-  selectFile(event) { // We need to check to make sure it is an image. Use Mime
-    const reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = (_event) => {
-      const url = reader.result;
-      this.accomodationTypesImages.push(url);
-    };
+  displayImageNeeded() {
+    this.validationErrorSnackBar.open('Please upload images for this accommodation type.', 'OK', {
+      duration: 2000,
+    });
+  }
+
+  removeImage(img): void {
+    const index = this.accomodationTypesImages.indexOf(img);
+    this.accomodationTypesImages.splice(index, 1);
+    this.viewImages.splice(index, 1);
+  }
+
+  selectFile(event): void {
+    if (this.viewImages.length === 3){
+      this.displayMaximumImageError();
+    }
+    else{
+    if (event.target.files) {
+        Array.from(event.target.files).forEach((file: File, i) => {
+          this.viewImages.push(file);
+          const reader = new FileReader();
+          reader.readAsDataURL(event.target.files[i]);
+          reader.onload = (events) => {
+            this.accomodationTypesImages.push(reader.result);
+          };
+        });
+      }
+    }
+  }
+
+  displayMaximumImageError() {
+    this.validationErrorSnackBar.open('A maximum of 3 images is allowed.', 'OK', {
+      duration: 2000,
+    });
   }
 }
