@@ -15,6 +15,7 @@ import {GlobalService} from 'src/app/services/Global/global.service';
 export class ParkComponent implements OnInit {
   displayedColumns: string[] = ['ParkName', 'view'];
   dataSource;
+  filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private parkService: ParkService, private globalService: GlobalService) { }
@@ -22,6 +23,10 @@ export class ParkComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.requestReferesh.subscribe(() => {this.getParks(); });
     this.getParks();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addPark() {

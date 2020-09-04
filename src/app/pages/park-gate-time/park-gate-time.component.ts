@@ -14,10 +14,11 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 })
 export class ParkGateTimeComponent implements OnInit {
   dataSource;
+  filter;
   constructor(private dialog: MatDialog, private parkGateTimeService: ParkGateTimeService, private globalService: GlobalService) { }
 
   displayedColumns: string[] = ['ParkGateName', 'SeasonName', 'view'];
- 
+
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -25,6 +26,11 @@ export class ParkGateTimeComponent implements OnInit {
     this.parkGateTimeService.requestReferesh.subscribe(() => {this.getParkGateTime(); });
     this.getParkGateTime();
   }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
+  }
+
   addParkGateTime(){
     const addParkGateTimeDialog =  this.dialog.open(AddParkGateTimeComponent, {disableClose: true});
   }

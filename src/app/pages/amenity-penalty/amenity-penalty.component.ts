@@ -16,6 +16,7 @@ export class AmenityPenaltyComponent implements OnInit {
 
   displayedColumns: string[] = ['camp', 'accomodationType', 'unitNumber', 'dateEffective', 'view'];
   dataSource;
+  filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private amenityPenaltyService: AmenityPenaltyService,
@@ -26,6 +27,9 @@ export class AmenityPenaltyComponent implements OnInit {
     this.getAmenityPenalty();
   }
 
+  filterTable(filter){
+    this.dataSource.filter = filter;
+  }
 
   addAmenityPenalty(){
     const addAmenityPenaltyDialog = this.dialog.open(AddAmenityPenaltyComponent, {disableClose: true});
@@ -38,7 +42,7 @@ export class AmenityPenaltyComponent implements OnInit {
 
   getAmenityPenalty(){
     this.amenityPenaltyService.readAmenityPenalty(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = result.AmenityPenalties;
+      this.dataSource = new MatTableDataSource(result.AmenityPenalties);
       this.dataSource.paginator = this.paginator;
     });
   }

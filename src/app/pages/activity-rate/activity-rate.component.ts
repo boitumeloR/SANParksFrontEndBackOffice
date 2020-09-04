@@ -16,7 +16,7 @@ export class ActivityRateComponent implements OnInit {
 
   displayedColumns: string[] = ['camp', 'type', 'activityDescription', 'dateEffective', 'view'];
   dataSource;
-
+  filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private dialog: MatDialog, private activityRateService: ActivityRateService, private globalService: GlobalService) { }
@@ -24,7 +24,10 @@ export class ActivityRateComponent implements OnInit {
   ngOnInit(): void {
     this.activityRateService.requestReferesh.subscribe(() => {this.getActivityRates(); });
     this.getActivityRates();
+  }
 
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addActivityRate(){

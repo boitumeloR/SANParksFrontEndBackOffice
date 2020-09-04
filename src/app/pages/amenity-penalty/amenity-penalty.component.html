@@ -1,9 +1,9 @@
 
 <h1>Amenity Penalty</h1>
 <div class="example-container">
-  <mat-form-field hintLabel="Max 100 characters" appearance="fill">
+  <mat-form-field hintLabel="Max 100 characters" appearance="fill" >
     <mat-label>Keyword Filter</mat-label>
-    <input matInput #input maxlength="100" placeholder="Ex. KIC 220L">
+    <input matInput #input maxlength="100" placeholder="Ex. KIC 220L" [ngModel]="filter" (ngModelChange)="filterTable(input.value)">
     <mat-hint>&nbsp; {{input.value?.length || 0}}/100</mat-hint>
   </mat-form-field>
 

@@ -15,6 +15,7 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 export class SeasonComponent implements OnInit {
 
   dataSource;
+  filter;
   constructor(private dialog: MatDialog, private seasonService: SeasonService, private globalService: GlobalService) { }
 
   displayedColumns: string[] = ['name', 'startDate', 'endDate', 'view'];
@@ -25,18 +26,22 @@ export class SeasonComponent implements OnInit {
     this.getSeason();
   }
 
+  filterTable(filter){
+    this.dataSource.filter = filter;
+  }
+
   addSeason(){
     const addSeasonDialog = this.dialog.open(AddSeasonComponent, {disableClose: true});
   }
 
   viewSeason(season){
-    localStorage.setItem('season', JSON.stringify(season)); 
+    localStorage.setItem('season', JSON.stringify(season));
     const viewSeasonDialog = this.dialog.open(ViewSeasonComponent);
   }
 
   getSeason(){
     this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = result.Seasons;
+      this.dataSource = new MatTableDataSource(result.Seasons);
       this.dataSource.paginator = this.paginator;
     });
   }

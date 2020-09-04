@@ -14,6 +14,7 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 })
 export class ActivityTypeComponent implements OnInit {
   dataSource;
+  filter;
   displayedColumns: string[] = ['ActivityTypeDescription', 'view'];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -22,6 +23,10 @@ export class ActivityTypeComponent implements OnInit {
   ngOnInit(): void {
     this.activityTypeService.requestReferesh.subscribe(() => {this.getActivityTypes(); });
     this.getActivityTypes();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addActivityType(){

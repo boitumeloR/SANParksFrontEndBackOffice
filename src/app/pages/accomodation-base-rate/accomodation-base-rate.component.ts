@@ -16,7 +16,7 @@ export class AccomodationBaseRateComponent implements OnInit {
 
   displayedColumns: string[] = ['accomodationType', 'camp', 'rate', 'view'];
   dataSource;
-
+  filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private accommodationTypeBaseRateService: AccommBaseRateService,
               private globalService: GlobalService) { }
@@ -24,6 +24,10 @@ export class AccomodationBaseRateComponent implements OnInit {
   ngOnInit(): void {
     this.accommodationTypeBaseRateService.requestReferesh.subscribe(() => this.getAccommodationBaseRate());
     this.getAccommodationBaseRate();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   viewAccomodationBaseRate(baseRate){
@@ -37,7 +41,7 @@ export class AccomodationBaseRateComponent implements OnInit {
 
   getAccommodationBaseRate(){
     this.accommodationTypeBaseRateService.readAccommodationTypeBaseRate(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = result.BaseRates;
+      this.dataSource = new MatTableDataSource(result.BaseRates);
       this.dataSource.paginator = this.paginator;
     });
   }

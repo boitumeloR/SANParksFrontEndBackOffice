@@ -16,13 +16,17 @@ export class CampTypeComponent implements OnInit {
 
   displayedColumns: string[] = ['CampTypeName', 'view'];
   dataSource;
-
+  filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private campTypeService: CampTypeService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.campTypeService.requestReferesh.subscribe(() => {this.getCampType(); });
     this.getCampType();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addCampType(){

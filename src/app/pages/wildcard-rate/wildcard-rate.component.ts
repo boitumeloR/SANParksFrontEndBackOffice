@@ -19,11 +19,16 @@ export class WildcardRateComponent implements OnInit {
 
   displayedColumns: string[] = ['clusterName', 'categoryName', 'dateEffective', 'view'];
   dataSource;
+  filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
     this.wildcardRateService.requestReferesh.subscribe(() => {this.getWildcardRate(); });
     this.getWildcardRate();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addWildcardRate(){
