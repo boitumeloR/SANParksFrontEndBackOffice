@@ -17,7 +17,7 @@ export class AccomodationAddRateComponent implements OnInit {
 
   displayedColumns: string[] = ['accomodationType', 'date', 'view'];
   dataSource;
-
+  filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private accommodationTypeAddRateService: AccommAddRateService,
               private globalService: GlobalService) { }
@@ -32,13 +32,17 @@ export class AccomodationAddRateComponent implements OnInit {
     const viewAccomodationAddRateDialog = this.dialog.open(ViewAccomodationAddRateComponent);
   }
 
+  filterTable(filter){
+    this.dataSource.filter = filter;
+  }
+
   addAccomodationAddRate(){
     const addAccomodationAddRateDialog = this.dialog.open(AddAccomodationAddRateComponent, {disableClose: true});
   }
 
   getAccommodationAddRate(){
     this.accommodationTypeAddRateService.readAccommodationTypeAddRate(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = result.AddRates;
+      this.dataSource = new MatTableDataSource(result.AddRates);
       this.dataSource.paginator = this.paginator;
     });
   }

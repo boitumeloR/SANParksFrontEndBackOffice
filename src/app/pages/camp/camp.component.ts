@@ -16,7 +16,7 @@ export class CampComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'park', 'view'];
   dataSource ;
-
+  filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private campService: CampService,
               private globalService: GlobalService) { }
@@ -24,6 +24,10 @@ export class CampComponent implements OnInit {
   ngOnInit(): void {
     this.campService.requestReferesh.subscribe(() => {this.getCamp(); });
     this.getCamp();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   viewCamp(camp){
@@ -37,7 +41,7 @@ export class CampComponent implements OnInit {
 
   getCamp(){
     this.campService.readCamp(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = result.Camps;
+      this.dataSource = new MatTableDataSource(result.Camps);
       this.dataSource.paginator = this.paginator;
     });
   }

@@ -16,12 +16,17 @@ export class AccomodationComponent implements OnInit {
 
   displayedColumns: string[] = ['unitNumber', 'accomodationType', 'camp', 'view'];
   dataSource;
+  filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private accomodationService: AccommodationService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.accomodationService.requestReferesh.subscribe(() => this.getAccommodation());
     this.getAccommodation();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addAccomodation(){
@@ -35,7 +40,7 @@ export class AccomodationComponent implements OnInit {
 
   getAccommodation(){
     this.accomodationService.readAccommodation(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = result.Accomodations;
+      this.dataSource = new MatTableDataSource(result.Accomodations);
       this.dataSource.paginator = this.paginator;
     });
   }

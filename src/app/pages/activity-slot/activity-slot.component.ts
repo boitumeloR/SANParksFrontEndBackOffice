@@ -16,6 +16,7 @@ export class ActivitySlotComponent implements OnInit {
 
   displayedColumns: string[] = ['camp', 'type', 'activityDescription', 'slotTime', 'view'];
   dataSource;
+  filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private activitySlotService: ActivitySlotService, private globalService: GlobalService) { }
@@ -23,6 +24,10 @@ export class ActivitySlotComponent implements OnInit {
   ngOnInit(): void {
     this.activitySlotService.requestReferesh.subscribe(() => {this.getActivitySlots(); });
     this.getActivitySlots();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addActivitySlot(){

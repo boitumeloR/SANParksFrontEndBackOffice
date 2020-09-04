@@ -16,6 +16,7 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 })
 export class AmenityTypeComponent implements OnInit {
   dataSource;
+  filter;
   displayedColumns: string[] = ['AmenityTypeName', 'view'];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -24,6 +25,10 @@ export class AmenityTypeComponent implements OnInit {
   ngOnInit(): void {
     this.amenityTypeService.requestReferesh.subscribe(() => {this.getAmenityTypes(); });
     this.getAmenityTypes();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addAmenityType(){
@@ -40,7 +45,5 @@ export class AmenityTypeComponent implements OnInit {
       this.dataSource = new MatTableDataSource(result.AmenityTypes);
       this.dataSource.paginator = this.paginator;
     });
-
-
-}
+  }
 }

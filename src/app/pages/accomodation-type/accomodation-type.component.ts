@@ -16,7 +16,7 @@ export class AccomodationTypeComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'view'];
   dataSource;
-
+  filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private accommodationTypeService: AccommodationTypeService,
               private globalService: GlobalService) { }
@@ -30,6 +30,10 @@ export class AccomodationTypeComponent implements OnInit {
     const addAccomodationTypeDialog = this.dialog.open(AddAccomodationTypeComponent, {disableClose: true});
   }
 
+  filterTable(filter){
+    this.dataSource.filter = filter;
+  }
+
   viewAccomodationType(accomodationType){
     localStorage.setItem('accommodationType', JSON.stringify(accomodationType));
     const viewAccomodationTypeDialog = this.dialog.open(ViewAccomodationTypeComponent);
@@ -37,7 +41,7 @@ export class AccomodationTypeComponent implements OnInit {
 
   getAccommodationTypes(){
     this.accommodationTypeService.readAccommodationType(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = result.AccommodationTypes;
+      this.dataSource = new MatTableDataSource(result.AccommodationTypes);
       this.dataSource.paginator = this.paginator;
     });
   }

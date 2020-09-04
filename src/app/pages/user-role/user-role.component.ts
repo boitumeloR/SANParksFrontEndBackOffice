@@ -16,6 +16,7 @@ export class UserRoleComponent implements OnInit {
 
   displayedColumns: string[] = ['UserRoleName', 'view'];
   dataSource;
+  filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private userRoleService: UserRoleService, private globalService: GlobalService) { }
@@ -23,6 +24,10 @@ export class UserRoleComponent implements OnInit {
   ngOnInit(): void {
     this.userRoleService.requestReferesh.subscribe(() => {this.getUserRole(); });
     this.getUserRole();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addUserRole(){

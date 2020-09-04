@@ -18,11 +18,15 @@ export class CampGateTimeComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'season', 'view'];
   dataSource;
-
+  filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
     this.campGateTimeService.requestReferesh.subscribe(() => {this.getCampGateTime(); });
     this.getCampGateTime();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addCampGateTime(){
@@ -36,7 +40,7 @@ export class CampGateTimeComponent implements OnInit {
 
   getCampGateTime(){
     this.campGateTimeService.readCampgateTime(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = result.CampGateTimes;
+      this.dataSource = new MatTableDataSource(result.CampGateTimes);
       this.dataSource.paginator = this.paginator;
     });
   }

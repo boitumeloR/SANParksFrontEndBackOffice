@@ -16,7 +16,7 @@ export class DailyConservationFeeComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'dateEffective', 'endDate', 'region', 'view'];
   dataSource;
-
+  filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private dailyConservationFeeService: DailyConservationFeeService,
               private globalService: GlobalService) { }
@@ -25,6 +25,11 @@ export class DailyConservationFeeComponent implements OnInit {
     this.dailyConservationFeeService.requestReferesh.subscribe(() => {this.getDailyConservationFee(); });
     this.getDailyConservationFee();
   }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
+  }
+
   viewDailyConservationFee(dailyConservationFee){
     localStorage.setItem('dailyConservationFee', JSON.stringify(dailyConservationFee));
     const viewDailyConservationFeeDialog = this.dialog.open(ViewDailyConservationFeeComponent);
@@ -36,7 +41,7 @@ export class DailyConservationFeeComponent implements OnInit {
 
   getDailyConservationFee(){
     this.dailyConservationFeeService.ReadDailyConservationFee(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = result.DaliyConservationFees;
+      this.dataSource = new MatTableDataSource(result.DaliyConservationFees);
       this.dataSource.paginator = this.paginator;
     });
   }

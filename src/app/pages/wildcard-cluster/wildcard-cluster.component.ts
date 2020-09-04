@@ -19,15 +19,22 @@ export class WildcardClusterComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'view'];
   dataSource;
+  filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
     this.wildcardClusterService.requestReferesh.subscribe(() => {this.getWildcardCluster(); });
     this.getWildcardCluster();
   }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
+  }
+
   addWildcardCluster(){
     const addWildcardClusterDialog = this.dialog.open(AddWildcardClusterComponent, {disableClose: true});
   }
+
   viewWildcardCluster(wildcardCluster){
     localStorage.setItem('wildcardCluster', JSON.stringify(wildcardCluster));
     const viewWildcardClusterDialog = this.dialog.open(ViewWildcardClusterComponent);

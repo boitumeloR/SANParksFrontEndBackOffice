@@ -18,11 +18,16 @@ export class EmployeeComponent implements OnInit {
 
   displayedColumns: string[] = ['park', 'employeeName', 'identityNumber', 'view'];
   dataSource;
+  filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
     this.employeeService.requestReferesh.subscribe(() => {this.getEmployee(); });
     this.getEmployee();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addEmployee(){
@@ -36,7 +41,7 @@ export class EmployeeComponent implements OnInit {
 
   getEmployee(){
     this.employeeService.ReadEmployee(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = result.Employees;
+      this.dataSource = new MatTableDataSource(result.Employees);
       this.dataSource.paginator = this.paginator;
     });
   }

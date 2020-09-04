@@ -15,14 +15,18 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 export class ParkGateComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private parkGateService: ParkGateService, private globalService: GlobalService) { }
-
   displayedColumns: string[] = ['ParkGateName', 'ParkName', 'ParkGateMax', 'view'];
   dataSource;
+  filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
     this.parkGateService.requestReferesh.subscribe(() => {this.getParkGates(); });
     this.getParkGates();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addParkGate(){

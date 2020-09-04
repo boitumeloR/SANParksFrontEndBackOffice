@@ -17,6 +17,7 @@ export class ActivityComponent implements OnInit {
 
   displayedColumns: string[] = ['type', 'activityDescription', 'view'];
   dataSource;
+  filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private activityService: ActivityService, private globalService: GlobalService) { }
@@ -24,7 +25,10 @@ export class ActivityComponent implements OnInit {
   ngOnInit(): void {
     this.activityService.requestReferesh.subscribe(() => this.getActivities());
     this.getActivities();
+  }
 
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addActivity(){
@@ -38,7 +42,7 @@ export class ActivityComponent implements OnInit {
 
   getActivities(){
     this.activityService.readActivity(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = result.Activities;
+      this.dataSource = new MatTableDataSource(result.Activities);
       this.dataSource.paginator = this.paginator;
     });
   }

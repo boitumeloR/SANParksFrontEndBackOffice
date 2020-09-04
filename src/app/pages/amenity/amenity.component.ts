@@ -16,7 +16,7 @@ export class AmenityComponent implements OnInit {
 
   displayedColumns: string[] = ['camp', 'accomodationType', 'unitNumber', 'view'];
   dataSource;
-
+  filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private dialog: MatDialog, private amenityService: AmenityService, private globalService: GlobalService) { }
@@ -24,6 +24,10 @@ export class AmenityComponent implements OnInit {
   ngOnInit(): void {
     this.amenityService.requestReferesh.subscribe(() => {this.getAmenity(); });
     this.getAmenity();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addAmenity(){
@@ -37,7 +41,7 @@ export class AmenityComponent implements OnInit {
 
   getAmenity(){
     this.amenityService.readAmenity(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = result.Amenities;
+      this.dataSource = new MatTableDataSource(result.Amenities);
       this.dataSource.paginator = this.paginator;
     });
   }

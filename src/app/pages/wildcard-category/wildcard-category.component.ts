@@ -15,6 +15,7 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 export class WildcardCategoryComponent implements OnInit {
   displayedColumns: string[] = ['WildcardCategoryName', 'view'];
   dataSource;
+  filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private wildcardCategoryService: WildcardCategoryService, private globalService: GlobalService) { }
@@ -22,6 +23,10 @@ export class WildcardCategoryComponent implements OnInit {
   ngOnInit(): void {
     this.wildcardCategoryService.requestReferesh.subscribe(() => {this.getWildcardCategory(); });
     this.getWildcardCategory();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addWildcardCategory(){

@@ -1,9 +1,9 @@
 
 <h1>Wildcard Category</h1> <!--Look at UI notes-->
 <div class="example-container">
-  <mat-form-field hintLabel="Max 100 characters" appearance="fill">
+  <mat-form-field hintLabel="Max 100 characters" appearance="fill" >
     <mat-label>Keyword Filter</mat-label>
-    <input matInput #input maxlength="100" placeholder="Ex. Individual ">
+    <input matInput #input maxlength="100" placeholder="Ex. Individual" [ngModel]="filter" (ngModelChange)="filterTable(input.value)">
     <mat-hint>&nbsp; {{input.value?.length || 0}}/100</mat-hint>
   </mat-form-field>
 
