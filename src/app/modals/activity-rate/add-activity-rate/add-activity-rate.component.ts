@@ -62,8 +62,8 @@ export class AddActivityRateComponent implements OnInit {
       hutAmount : ['', [Validators.required, Validators.min(0)]],
       personAmount : ['', [Validators.required, Validators.min(0)]],
       bikeAmount : ['', [Validators.required, Validators.min(0)]],
-      noBikeAmunt : ['', [Validators.required, Validators.min(0)]]
-      // dateEffective : ['', Validators.required]
+      noBikeAmunt : ['', [Validators.required, Validators.min(0)]],
+      dateEffective : ['', Validators.required]
 
     });
   }
@@ -96,7 +96,8 @@ export class AddActivityRateComponent implements OnInit {
           NoBikeAmount: this.activityRateDetails.get('noBikeAmunt').value,
           RateTypeID: this.activityRateDetails.get('rateType').value,
           ActivityID: this.selectActivityForm.get('activity').value,
-          CampID: this.selectActivityForm.get('camp').value
+          CampID: this.selectActivityForm.get('camp').value,
+          DateEffective:  this.activityRateDetails.get('dateEffective').value
         };
          this.activityRateService.createActivityRate(newActivityRate, this.globalService.GetServer());
       }

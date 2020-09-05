@@ -20,7 +20,7 @@ export class UpdateActivityRateComponent implements OnInit {
   selectActivityForm: FormGroup;
   actvivityRate;
   rateTypeDropDown;
-
+  dateEffective;
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<UpdateActivityRateComponent>, private activityRateService: ActivityRateService,
               private globalService: GlobalService) { }
@@ -35,6 +35,7 @@ export class UpdateActivityRateComponent implements OnInit {
     this.selectActivityForm = this.formBuilder.group({
     });
 
+    this.dateEffective = new Date(this.actvivityRate.DateEffective);
     this.activityRateDetails = this.formBuilder.group({
       rateType: [this.actvivityRate.RateTypeID, Validators.required],
       adultRate : [this.actvivityRate.AdultRateAmount, [Validators.required, Validators.min(0)]],
@@ -44,7 +45,7 @@ export class UpdateActivityRateComponent implements OnInit {
       personAmount : [this.actvivityRate.PersonAmount, [Validators.required, Validators.min(0)]],
       bikeAmount : [this.actvivityRate.BikeAmount, [Validators.required, Validators.min(0)]],
       noBikeAmunt : [this.actvivityRate.NoBikeAmount, [Validators.required, Validators.min(0)]],
-      // dateEffective : [this.actvivityRate.RateTypeID, Validators.required]
+      dateEffective : [this.dateEffective, Validators.required]
 
     });
   }
@@ -77,7 +78,8 @@ export class UpdateActivityRateComponent implements OnInit {
           PersonAmount: this.activityRateDetails.get('personAmount').value,
           BikeAmount: this.activityRateDetails.get('bikeAmount').value,
           NoBikeAmount: this.activityRateDetails.get('noBikeAmunt').value,
-          RateTypeID: this.activityRateDetails.get('rateType').value
+          RateTypeID: this.activityRateDetails.get('rateType').value,
+          DateEffective: this.activityRateDetails.get('dateEffective').value
         };
          this.activityRateService.updateActivityRate(updateActivityRate, this.globalService.GetServer());
       }
