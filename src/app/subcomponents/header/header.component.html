@@ -1,4 +1,4 @@
-<mat-toolbar color = "primary">
+<mat-toolbar color = "primary" *ngIf="loggedIn$ | async as isLoggedIn">
   <!--[ngClass]="{'open': opened}"-->
     <div id="burger" #burger (click)="toggleBurger()" fxShow="true" fxHide.lt-md="true">
         <span></span> 
@@ -15,6 +15,10 @@
       <a mat-raised-button color="primary" id="login" target="_blank"  style="margin-left:10px;">
         <mat-icon>account_circle</mat-icon>
         Admin
+      </a>
+      <a mat-raised-button color="primary" id="login" target="_blank"  style="margin-left:10px;" (click)="logout()">
+        <mat-icon>power_settings_new</mat-icon>
+        Logout
       </a>
     </div>
 </mat-toolbar>
