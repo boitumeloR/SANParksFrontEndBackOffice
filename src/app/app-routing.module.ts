@@ -46,7 +46,10 @@ import { BookingCheckinComponent } from './pages/reports/booking-checkin/booking
 import {ClientComponent} from './pages/client/client.component';
 import {PurchaseWildcardComponent} from './pages/Purchase Wildcard/purchase-wildcard/purchase-wildcard.component';
 import {SearchWildcardMembershipComponent} from './pages/renew/search-wildcard-membership/search-wildcard-membership.component'
-
+import { LoginComponent } from './subcomponents/login/login/login.component';
+import { ForgotPasswordComponent } from './subcomponents/login/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './subcomponents/login/reset-password/reset-password.component';
+import { PageNotFoundComponent } from './subcomponents/page-not-found/page-not-found.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -92,9 +95,13 @@ const routes: Routes = [
     path: 'Wildcard-Rate',
     component: WildcardRateComponent
   },
-  { // Perhaps we should have an actual home component
-    path: 'home',
-    component: ParkComponent
+  {
+    path: 'Forgot-Password',
+    component: ForgotPasswordComponent
+  },
+  {
+    path: 'Reset-Password',
+    component: ResetPasswordComponent
   },
   {
     path: 'addPark',

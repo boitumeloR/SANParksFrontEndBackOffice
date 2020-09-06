@@ -326,7 +326,6 @@ import { UnannouncedCheckInComponent } from './pages/unannounced-check-in/unanno
 import { PreBookedCheckInComponent } from './pages/pre-booked-check-in/pre-booked-check-in.component';
 import { SuccessModalComponent } from './modals/auxilliary-modals/success-modal/success-modal.component';
 import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.component';
-
 import { NgxStripeModule } from 'ngx-stripe';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatStepper} from '@angular/material/stepper';
@@ -375,6 +374,17 @@ import { RenewWildcardMembershipComponent } from './pages/renew/renew-wildcard-m
 import { UpdateWildcardStatusConfirmationComponent } from './pages/renew/update-wildcard-status-confirmation/update-wildcard-status-confirmation.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { LoginComponent } from './subcomponents/login/login/login.component';
+import { LoginFailedComponent } from './subcomponents/login/login-failed/login-failed.component';
+import { ForgotPasswordComponent } from './subcomponents/login/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './subcomponents/login/reset-password/reset-password.component';
+import { PageNotFoundComponent } from './subcomponents/page-not-found/page-not-found.component';
+import { UserNotFoundComponent } from './subcomponents/login/user-not-found/user-not-found.component';
+import { ForgotPasswordUnsucessfulComponent } from './subcomponents/login/forgot-password-unsucessful/forgot-password-unsucessful.component';
+import { ForgotPasswordSuccessfulComponent } from './subcomponents/login/forgot-password-successful/forgot-password-successful.component';
+import { ResetPasswordSucessfulComponent } from './subcomponents/login/reset-password-sucessful/reset-password-sucessful.component';
+import { ResetPasswordUnsuccessfulComponent } from './subcomponents/login/reset-password-unsuccessful/reset-password-unsuccessful.component';
+import { RouterModule } from '@angular/router';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -739,6 +749,16 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     SearchWildcardMembershipComponent,
     RenewWildcardMembershipComponent,
     UpdateWildcardStatusConfirmationComponent,
+    LoginComponent,
+    LoginFailedComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    PageNotFoundComponent,
+    UserNotFoundComponent,
+    ForgotPasswordUnsucessfulComponent,
+    ForgotPasswordSuccessfulComponent,
+    ResetPasswordSucessfulComponent,
+    ResetPasswordUnsuccessfulComponent,
   ],
   entryComponents: [
     AddParkComponent,
@@ -759,7 +779,15 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MaterialModule,
     NgxMaterialTimepickerModule,
     MatNativeDateModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot([
+      { // Perhaps we should have an actual home component
+        path: 'Login',
+        component: LoginComponent
+      },
+      {path: '', redirectTo: '/Login', pathMatch: 'full'},
+      {path: '**', component: PageNotFoundComponent}
+    ]),
   ],
   providers: [MatSnackBarModule, MatStepper, DatePipe],
   bootstrap: [AppComponent]
