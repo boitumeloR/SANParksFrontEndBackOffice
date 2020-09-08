@@ -22,6 +22,7 @@ export class AddEmployeeComponent implements OnInit {
   parkDropDown;
   userRoleDropDown;
   employmentStatusDropDown;
+  titleDropDown;
 
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<AddEmployeeComponent>, private parkService: ParkService,
@@ -40,7 +41,12 @@ export class AddEmployeeComponent implements OnInit {
       this.employmentStatusDropDown = result.ListOfEmploymentStatus;
     });
 
+    this.employeeService.ReadTitles(this.globalService.GetServer()).subscribe((result: any) => {
+      this.titleDropDown = result.ListOfTitles;
+    });
+
     this.basicEmployeeDetails = this.formBuilder.group({
+      title: ['', Validators.required],
       name: ['', Validators.required],
       surname : ['', Validators.required],
       identityNumber : ['', Validators.required],
@@ -64,7 +70,14 @@ export class AddEmployeeComponent implements OnInit {
       this.displayValidationError();
     }
     else{
-      this.myStepper.next();
+      const numbers = /^[0-9]+$/;
+      if (this.basicEmployeeDetails.get('cellphoneNumber').value.match(numbers) &&
+            this.basicEmployeeDetails.get('workNumber').value.match(numbers)){
+            this.myStepper.next();
+      }
+      else{
+        this.displayValidationForCellAndWork();
+      }
     }
   }
 
@@ -78,7 +91,10 @@ export class AddEmployeeComponent implements OnInit {
 
       addEmployeeConfirmationDialog.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
+
           const newEmployee = {
+            TitleID: this.basicEmployeeDetails.get('title').value,
             EmployeeName: this.basicEmployeeDetails.get('name').value,
             EmployeeSurname: this.basicEmployeeDetails.get('surname').value,
             EmployeeEmail: this.basicEmployeeDetails.get('emailAddress').value,
@@ -90,7 +106,8 @@ export class AddEmployeeComponent implements OnInit {
             EmployeePostalCode: this.basicEmployeeDetails.get('postalCode').value,
             UserRoleID: this.employeeRole.get('userRole').value,
             ParkID: this.employeeRole.get('park').value,
-            EmploymentStatusID: this.employeeRole.get('employmentStatus').value
+            EmploymentStatusID: this.employeeRole.get('employmentStatus').value,
+            authenticateUser: user
           };
 
           this.employeeService.CreateEmployee(newEmployee, this.globalService.GetServer());
@@ -110,6 +127,12 @@ export class AddEmployeeComponent implements OnInit {
 
   displayValidationError() {
     this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  displayValidationForCellAndWork() {
+    this.validationErrorSnackBar.open('The cellphone or work number details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }

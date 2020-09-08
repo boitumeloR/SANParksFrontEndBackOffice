@@ -68,6 +68,9 @@ export class AddActivitySlotComponent implements OnInit {
     if (this.addActivitySlot.invalid){
       this.displayValidationError();
     }
+    else if (this.addActivitySlot.get('endDate').value < this.addActivitySlot.get('startDate').value){
+      this.displayDateError();
+    }
     else{
       this.dialogRef.close();
       const addSlotTimeConfirmationDialog = this.dialog.open(AddActivitySlotConfirmationComponent);
@@ -116,6 +119,12 @@ export class AddActivitySlotComponent implements OnInit {
     this.activityService.getActivtyInSpecificCamp(this.campSelected, activityTypeID, this.globalService.GetServer()).
     subscribe((result: any) => {
       this.activityDropDown = result.ListOfActivities;
+    });
+  }
+
+  displayDateError() {
+    this.validationErrorSnackBar.open('The date effective must be earlier or equal than the end date. Please try again.', 'OK', {
+      duration: 3500,
     });
   }
 }

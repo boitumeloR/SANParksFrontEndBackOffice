@@ -38,10 +38,13 @@ export class AddAmentityTypeComponent implements OnInit {
       const addAmenityTypeConfirmationDialog = this.dialog.open(AddAmentityTypeConfirmationComponent);
       addAmenityTypeConfirmationDialog.afterClosed().subscribe( result => {
         if (result === true){
-           const newAmenityType = {
-            AmenityTypeName: this.addAmenityTypeForm.get('amenityTypeName').value
+          const user = JSON.parse(localStorage.getItem('user'));
+
+          const newAmenityType = {
+            AmenityTypeName: this.addAmenityTypeForm.get('amenityTypeName').value,
+            authenticateUser: user
           };
-           this.amenityTypeService.createAmenityType(newAmenityType, this.globalService.GetServer());
+          this.amenityTypeService.createAmenityType(newAmenityType, this.globalService.GetServer());
         }
       });
     }

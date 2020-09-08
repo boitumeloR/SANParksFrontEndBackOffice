@@ -56,6 +56,9 @@ export class UpdateActivitySlotComponent implements OnInit {
     if (this.updateActivitySlots.invalid){
       this.displayValidationError();
     }
+    else if (this.updateActivitySlots.get('endDate').value < this.updateActivitySlots.get('startDate').value){
+      this.displayDateError();
+    }
     else{
       this.dialogRef.close();
       const updateActivitySlotConfirmationDialog = this.dialog.open(UpdateActivitySlotConfirmationComponent);
@@ -86,6 +89,12 @@ export class UpdateActivitySlotComponent implements OnInit {
 
   displayValidationError() {
     this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  displayDateError() {
+    this.validationErrorSnackBar.open('The date effective must be earlier or equal than the end date. Please try again.', 'OK', {
       duration: 3500,
     });
   }

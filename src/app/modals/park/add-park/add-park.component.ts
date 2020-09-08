@@ -21,6 +21,7 @@ export class AddParkComponent implements OnInit {
               private dialogRef: MatDialogRef<AddParkComponent>, private parkService: ParkService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
+
     this.addParkForm = this.formBuilder.group({
       parkName: ['', Validators.required],
       parkLimit : ['', [Validators.required, Validators.min(1)]],
@@ -29,26 +30,33 @@ export class AddParkComponent implements OnInit {
       parkDescription : ['', Validators.required]
     });
   }
+
   addPark(){
     if (this.addParkForm.invalid){
       this.displayValidationError();
     }
     else{
-      this.dialogRef.close();
-      const addParkConfirmationDiag = this.dialog.open(AddParkConfirmationComponent);
+      const numbers = /^[0-9\.]+$/;
+      if (this.addParkForm.get('parkLongitude').value.match(numbers) && this.addParkForm.get('parkLatitude').value.match(numbers)){
+        this.dialogRef.close();
+        const addParkConfirmationDiag = this.dialog.open(AddParkConfirmationComponent);
 
-      addParkConfirmationDiag.afterClosed().subscribe( result => {
-        if (result === true){
-           const newPark = {
-            ParkName: this.addParkForm.get('parkName').value,
-            ParkLimit: this.addParkForm.get('parkLimit').value,
-            ParkLatitude: this.addParkForm.get('parkLatitude').value,
-            ParkLongitude: this.addParkForm.get('parkLongitude').value,
-            ParkDescription: this.addParkForm.get('parkDescription').value
-          };
-           this.parkService.CreatePark(newPark, this.globalService.GetServer());
-        }
-      });
+        addParkConfirmationDiag.afterClosed().subscribe( result => {
+          if (result === true){
+             const newPark = {
+              ParkName: this.addParkForm.get('parkName').value,
+              ParkLimit: this.addParkForm.get('parkLimit').value,
+              ParkLatitude: this.addParkForm.get('parkLatitude').value,
+              ParkLongitude: this.addParkForm.get('parkLongitude').value,
+              ParkDescription: this.addParkForm.get('parkDescription').value
+            };
+             this.parkService.CreatePark(newPark, this.globalService.GetServer());
+          }
+        });
+      }
+      else{
+        this.displayValidationForCordinates();
+      }
     }
   }
 
@@ -63,6 +71,12 @@ export class AddParkComponent implements OnInit {
 
   displayValidationError() {
     this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  displayValidationForCordinates() {
+    this.validationErrorSnackBar.open('The latitude or longitude details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }

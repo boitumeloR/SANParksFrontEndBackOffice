@@ -47,10 +47,12 @@ export class UpdateCampComponent implements OnInit {
       this.displayValidationError();
     }
     else{
-      this.dialogRef.close();
-      const udpateCampDialog = this.dialog.open(UpdateCampConfirmationComponent);
+      const numbers = /^[0-9\.]+$/;
+      if (this.updateCampForm.get('campLatitude').value.match(numbers) && this.updateCampForm.get('campLongitude').value.match(numbers)){
+        this.dialogRef.close();
+        const udpateCampDialog = this.dialog.open(UpdateCampConfirmationComponent);
 
-      udpateCampDialog.afterClosed().subscribe(result => {
+        udpateCampDialog.afterClosed().subscribe(result => {
         if (result === true){
           const updatedCamp = {
             CampID: this.camp.CampID,
@@ -65,6 +67,10 @@ export class UpdateCampComponent implements OnInit {
           this.campService.updateCamp(updatedCamp, this.globalService.GetServer());
         }
       });
+      }
+      else{
+        this.displayValidationForCordinates();
+      }
     }
   }
 
@@ -79,6 +85,12 @@ export class UpdateCampComponent implements OnInit {
 
   displayValidationError() {
     this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  displayValidationForCordinates() {
+    this.validationErrorSnackBar.open('The latitude or longitude details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }

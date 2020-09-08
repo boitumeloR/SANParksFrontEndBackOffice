@@ -9,6 +9,10 @@
     <mat-dialog-content appearance="mat-typography">
       <div class="example-container">
         <mat-form-field appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput value="{{employee.TitleName}}" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
             <mat-label>Name</mat-label>
             <input matInput value="{{employee.EmployeeName}}" readonly>
         </mat-form-field>

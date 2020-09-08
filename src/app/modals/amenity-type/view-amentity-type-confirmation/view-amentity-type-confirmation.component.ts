@@ -26,7 +26,11 @@ amenityType: AmenityType;
     const deleteAmenityTypeConfirmation =  this.dialog.open(DeleteAmentityTypeConfirmationComponent);
     deleteAmenityTypeConfirmation.afterClosed().subscribe(result => {
       if (result === true){
-        this.activityTypeService.deleteAmenityType(this.amenityType.AmenityTypeID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.activityTypeService.deleteAmenityType(authenticateUser, this.amenityType.AmenityTypeID, this.globalService.GetServer());
       }
     });
   }

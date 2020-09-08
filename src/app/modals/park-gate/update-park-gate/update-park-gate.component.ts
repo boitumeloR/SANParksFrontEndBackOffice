@@ -45,6 +45,9 @@ export class UpdateParkGateComponent implements OnInit {
       this.displayValidationError();
     }
     else{
+      const numbers = /^[0-9\.]+$/;
+      if (this.updateParkGateForm.get('parkGateLongitude').value.match(numbers) &&
+            this.updateParkGateForm.get('parkGateLatitude').value.match(numbers)){
       this.dialogRef.close();
       const confirmupdateDialog = this.dialog.open(UpdateParkGateConfirmationComponent);
 
@@ -63,6 +66,10 @@ export class UpdateParkGateComponent implements OnInit {
             this.parkGateService.UpdateParkGate(parkGate, this.globalService.GetServer());
           }
       });
+     }
+     else{
+      this.displayValidationForCordinates();
+     }
     }
   }
 
@@ -77,6 +84,12 @@ export class UpdateParkGateComponent implements OnInit {
 
   displayValidationError() {
     this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  displayValidationForCordinates() {
+    this.validationErrorSnackBar.open('The latitude or longitude details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }

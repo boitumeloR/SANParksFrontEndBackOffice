@@ -5,7 +5,7 @@
     <div class="example-container">
       <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
-        <textarea matInput #input maxlength="300" cdkTextareaAutosize formControlName="description" ></textarea>
+        <textarea matInput #input maxlength="300"  cdkTextareaAutosize formControlName="description" ></textarea>
         <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
       </mat-form-field>      
     </div>

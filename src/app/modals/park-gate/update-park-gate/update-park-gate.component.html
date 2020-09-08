@@ -5,7 +5,7 @@
     <div class="example-container">
       <mat-form-field appearance="fill">
         <mat-label>Park Gate Name</mat-label>
-        <input matInput formControlName="parkGateName">
+        <input matInput formControlName="parkGateName" maxlength="50">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Park</mat-label>
@@ -21,12 +21,12 @@
       <br>
       <mat-form-field appearance="fill">
         <mat-label>Park Gate Latitude</mat-label>
-        <input matInput formControlName="parkGateLatitude">
+        <input matInput formControlName="parkGateLatitude" maxlength="31">
         <mat-hint>Gate Latitude Co-Ordinates</mat-hint>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Park Gate Longitude</mat-label>
-        <input matInput formControlName="parkGateLongitude">
+        <input matInput formControlName="parkGateLongitude" maxlength="31">
         <mat-hint>Gate Longitude Co-Ordinates</mat-hint>
       </mat-form-field>
       <mat-form-field hintLabel="Max 300 characters" appearance="fill">

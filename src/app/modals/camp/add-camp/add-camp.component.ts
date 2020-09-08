@@ -48,23 +48,29 @@ export class AddCampComponent implements OnInit {
       this.displayValidationError();
     }
     else{
-      this.dialogRef.close();
-      const addCampDialog = this.dialog.open(AddCampConfirmationComponent);
+      const numbers = /^[0-9\.]+$/;
+      if (this.addCampForm.get('campLatitude').value.match(numbers) && this.addCampForm.get('campLongitude').value.match(numbers)){
+        this.dialogRef.close();
+        const addCampDialog = this.dialog.open(AddCampConfirmationComponent);
 
-      addCampDialog.afterClosed().subscribe(result => {
-        if (result === true){
-          const newCamp = {
-            CampName: this.addCampForm.get('campName').value,
-            CampTypeID: this.addCampForm.get('campType').value,
-            ParkID: this.addCampForm.get('park').value,
-            CampDescription: this.addCampForm.get('campDescription').value,
-            CampLatitude: this.addCampForm.get('campLatitude').value,
-            CampLongitude: this.addCampForm.get('campLongitude').value,
-          };
+        addCampDialog.afterClosed().subscribe(result => {
+          if (result === true){
+            const newCamp = {
+              CampName: this.addCampForm.get('campName').value,
+              CampTypeID: this.addCampForm.get('campType').value,
+              ParkID: this.addCampForm.get('park').value,
+              CampDescription: this.addCampForm.get('campDescription').value,
+              CampLatitude: this.addCampForm.get('campLatitude').value,
+              CampLongitude: this.addCampForm.get('campLongitude').value,
+            };
 
-          this.campService.createCamp(newCamp, this.globalService.GetServer());
-        }
-      });
+            this.campService.createCamp(newCamp, this.globalService.GetServer());
+          }
+        });
+      }
+      else{
+        this.displayValidationForCordinates();
+      }
     }
   }
 
@@ -79,6 +85,12 @@ export class AddCampComponent implements OnInit {
 
   displayValidationError() {
     this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  displayValidationForCordinates() {
+    this.validationErrorSnackBar.open('The latitude or longitude details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }

@@ -15,10 +15,10 @@
                     </mat-select>
                     <mat-hint>The associated activity type</mat-hint>
                 </mat-form-field> 
-                <mat-form-field hintLabel="Max 300 characters" appearance="fill">
+                <mat-form-field hintLabel="Max 75 characters" appearance="fill">
                     <mat-label>Activity Description</mat-label>
-                    <textarea cdkTextareaAutosize matInput #input maxlength="300" formControlName="activityDescription"></textarea>
-                    <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
+                    <textarea cdkTextareaAutosize matInput #input maxlength="75" formControlName="activityDescription"></textarea>
+                    <mat-hint>&nbsp;{{input.value?.length || 0}}/75</mat-hint>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Maximum Capacity</mat-label>
