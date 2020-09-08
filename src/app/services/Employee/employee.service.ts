@@ -7,6 +7,7 @@ import {UpdateEmployeeUnsuccessfulComponent} from 'src/app/modals/employee/updat
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 export interface Employee {
   EmployeeID: number;
   EmployeeStatusID: number;
@@ -28,7 +29,7 @@ export interface Employee {
   providedIn: 'root'
 })
 export class EmployeeService {
-  constructor(private http: HttpClient, private dialog: MatDialog) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -36,36 +37,53 @@ export class EmployeeService {
   }
 
   CreateEmployee(Employee, link){
-    this.http.post(`${link}/api/employee/createEmployee`, Employee).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    this.http.post(`${link}/api/employee/createEmployee`, Employee).subscribe((addResult: any) => {
       if (addResult.Error){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addEmployeeUnsuccessfulDialog = this.dialog.open(AddEmployeeUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addEmployeeSuccessfulDialog = this.dialog.open(AddEmployeeSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
 
   ReadEmployee(link){
-    return this.http.get(`${link}/api/employee/getEmployee`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/employee/getEmployee`, user);
   }
 
   UpdateEmployee(Employee, link){
-    this.http.post(`${link}/api/employee/updateEmployee`, Employee).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    this.http.post(`${link}/api/employee/updateEmployee`, Employee).subscribe((updateResult: any) => {
       if (updateResult.Error){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateEmployeeUnsuccessfulDialog = this.dialog.open(UpdateEmployeeUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateEmployeeSuccessfulDialog = this.dialog.open(UpdateEmployeeSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
 
   ReadEmploymentStatus(link){
     return this.http.get(`${link}/api/employee/getEmploymentStatus`);
+  }
+
+  ReadTitles(link){
+    return this.http.get(`${link}/api/employee/getTitles`);
   }
 }

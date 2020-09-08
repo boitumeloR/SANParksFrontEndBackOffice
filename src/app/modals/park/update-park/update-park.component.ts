@@ -37,10 +37,12 @@ export class UpdateParkComponent implements OnInit {
       this.displayValidationError();
     }
     else{
-      this.dialogRef.close();
-      const updateParkConfirmDialog = this.dialog.open(UpdateParkConfirmationComponent);
+      const numbers = /^[0-9\.]+$/;
+      if (this.updateParkForm.get('parkLongitude').value.match(numbers) && this.updateParkForm.get('parkLatitude').value.match(numbers)){
+        this.dialogRef.close();
+        const updateParkConfirmDialog = this.dialog.open(UpdateParkConfirmationComponent);
 
-      updateParkConfirmDialog.afterClosed().subscribe( result => {
+        updateParkConfirmDialog.afterClosed().subscribe( result => {
         if (result === true){
            const park = {
             ParkID: this.park.ParkID,
@@ -53,6 +55,11 @@ export class UpdateParkComponent implements OnInit {
            this.parkService.UpdatePark(park, this.globalService.GetServer());
         }
       });
+      }
+
+      else{
+        this.displayValidationForCordinates();
+      }
     }
   }
 
@@ -67,6 +74,12 @@ export class UpdateParkComponent implements OnInit {
 
   displayValidationError() {
     this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  displayValidationForCordinates() {
+    this.validationErrorSnackBar.open('The latitude or longitude details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }

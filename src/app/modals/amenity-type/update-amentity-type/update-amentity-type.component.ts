@@ -38,9 +38,11 @@ export class UpdateAmentityTypeComponent implements OnInit {
 
       updateAmenityTypeConfirmDialog.afterClosed().subscribe( result => {
         if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
            const amenityType = {
             AmenityTypeID: this.amenityType.AmenityTypeID,
-            AmenityTypeName: this.updateAmenityTypeForm.get('amenityTypeName').value
+            AmenityTypeName: this.updateAmenityTypeForm.get('amenityTypeName').value,
+            authenticateUser: user
           };
            this.amenityTypeService.updateAmenityType(amenityType, this.globalService.GetServer());
         }

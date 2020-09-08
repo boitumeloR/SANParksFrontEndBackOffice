@@ -6,6 +6,8 @@ import { ViewAmentityTypeConfirmationComponent } from 'src/app/modals/amenity-ty
 import {MatDialog} from '@angular/material/dialog';
 import { AmenityTypeService } from 'src/app/services/AmenityType/amenity-type.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/Login/login.service';
 
 
 
@@ -20,7 +22,8 @@ export class AmenityTypeComponent implements OnInit {
   displayedColumns: string[] = ['AmenityTypeName', 'view'];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog, private amenityTypeService: AmenityTypeService, private globalService: GlobalService ) { }
+  constructor(private dialog: MatDialog, private amenityTypeService: AmenityTypeService, private globalService: GlobalService,
+              private router: Router, private loginService: LoginService ) { }
 
   ngOnInit(): void {
     this.amenityTypeService.requestReferesh.subscribe(() => {this.getAmenityTypes(); });
@@ -42,8 +45,15 @@ export class AmenityTypeComponent implements OnInit {
 
   getAmenityTypes(){
     this.amenityTypeService.readAmenityType(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.AmenityTypes);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.AmenityTypes);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

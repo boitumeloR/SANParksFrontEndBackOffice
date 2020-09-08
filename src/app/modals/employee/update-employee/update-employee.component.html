@@ -7,46 +7,53 @@
         <form [formControl]="basicEmployeeDetails" [formGroup]="basicEmployeeDetails">
             <ng-template matStepLabel>Employee Particulars</ng-template>
             <mat-dialog-content appearance="mat-typography">
-            <div class="example-container">              
+            <div class="example-container">
+                <mat-form-field appearance="fill">
+                    <mat-label>Title</mat-label>
+                    <mat-select formControlName="title">
+                        <mat-option *ngFor="let title of titleDropDown" [value]="title.TitleID">{{title.TitleName}}</mat-option>
+                    </mat-select>
+                    <mat-hint>Tile of the employee.</mat-hint>
+                </mat-form-field>               
                 <mat-form-field appearance="fill">
                     <mat-label>Name</mat-label>
-                    <input matInput formControlName="name">
+                    <input matInput formControlName="name" maxlength="50" >
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Surname</mat-label>
-                    <input matInput formControlName="surname">
+                    <input matInput formControlName="surname" maxlength="50" >
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Identity Number</mat-label>
-                    <input matInput  formControlName="identityNumber">
+                    <input matInput  formControlName="identityNumber" maxlength="20" >
                     <mat-hint>Provide a valid identity number</mat-hint>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Cellphone Number</mat-label>
-                    <input matInput formControlName="cellphoneNumber">
+                    <input matInput formControlName="cellphoneNumber" maxlength="10" >
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Work Number</mat-label>
-                    <input matInput formControlName="workNumber">
+                    <input matInput formControlName="workNumber" maxlength="10" >
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Email Address</mat-label>
-                    <input matInput formControlName="emailAddress">
+                    <input matInput formControlName="emailAddress" maxlength="320" >
                     <mat-hint>Email address to be used for work purposes</mat-hint>
                 </mat-form-field>
-                <mat-form-field hintLabel="Max 200 characters" appearance="fill">
+                <mat-form-field hintLabel="Max 100 characters" appearance="fill" >
                     <mat-label>Address Line 1</mat-label>
-                    <textarea matInput maxlength="200" formControlName="addressLine1" cdkTextareaAutosize #addressLine1></textarea>
-                    <mat-hint>&nbsp; {{addressLine1.value.length}}/200</mat-hint>
+                    <textarea matInput maxlength="100" formControlName="addressLine1" cdkTextareaAutosize #addressLine1 maxlength="100" ></textarea>
+                    <mat-hint>&nbsp; {{addressLine1.value.length}}/100</mat-hint>
                 </mat-form-field>
-                <mat-form-field hintLabel="Max 200 characters"appearance="fill">
+                <mat-form-field hintLabel="Max 100 characters"appearance="fill">
                     <mat-label>Address Line 2</mat-label>
-                    <textarea matInput maxlength="200" formControlName="addressLine2" #addressLine2 cdkTextareaAutosize ></textarea>
-                    <mat-hint>&nbsp;{{addressLine2.value.length}}/200</mat-hint>
+                    <textarea matInput maxlength="100" formControlName="addressLine2" #addressLine2 cdkTextareaAutosize maxlength="100" ></textarea>
+                    <mat-hint>&nbsp;{{addressLine2.value.length}}/100</mat-hint>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Postal Code</mat-label>
-                    <input matInput formControlName="postalCode">
+                    <input matInput formControlName="postalCode" maxlength="7" >
                 </mat-form-field>
             </div>
             </mat-dialog-content>

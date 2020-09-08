@@ -23,6 +23,8 @@ export class UpdateEmployeeComponent implements OnInit {
   userRoleDropDown;
   employmentStatusDropDown;
   employee;
+  titleDropDown;
+
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<UpdateEmployeeComponent>, private parkService: ParkService,
               private userRoleService: UserRoleService, private employeeService: EmployeeService, private globalService: GlobalService) { }
@@ -42,7 +44,12 @@ export class UpdateEmployeeComponent implements OnInit {
       this.employmentStatusDropDown = result.ListOfEmploymentStatus;
     });
 
+    this.employeeService.ReadTitles(this.globalService.GetServer()).subscribe((result: any) => {
+      this.titleDropDown = result.ListOfTitles;
+    });
+
     this.basicEmployeeDetails = this.formBuilder.group({
+      title: [this.employee.TitleID, Validators.required],
       name: [this.employee.EmployeeName, Validators.required],
       surname : [this.employee.EmployeeSurname, Validators.required],
       identityNumber : [this.employee.EmployeeIDNumber, Validators.required],
@@ -66,7 +73,14 @@ export class UpdateEmployeeComponent implements OnInit {
       this.displayValidationError();
     }
     else{
-      this.myStepper.next();
+      const numbers = /^[0-9]+$/;
+      if (this.basicEmployeeDetails.get('cellphoneNumber').value.match(numbers) &&
+            this.basicEmployeeDetails.get('workNumber').value.match(numbers)){
+            this.myStepper.next();
+      }
+      else{
+        this.displayValidationForCellAndWork();
+      }
     }
   }
 
@@ -80,8 +94,11 @@ export class UpdateEmployeeComponent implements OnInit {
 
       updateEmployeeConfirmationDialog.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
+
           const newEmployee = {
             EmployeeID : this.employee.EmployeeID,
+            TitleID: this.basicEmployeeDetails.get('title').value,
             EmployeeName: this.basicEmployeeDetails.get('name').value,
             EmployeeSurname: this.basicEmployeeDetails.get('surname').value,
             EmployeeEmail: this.basicEmployeeDetails.get('emailAddress').value,
@@ -93,7 +110,8 @@ export class UpdateEmployeeComponent implements OnInit {
             EmployeePostalCode: this.basicEmployeeDetails.get('postalCode').value,
             UserRoleID: this.employeeRole.get('userRole').value,
             ParkID: this.employeeRole.get('park').value,
-            EmploymentStatusID: this.employeeRole.get('employmentStatus').value
+            EmploymentStatusID: this.employeeRole.get('employmentStatus').value,
+            authenticateUser: user
           };
 
           this.employeeService.UpdateEmployee(newEmployee, this.globalService.GetServer());
@@ -113,6 +131,12 @@ export class UpdateEmployeeComponent implements OnInit {
 
   displayValidationError() {
     this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  displayValidationForCellAndWork() {
+    this.validationErrorSnackBar.open('The cellphone or work number details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }

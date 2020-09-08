@@ -70,6 +70,9 @@ export class UpdateParkGateTimeComponent implements OnInit {
     if (this.updateParkGateTimeForm.invalid){
       this.displayValidationError();
     }
+    else if (this.updateParkGateTimeForm.get('gateClosingTime').value <= this.updateParkGateTimeForm.get('gateOpeningTime').value){
+      this.displayTimeError();
+    }
     else{
       this.dialogRef.close();
       const confirmUpdateDialog =  this.dialog.open(UpdateParkGateTimeConfirmationComponent);
@@ -100,6 +103,11 @@ export class UpdateParkGateTimeComponent implements OnInit {
 
   displayValidationError() {
     this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+  displayTimeError() {
+    this.validationErrorSnackBar.open('The opening time must be earlier than the close time. Please try again.', 'OK', {
       duration: 3500,
     });
   }

@@ -6,6 +6,7 @@ import { ViewEmployeeComponent } from 'src/app/modals/employee/view-employee/vie
 import {MatDialog} from '@angular/material/dialog';
 import { EmployeeService } from 'src/app/services/Employee/employee.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
@@ -14,7 +15,8 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 })
 export class EmployeeComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private employeeService: EmployeeService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private router: Router,
+              private employeeService: EmployeeService, private globalService: GlobalService) { }
 
   displayedColumns: string[] = ['park', 'employeeName', 'identityNumber', 'view'];
   dataSource;
@@ -40,9 +42,23 @@ export class EmployeeComponent implements OnInit {
   }
 
   getEmployee(){
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const employee = {
+        SessionID: user.SessionID,
+        UserSecret: user.UserSecret
+    };
+
     this.employeeService.ReadEmployee(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.Employees);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.Employees);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

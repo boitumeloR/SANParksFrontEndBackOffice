@@ -46,6 +46,9 @@ export class AddDailyConservationFeeComponent implements OnInit {
     if (this.addDailyConservationFeeForm.invalid){
       this.displayValidationError();
     }
+    else if (this.addDailyConservationFeeForm.get('endDate').value < this.addDailyConservationFeeForm.get('dateEffective').value){
+      this.displayDateError();
+    }
     else{
       this.dialogRef.close();
       const addDailyConservationFeeConfirmation = this.dialog.open(AddDailyConservationFeeConfirmationComponent);
@@ -77,6 +80,12 @@ export class AddDailyConservationFeeComponent implements OnInit {
 
   displayValidationError() {
     this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  displayDateError() {
+    this.validationErrorSnackBar.open('The date effective must be earlier or equal than the end date. Please try again.', 'OK', {
       duration: 3500,
     });
   }

@@ -60,6 +60,9 @@ export class UpdateCampGateTimeComponent implements OnInit {
     if (this.updateCampGateTimeForm.invalid){
       this.displayValidationError();
     }
+    else if (this.updateCampGateTimeForm.get('openTime').value >= this.updateCampGateTimeForm.get('closeTime').value){
+      this.displayTimeError();
+    }
     else{
       this.dialogRef.close();
       const updateCampGateTimeConfirmationDialog = this.dialog.open(UpdateCampGateTimeConfirmationComponent);
@@ -90,6 +93,12 @@ export class UpdateCampGateTimeComponent implements OnInit {
 
   displayValidationError() {
     this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  displayTimeError() {
+    this.validationErrorSnackBar.open('The opening time must be earlier than the close time. Please try again.', 'OK', {
       duration: 3500,
     });
   }

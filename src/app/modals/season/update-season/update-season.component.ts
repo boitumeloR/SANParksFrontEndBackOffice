@@ -40,6 +40,9 @@ export class UpdateSeasonComponent implements OnInit {
     if (this.updateSeasonForm.invalid){
       this.displayValidationError();
     }
+    else if (this.updateSeasonForm.get('startDate').value > this.updateSeasonForm.get('endDate').value){
+      this.displayDateError();
+    }
     else{
       this.dialogRef.close();
       const updateSeasonConfirmationDialog = this.dialog.open(UpdateSeasonConfirmationComponent);
@@ -70,6 +73,12 @@ export class UpdateSeasonComponent implements OnInit {
 
   displayValidationError() {
     this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  displayDateError() {
+    this.validationErrorSnackBar.open('The date effective must be earlier than the end date. Please try again.', 'OK', {
       duration: 3500,
     });
   }

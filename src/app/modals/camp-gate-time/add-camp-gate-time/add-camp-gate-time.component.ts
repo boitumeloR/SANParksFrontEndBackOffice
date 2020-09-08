@@ -67,6 +67,9 @@ export class AddCampGateTimeComponent implements OnInit {
     if (this.addCampGateTimeForm.invalid){
       this.displayValidationError();
     }
+    else if (this.addCampGateTimeForm.get('openTime').value >= this.addCampGateTimeForm.get('closeTime').value){
+      this.displayTimeError();
+    }
     else{
       this.dialogRef.close();
       const addCampGateTimeConfirmation = this.dialog.open(AddCampGateTimeConfirmationComponent);
@@ -92,6 +95,12 @@ export class AddCampGateTimeComponent implements OnInit {
       if (result === true){
         this.dialogRef.close();
       }
+    });
+  }
+
+  displayTimeError() {
+    this.validationErrorSnackBar.open('The opening time must be earlier than the close time. Please try again.', 'OK', {
+      duration: 3500,
     });
   }
 
