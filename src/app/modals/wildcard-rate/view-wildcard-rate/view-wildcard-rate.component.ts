@@ -28,7 +28,11 @@ export class ViewWildcardRateComponent implements OnInit {
 
     deleteWildcardRateDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.wildcardRateService.DeleteWildcardRate(this.wildcardRate.WildcardRateID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.wildcardRateService.DeleteWildcardRate(authenticateUser, this.wildcardRate.WildcardRateID, this.globalService.GetServer());
       }
     });
   }

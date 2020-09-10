@@ -49,10 +49,12 @@ export class AddParkGateTimeComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-    });
+      localStorage.setItem('user', JSON.stringify(result.user));
 
-    this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((result: any) => {
-      this.seasonDropDown = result.Seasons;
+      this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((resultSeason: any) => {
+          this.seasonDropDown = resultSeason.Seasons;
+          localStorage.setItem('user', JSON.stringify(resultSeason.user));
+        });
     });
 
     this.seasonSelected = false;
@@ -77,11 +79,13 @@ export class AddParkGateTimeComponent implements OnInit {
       const addParkGateTimeConfirmationDialog = this.dialog.open(AddParkGateTimeConfirmationComponent);
       addParkGateTimeConfirmationDialog.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
           const newParkGateTime = {
             ParkGateID: this.addParkGateTimeForm.get('parkGate').value,
             SeasonID: this.addParkGateTimeForm.get('season').value,
             ParkOpenTime: this.addParkGateTimeForm.get('gateOpeningTime').value,
-            ParkCloseTime: this.addParkGateTimeForm.get('gateClosingTime').value
+            ParkCloseTime: this.addParkGateTimeForm.get('gateClosingTime').value,
+            authenticateUser: user
           };
 
           this.parkGateTimeService.CreateParkGateTime(newParkGateTime, this.globalService.GetServer());
@@ -120,5 +124,6 @@ export class AddParkGateTimeComponent implements OnInit {
   displaySeasonDates(SeasonID){
     this.selectedSeason = this.seasonDropDown.find(XX => XX.SeasonID === SeasonID);
     this.seasonSelected = true;
+    const user = JSON.parse(localStorage.getItem('user'));
   }
 }

@@ -9,6 +9,7 @@ import {UpdateAmenitySuccessfulComponent} from 'src/app/modals/amenity/update-am
 import {UpdateAmenityUnsuccessfulComponent} from 'src/app/modals/amenity/update-amenity-unsuccessful/update-amenity-unsuccessful.component';
 import { DeleteAmenitySuccessfulComponent } from 'src/app/modals/amenity/delete-amenity-successful/delete-amenity-successful.component';
 import { DeleteAmenityUnsuccessfulComponent } from 'src/app/modals/amenity/delete-amenity-unsuccessful/delete-amenity-unsuccessful.component';
+import { Router } from '@angular/router';
 
 export interface Amenity{
   PenaltyID: number;
@@ -27,7 +28,8 @@ export interface Amenity{
 })
 export class AmenityService {
 
-  constructor(private dialog: MatDialog , private http: HttpClient) { }
+  constructor(private dialog: MatDialog , private http: HttpClient,
+              private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -35,41 +37,61 @@ export class AmenityService {
   }
 
   createAmenity(Amenity, link){
-    return this.http.post(`${link}/api/amenity/createAmenity`, Amenity).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    return this.http.post(`${link}/api/amenity/createAmenity`, Amenity).subscribe((addResult: any) => {
       if (addResult.Error){
         const addAmenityUnsuccessfulDialog = this.dialog.open(AddAmenityUnsuccessfulComponent);
+        localStorage.setItem('user', JSON.stringify(addResult.user));
+        this.dialog.open(AddAmenityUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addAmenitySuccessfulDialog = this.dialog.open(AddAmenitySuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
   readAmenity(link){
-    return this.http.get(`${link}/api/amenity/getAmenity`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/amenity/getAmenity`, user);
   }
   updateAmenity(updatedAmenity, link){
-    return this.http.post(`${link}/api/amenity/updateAmenity`, updatedAmenity).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    return this.http.post(`${link}/api/amenity/updateAmenity`, updatedAmenity).subscribe((updateResult: any) => {
       if (updateResult.Error){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateAmenityUnsuccessfulDialog = this.dialog.open(UpdateAmenityUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateAmenitySuccessfulDialog = this.dialog.open(UpdateAmenitySuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
-  deleteAmenity(AmenityID, link){
-    return this.http.delete(`${link}/api/amenity/deleteAmenity?amenityID=${AmenityID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((deleteResult: any) => {
+  deleteAmenity(user,AmenityID, link){
+    return this.http.post(`${link}/api/amenity/deleteAmenity?amenityID=${AmenityID}`, user).subscribe((deleteResult: any) => {
       if (deleteResult.Error){
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteAmenityUnsuccessfulDialog = this.dialog.open(DeleteAmenityUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (deleteResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteAmenitySuccessfulDialog = this.dialog.open(DeleteAmenitySuccessfulComponent);
+        this.refresh.next();
       }
     });
   }

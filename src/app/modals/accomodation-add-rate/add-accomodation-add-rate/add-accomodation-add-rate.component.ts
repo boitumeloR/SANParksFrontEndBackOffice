@@ -24,6 +24,7 @@ export class AddAccomodationAddRateComponent implements OnInit {
   ngOnInit(): void {
     this.accommodationTypeService.readAccommodationType(this.globalService.GetServer()).subscribe((result: any) => {
       this.accommodationTypeDropDown = result.AccommodationTypes;
+      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.addAccomodationRateForm = this.formBuilder.group({
@@ -44,11 +45,14 @@ export class AddAccomodationAddRateComponent implements OnInit {
 
       addAccomodationAddRateConfirmation.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
+
           const newAccommodationAddRate = {
             AccomodationTypeID: this.addAccomodationRateForm.get('accomodationType').value,
             AdultRateAmount: this.addAccomodationRateForm.get('adultRate').value,
             ChildRateAmount: this.addAccomodationRateForm.get('childRate').value,
             DateEffective: this.addAccomodationRateForm.get('dateEffective').value,
+            authenticateUser: user
           };
           this.addRateService.createAccommodationTypeAddRate(newAccommodationAddRate, this.globalService.GetServer());
         }

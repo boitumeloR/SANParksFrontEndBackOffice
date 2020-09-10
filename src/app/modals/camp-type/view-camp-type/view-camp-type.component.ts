@@ -25,7 +25,11 @@ campType: CampType;
     const deleteCampTypeDialog = this.dialog.open(DeleteCampTypeComponent);
     deleteCampTypeDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.campTypeService.DeleteCampType(this.campType.CampTypeID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.campTypeService.DeleteCampType(authenticateUser, this.campType.CampTypeID, this.globalService.GetServer());
       }
     });
   }

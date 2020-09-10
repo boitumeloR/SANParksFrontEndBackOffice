@@ -28,7 +28,12 @@ export class ViewAccomodationAddRateComponent implements OnInit {
 
     deleteAccomodationAddRateDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.accommodatinoAddRateService.deleteAccommodationTypeAddRate(this.addRate.AddRateID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.accommodatinoAddRateService.deleteAccommodationTypeAddRate(authenticateUser, this.addRate.AddRateID,
+          this.globalService.GetServer());
       }
     });
   }

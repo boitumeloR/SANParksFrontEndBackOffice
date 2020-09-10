@@ -6,6 +6,7 @@ import { ViewAmenityComponent } from 'src/app/modals/amenity/view-amenity/view-a
 import {MatDialog} from '@angular/material/dialog';
 import { AmenityService } from 'src/app/services/Amenity/amenity.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-amenity',
@@ -19,7 +20,8 @@ export class AmenityComponent implements OnInit {
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog, private amenityService: AmenityService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private amenityService: AmenityService, private globalService: GlobalService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.amenityService.requestReferesh.subscribe(() => {this.getAmenity(); });
@@ -41,8 +43,15 @@ export class AmenityComponent implements OnInit {
 
   getAmenity(){
     this.amenityService.readAmenity(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.Amenities);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.Amenities);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

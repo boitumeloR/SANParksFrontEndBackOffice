@@ -37,11 +37,14 @@ export class AddActivityRateComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
+      localStorage.setItem('user', JSON.stringify(result.user));
+
+      this.activityTypeService.readActivityType(this.globalService.GetServer()).subscribe((ActTypeResult: any) => {
+        this.activityTypeDropDown = ActTypeResult.ActivityTypes;
+        localStorage.setItem('user', JSON.stringify(ActTypeResult.user));
+      });
     });
 
-    this.activityTypeService.readActivityType(this.globalService.GetServer()).subscribe((result: any) => {
-      this.activityTypeDropDown = result.ActivityTypes;
-    });
 
     this.activityRateService.readRateTypes(this.globalService.GetServer()).subscribe((result: any) => {
       this.rateTypeDropDown = result.ListOfRateTypes;
@@ -86,6 +89,8 @@ export class AddActivityRateComponent implements OnInit {
 
     addActivityRateConfirmationDialog.afterClosed().subscribe( result => {
       if (result === true){
+         const user = JSON.parse(localStorage.getItem('user'));
+
          const newActivityRate = {
           AdultRateAmount: this.activityRateDetails.get('adultRate').value,
           ChildRateAmount: this.activityRateDetails.get('childRate').value,
@@ -97,7 +102,8 @@ export class AddActivityRateComponent implements OnInit {
           RateTypeID: this.activityRateDetails.get('rateType').value,
           ActivityID: this.selectActivityForm.get('activity').value,
           CampID: this.selectActivityForm.get('camp').value,
-          DateEffective:  this.activityRateDetails.get('dateEffective').value
+          DateEffective:  this.activityRateDetails.get('dateEffective').value,
+          authenticateUser: user
         };
          this.activityRateService.createActivityRate(newActivityRate, this.globalService.GetServer());
       }

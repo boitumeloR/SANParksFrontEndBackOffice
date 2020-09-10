@@ -27,11 +27,14 @@ export class UpdateCampComponent implements OnInit {
     this.camp = JSON.parse(localStorage.getItem('camp'));
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
+      localStorage.setItem('user', JSON.stringify(result.user));
+
+      this.campTypeService.ReadCampType(this.globalService.GetServer()).subscribe((resultCampType: any) => {
+        this.campTypeDropDown = resultCampType.CampTypes;
+        localStorage.setItem('user', JSON.stringify(resultCampType.user));
+      });
     });
 
-    this.campTypeService.ReadCampType(this.globalService.GetServer()).subscribe((result: any) => {
-      this.campTypeDropDown = result.CampTypes;
-    });
     this.updateCampForm = this.formBuilder.group({
       campName: [this.camp.CampName, Validators.required],
       campType : [this.camp.CampTypeID, Validators.required],
@@ -54,6 +57,7 @@ export class UpdateCampComponent implements OnInit {
 
         udpateCampDialog.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
           const updatedCamp = {
             CampID: this.camp.CampID,
             CampName: this.updateCampForm.get('campName').value,
@@ -62,6 +66,7 @@ export class UpdateCampComponent implements OnInit {
             CampDescription: this.updateCampForm.get('campDescription').value,
             CampLatitude: this.updateCampForm.get('campLatitude').value,
             CampLongitude: this.updateCampForm.get('campLongitude').value,
+            authenticateUser: user
           };
 
           this.campService.updateCamp(updatedCamp, this.globalService.GetServer());

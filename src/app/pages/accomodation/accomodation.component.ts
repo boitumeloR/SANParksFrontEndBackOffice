@@ -6,6 +6,7 @@ import { ViewAccomodationComponent } from 'src/app/modals/accomodation/view-acco
 import {MatDialog} from '@angular/material/dialog';
 import { AccommodationService } from 'src/app/services/Accommodation/accommodation.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accomodation',
@@ -18,7 +19,8 @@ export class AccomodationComponent implements OnInit {
   dataSource;
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog, private accomodationService: AccommodationService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private accomodationService: AccommodationService, private globalService: GlobalService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.accomodationService.requestReferesh.subscribe(() => this.getAccommodation());
@@ -40,8 +42,15 @@ export class AccomodationComponent implements OnInit {
 
   getAccommodation(){
     this.accomodationService.readAccommodation(this.globalService.GetServer()).subscribe((result: any) => {
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
       this.dataSource = new MatTableDataSource(result.Accomodations);
       this.dataSource.paginator = this.paginator;
+      localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

@@ -47,11 +47,14 @@ export class AddActivitySlotComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
+      localStorage.setItem('user', JSON.stringify(result.user));
+
+      this.activityTypeService.readActivityType(this.globalService.GetServer()).subscribe((resultActType: any) => {
+        this.activityTypeDropDown = resultActType.ActivityTypes;
+        localStorage.setItem('user', JSON.stringify(resultActType.user));
+      });
     });
 
-    this.activityTypeService.readActivityType(this.globalService.GetServer()).subscribe((result: any) => {
-      this.activityTypeDropDown = result.ActivityTypes;
-    });
 
     this.addActivitySlot = this.formBuilder.group({
       park: ['', Validators.required],
@@ -77,12 +80,15 @@ export class AddActivitySlotComponent implements OnInit {
 
       addSlotTimeConfirmationDialog.afterClosed().subscribe( result => {
         if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
+
            const newActivitySlot = {
             ActivityID: this.addActivitySlot.get('activity').value,
             CampID: this.addActivitySlot.get('camp').value,
             SlotTime: this.addActivitySlot.get('slotTime').value,
             startDate: this.addActivitySlot.get('startDate').value,
-            endDate: this.addActivitySlot.get('endDate').value
+            endDate: this.addActivitySlot.get('endDate').value,
+            authenticateUser: user
           };
            this.activitySlotService.CreateActivitySlot(newActivitySlot, this.globalService.GetServer());
         }

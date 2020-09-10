@@ -6,6 +6,7 @@ import { ViewParkGateComponent } from 'src/app/modals/park-gate/view-park-gate/v
 import {MatDialog} from '@angular/material/dialog';
 import { ParkGateService } from 'src/app/services/ParkGate/park-gate.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-park-gate',
@@ -14,7 +15,8 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 })
 export class ParkGateComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private parkGateService: ParkGateService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private parkGateService: ParkGateService, private globalService: GlobalService,
+              private router: Router) { }
   displayedColumns: string[] = ['ParkGateName', 'ParkName', 'ParkGateMax', 'view'];
   dataSource;
   filter;
@@ -40,8 +42,15 @@ export class ParkGateComponent implements OnInit {
 
   getParkGates(){
     this.parkGateService.ReadParkGate(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.ParkGates);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.ParkGates);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

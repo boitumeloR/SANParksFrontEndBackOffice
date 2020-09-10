@@ -38,11 +38,14 @@ export class AddWildcardCategoryComponent implements OnInit {
       const addWildcardCategoryConfirmationDialog =  this.dialog.open(AddWildcardCategoryConfirmationComponent);
       addWildcardCategoryConfirmationDialog.afterClosed().subscribe( result => {
         if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
+
            const newWildcardCategory = {
             CategoryName: this.addWildcardCategoryForm.get('wildcardCategoryName').value,
             CategoryDescription: this.addWildcardCategoryForm.get('wildcardCategoryDescription').value,
             AdultLimit: this.addWildcardCategoryForm.get('AdultLimit').value,
-            ChildLimit: this.addWildcardCategoryForm.get('ChildLimit').value
+            ChildLimit: this.addWildcardCategoryForm.get('ChildLimit').value,
+            authenticateUser: user
           };
            this.wildcardCategoryService.CreateWildcardCategory(newWildcardCategory, this.globalService.GetServer());
         }

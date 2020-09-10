@@ -29,7 +29,12 @@ export class ViewWildcardCategoryComponent implements OnInit {
 
     deleteWildcardCategoryDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.wildcardCategoryService.DeleteWildcardCategory(this.wildcardCategory.WildcardCategoryID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.wildcardCategoryService.DeleteWildcardCategory(authenticateUser, this.wildcardCategory.WildcardCategoryID,
+          this.globalService.GetServer());
       }
     });
   }

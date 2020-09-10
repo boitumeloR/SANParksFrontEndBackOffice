@@ -26,10 +26,12 @@ export class AddWildcardRateComponent implements OnInit {
   ngOnInit(): void {
     this.wildcardCategoryService.ReadWildcardCategory(this.globalService.GetServer()).subscribe((result: any) => {
       this.wildcardCategoryDropDown = result.WildcardCategories;
-    });
+      localStorage.setItem('user', JSON.stringify(result.user));
 
-    this.wildcardClusterService.ReadWildcardCluster(this.globalService.GetServer()).subscribe((result: any) => {
-      this.wildcardClusterDropdown = result.WildcardClusters;
+      this.wildcardClusterService.ReadWildcardCluster(this.globalService.GetServer()).subscribe((resultWildcardCluster: any) => {
+        this.wildcardClusterDropdown = resultWildcardCluster.WildcardClusters;
+        localStorage.setItem('user', JSON.stringify(resultWildcardCluster.user));
+      });
     });
 
     this.addWildcardRateForm = this.formBuilder.group({
@@ -50,11 +52,14 @@ export class AddWildcardRateComponent implements OnInit {
 
       addWildcardRateConfirmation.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
+
           const newWildcardRate = {
             WildcardCategoryID: this.addWildcardRateForm.get('wildcardCategory').value,
             WildcardClusterID: this.addWildcardRateForm.get('wildcardCluster').value,
             RateAmount: this.addWildcardRateForm.get('wildcardRate').value,
-            DateEffective: this.addWildcardRateForm.get('dateEffective').value
+            DateEffective: this.addWildcardRateForm.get('dateEffective').value,
+            authenticateUser: user
           };
 
           this.wildcardRateService.CreateWildcardRate(newWildcardRate, this.globalService.GetServer());

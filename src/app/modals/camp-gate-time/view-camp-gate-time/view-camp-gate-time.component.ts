@@ -19,7 +19,7 @@ export class ViewCampGateTimeComponent implements OnInit {
   }
 
   updateCampGateTime(){
-    const updateCampGateTime = this.dialog.open(UpdateCampGateTimeComponent,{disableClose: true});
+    const updateCampGateTime = this.dialog.open(UpdateCampGateTimeComponent, {disableClose: true});
   }
 
   deleteCampGateTime(){
@@ -27,9 +27,12 @@ export class ViewCampGateTimeComponent implements OnInit {
 
     deleteCampGateTimeDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.campGateTimeService.deleteCampGateTime(this.campGateTime.CampGateTimeID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.campGateTimeService.deleteCampGateTime(authenticateUser, this.campGateTime.CampGateTimeID, this.globalService.GetServer());
       }
     });
-
   }
 }

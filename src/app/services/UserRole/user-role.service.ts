@@ -10,6 +10,7 @@ import { UpdateUserRoleSuccessfulComponent} from 'src/app/modals/user-role/updat
 import { UpdateUserRoleUnsuccessfulComponent} from 'src/app/modals/user-role/update-user-role-unsuccessful/update-user-role-unsuccessful.component';
 import { DeleteUserRoleSuccessfulComponent} from 'src/app/modals/user-role/delete-user-role-successful/delete-user-role-successful.component';
 import { DeleteUserRoleUnsuccessfulComponent} from 'src/app/modals/user-role/delete-user-role-unsuccessful/delete-user-role-unsuccessful.component';
+import { Router } from '@angular/router';
 export interface UserRole {
   RoleID: number;
   UserRoleName: string;
@@ -25,7 +26,7 @@ export interface UserRoleDropDown {
 })
 
 export class UserRoleService {
-  constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog) { }
+  constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog, private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -33,44 +34,63 @@ export class UserRoleService {
   }
 
   CreateUserRole(UserRole, link){
-    return this.http.post(`${link}/api/UserRole/CreateUserRole`, UserRole).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    return this.http.post(`${link}/api/UserRole/CreateUserRole`, UserRole).subscribe((addResult: any) => {
       if (addResult.Error){
+       localStorage.setItem('user', JSON.stringify(addResult.user));
        const addUserRoleUnsuccessfulComponent = this.dialog.open(AddUserRoleUnsuccessfulComponent);
+       this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+       localStorage.setItem('user', JSON.stringify(addResult.user));
        const addUserRoleSuccessfulComponent = this.dialog.open(AddUserRoleSuccessfulComponent);
+       this.refresh.next();
       }
     });
   }
 
   ReadUserRole(link){
-    return this.http.get(`${link}/api/UserRole/getUserRole`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/UserRole/getUserRole`, user);
   }
 
   UpdateUserRole(UserRole, link){
-    return this.http.post(`${link}/api/UserRole/UpdateUserRole`, UserRole).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((UpdateResult: any) => {
+    return this.http.post(`${link}/api/UserRole/UpdateUserRole`, UserRole).subscribe((UpdateResult: any) => {
       if (UpdateResult.Error){
+       localStorage.setItem('user', JSON.stringify(UpdateResult.user));
        const updateUserRoleUnsuccessfulComponent = this.dialog.open(UpdateUserRoleUnsuccessfulComponent);
+       this.refresh.next();
+      }
+      else if (UpdateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+       localStorage.setItem('user', JSON.stringify(UpdateResult.user));
        const updateUserRoleSuccessfulComponent = this.dialog.open(UpdateUserRoleSuccessfulComponent);
+       this.refresh.next();
       }
     });
   }
 
-  DeleteUserRole(UserRoleID, link){
-    return this.http.delete(`${link}/api/UserRole/DeleteUserRole?userRoleID=${UserRoleID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((deleteResult: any) => {
+  DeleteUserRole(user, UserRoleID, link){
+    return this.http.post(`${link}/api/UserRole/DeleteUserRole?userRoleID=${UserRoleID}`, user).subscribe((deleteResult: any) => {
       if (deleteResult.Error){
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteUserRoleUnsuccessfulDialog = this.dialog.open(DeleteUserRoleUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (deleteResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteUserRoleSuccessfulDialog = this.dialog.open(DeleteUserRoleSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }

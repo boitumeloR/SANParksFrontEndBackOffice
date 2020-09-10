@@ -37,7 +37,11 @@ export class ViewActivityComponent implements OnInit {
 
     deleteActivityTypeDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.activityService.deleteActivity(this.activity.ActivityID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.activityService.deleteActivity(authenticateUser, this.activity.ActivityID, this.globalService.GetServer());
       }
     });
   }

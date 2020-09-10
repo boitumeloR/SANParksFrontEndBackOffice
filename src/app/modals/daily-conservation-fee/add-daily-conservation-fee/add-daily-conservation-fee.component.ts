@@ -26,6 +26,7 @@ export class AddDailyConservationFeeComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
+      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.dailyConservationFeeService.GetRegions(this.globalService.GetServer()).subscribe((result: any) => {
@@ -55,6 +56,8 @@ export class AddDailyConservationFeeComponent implements OnInit {
 
       addDailyConservationFeeConfirmation.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
+
           const newDailyConservationFee = {
             ParkID: this.addDailyConservationFeeForm.get('park').value,
             RegionID: this.addDailyConservationFeeForm.get('region').value,
@@ -62,6 +65,7 @@ export class AddDailyConservationFeeComponent implements OnInit {
             AdultAmount: this.addDailyConservationFeeForm.get('adultAmount').value,
             DateEffective: this.addDailyConservationFeeForm.get('dateEffective').value,
             EndDate: this.addDailyConservationFeeForm.get('endDate').value,
+            authenticateUser: user
           };
 
           this.dailyConservationFeeService.CreateDailyConservationFee(newDailyConservationFee, this.globalService.GetServer());

@@ -10,6 +10,7 @@ import {UpdateWildcardRateUnsuccessfulComponent} from 'src/app/modals/wildcard-r
 import { DeleteWildcardRateSuccessfulComponent } from 'src/app/modals/wildcard-rate/delete-wildcard-rate-successful/delete-wildcard-rate-successful.component';
 import { DeleteWildcardRateUnsuccessfulComponent } from 'src/app/modals/wildcard-rate/delete-wildcard-rate-unsuccessful/delete-wildcard-rate-unsuccessful.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 export interface WildcardRate {
   WildcardRateID: number;
@@ -24,7 +25,8 @@ export interface WildcardRate {
 })
 export class WildcardRateService {
 
-  constructor(private http: HttpClient, private dialog: MatDialog) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, 
+              private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -32,44 +34,64 @@ export class WildcardRateService {
   }
 
   CreateWildcardRate(WildcardRate, link){
-    return this.http.post(`${link}/api/wildcardRate/createWildcardRate`, WildcardRate).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    return this.http.post(`${link}/api/wildcardRate/createWildcardRate`, WildcardRate).subscribe((addResult: any) => {
       if (addResult.Error){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addWildcardRateUnsuccessfulDialog = this.dialog.open(AddWildcardRateUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addWildcardRateSuccessfulDialog = this.dialog.open(AddWildcardRateSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
 
   ReadWildcardRate(link){
-    return this.http.get(`${link}/api/wildcardRate/getwildcardRate`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/wildcardRate/getwildcardRate`, user);
   }
 
   UpdateWildcardRate(WildcardRate, link){
-    return this.http.post(`${link}/api/wildcardRate/updateWildcardRate`, WildcardRate).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    return this.http.post(`${link}/api/wildcardRate/updateWildcardRate`, WildcardRate).subscribe((updateResult: any) => {
       if (updateResult.Error){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateWildcardRateUnsuccessfulDialog = this.dialog.open(UpdateWildcardRateUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateWildcardRateSuccessfulDialog = this.dialog.open(UpdateWildcardRateSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
 
-  DeleteWildcardRate(WildcardRateID, link){
-    return this.http.delete(`${link}/api/wildcardRate/deleteWildcardRate?wildcardRateID=${WildcardRateID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((deleteResult: any) => {
+  DeleteWildcardRate(user, WildcardRateID, link){
+    return this.http.post(`${link}/api/wildcardRate/deleteWildcardRate?wildcardRateID=${WildcardRateID}`, user)
+    .subscribe((deleteResult: any) => {
       if (deleteResult.Error){
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteWildcardRateUnsuccessfulDialog = this.dialog.open(DeleteWildcardRateUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (deleteResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteWildcardRateSuccessfulDialog = this.dialog.open(DeleteWildcardRateSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }

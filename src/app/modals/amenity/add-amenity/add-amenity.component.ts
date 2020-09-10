@@ -40,18 +40,21 @@ export class AddAmenityComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-    });
+      localStorage.setItem('user', JSON.stringify(result.user));
 
-    this.accommodationService.readAccommodation(this.globalService.GetServer()).subscribe((result: any) => {
-      this.accommodations = result.Accomodations;
+      this.accommodationService.readAccommodation(this.globalService.GetServer()).subscribe((resultAccommdoation: any) => {
+        this.accommodations = resultAccommdoation.Accomodations;
+        localStorage.setItem('user', JSON.stringify(resultAccommdoation.user));
+
+        this.amenityTypeService.readAmenityType(this.globalService.GetServer()).subscribe((resultAmenityType: any) => {
+          this.amenityTypeDropDown = resultAmenityType.AmenityTypes;
+          localStorage.setItem('user', JSON.stringify(resultAmenityType.user));
+        });
+      });
     });
 
     this.amenityService.readAmenityStatus(this.globalService.GetServer()).subscribe((result: any) => {
       this.amenityStatusDropDown = result.listOfAmenityStatus;
-    });
-
-    this.amenityTypeService.readAmenityType(this.globalService.GetServer()).subscribe((result: any) => {
-      this.amenityTypeDropDown = result.AmenityTypes;
     });
 
     this.amenityLocation = this.formBuilder.group({
@@ -87,6 +90,8 @@ export class AddAmenityComponent implements OnInit {
 
     addAmenityConfirmationDialog.afterClosed().subscribe( result => {
       if (result === true){
+         const user = JSON.parse(localStorage.getItem('user'));
+
          const newAmenity = {
           AmenityTypeID: this.amenityDetails.get('amenityType').value,
           CampID: this.amenityLocation.get('camp').value,
@@ -94,6 +99,7 @@ export class AddAmenityComponent implements OnInit {
           AmenityStatusID: this.amenityDetails.get('amenityStatus').value,
           AmenityDescription: this.amenityDetails.get('amenityDescription').value,
           UnitNumber: this.amenityLocation.get('unitNumber').value,
+          authenticateUser: user
         };
          this.amenityService.createAmenity(newAmenity, this.globalService.GetServer());
       }

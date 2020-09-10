@@ -10,6 +10,7 @@ import {UpdateParkGateTimeSuccessfulComponent} from 'src/app/modals/park-gate-ti
 import { UpdateParkGateTimeUnsuccessfulComponent} from 'src/app/modals/park-gate-time/update-park-gate-time-unsuccessful/update-park-gate-time-unsuccessful.component';
 import { DelteParkGateTimeSuccessfulComponent } from 'src/app/modals/park-gate-time/delte-park-gate-time-successful/delte-park-gate-time-successful.component';
 import { DeleteParkGateTimeUnsuccessfulComponent } from 'src/app/modals/park-gate-time/delete-park-gate-time-unsuccessful/delete-park-gate-time-unsuccessful.component';
+import { Router } from '@angular/router';
 export interface ParkGateTime {
   PTimeID: number;
   ParkGateID: number;
@@ -33,7 +34,7 @@ export interface ParkGateTimeDropDown {
 
 export class ParkGateTimeService {
 
-  constructor(private http: HttpClient, private dialog: MatDialog) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -41,44 +42,63 @@ export class ParkGateTimeService {
   }
 
   CreateParkGateTime(ParkGateTime, link){ 
-    this.http.post(`${link}/api/parkGateTime/createParkGateTime`, ParkGateTime).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    this.http.post(`${link}/api/parkGateTime/createParkGateTime`, ParkGateTime).subscribe((addResult: any) => {
       if (addResult.Error){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addParkGateTimeUnsuccessfulDialog = this.dialog.open(AddParkGateTimeUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addParkGateTimeSuccessfulDialog = this.dialog.open(AddParkGateTimeSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
 
   ReadParkGateTime(link){
-    return this.http.get(`${link}/api/parkGateTime/getParkGateTime`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/parkGateTime/getParkGateTime`, user);
   }
 
   UpdateParkGateTime(ParkGateTime, link){
-    this.http.post(`${link}/api/parkGateTime/updateParkGateTime`, ParkGateTime).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    this.http.post(`${link}/api/parkGateTime/updateParkGateTime`, ParkGateTime).subscribe((updateResult: any) => {
       if (updateResult.Error){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateParkGateTimeUnsuccessfulDialog = this.dialog.open(UpdateParkGateTimeUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateParkGateTimeSuccessfulDialog = this.dialog.open(UpdateParkGateTimeSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
 
-  DeleteParkGateTime(PTimeID, link){ 
-    this.http.delete(`${link}/api/parkGateTime/deleteParkGateTime?parkGateTimeID=${PTimeID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((deleteResult: any) => {
+  DeleteParkGateTime(user ,PTimeID, link){ 
+    this.http.post(`${link}/api/parkGateTime/deleteParkGateTime?parkGateTimeID=${PTimeID}`, user).subscribe((deleteResult: any) => {
       if (deleteResult.Error){
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteParkGateTimeUnsuccessfulDialog = this.dialog.open(DeleteParkGateTimeUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (deleteResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteParkGateTimeSuccessfulDialog = this.dialog.open(DelteParkGateTimeSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }

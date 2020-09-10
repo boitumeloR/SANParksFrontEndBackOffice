@@ -26,7 +26,11 @@ export class ViewAccomodationComponent implements OnInit {
 
     deleteAccomodationDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.accommodationService.deleteAccommodation(this.accommodation.AccommodationID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.accommodationService.deleteAccommodation(authenticateUser, this.accommodation.AccommodationID, this.globalService.GetServer());
       }
     });
   }

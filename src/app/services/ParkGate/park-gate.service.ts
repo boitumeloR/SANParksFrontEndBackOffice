@@ -9,6 +9,7 @@ import {UpdateParkGateSuccessfulComponent} from 'src/app/modals/park-gate/update
 import {UpdateParkGateUnsuccessfulComponent} from 'src/app/modals/park-gate/update-park-gate-unsuccessful/update-park-gate-unsuccessful.component';
 import { DeleteParkGateSuccessfulComponent } from 'src/app/modals/park-gate/delete-park-gate-successful/delete-park-gate-successful.component';
 import {  DeleteParkGateUnsuccessfulComponent } from 'src/app/modals/park-gate/delete-park-gate-unsuccessful/delete-park-gate-unsuccessful.component';
+import { Router } from '@angular/router';
 
 export interface ParkGate {
   ParkGateID: number;
@@ -31,7 +32,7 @@ export interface ParkGateDropDown {
 })
 export class ParkGateService {
 
-  constructor(private http: HttpClient, private dialog: MatDialog) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -39,44 +40,64 @@ export class ParkGateService {
   }
 
   CreateParkGate(ParkGate, link){
-    this.http.post(`${link}/api/parkGate/createParkGate`, ParkGate).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    this.http.post(`${link}/api/parkGate/createParkGate`, ParkGate).subscribe((addResult: any) => {
       if (addResult.Error){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addParkGateUnsuccessfulDialog = this.dialog.open(AddParkGateUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addParkGateSuccessfulDialog = this.dialog.open(AddParkGateSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
 
   ReadParkGate(link){
-    return this.http.get(`${link}/api/parkGate/getParkGate`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/parkGate/getParkGate`, user);
   }
 
   UpdateParkGate(ParkGate, link){
-    this.http.post(`${link}/api/parkGate/updateParkGate`, ParkGate).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    this.http.post(`${link}/api/parkGate/updateParkGate`, ParkGate).subscribe((updateResult: any) => {
       if (updateResult.Error){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateParkGateUnsuccessfulDialog = this.dialog.open(UpdateParkGateUnsuccessfulComponent);
+        this.refresh.next();
+
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateParkGateSuccessfulDialog = this.dialog.open(UpdateParkGateSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
 
-  DeleteParkGate(ParkGateID, link){
-    this.http.delete(`${link}/api/parkGate/deleteParkGate?parkGateID=${ParkGateID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((deleteResult: any) => {
+  DeleteParkGate(user,ParkGateID, link){
+    this.http.post(`${link}/api/parkGate/deleteParkGate?parkGateID=${ParkGateID}`, user).subscribe((deleteResult: any) => {
       if (deleteResult.Error){
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteParkGateUnsuccessfulDialog = this.dialog.open(DeleteParkGateUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (deleteResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteParkGateSuccessfulDialog = this.dialog.open(DeleteParkGateSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }

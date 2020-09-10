@@ -26,6 +26,7 @@ export class UpdateParkGateComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
+      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.parkGate = JSON.parse(localStorage.getItem('parkGate'));
@@ -53,6 +54,7 @@ export class UpdateParkGateComponent implements OnInit {
 
       confirmupdateDialog.afterClosed().subscribe(result => {
           if (result === true){
+            const user = JSON.parse(localStorage.getItem('user'));
             const parkGate = {
               ParkGateID: this.parkGate.ParkGateID,
               ParkGateName: this.updateParkGateForm.get('parkGateName').value,
@@ -61,6 +63,7 @@ export class UpdateParkGateComponent implements OnInit {
               ParkGateLatitude: this.updateParkGateForm.get('parkGateLatitude').value,
               ParkGateLongitude: this.updateParkGateForm.get('parkGateLongitude').value,
               ParkGateDescription: this.updateParkGateForm.get('parkGateDescription').value,
+              authenticateUser: user
             };
 
             this.parkGateService.UpdateParkGate(parkGate, this.globalService.GetServer());

@@ -31,6 +31,7 @@ export class AddAccomodationTypeComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkWithCamps = result.Parks;
+      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.basicAccomodationTypeDetails = this.formBuilder.group({
@@ -92,6 +93,7 @@ export class AddAccomodationTypeComponent implements OnInit {
       addAccomodationTypeConfirmationDialog.afterClosed().subscribe(result => {
         if (result === true){
           const selectedCamps = this.campsForAccomodationType.get('ListOfAssociatedCamp').value as Array<number>;
+          const user = JSON.parse(localStorage.getItem('user'));
 
           const newAccommodationType = {
             AccTypeName: this.basicAccomodationTypeDetails.get('accomodationType').value,
@@ -101,7 +103,8 @@ export class AddAccomodationTypeComponent implements OnInit {
             AdultLimit: this.basicAccomodationTypeDetails.get('adultLimit').value,
             ChildLimit: this.basicAccomodationTypeDetails.get('childLimit').value,
             ListOfAssociatedCamp: selectedCamps,
-            ListOfAccommodationTypeImages: this.viewImages
+            ListOfAccommodationTypeImages: this.viewImages,
+            authenticateUser: user
           };
 
           const formData = new FormData();
@@ -112,6 +115,8 @@ export class AddAccomodationTypeComponent implements OnInit {
           formData.append('NumBeds', newAccommodationType.NumBeds);
           formData.append('ChildLimit', newAccommodationType.ChildLimit);
           formData.append('AdultLimit', newAccommodationType.AdultLimit);
+          formData.append('sessionID', user.SessionID);
+          formData.append('userSecret', user.UserSecret);
 
           selectedCamps.forEach((el: any) => {
             formData.append('ListOfAssociatedCamp', el.CampID.toString());

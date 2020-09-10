@@ -11,6 +11,7 @@ import {UpdateCampGateTimeSuccessfulComponent} from 'src/app/modals/camp-gate-ti
 import {UpdateCampGateTimeUnsuccessfulComponent} from 'src/app/modals/camp-gate-time/update-camp-gate-time-unsuccessful/update-camp-gate-time-unsuccessful.component';
 import { DeleteCampGateTimeSuccessfulComponent } from 'src/app/modals/camp-gate-time/delete-camp-gate-time-successful/delete-camp-gate-time-successful.component';
 import { DeleteCampGateTimeUnsuccessfulComponent } from 'src/app/modals/camp-gate-time/delete-camp-gate-time-unsuccessful/delete-camp-gate-time-unsuccessful.component';
+import { Router } from '@angular/router';
 
 export interface CampGateTime{
   CampGateTimeID: number;
@@ -31,7 +32,7 @@ export interface CampGateTime{
 })
 export class CampGateTimeService {
 
-  constructor(private dialog: MatDialog , private http: HttpClient ) { }
+  constructor(private dialog: MatDialog , private http: HttpClient, private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -39,41 +40,61 @@ export class CampGateTimeService {
   }
 
   createCampGateTime(CampGateTime, link){
-    return this.http.post(`${link}/api/campGateTime/createCampGateTime`, CampGateTime).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    return this.http.post(`${link}/api/campGateTime/createCampGateTime`, CampGateTime).subscribe((addResult: any) => {
       if (addResult.Error){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addCampGateTimeUnsuccessfulDialog = this.dialog.open(AddCampGateTimeUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addCampGateTimeSuccessfulDialog = this.dialog.open(AddCampGateTimeSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
   readCampgateTime(link){
-    return this.http.get(`${link}/api/campGateTime/getCampGateTime`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/campGateTime/getCampGateTime`, user);
   }
   updateCampGateTime(updatedCampGateTime, link){
-    return this.http.post(`${link}/api/campGateTime/updateCampGateTime`, updatedCampGateTime).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    return this.http.post(`${link}/api/campGateTime/updateCampGateTime`, updatedCampGateTime).subscribe((updateResult: any) => {
       if (updateResult.Error){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateCampGateTimeUnsuccessfulDialog = this.dialog.open(UpdateCampGateTimeUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateCampGateTimeSuccessfulDialog = this.dialog.open(UpdateCampGateTimeSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
-  deleteCampGateTime(CampGateTimeID, link){
-    return this.http.delete(`${link}/api/campGateTime/deleteCampGateTime?campGateTimeID=${CampGateTimeID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((deleteResult: any) => {
+  deleteCampGateTime(user, CampGateTimeID, link){
+    return this.http.post(`${link}/api/campGateTime/deleteCampGateTime?campGateTimeID=${CampGateTimeID}`, user).
+    subscribe((deleteResult: any) => {
       if (deleteResult.Error){
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteCampGateTimeUnsuccessfulDialog = this.dialog.open(DeleteCampGateTimeUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (deleteResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteCampGateTimeSuccessfulDialog = this.dialog.open(DeleteCampGateTimeSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }

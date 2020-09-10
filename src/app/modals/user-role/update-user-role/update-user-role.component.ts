@@ -37,10 +37,13 @@ export class UpdateUserRoleComponent implements OnInit {
       const updateUserRoleConfirmationDialog = this.dialog.open(UpdateUserRoleConfirmationComponent);
       updateUserRoleConfirmationDialog.afterClosed().subscribe( result => {
         if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
+
            const userRole = {
             UserRoleID: this.userRole.RoleID,
             UserRoleName: this.updateUserRoleForm.get('userRoleName').value,
-            UserRoleDescription: this.updateUserRoleForm.get('userRoleDescription').value
+            UserRoleDescription: this.updateUserRoleForm.get('userRoleDescription').value,
+            authenticateUser: user
           };
            this.userRoleService.UpdateUserRole(userRole, this.globalService.GetServer());
         }

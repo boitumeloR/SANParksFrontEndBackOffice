@@ -9,6 +9,7 @@ import { DeleteActivityRateUnsuccessfulComponent} from 'src/app/modals/activity-
 import {MatDialog} from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
+import { Router } from '@angular/router';
 export interface ActivityRate{
   ActivityRateID: number;
   ActivityID: number;
@@ -30,7 +31,8 @@ export interface ActivityRate{
 })
 export class ActivityRateService {
 
-  constructor(private dialog: MatDialog , private http: HttpClient) { }
+  constructor(private dialog: MatDialog , private http: HttpClient,
+              private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -38,41 +40,61 @@ export class ActivityRateService {
   }
 
   createActivityRate(ActivityRate, link){
-    return this.http.post(`${link}/api/activityRate/createActivityRate`, ActivityRate).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    return this.http.post(`${link}/api/activityRate/createActivityRate`, ActivityRate).subscribe((addResult: any) => {
       if (addResult.Error){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addActivityRateUnsuccessfulDialog = this.dialog.open(AddActivityRateUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addActivityRateSuccessfulDialog = this.dialog.open(AddActivityRateSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
   readActivityRate(link){
-    return this.http.get(`${link}/api/activityRate/getActivityRate`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/activityRate/getActivityRate`, user);
   }
   updateActivityRate(updatedActivityRate, link){
-    return this.http.post(`${link}/api/activityRate/updateActivityRate`, updatedActivityRate).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    return this.http.post(`${link}/api/activityRate/updateActivityRate`, updatedActivityRate).subscribe((updateResult: any) => {
       if (updateResult.Error){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateActivityRateUnsuccessfulDialog = this.dialog.open(UpdateActivityRateUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateActivityRateSuccessfulDialog = this.dialog.open(UpdateActivityRateSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
-  deleteActivityRate(ActivityRateID, link){
-    return this.http.delete(`${link}/api/activityRate/deleteActivityRate?activityRateID=${ActivityRateID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((deleteResult: any) => {
+  deleteActivityRate(user, ActivityRateID, link){
+    return this.http.post(`${link}/api/activityRate/deleteActivityRate?activityRateID=${ActivityRateID}`, user).
+    subscribe((deleteResult: any) => {
       if (deleteResult.Error){
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteActivityRateUnsuccessfulDialog = this.dialog.open(DeleteActivityRateUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (deleteResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteActivityRateSuccessfulDialog = this.dialog.open(DeleteActivityRateSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }

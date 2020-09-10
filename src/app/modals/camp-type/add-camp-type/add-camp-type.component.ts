@@ -37,9 +37,11 @@ export class AddCampTypeComponent implements OnInit {
 
       addCampTypeDialog.afterClosed().subscribe( result => {
         if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
            const newCampType = {
             CampTypeName: this.addCampTypeForm.get('campTypeName').value,
-            CampTypeDescription: this.addCampTypeForm.get('campTypeDescription').value
+            CampTypeDescription: this.addCampTypeForm.get('campTypeDescription').value,
+            authenticateUser: user
           };
            this.campTypeService.CreateCampType(newCampType, this.globalService.GetServer());
         }

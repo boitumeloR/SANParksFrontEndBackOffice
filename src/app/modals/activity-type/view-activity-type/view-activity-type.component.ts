@@ -24,7 +24,11 @@ activityType: ActivityType;
     const deleteActivityTypeConfirmation =  this.dialog.open(DeleteActivityTypeComponent);
     deleteActivityTypeConfirmation.afterClosed().subscribe(result => {
       if (result === true){
-        this.activityTypeService.deleteActivityType(this.activityType.ActivityTypeID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.activityTypeService.deleteActivityType(authenticateUser, this.activityType.ActivityTypeID, this.globalService.GetServer());
       }
     });
   }

@@ -6,6 +6,7 @@ import { ViewCampTypeComponent } from 'src/app/modals/camp-type/view-camp-type/v
 import {MatDialog} from '@angular/material/dialog';
 import { CampType, CampTypeService } from 'src/app/services/CampType/camp-type.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-camp-type',
@@ -18,7 +19,8 @@ export class CampTypeComponent implements OnInit {
   dataSource;
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog, private campTypeService: CampTypeService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private campTypeService: CampTypeService, private globalService: GlobalService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.campTypeService.requestReferesh.subscribe(() => {this.getCampType(); });
@@ -40,8 +42,15 @@ export class CampTypeComponent implements OnInit {
 
   getCampType(){
     this.campTypeService.ReadCampType(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.CampTypes);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.CampTypes);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 

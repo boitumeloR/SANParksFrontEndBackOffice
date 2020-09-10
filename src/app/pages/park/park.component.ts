@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { ViewParkComponent } from 'src/app/modals/park/view-park/view-park.component';
 import { ParkService, Park } from 'src/app/services/Park/park.service';
 import {GlobalService} from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-park',
@@ -18,7 +19,8 @@ export class ParkComponent implements OnInit {
   filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog, private parkService: ParkService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private parkService: ParkService, private globalService: GlobalService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.parkService.requestReferesh.subscribe(() => {this.getParks(); });
@@ -40,8 +42,15 @@ export class ParkComponent implements OnInit {
 
   getParks(){
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.Parks);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.Parks);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

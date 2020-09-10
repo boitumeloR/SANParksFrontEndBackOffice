@@ -25,7 +25,11 @@ export class ViewParkComponent implements OnInit {
     const deleteParkConfirmation =  this.dialog.open(DeleteParkComponent);
     deleteParkConfirmation.afterClosed().subscribe(result => {
       if (result === true){
-        this.parkService.DeletePark(this.park.ParkID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.parkService.DeletePark(authenticateUser, this.park.ParkID, this.globalService.GetServer());
       }
     });
   }

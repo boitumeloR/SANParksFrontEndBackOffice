@@ -40,10 +40,12 @@ export class AddSeasonComponent implements OnInit {
 
       addSeasonConfirmationDialog.afterClosed().subscribe(result => {
         if (result === true){
+            const user = JSON.parse(localStorage.getItem('user'));
             const newSeason = {
               seasonName: this.addSeasonForm.get('seasonName').value,
               startDate: this.addSeasonForm.get('startDate').value,
-              endDate: this.addSeasonForm.get('endDate').value
+              endDate: this.addSeasonForm.get('endDate').value,
+              authenticateUser: user
             };
 
             this.seasonService.CreateSeason(newSeason, this.globalService.GetServer());

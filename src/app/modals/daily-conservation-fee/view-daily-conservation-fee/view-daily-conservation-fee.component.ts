@@ -27,7 +27,11 @@ export class ViewDailyConservationFeeComponent implements OnInit {
 
     deleteDailyConservationFeeDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.dailyConservationFeeServie.DeleteDailyConservationFee(this.globalService.GetServer(),
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.dailyConservationFeeServie.DeleteDailyConservationFee(authenticateUser, this.globalService.GetServer(),
         this.dailyConservationFee.ConservationID);
       }
     });

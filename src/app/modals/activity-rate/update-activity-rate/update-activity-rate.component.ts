@@ -69,6 +69,8 @@ export class UpdateActivityRateComponent implements OnInit {
 
     updateActivityRateConfirmationDialog.afterClosed().subscribe( result => {
       if (result === true){
+         const user = JSON.parse(localStorage.getItem('user'));
+
          const updateActivityRate = {
           ActivityRateID: this.actvivityRate.ActivityRateID,
           AdultRateAmount: this.activityRateDetails.get('adultRate').value,
@@ -79,7 +81,8 @@ export class UpdateActivityRateComponent implements OnInit {
           BikeAmount: this.activityRateDetails.get('bikeAmount').value,
           NoBikeAmount: this.activityRateDetails.get('noBikeAmunt').value,
           RateTypeID: this.activityRateDetails.get('rateType').value,
-          DateEffective: this.activityRateDetails.get('dateEffective').value
+          DateEffective: this.activityRateDetails.get('dateEffective').value,
+          authenticateUser: user
         };
          this.activityRateService.updateActivityRate(updateActivityRate, this.globalService.GetServer());
       }
