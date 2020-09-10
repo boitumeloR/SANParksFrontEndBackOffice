@@ -26,7 +26,11 @@ export class ViewActivitySlotComponent implements OnInit {
 
     deleteActivitySlotDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.activitySlotService.DeleteActivitySlot(this.actvivitySlot.ActivitySlotID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.activitySlotService.DeleteActivitySlot(authenticateUser, this.actvivitySlot.ActivitySlotID, this.globalService.GetServer());
       }
     });
   }

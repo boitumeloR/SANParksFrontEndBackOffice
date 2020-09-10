@@ -6,6 +6,7 @@ import { ViewWildcardRateComponent } from 'src/app/modals/wildcard-rate/view-wil
 import {MatDialog} from '@angular/material/dialog';
 import { WildcardRateService } from 'src/app/services/WildcardRate/wildcard-rate.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wildcard-rate',
@@ -15,7 +16,7 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 export class WildcardRateComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private wildcardRateService: WildcardRateService,
-              private globalService: GlobalService) { }
+              private globalService: GlobalService, private router: Router) { }
 
   displayedColumns: string[] = ['clusterName', 'categoryName', 'dateEffective', 'view'];
   dataSource;
@@ -42,8 +43,15 @@ export class WildcardRateComponent implements OnInit {
 
   getWildcardRate(){
     this.wildcardRateService.ReadWildcardRate(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.WildcardRates);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.WildcardRates);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

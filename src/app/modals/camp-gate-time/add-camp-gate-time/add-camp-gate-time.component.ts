@@ -48,10 +48,12 @@ export class AddCampGateTimeComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-    });
+      localStorage.setItem('user', JSON.stringify(result.user));
 
-    this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((result: any) => {
-      this.seasonDropDown = result.Seasons;
+      this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((resultSeason: any) => {
+        this.seasonDropDown = resultSeason.Seasons;
+        localStorage.setItem('user', JSON.stringify(resultSeason.user));
+      });
     });
 
     this.addCampGateTimeForm = this.formBuilder.group({
@@ -76,11 +78,13 @@ export class AddCampGateTimeComponent implements OnInit {
 
       addCampGateTimeConfirmation.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
           const newCampGateTime = {
             CampID: this.addCampGateTimeForm.get('camp').value,
             SeasonID: this.addCampGateTimeForm.get('season').value,
             CampOpenTime: this.addCampGateTimeForm.get('openTime').value,
             CampCloseTime: this.addCampGateTimeForm.get('closeTime').value,
+            authenticateUser: user
           };
 
           this.campGateTimeService.createCampGateTime(newCampGateTime, this.globalService.GetServer());

@@ -37,9 +37,12 @@ export class AddUserRoleComponent implements OnInit {
 
       addUserRoleConfirmationDialog.afterClosed().subscribe( result => {
         if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
+
            const newUserRole = {
             UserRoleName: this.addUserRoleForm.get('userRoleName').value,
-            UserRoleDescription: this.addUserRoleForm.get('userRoleDescription').value
+            UserRoleDescription: this.addUserRoleForm.get('userRoleDescription').value,
+            authenticateUser: user
           };
            this.userRoleService.CreateUserRole(newUserRole, this.globalService.GetServer());
         }

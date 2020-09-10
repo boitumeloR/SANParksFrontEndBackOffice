@@ -25,7 +25,11 @@ export class ViewParkGateComponent implements OnInit {
 
     deleteParkGateDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.parkGateService.DeleteParkGate(this.parkGate.ParkGateID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.parkGateService.DeleteParkGate(authenticateUser,this.parkGate.ParkGateID, this.globalService.GetServer());
       }
     });
   }

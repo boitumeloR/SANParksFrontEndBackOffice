@@ -6,6 +6,7 @@ import { ViewAccomodationBaseRateComponent } from 'src/app/modals/accomodation-b
 import {MatDialog} from '@angular/material/dialog';
 import { AccommBaseRateService } from 'src/app/services/AccommBaseRate/accomm-base-rate.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accomodation-base-rate',
@@ -19,7 +20,7 @@ export class AccomodationBaseRateComponent implements OnInit {
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private accommodationTypeBaseRateService: AccommBaseRateService,
-              private globalService: GlobalService) { }
+              private globalService: GlobalService, private router: Router) { }
 
   ngOnInit(): void {
     this.accommodationTypeBaseRateService.requestReferesh.subscribe(() => this.getAccommodationBaseRate());
@@ -41,8 +42,15 @@ export class AccomodationBaseRateComponent implements OnInit {
 
   getAccommodationBaseRate(){
     this.accommodationTypeBaseRateService.readAccommodationTypeBaseRate(this.globalService.GetServer()).subscribe((result: any) => {
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
       this.dataSource = new MatTableDataSource(result.BaseRates);
       this.dataSource.paginator = this.paginator;
+      localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

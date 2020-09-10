@@ -10,6 +10,7 @@ import {UpdateParkSuccessfulComponent} from 'src/app/modals/park/update-park-suc
 import {UpdateParkUnsuccessfulComponent} from 'src/app/modals/park/update-park-unsuccessful/update-park-unsuccessful.component';
 import { DeleteParkSuccessfulComponent } from 'src/app/modals/park/delete-park-successful/delete-park-successful.component';
 import { DeleteParkUnsuccessfulComponent } from 'src/app/modals/park/delete-park-unsuccessful/delete-park-unsuccessful.component';
+import { Router } from '@angular/router';
 export interface Park {
   ParkID: number;
   ParkName: string;
@@ -28,7 +29,8 @@ export interface ParkDropdown {
   providedIn: 'root'
 })
 export class ParkService {
-  constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog) { }
+  constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog,
+              private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -36,44 +38,63 @@ export class ParkService {
   }
 
   CreatePark(Park, link){
-    return this.http.post(`${link}/api/Park/CreatePark`, Park).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    return this.http.post(`${link}/api/Park/CreatePark`, Park).subscribe((addResult: any) => {
       if (addResult.Error){
+       localStorage.setItem('user', JSON.stringify(addResult.user));
        const addParkUnsuccessfulDialog = this.dialog.open(AddParkUnsuccessfulComponent);
+       this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+       localStorage.setItem('user', JSON.stringify(addResult.user));
        const addParkSuccessfulDialog = this.dialog.open(AddParkSuccessfulComponent);
+       this.refresh.next();
       }
     });
   }
 
   ReadPark(link){
-     return this.http.get(`${link}/api/Park/getPark`);
+     const user = JSON.parse(localStorage.getItem('user'));
+     return this.http.post(`${link}/api/Park/getPark`, user);
   }
 
   UpdatePark(Park, link){
-    return this.http.post(`${link}/api/Park/UpdatePark`, Park).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    return this.http.post(`${link}/api/Park/UpdatePark`, Park).subscribe((updateResult: any) => {
       if (updateResult.Error){
+       localStorage.setItem('user', JSON.stringify(updateResult.user));
        const updateParkUnsuccessfulDialog = this.dialog.open(UpdateParkUnsuccessfulComponent);
+       this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+       localStorage.setItem('user', JSON.stringify(updateResult.user));
        const updateParkSuccessfulDialog = this.dialog.open(UpdateParkSuccessfulComponent);
+       this.refresh.next();
       }
     });
   }
 
-  DeletePark(ParkID, link){
-    return this.http.delete(`${link}/api/Park/DeletePark?parkID=${ParkID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((deleteResult: any) => {
+  DeletePark(user, ParkID, link){
+    return this.http.post(`${link}/api/Park/DeletePark?parkID=${ParkID}`, user).subscribe((deleteResult: any) => {
       if (deleteResult.Error){
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteParkUnsuccessfulDialog = this.dialog.open(DeleteParkUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (deleteResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteParkSuccessfulDialog = this.dialog.open(DeleteParkSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }

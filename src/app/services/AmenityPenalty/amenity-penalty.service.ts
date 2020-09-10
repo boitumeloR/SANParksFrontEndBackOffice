@@ -9,6 +9,7 @@ import {UpdateAmenityPenaltySuccessfulComponent} from 'src/app/modals/amenity-pe
 import {UpdateAmenityPenaltyUnsuccessfulComponent} from 'src/app/modals/amenity-penalty/update-amenity-penalty-unsuccessful/update-amenity-penalty-unsuccessful.component';
 import { DeleteAmenityPenaltySuccessfulComponent } from 'src/app/modals/amenity-penalty/delete-amenity-penalty-successful/delete-amenity-penalty-successful.component';
 import { DeleteAmenityPenaltyUnsuccessfulComponent } from 'src/app/modals/amenity-penalty/delete-amenity-penalty-unsuccessful/delete-amenity-penalty-unsuccessful.component';
+import { Router } from '@angular/router';
 
 export interface AmenityPenalty{
   PenaltyID: number;
@@ -33,44 +34,65 @@ export class AmenityPenaltyService {
     return this.refresh;
   }
 
-  constructor(private dialog: MatDialog , private http: HttpClient) { }
+  constructor(private dialog: MatDialog , private http: HttpClient,
+              private router: Router) { }
 
   createAmenityPenalty(AmenityPenalty, link){
-    return this.http.post(`${link}/api/amenityPenalty/createAmenityPenalty`, AmenityPenalty).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    return this.http.post(`${link}/api/amenityPenalty/createAmenityPenalty`, AmenityPenalty).subscribe((addResult: any) => {
       if (addResult.Error){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addAmenityPenaltyUnsuccessfulDialog = this.dialog.open(AddAmenityPenaltyUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addAmenityPenaltySuccessfulDialog = this.dialog.open(AddAmenityPenaltySuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
   readAmenityPenalty(link){
-    return this.http.get(`${link}/api/amenityPenalty/getAmenityPenalty`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/amenityPenalty/getAmenityPenalty`, user);
   }
   updateAmenityPenalty(updatedAmenityPenalty, link){
-    return this.http.post(`${link}/api/amenityPenalty/updateAmenityPenalty`, updatedAmenityPenalty).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    return this.http.post(`${link}/api/amenityPenalty/updateAmenityPenalty`, updatedAmenityPenalty).subscribe((updateResult: any) => {
       if (updateResult.Error){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateAmenityPenaltyUnsuccessfulDialog = this.dialog.open(UpdateAmenityPenaltyUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateAmenityPenaltySuccessfulDialog = this.dialog.open(UpdateAmenityPenaltySuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
-  deleteAmenityPenalty(PenaltyID, link){
-    return this.http.delete(`${link}/api/amenityPenalty/deleteAmenityPenalty?amenityPenaltyID=${PenaltyID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((deleteResult: any) => {
+  deleteAmenityPenalty(user, PenaltyID, link){
+    return this.http.post(`${link}/api/amenityPenalty/deleteAmenityPenalty?amenityPenaltyID=${PenaltyID}`, user).
+    subscribe((deleteResult: any) => {
       if (deleteResult.Error){
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteAmenityPenaltyUnsuccessfulDialog = this.dialog.open(DeleteAmenityPenaltyUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (deleteResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteAmenityPenaltySuccessfulDialog = this.dialog.open(DeleteAmenityPenaltySuccessfulComponent);
+        this.refresh.next();
       }
     });
   }

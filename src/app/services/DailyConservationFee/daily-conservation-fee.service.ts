@@ -10,6 +10,7 @@ import {UpdateDailyConservationFeeSuccessfulComponent} from 'src/app/modals/dail
 import {UpdateDailyConservationFeeUnsuccessfulComponent} from 'src/app/modals/daily-conservation-fee/update-daily-conservation-fee-unsuccessful/update-daily-conservation-fee-unsuccessful.component';
 import { DeleteDailyConservationFeeSuccessfulComponent } from 'src/app/modals/daily-conservation-fee/delete-daily-conservation-fee-successful/delete-daily-conservation-fee-successful.component';
 import { DeleteDailyConservationFeeUnsuccessfulComponent } from 'src/app/modals/daily-conservation-fee/delete-daily-conservation-fee-unsuccessful/delete-daily-conservation-fee-unsuccessful.component';
+import { Router } from '@angular/router';
 
 export interface DailyConservationFee {
   ConservationID: number;
@@ -32,7 +33,7 @@ export interface DailyConservationFeeDropDown {
 })
 export class DailyConservationFeeService {
 
-  constructor(private http: HttpClient, private dialog: MatDialog) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -40,44 +41,63 @@ export class DailyConservationFeeService {
   }
 
   CreateDailyConservationFee(DailyConservationFee, link){
-    this.http.post(`${link}/api/dailyConservationFee/createDailyConservationFee`, DailyConservationFee).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    this.http.post(`${link}/api/dailyConservationFee/createDailyConservationFee`, DailyConservationFee).subscribe((addResult: any) => {
       if (addResult.Error){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addDailyConservationFeeUnsuccessfulDialog = this.dialog.open(AddDailyConservationFeeUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addDailyConservationFeeSuccessfulDialog = this.dialog.open(AddDailyConservationFeeSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
 
   ReadDailyConservationFee(link){
-    return this.http.get(`${link}/api/dailyConservationFee/getDailyConservationFee`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/dailyConservationFee/getDailyConservationFee`, user);
   }
 
   UpdateDailyConservationFee(DailyConservationFee, link){
-    this.http.post(`${link}/api/dailyConservationFee/updateDailyConservation`, DailyConservationFee).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    this.http.post(`${link}/api/dailyConservationFee/updateDailyConservation`, DailyConservationFee).subscribe((updateResult: any) => {
       if (updateResult.Error){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateDailyConservationFeeUnsuccessfulDialog = this.dialog.open(UpdateDailyConservationFeeUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateDailyConservationFeeSuccessfulDialog = this.dialog.open(UpdateDailyConservationFeeSuccessfulComponent);
-      }
+        this.refresh.next();      }
     });
   }
 
-  DeleteDailyConservationFee(link,ConservationID){
-    this.http.delete(`${link}/api/dailyConservationFee/deleteDailyConservationFee?dailyConservationFeeID=${ConservationID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+  DeleteDailyConservationFee(user, link, ConservationID){
+    this.http.post(`${link}/api/dailyConservationFee/deleteDailyConservationFee?dailyConservationFeeID=${ConservationID}`, user)
+    .subscribe((updateResult: any) => {
       if (updateResult.Error){
+      localStorage.setItem('user', JSON.stringify(updateResult.user));
       const deleteDailyConservationFeeUnsuccessfulDialog = this.dialog.open(DeleteDailyConservationFeeUnsuccessfulComponent);
+      this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const deleteDailyConservationFeeSuccessfulDialog = this.dialog.open(DeleteDailyConservationFeeSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }

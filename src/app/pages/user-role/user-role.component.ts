@@ -6,6 +6,7 @@ import { ViewUserRoleComponent } from 'src/app/modals/user-role/view-user-role/v
 import { MatDialog} from '@angular/material/dialog';
 import { UserRole, UserRoleService} from 'src/app/services/UserRole/user-role.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-role',
@@ -19,7 +20,8 @@ export class UserRoleComponent implements OnInit {
   filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog, private userRoleService: UserRoleService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private userRoleService: UserRoleService, private globalService: GlobalService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.userRoleService.requestReferesh.subscribe(() => {this.getUserRole(); });
@@ -41,8 +43,15 @@ export class UserRoleComponent implements OnInit {
 
   getUserRole(){
     this.userRoleService.ReadUserRole(this.globalService.GetServer()).subscribe((result: any) => {
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
       this.dataSource = new MatTableDataSource(result.UserRoles);
       this.dataSource.paginator = this.paginator;
+      localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

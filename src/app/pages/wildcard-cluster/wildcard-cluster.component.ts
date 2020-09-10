@@ -6,6 +6,7 @@ import { ViewWildcardClusterComponent } from 'src/app/modals/wildcard-cluster/vi
 import {MatDialog} from '@angular/material/dialog';
 import { WildcardClusterService } from 'src/app/services/WildcardCluster/wildcard-cluster.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,7 +16,8 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 })
 export class WildcardClusterComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private wildcardClusterService: WildcardClusterService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private wildcardClusterService: WildcardClusterService, private globalService: GlobalService,
+              private router: Router) { }
 
   displayedColumns: string[] = ['name', 'view'];
   dataSource;
@@ -42,8 +44,15 @@ export class WildcardClusterComponent implements OnInit {
 
   getWildcardCluster(){
     this.wildcardClusterService.ReadWildcardCluster(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.WildcardClusters);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.WildcardClusters);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

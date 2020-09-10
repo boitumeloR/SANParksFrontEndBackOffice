@@ -35,8 +35,11 @@ export class AddActivityTypeComponent implements OnInit {
       const addActivityTypeConfirmationDialog = this.dialog.open(AddActivityTypeConfirmationComponent);
       addActivityTypeConfirmationDialog.afterClosed().subscribe( result => {
         if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
+
            const newActivityType = {
-            ActivityTypeDescription: this.addActivityTypes.get('description').value
+            ActivityTypeDescription: this.addActivityTypes.get('description').value,
+            authenticateUser: user
           };
            this.activityTypeService.createActivityType(newActivityType, this.globalService.GetServer());
         }

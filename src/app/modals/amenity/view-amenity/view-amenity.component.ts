@@ -27,7 +27,11 @@ export class ViewAmenityComponent implements OnInit {
 
     deleteAmenityDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.amenityService.deleteAmenity(this.amenity.AmenityID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.amenityService.deleteAmenity(authenticateUser, this.amenity.AmenityID, this.globalService.GetServer());
       }
     });
   }

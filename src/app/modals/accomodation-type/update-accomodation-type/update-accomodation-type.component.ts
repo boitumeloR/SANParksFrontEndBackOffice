@@ -43,6 +43,7 @@ export class UpdateAccomodationTypeComponent implements OnInit {
 
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkWithCamps = result.Parks;
+      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.basicUpdateAccomodationTypeDetails = this.formBuilder.group({
@@ -51,7 +52,7 @@ export class UpdateAccomodationTypeComponent implements OnInit {
       noOfBeds : [this.accommodationType.NumBeds, [Validators.required, Validators.min(0)]],
       noOfBaths : [this.accommodationType.NumBaths, [Validators.required, Validators.min(0)]],
       adultLimit : [this.accommodationType.AdultLimit, [Validators.required, Validators.min(0)]],
-      childLimit : [this.accommodationType.ChildLimit, [Validators.required, Validators.min(0)]]
+      childLimit : [this.accommodationType.ChildLimit, [Validators.required, Validators.min(0)]],
     });
 
     this.campsForAccomodationType = this.formBuilder.group({
@@ -86,6 +87,7 @@ export class UpdateAccomodationTypeComponent implements OnInit {
       updateAccomodationTypeConfirmationDialog.afterClosed().subscribe(result => {
         if (result === true){
           const selectedCamps = this.campsForAccomodationType.get('ListOfAssociatedCamp').value as Array<number>;
+          const user = JSON.parse(localStorage.getItem('user'));
 
           const updateAccommodationType = {
             AccommodationTypeID: this.accommodationType.AccommodationTypeID,
@@ -96,7 +98,8 @@ export class UpdateAccomodationTypeComponent implements OnInit {
             AdultLimit: this.basicUpdateAccomodationTypeDetails.get('adultLimit').value,
             ChildLimit: this.basicUpdateAccomodationTypeDetails.get('childLimit').value,
             ListOfAssociatedCamp: selectedCamps,
-            ListOfAccommodationTypeImages: this.viewImages
+            ListOfAccommodationTypeImages: this.viewImages,
+            authenticateUser: user
           };
 
           const formData = new FormData();
@@ -107,6 +110,8 @@ export class UpdateAccomodationTypeComponent implements OnInit {
           formData.append('NumBeds', updateAccommodationType.NumBeds);
           formData.append('ChildLimit', updateAccommodationType.ChildLimit);
           formData.append('AdultLimit', updateAccommodationType.AdultLimit);
+          formData.append('sessionID', user.SessionID);
+          formData.append('userSecret', user.UserSecret);
 
           selectedCamps.forEach((el: any) => {
             formData.append('ListOfAssociatedCamp', el.CampID.toString());

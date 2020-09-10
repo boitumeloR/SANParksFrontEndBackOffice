@@ -35,6 +35,7 @@ export class UpdateAmenityComponent implements OnInit {
 
     this.amenityTypeService.readAmenityType(this.globalService.GetServer()).subscribe((result: any) => {
       this.amenityTypeDropDown = result.AmenityTypes;
+      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.amenityDetails = this.formBuilder.group({
@@ -54,11 +55,14 @@ export class UpdateAmenityComponent implements OnInit {
 
     updateAmenityConfirmationDialog.afterClosed().subscribe( result => {
       if (result === true){
+         const user = JSON.parse(localStorage.getItem('user'));
+
          const updateAmenity = {
           AmenityID: this.amenity.AmenityID,
           AmenityTypeID: this.amenityDetails.get('amenityType').value,
           AmenityStatusID: this.amenityDetails.get('amenityStatus').value,
-          AmenityDescription: this.amenityDetails.get('amenityDescription').value
+          AmenityDescription: this.amenityDetails.get('amenityDescription').value,
+          authenticateUser: user
         };
          this.amenityService.updateAmenity(updateAmenity, this.globalService.GetServer());
       }

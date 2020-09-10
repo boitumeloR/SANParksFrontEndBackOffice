@@ -27,10 +27,12 @@ export class AddCampComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-    });
+      localStorage.setItem('user', JSON.stringify(result.user));
 
-    this.campTypeService.ReadCampType(this.globalService.GetServer()).subscribe((result: any) => {
-      this.campTypeDropDown = result.CampTypes;
+      this.campTypeService.ReadCampType(this.globalService.GetServer()).subscribe((resultCampType: any) => {
+        this.campTypeDropDown = resultCampType.CampTypes;
+        localStorage.setItem('user', JSON.stringify(resultCampType.user));
+      });
     });
 
     this.addCampForm = this.formBuilder.group({
@@ -55,6 +57,8 @@ export class AddCampComponent implements OnInit {
 
         addCampDialog.afterClosed().subscribe(result => {
           if (result === true){
+            const user = JSON.parse(localStorage.getItem('user'));
+
             const newCamp = {
               CampName: this.addCampForm.get('campName').value,
               CampTypeID: this.addCampForm.get('campType').value,
@@ -62,6 +66,7 @@ export class AddCampComponent implements OnInit {
               CampDescription: this.addCampForm.get('campDescription').value,
               CampLatitude: this.addCampForm.get('campLatitude').value,
               CampLongitude: this.addCampForm.get('campLongitude').value,
+              authenticateUser: user
             };
 
             this.campService.createCamp(newCamp, this.globalService.GetServer());

@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { ViewActivitySlotComponent } from 'src/app/modals/activity-slot/view-activity-slot/view-activity-slot.component';
 import { ActivitySlotService } from 'src/app/services/ActivitySlot/activity-slot.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-activity-slot',
@@ -19,7 +20,8 @@ export class ActivitySlotComponent implements OnInit {
   filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog, private activitySlotService: ActivitySlotService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private activitySlotService: ActivitySlotService, private globalService: GlobalService, 
+              private router: Router) { }
 
   ngOnInit(): void {
     this.activitySlotService.requestReferesh.subscribe(() => {this.getActivitySlots(); });
@@ -41,8 +43,15 @@ export class ActivitySlotComponent implements OnInit {
 
   getActivitySlots(){
     this.activitySlotService.ReadActivitySlot(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.ActivitySlots);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.ActivitySlots);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

@@ -56,10 +56,13 @@ export class UpdateAmenityPenaltyComponent implements OnInit {
 
     updateAmenityPenaltyConfirmationDialog.afterClosed().subscribe( result => {
       if (result === true){
+         const user = JSON.parse(localStorage.getItem('user'));
+
          const updateAmenityPenalty = {
           PenaltyID: this.amenity.AmenityPenaltyID,
           AmenityPenaltyAmount: this.amenityPenalty.get('amenityPenalty').value,
-          DateEffective: this.amenityPenalty.get('dateEffective').value
+          DateEffective: this.amenityPenalty.get('dateEffective').value,
+          authenticateUser: user
         };
          this.amenityPenaltyService.updateAmenityPenalty(updateAmenityPenalty, this.globalService.GetServer());
       }

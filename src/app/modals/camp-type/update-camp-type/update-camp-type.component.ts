@@ -38,10 +38,12 @@ export class UpdateCampTypeComponent implements OnInit {
 
       UpdateCampTypeConfirmation.afterClosed().subscribe( result => {
         if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
            const campType = {
             CampTypeID: this.campType.CampTypeID,
             CampTypeName: this.updateCampTypeForm.get('campTypeName').value,
-            CampTypeDescription: this.updateCampTypeForm.get('campTypeDescription').value
+            CampTypeDescription: this.updateCampTypeForm.get('campTypeDescription').value,
+            authenticateUser: user
           };
            this.campTypeService.UpdateCampType(campType, this.globalService.GetServer());
         }

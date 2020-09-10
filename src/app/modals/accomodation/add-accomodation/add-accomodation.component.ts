@@ -29,6 +29,7 @@ export class AddAccomodationComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
+      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.addAccomodationForm = this.formBuilder.group({
@@ -49,10 +50,13 @@ export class AddAccomodationComponent implements OnInit {
 
       addAccomodationConfirmation.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
+
           const newAccommodation = {
             UnitNumber: this.addAccomodationForm.get('unitNumber').value,
             CampID: this.addAccomodationForm.get('camp').value,
             AccomodationTypeID: this.addAccomodationForm.get('accomodationType').value,
+            authenticateUser: user
           };
           this.accommodationService.createAccommodation(newAccommodation, this.globalService.GetServer());
         }

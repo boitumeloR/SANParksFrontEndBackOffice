@@ -17,7 +17,7 @@ export class ViewSeasonComponent implements OnInit {
   }
 
   updateSeason(){
-    const updateSeasonDialog = this.dialog.open(UpdateSeasonComponent,{disableClose:true})
+    const updateSeasonDialog = this.dialog.open(UpdateSeasonComponent, {disableClose: true});
   }
 
   deleteSeason(){

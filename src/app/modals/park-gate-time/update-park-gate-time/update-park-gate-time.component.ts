@@ -50,11 +50,13 @@ export class UpdateParkGateTimeComponent implements OnInit {
 
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-    });
+      localStorage.setItem('user', JSON.stringify(result.user));
 
-    this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((result: any) => {
-      this.seasonDropDown = result.Seasons;
-      this.displaySeasonDates(this.parkGateTime.SeasonID);
+      this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((resultSeason: any) => {
+        this.seasonDropDown = resultSeason.Seasons;
+        this.displaySeasonDates(this.parkGateTime.SeasonID);
+        localStorage.setItem('user', JSON.stringify(resultSeason.user));
+      });
     });
 
     this.updateParkGateTimeForm = this.formBuilder.group({
@@ -79,11 +81,14 @@ export class UpdateParkGateTimeComponent implements OnInit {
 
       confirmUpdateDialog.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
+
           const parkGateTime = {
             PTimeID: this.parkGateTime.PTimeID,
             SeasonID: this.updateParkGateTimeForm.get('season').value,
             ParkOpenTime: this.updateParkGateTimeForm.get('gateOpeningTime').value,
-            ParkCloseTime: this.updateParkGateTimeForm.get('gateClosingTime').value
+            ParkCloseTime: this.updateParkGateTimeForm.get('gateClosingTime').value,
+            authenticateUser: user
           };
 
           this.parkGateTimeService.UpdateParkGateTime(parkGateTime, this.globalService.GetServer());

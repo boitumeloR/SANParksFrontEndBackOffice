@@ -26,7 +26,12 @@ export class ViewAmenityPenaltyComponent implements OnInit {
 
     deleteAmenityPenaltyDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.amenityPenaltyService.deleteAmenityPenalty(this.amenityPenalty.AmenityPenaltyID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.amenityPenaltyService.deleteAmenityPenalty(authenticateUser, this.amenityPenalty.AmenityPenaltyID,
+          this.globalService.GetServer());
       }
     });
   }

@@ -65,11 +65,14 @@ export class UpdateActivitySlotComponent implements OnInit {
 
       updateActivitySlotConfirmationDialog.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
+
           const activitySlot = {
             ActivitySlotID: this.actvivitySlot.ActivitySlotID,
             SlotTime: this.updateActivitySlots.get('slotTime').value,
             startDate: this.updateActivitySlots.get('startDate').value,
-            endDate: this.updateActivitySlots.get('endDate').value
+            endDate: this.updateActivitySlots.get('endDate').value,
+            authenticateUser: user
           };
 
           this.activitySlotService.UpdateActivitySlot(activitySlot, this.globalService.GetServer());

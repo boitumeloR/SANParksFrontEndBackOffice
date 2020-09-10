@@ -6,6 +6,7 @@ import { ViewAccomodationAddRateComponent } from 'src/app/modals/accomodation-ad
 import {MatDialog} from '@angular/material/dialog';
 import { AccommAddRateService } from 'src/app/services/AccommAddRate/accomm-add-rate.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class AccomodationAddRateComponent implements OnInit {
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private accommodationTypeAddRateService: AccommAddRateService,
-              private globalService: GlobalService) { }
+              private globalService: GlobalService, private router: Router) { }
 
   ngOnInit(): void {
     this.accommodationTypeAddRateService.requestReferesh.subscribe(() => this.getAccommodationAddRate());
@@ -42,8 +43,15 @@ export class AccomodationAddRateComponent implements OnInit {
 
   getAccommodationAddRate(){
     this.accommodationTypeAddRateService.readAccommodationTypeAddRate(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.AddRates);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.AddRates);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

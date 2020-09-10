@@ -29,7 +29,11 @@ export class ViewCampComponent implements OnInit {
 
     deleteCampDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.campService.deleteCamp(this.camp.CampID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.campService.deleteCamp(authenticateUser, this.camp.CampID, this.globalService.GetServer());
       }
     });
   }

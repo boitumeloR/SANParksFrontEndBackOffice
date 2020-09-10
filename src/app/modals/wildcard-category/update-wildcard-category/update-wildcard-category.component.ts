@@ -40,12 +40,15 @@ export class UpdateWildcardCategoryComponent implements OnInit {
       const updateWildcardCategoryConfirmationDialog = this.dialog.open(UpdateWildcardCategoryConfirmationComponent);
       updateWildcardCategoryConfirmationDialog.afterClosed().subscribe( result => {
         if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
+
            const wildcardCategory = {
             WildcardCategoryID: this.wildcardCategory.WildcardCategoryID,
             CategoryName: this.updateWildcardCategoryForm.get('WildcardCategoryName').value,
             CategoryDescription: this.updateWildcardCategoryForm.get('WildcardCategoryDescription').value,
             AdultLimit: this.updateWildcardCategoryForm.get('AdultLimit').value,
             ChildLimit: this.updateWildcardCategoryForm.get('ChildLimit').value,
+            authenticateUser: user
           };
            this.wildcardCategoryService.UpdateWildcardCategory(wildcardCategory, this.globalService.GetServer());
         }

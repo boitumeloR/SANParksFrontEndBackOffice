@@ -6,6 +6,7 @@ import { ViewDailyConservationFeeComponent } from 'src/app/modals/daily-conserva
 import {MatDialog} from '@angular/material/dialog';
 import { DailyConservationFeeService } from 'src/app/services/DailyConservationFee/daily-conservation-fee.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-daily-conservation-fee',
@@ -19,7 +20,7 @@ export class DailyConservationFeeComponent implements OnInit {
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private dailyConservationFeeService: DailyConservationFeeService,
-              private globalService: GlobalService) { }
+              private globalService: GlobalService, private router: Router) { }
 
   ngOnInit(): void {
     this.dailyConservationFeeService.requestReferesh.subscribe(() => {this.getDailyConservationFee(); });
@@ -41,8 +42,15 @@ export class DailyConservationFeeComponent implements OnInit {
 
   getDailyConservationFee(){
     this.dailyConservationFeeService.ReadDailyConservationFee(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.DaliyConservationFees);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.DaliyConservationFees);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

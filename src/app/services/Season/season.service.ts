@@ -7,6 +7,7 @@ import {AddSeasonSuccessfulComponent} from 'src/app/modals/season/add-season-suc
 import {AddSeasonUnsuccessfulComponent} from 'src/app/modals/season/add-season-unsuccessful/add-season-unsuccessful.component';
 import {UpdateSeasonSuccessfulComponent} from 'src/app/modals/season/update-season-successful/update-season-successful.component';
 import {UpdateSeasonUnsuccessfulComponent} from 'src/app/modals/season/update-season-unsuccessful/update-season-unsuccessful.component';
+import { Router } from '@angular/router';
 
 export interface Season {
   SeasonID: number;
@@ -25,7 +26,7 @@ export interface SeasonDropDown {
 })
 export class SeasonService {
 
-  constructor(private http: HttpClient, private dialog: MatDialog) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -33,31 +34,44 @@ export class SeasonService {
   }
 
   CreateSeason(Season, link){
-    this.http.post(`${link}/api/season/createSeason`, Season).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    this.http.post(`${link}/api/season/createSeason`, Season).subscribe((addResult: any) => {
       if (addResult.Error){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addSeasonUnsuccessfulDialog = this.dialog.open(AddSeasonUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addSeasonSuccessfulDialog = this.dialog.open(AddSeasonSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
 
   ReadSeason(link){
-    return this.http.get(`${link}/api/season/getSeason`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/season/getSeason`, user);
   }
 
   UpdateSeason(Season, link){
-    this.http.post(`${link}/api/season/updateSeason`, Season).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    this.http.post(`${link}/api/season/updateSeason`, Season).subscribe((updateResult: any) => {
       if (updateResult.Error){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateSeasonUnsuccessfulDialog = this.dialog.open(UpdateSeasonUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateSeasonSuccessfulDialog = this.dialog.open(UpdateSeasonSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }

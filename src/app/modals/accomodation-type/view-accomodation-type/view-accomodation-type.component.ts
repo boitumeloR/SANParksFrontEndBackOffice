@@ -33,7 +33,12 @@ export class ViewAccomodationTypeComponent implements OnInit {
 
     deleteAccomodationTypeTypeDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.accommodationTypeService.deleteAccommodationType(this.accommodationType.AccommodationTypeID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.accommodationTypeService.deleteAccommodationType(authenticateUser, this.accommodationType.AccommodationTypeID,
+          this.globalService.GetServer());
       }
     });
   }

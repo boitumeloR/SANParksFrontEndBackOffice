@@ -40,6 +40,7 @@ export class AddAmenityPenaltyComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
+      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.amenityLocation = this.formBuilder.group({
@@ -75,10 +76,13 @@ export class AddAmenityPenaltyComponent implements OnInit {
 
     addAmenityPenaltyConfirmationDialog.afterClosed().subscribe( result => {
       if (result === true){
+         const user = JSON.parse(localStorage.getItem('user'));
+
          const newAmenityPenalty = {
           AmenityID: this.amenityLocation.get('amenity').value,
           AmenityPenaltyAmount: this.amenityDetails.get('amenityPenalty').value,
-          DateEffective: this.amenityDetails.get('dateEffective').value
+          DateEffective: this.amenityDetails.get('dateEffective').value,
+          authenticateUser: user
         };
          this.amenityPenaltyService.createAmenityPenalty(newAmenityPenalty, this.globalService.GetServer());
       }

@@ -40,10 +40,13 @@ export class UpdateActivityComponent implements OnInit {
 
     this.activityTypeService.readActivityType(this.globalService.GetServer()).subscribe((result: any) => {
       this.activityTypeDropDown = result.ActivityTypes;
-    });
+      localStorage.setItem('user', JSON.stringify(result.user));
 
-    this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
-      this.parkWithCamps = result.Parks;
+
+      this.parkService.ReadPark(this.globalService.GetServer()).subscribe((resultPark: any) => {
+      this.parkWithCamps = resultPark.Parks;
+      localStorage.setItem('user', JSON.stringify(resultPark.user));
+    });
     });
 
     this.basicActivityDetails = this.formBuilder.group({
@@ -115,6 +118,7 @@ export class UpdateActivityComponent implements OnInit {
     updateActivityConfirmationDialog.afterClosed().subscribe(result => {
       if (result === true){
         const selectedCamps = this.campsAvailableAt.get('ListOfAssociatedCamp').value as Array<number>;
+        const user = JSON.parse(localStorage.getItem('user'));
 
         const updatedActivity = {
           activityID: this.activity.ActivityID,
@@ -124,7 +128,8 @@ export class UpdateActivityComponent implements OnInit {
           minimumAge: this.basicActivityDetails.get('minimumAge').value,
           maximumAge: this.basicActivityDetails.get('maximumAge').value,
           ListOfAssociatedCamp: selectedCamps,
-          ListOfAccommodationTypeImages: this.viewImages
+          ListOfAccommodationTypeImages: this.viewImages,
+          authenticateUser: user
         };
 
         const formData = new FormData();
@@ -135,6 +140,9 @@ export class UpdateActivityComponent implements OnInit {
         formData.append('maximumCapacity', updatedActivity.maximumCapacity);
         formData.append('minimumAge', updatedActivity.minimumAge);
         formData.append('maximumAge', updatedActivity.maximumAge);
+        formData.append('sessionID', user.SessionID);
+        formData.append('userSecret', user.UserSecret);
+
 
         selectedCamps.forEach((el: any) => {
           formData.append('ListOfAssociatedCamp', el.CampID.toString());

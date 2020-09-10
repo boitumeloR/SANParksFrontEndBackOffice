@@ -38,19 +38,24 @@ export class UpdateParkComponent implements OnInit {
     }
     else{
       const numbers = /^[0-9\.]+$/;
-      if (this.updateParkForm.get('parkLongitude').value.match(numbers) && this.updateParkForm.get('parkLatitude').value.match(numbers)){
+
+      if (String(this.updateParkForm.get('parkLongitude').value).match(numbers) &&
+          String(this.updateParkForm.get('parkLatitude').value).match(numbers)){
         this.dialogRef.close();
         const updateParkConfirmDialog = this.dialog.open(UpdateParkConfirmationComponent);
 
         updateParkConfirmDialog.afterClosed().subscribe( result => {
         if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
+
            const park = {
             ParkID: this.park.ParkID,
             ParkName: this.updateParkForm.get('parkName').value,
             ParkLimit: this.updateParkForm.get('parkLimit').value,
             ParkLatitude: this.updateParkForm.get('parkLatitude').value,
             ParkLongitude: this.updateParkForm.get('parkLongitude').value,
-            ParkDescription: this.updateParkForm.get('parkDescription').value
+            ParkDescription: this.updateParkForm.get('parkDescription').value,
+            authenticateUser: user
           };
            this.parkService.UpdatePark(park, this.globalService.GetServer());
         }

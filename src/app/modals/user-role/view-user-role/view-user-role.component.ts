@@ -25,7 +25,11 @@ userRole: UserRole;
     const deleteUserRoleDialog =  this.dialog.open(DeleteUserRoleComponent);
     deleteUserRoleDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.userRoleService.DeleteUserRole(this.userRole.RoleID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+          authenticateUser: user
+        };
+        this.userRoleService.DeleteUserRole(authenticateUser,this.userRole.RoleID, this.globalService.GetServer());
       }
     });
   }

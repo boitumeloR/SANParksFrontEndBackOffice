@@ -6,6 +6,7 @@ import { ViewActivityComponent } from 'src/app/modals/activity/view-activity/vie
 import {MatDialog} from '@angular/material/dialog';
 import { ActivityService } from 'src/app/services/Activity/activity.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-activity',
@@ -20,7 +21,8 @@ export class ActivityComponent implements OnInit {
   filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog, private activityService: ActivityService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private activityService: ActivityService, private globalService: GlobalService, 
+              private router: Router) { }
 
   ngOnInit(): void {
     this.activityService.requestReferesh.subscribe(() => this.getActivities());
@@ -42,8 +44,15 @@ export class ActivityComponent implements OnInit {
 
   getActivities(){
     this.activityService.readActivity(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.Activities);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.Activities);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

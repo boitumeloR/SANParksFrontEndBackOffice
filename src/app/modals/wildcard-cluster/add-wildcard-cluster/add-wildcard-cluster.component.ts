@@ -23,6 +23,7 @@ export class AddWildcardClusterComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkCheckBox = result.Parks;
+      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.addWildcardClusterForm = this.formBuilder.group({
@@ -55,11 +56,13 @@ export class AddWildcardClusterComponent implements OnInit {
       addWildcardClusterConfirmationDialog.afterClosed().subscribe(result => {
         if (result === true){
           const selectedParks = this.addWildcardClusterForm.get('ListOfAssociatedParks').value as FormArray;
+          const user = JSON.parse(localStorage.getItem('user'));
 
           const newWildcardCluster = {
             WildcardClusterName: this.addWildcardClusterForm.get('wildcardClusterName').value,
             WildcardClusterDescription: this.addWildcardClusterForm.get('wildcardClusterDescription').value,
-            listOfParks: selectedParks
+            listOfParks: selectedParks,
+            authenticateUser: user
           };
 
           this.wildcardClusterService.CreateWildcardCluster(newWildcardCluster, this.globalService.GetServer());

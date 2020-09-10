@@ -29,6 +29,8 @@ export class UpdateAccomodationBaseRateComponent implements OnInit {
     this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((result: any) => {
       this.seasonDropDown = result.Seasons;
       this.displaySeasonDates(this.baseRate.SeasonID);
+      localStorage.setItem('user', JSON.stringify(result.user));
+
     });
 
     this.updateAccomodationBaseRateForm = this.formBuilder.group({
@@ -50,12 +52,15 @@ export class UpdateAccomodationBaseRateComponent implements OnInit {
 
       updateAccomodationBaseRateConfirmation.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
+
           const newBaseRate = {
             BaseRateID: this.baseRate.BaseRateID,
             AccommodationTypeID: this.baseRate.AccommodationTypeID,
             CampID: this.baseRate.CampID,
             BaseRateAmount: this.updateAccomodationBaseRateForm.get('baseRate').value,
             SeasonID: this.updateAccomodationBaseRateForm.get('season').value,
+            authenticateUser: user
           };
 
           this.accTypeBaseRateService.updateAccommodationTypeBaseRate(newBaseRate, this.globalService.GetServer());

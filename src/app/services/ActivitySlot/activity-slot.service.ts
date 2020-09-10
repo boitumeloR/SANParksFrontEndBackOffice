@@ -9,6 +9,7 @@ import { UpdateActivitySlotSuccessfulComponent} from 'src/app/modals/activity-sl
 import { UpdateActivitySlotUnsuccessfulComponent} from 'src/app/modals/activity-slot/update-activity-slot-unsuccessful/update-activity-slot-unsuccessful.component';
 import { DeleteActivitySlotSuccessfulComponent} from 'src/app/modals/activity-slot/delete-activity-slot-successful/delete-activity-slot-successful.component';
 import { DeleteActivitySlotUnsuccessfulComponent} from 'src/app/modals/activity-slot/delete-activity-slot-unsuccessful/delete-activity-slot-unsuccessful.component';
+import { Router } from '@angular/router';
 
 export interface ActivitySlot {
   ActivitySlotID: number;
@@ -28,7 +29,7 @@ export interface ActivitySlotDropDown {
 })
 
 export class ActivitySlotService {
-  constructor(private http: HttpClient, private dialog: MatDialog) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -36,44 +37,64 @@ export class ActivitySlotService {
   }
 
   CreateActivitySlot(ActivitySlot, link){
-    return this.http.post(`${link}/api/activitySlot/createActivitySlot`, ActivitySlot).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    return this.http.post(`${link}/api/activitySlot/createActivitySlot`, ActivitySlot).subscribe((addResult: any) => {
       if (addResult.Error){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addActivitySlotUnsuccessfulDialog = this.dialog.open(AddActivitySlotUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addActivitySlotSuccessfulDialog = this.dialog.open(AddActivitySlotSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
 
   ReadActivitySlot(link){
-    return this.http.get(`${link}/api/activitySlot/getActivitySlot`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/activitySlot/getActivitySlot`, user);
   }
 
   UpdateActivitySlot(ActivitySlot, link){
-    return this.http.post(`${link}/api/activitySlot/updateActivitySlot`, ActivitySlot).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    return this.http.post(`${link}/api/activitySlot/updateActivitySlot`, ActivitySlot).subscribe((updateResult: any) => {
       if (updateResult.Error){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateActivitySlotUnsuccessfulDialog = this.dialog.open(UpdateActivitySlotUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateActivitySlotSuccessfulDialog = this.dialog.open(UpdateActivitySlotSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
 
-  DeleteActivitySlot(ActivitySlotID, link){
-    return this.http.delete(`${link}/api/activitySlot/deleteActivitySlot?activitySlotID=${ActivitySlotID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((deleteResult: any) => {
+  DeleteActivitySlot(user, ActivitySlotID, link){
+    return this.http.post(`${link}/api/activitySlot/deleteActivitySlot?activitySlotID=${ActivitySlotID}`, user).
+    subscribe((deleteResult: any) => {
       if (deleteResult.Error){
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteActivitySlotUnsuccessfulDialog = this.dialog.open(DeleteActivitySlotUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (deleteResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteActivitySlotSuccessfulDialog = this.dialog.open(DeleteActivitySlotSuccessfulComponent);
+        this.refresh.next();
       }
     });
   }

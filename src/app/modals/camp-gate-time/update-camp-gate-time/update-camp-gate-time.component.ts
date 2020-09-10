@@ -45,6 +45,7 @@ export class UpdateCampGateTimeComponent implements OnInit {
     this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((result: any) => {
       this.seasonDropDown = result.Seasons;
       this.displaySeasonDates(this.campGateTime.SeasonID);
+      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.updateCampGateTimeForm = this.formBuilder.group({
@@ -69,11 +70,13 @@ export class UpdateCampGateTimeComponent implements OnInit {
 
       updateCampGateTimeConfirmationDialog.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
           const campGateTime = {
             CampGateTimeID: this.campGateTime.CampGateTimeID,
             SeasonID: this.updateCampGateTimeForm.get('season').value,
             CampOpenTime: this.updateCampGateTimeForm.get('openTime').value,
             CampCloseTime: this.updateCampGateTimeForm.get('closeTime').value,
+            authenticateUser: user
           };
 
           this.campGateTimeService.updateCampGateTime(campGateTime, this.globalService.GetServer());

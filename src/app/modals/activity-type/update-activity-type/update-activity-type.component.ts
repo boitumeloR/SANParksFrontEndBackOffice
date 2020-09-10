@@ -38,9 +38,12 @@ export class UpdateActivityTypeComponent implements OnInit {
 
       updateActivityTypeConfirmDialog.afterClosed().subscribe( result => {
         if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
+
            const activityType = {
             ActivityTypeID: this.activityType.ActivityTypeID,
-            ActivityTypeDescription: this.updateActivityTypes.get('description').value
+            ActivityTypeDescription: this.updateActivityTypes.get('description').value,
+            authenticateUser: user
           };
            this.activityTypeService.updateActivityType(activityType, this.globalService.GetServer());
         }

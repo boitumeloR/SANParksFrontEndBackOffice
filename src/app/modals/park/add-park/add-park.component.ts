@@ -43,12 +43,15 @@ export class AddParkComponent implements OnInit {
 
         addParkConfirmationDiag.afterClosed().subscribe( result => {
           if (result === true){
+             const user = JSON.parse(localStorage.getItem('user'));
+
              const newPark = {
               ParkName: this.addParkForm.get('parkName').value,
               ParkLimit: this.addParkForm.get('parkLimit').value,
               ParkLatitude: this.addParkForm.get('parkLatitude').value,
               ParkLongitude: this.addParkForm.get('parkLongitude').value,
-              ParkDescription: this.addParkForm.get('parkDescription').value
+              ParkDescription: this.addParkForm.get('parkDescription').value,
+              authenticateUser: user
             };
              this.parkService.CreatePark(newPark, this.globalService.GetServer());
           }

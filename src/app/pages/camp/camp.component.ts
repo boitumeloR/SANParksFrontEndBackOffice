@@ -6,6 +6,7 @@ import { ViewCampComponent } from 'src/app/modals/camp/view-camp/view-camp.compo
 import {MatDialog} from '@angular/material/dialog';
 import { CampService } from 'src/app/services/Camp/camp.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-camp',
@@ -19,7 +20,7 @@ export class CampComponent implements OnInit {
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private campService: CampService,
-              private globalService: GlobalService) { }
+              private globalService: GlobalService, private router: Router) { }
 
   ngOnInit(): void {
     this.campService.requestReferesh.subscribe(() => {this.getCamp(); });
@@ -41,8 +42,15 @@ export class CampComponent implements OnInit {
 
   getCamp(){
     this.campService.readCamp(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.Camps);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.Camps);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

@@ -6,6 +6,7 @@ import { ViewWildcardCategoryComponent } from 'src/app/modals/wildcard-category/
 import {MatDialog} from '@angular/material/dialog';
 import { WildcardCategoryService } from 'src/app/services/WildcardCategory/wildcard-category.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wildcard-category',
@@ -18,7 +19,8 @@ export class WildcardCategoryComponent implements OnInit {
   filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog, private wildcardCategoryService: WildcardCategoryService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private wildcardCategoryService: WildcardCategoryService, private globalService: GlobalService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.wildcardCategoryService.requestReferesh.subscribe(() => {this.getWildcardCategory(); });
@@ -39,8 +41,15 @@ export class WildcardCategoryComponent implements OnInit {
   }
   getWildcardCategory(){
     this.wildcardCategoryService.ReadWildcardCategory(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.WildcardCategories);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.WildcardCategories);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

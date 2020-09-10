@@ -6,6 +6,7 @@ import { ViewCampGateTimeComponent } from 'src/app/modals/camp-gate-time/view-ca
 import {MatDialog} from '@angular/material/dialog';
 import { CampGateTimeService } from 'src/app/services/CampGateTime/camp-gate-time.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-camp-gate-time',
@@ -14,7 +15,8 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 })
 export class CampGateTimeComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private campGateTimeService: CampGateTimeService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private campGateTimeService: CampGateTimeService, private globalService: GlobalService,
+              private router: Router) { }
 
   displayedColumns: string[] = ['name', 'season', 'view'];
   dataSource;
@@ -40,8 +42,15 @@ export class CampGateTimeComponent implements OnInit {
 
   getCampGateTime(){
     this.campGateTimeService.readCampgateTime(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.CampGateTimes);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.CampGateTimes);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

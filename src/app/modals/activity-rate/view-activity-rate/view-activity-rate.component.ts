@@ -27,7 +27,11 @@ export class ViewActivityRateComponent implements OnInit {
 
     deleteActivityRateDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.activityRateService.deleteActivityRate(this.activityRate.ActivityRateID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.activityRateService.deleteActivityRate(authenticateUser, this.activityRate.ActivityRateID, this.globalService.GetServer());
       }
     });
   }

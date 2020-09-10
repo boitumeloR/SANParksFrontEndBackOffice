@@ -31,6 +31,7 @@ export class UpdateDailyConservationFeeComponent implements OnInit {
 
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
+      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.dailyConservationFeeService.GetRegions(this.globalService.GetServer()).subscribe((result: any) => {
@@ -63,6 +64,7 @@ export class UpdateDailyConservationFeeComponent implements OnInit {
 
       updateDailyConservationFeeConfirmationDialog.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
           const dailyConservationFee = {
             ConservationID: this.dailyConservationFee.ConservationID,
             ParkID: this.updateDailyConservationFeeForm.get('park').value,
@@ -71,6 +73,7 @@ export class UpdateDailyConservationFeeComponent implements OnInit {
             AdultAmount: this.updateDailyConservationFeeForm.get('adultAmount').value,
             DateEffective: this.updateDailyConservationFeeForm.get('dateEffective').value,
             endDate: this.updateDailyConservationFeeForm.get('endDate').value,
+            authenticateUser: user
           };
 
           this.dailyConservationFeeService.UpdateDailyConservationFee(dailyConservationFee, this.globalService.GetServer());

@@ -23,7 +23,7 @@ export class AmenityTypeComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private amenityTypeService: AmenityTypeService, private globalService: GlobalService,
-              private router: Router, private loginService: LoginService ) { }
+              private router: Router) { }
 
   ngOnInit(): void {
     this.amenityTypeService.requestReferesh.subscribe(() => {this.getAmenityTypes(); });

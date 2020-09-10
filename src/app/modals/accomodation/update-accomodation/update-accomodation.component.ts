@@ -48,11 +48,14 @@ export class UpdateAccomodationComponent implements OnInit {
 
       updateAccomodationDialog.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
+
           const updateAccommodation = {
             AccommodationID: this.accommodation.AccommodationID,
             UnitNumber: this.updateAccomodationForm.get('unitNumber').value,
             CampID: this.accommodation.CampID,
             AccomodationTypeID: this.updateAccomodationForm.get('accomodationType').value,
+            authenticateUser: user
           };
           this.accommodationService.updateAccommodation(updateAccommodation, this.globalService.GetServer());
         }

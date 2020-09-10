@@ -9,6 +9,7 @@ import { UpdateAccomodationTypeSuccessfulComponent} from 'src/app/modals/accomod
 import { UpdateAccomodationTypeUnsuccessfulComponent} from 'src/app/modals/accomodation-type/update-accomodation-type-unsuccessful/update-accomodation-type-unsuccessful.component';
 import { DeleteAccomodationTypeSuccessfulComponent} from 'src/app/modals/accomodation-type/delete-accomodation-type-successful/delete-accomodation-type-successful.component';
 import { DeleteAccomodationTypeUnsuccessfulComponent} from 'src/app/modals/accomodation-type/delete-accomodation-type-unsuccessful/delete-accomodation-type-unsuccessful.component';
+import { Router } from '@angular/router';
 
 export interface AccommodationType{
   AccommodationTypeID: number;
@@ -30,7 +31,8 @@ export interface AccommodationTypeDropDown{
 })
 export class AccommodationTypeService {
 
-  constructor(private dialog: MatDialog, private http: HttpClient ) { }
+  constructor(private dialog: MatDialog, private http: HttpClient,
+              private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -38,41 +40,65 @@ export class AccommodationTypeService {
   }
 
   createAccommodationType(accommodationType, link: string){
-    return this.http.post(`${link}/api/accommodationType/createAccommodationType`, accommodationType).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    return this.http.post(`${link}/api/accommodationType/createAccommodationType`, accommodationType).subscribe((addResult: any) => {
       if (addResult.Error){
         const addAccomodationTypeUnsuccessfulDialog = this.dialog.open(AddAccomodationTypeUnsuccessfulComponent);
+        localStorage.setItem('user', JSON.stringify(addResult.user));
+        this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
         const addAccomodationTypeSuccessfulDialog = this.dialog.open(AddAccomodationTypeSuccessfulComponent);
+        localStorage.setItem('user', JSON.stringify(addResult.user));
+        this.refresh.next();
       }
     });
   }
   readAccommodationType(link){
-    return this.http.get(`${link}/api/accommodationType/getAccommodationType`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/accommodationType/getAccommodationType`, user);
   }
   updateAccommodationType(updatedAccommodationType, link){
-    return this.http.post(`${link}/api/accommodationType/updateAccommodationType`, updatedAccommodationType).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    return this.http.post(`${link}/api/accommodationType/updateAccommodationType`, updatedAccommodationType).
+    subscribe((updateResult: any) => {
       if (updateResult.Error){
         const updateAccomodationTypeUnsuccessfulDialog = this.dialog.open(UpdateAccomodationTypeUnsuccessfulComponent);
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
+        this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
-        const updateAccomodationTypeSuccessfulDialog = this.dialog.open(UpdateAccomodationTypeSuccessfulComponent);
+        const updatAccomodationTypeSuccessfulDialog = this.dialog.open(UpdateAccomodationTypeSuccessfulComponent);
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
+        this.refresh.next();
+
       }
     });
   }
-  deleteAccommodationType(AccommodationTypeID, link){
-    return this.http.delete(`${link}/api/accommodationType/deleteAccommodationType?accommodationTypeID=${AccommodationTypeID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((deleteResult: any) => {
+  deleteAccommodationType(user, AccommodationTypeID, link){
+    return this.http.post(`${link}/api/accommodationType/deleteAccommodationType?accommodationTypeID=${AccommodationTypeID}`, user).
+    subscribe((deleteResult: any) => {
       if (deleteResult.Error){
         const deleteAccomodationTypeUnsuccessfulDialog = this.dialog.open(DeleteAccomodationTypeUnsuccessfulComponent);
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
+        this.refresh.next();
+
+      }
+      else if (deleteResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
         const deleteAccomodationTypeSuccessfulDialog = this.dialog.open(DeleteAccomodationTypeSuccessfulComponent);
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
+        this.refresh.next();
+
       }
     });
   }

@@ -6,6 +6,7 @@ import { ViewSeasonComponent } from 'src/app/modals/season/view-season/view-seas
 import {MatDialog} from '@angular/material/dialog';
 import { SeasonService } from 'src/app/services/Season/season.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-season',
@@ -16,7 +17,8 @@ export class SeasonComponent implements OnInit {
 
   dataSource;
   filter;
-  constructor(private dialog: MatDialog, private seasonService: SeasonService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private seasonService: SeasonService, private globalService: GlobalService,
+              private router: Router) { }
 
   displayedColumns: string[] = ['name', 'startDate', 'endDate', 'view'];
 
@@ -41,8 +43,15 @@ export class SeasonComponent implements OnInit {
 
   getSeason(){
     this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((result: any) => {
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
       this.dataSource = new MatTableDataSource(result.Seasons);
       this.dataSource.paginator = this.paginator;
+      localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

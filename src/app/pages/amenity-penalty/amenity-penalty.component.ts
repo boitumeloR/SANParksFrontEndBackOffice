@@ -6,6 +6,7 @@ import { ViewAmenityPenaltyComponent } from 'src/app/modals/amenity-penalty/view
 import {MatDialog} from '@angular/material/dialog';
 import { AmenityPenaltyService } from 'src/app/services/AmenityPenalty/amenity-penalty.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-amenity-penalty',
@@ -20,7 +21,7 @@ export class AmenityPenaltyComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private amenityPenaltyService: AmenityPenaltyService,
-              private globalService: GlobalService) { }
+              private globalService: GlobalService, private router: Router) { }
 
   ngOnInit(): void {
     this.amenityPenaltyService.requestReferesh.subscribe(() => this.getAmenityPenalty());
@@ -42,8 +43,15 @@ export class AmenityPenaltyComponent implements OnInit {
 
   getAmenityPenalty(){
     this.amenityPenaltyService.readAmenityPenalty(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.AmenityPenalties);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.AmenityPenalties);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

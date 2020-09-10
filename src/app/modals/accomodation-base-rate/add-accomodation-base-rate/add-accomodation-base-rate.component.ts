@@ -34,10 +34,12 @@ export class AddAccomodationBaseRateComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-    });
+      localStorage.setItem('user', JSON.stringify(result.user));
 
-    this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((result: any) => {
-      this.seasonDropDown = result.Seasons;
+      this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((seasonResult: any) => {
+        this.seasonDropDown = seasonResult.Seasons;
+        localStorage.setItem('user', JSON.stringify(seasonResult.user));
+      });
     });
 
     this.addAccomodationBaseRateForm = this.formBuilder.group({
@@ -59,11 +61,14 @@ export class AddAccomodationBaseRateComponent implements OnInit {
 
       addAccomodationBaseRateConfirmation.afterClosed().subscribe(result => {
         if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
+
           const newBaseRate = {
             AccommodationTypeID: this.addAccomodationBaseRateForm.get('accomodationType').value,
             CampID: this.addAccomodationBaseRateForm.get('camp').value,
             BaseRateAmount: this.addAccomodationBaseRateForm.get('baseRate').value,
             SeasonID: this.addAccomodationBaseRateForm.get('season').value,
+            authenticateUser: user
           };
 
           this.accTypeBaseRateService.createAccommodationTypeBaseRate(newBaseRate, this.globalService.GetServer());

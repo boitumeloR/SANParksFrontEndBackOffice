@@ -35,7 +35,12 @@ export class ViewWildcardClusterComponent implements OnInit {
 
     deleteWildcardDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.wildcardClusterService.DeleteWildcardCluster(this.wildcardCluster.WildcardClusterID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.wildcardClusterService.DeleteWildcardCluster(authenticateUser, this.wildcardCluster.WildcardClusterID,
+          this.globalService.GetServer());
       }
     });
   }

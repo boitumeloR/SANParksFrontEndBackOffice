@@ -28,7 +28,12 @@ export class ViewAccomodationBaseRateComponent implements OnInit {
 
     deleteAccomodationBaseRateDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.accommodationTypeBaseRateService.deleteAccommodationTypeBaseRate(this.baseRate.BaseRateID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.accommodationTypeBaseRateService.deleteAccommodationTypeBaseRate(authenticateUser, this.baseRate.BaseRateID,
+          this.globalService.GetServer());
       }
     });
   }

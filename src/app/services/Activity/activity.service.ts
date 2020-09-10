@@ -9,6 +9,7 @@ import {UpdateActivitySuccessfulComponent } from 'src/app/modals/activity/update
 import { UpdateActivityUnsuccessfulComponent} from 'src/app/modals/activity/update-activity-unsuccessful/update-activity-unsuccessful.component';
 import { DeleteActivitySuccessfulComponent} from 'src/app/modals/activity/delete-activity-successful/delete-activity-successful.component';
 import { DeleteActivityUnsuccessfulComponent} from 'src/app/modals/activity/delete-activity-unsuccessful/delete-activity-unsuccessful.component';
+import { Router } from '@angular/router';
 
 export interface Activity{
   ActivityID: number;
@@ -29,7 +30,8 @@ export interface ActivityDropDown{
 })
 export class ActivityService {
 
-  constructor(private dialog: MatDialog, private http: HttpClient) { }
+  constructor(private dialog: MatDialog, private http: HttpClient,
+              private router: Router) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -37,41 +39,60 @@ export class ActivityService {
   }
 
   createActivity(Activity, link){
-    return this.http.post(`${link}/api/activity/createActivity`, Activity).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((addResult: any) => {
+    return this.http.post(`${link}/api/activity/createActivity`, Activity).subscribe((addResult: any) => {
       if (addResult.Error){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addActivityUnsuccessfulDialog = this.dialog.open(AddActivityUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(addResult.user));
         const addActivitySuccessfulDialog = this.dialog.open(AddActivitySuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
   readActivity(link){
-    return this.http.get(`${link}/api/activity/getActivity`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/activity/getActivity`, user);
   }
   updateActivity(updatedActivity, link){
-    return this.http.post(`${link}/api/activity/updateActivity`, updatedActivity).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((updateResult: any) => {
+    return this.http.post(`${link}/api/activity/updateActivity`, updatedActivity).subscribe((updateResult: any) => {
       if (updateResult.Error){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateActivityUnsuccessfulDialog = this.dialog.open(UpdateActivityUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateActivitySuccessfulDialog = this.dialog.open(UpdateActivitySuccessfulComponent);
+        this.refresh.next();
       }
     });
   }
-  deleteActivity(ActivityID, link){
-    return this.http.delete(`${link}/api/activity/deleteActivity?activityID=${ActivityID}`).pipe( tap(
-      () => {this.refresh.next(); }
-    )).subscribe((deleteResult: any) => {
+  deleteActivity(user, ActivityID, link){
+    return this.http.post(`${link}/api/activity/deleteActivity?activityID=${ActivityID}`, user).subscribe((deleteResult: any) => {
       if (deleteResult.Error){
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteActivityUnsuccessfulDialog = this.dialog.open(DeleteActivityUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (deleteResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
       }
       else{
+        localStorage.setItem('user', JSON.stringify(deleteResult.user));
         const deleteActivitySuccessfulDialog = this.dialog.open(DeleteActivitySuccessfulComponent);
+        this.refresh.next();
       }
     });
   }

@@ -26,7 +26,11 @@ export class ViewParkGateTimeComponent implements OnInit {
 
     deleteGateTimeDialog.afterClosed().subscribe(result => {
       if (result === true){
-        this.parkGateTimeService.DeleteParkGateTime(this.parkGateTime.PTimeID, this.globalService.GetServer());
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authenticateUser = {
+            authenticateUser: user
+          };
+        this.parkGateTimeService.DeleteParkGateTime(authenticateUser, this.parkGateTime.PTimeID, this.globalService.GetServer());
       }
     });
   }

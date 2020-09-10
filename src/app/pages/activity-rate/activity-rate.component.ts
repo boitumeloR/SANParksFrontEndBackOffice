@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { ViewActivityRateComponent } from 'src/app/modals/activity-rate/view-activity-rate/view-activity-rate.component';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { ActivityRateService } from 'src/app/services/ActivityRate/activity-rate.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-activity-rate',
@@ -19,7 +20,8 @@ export class ActivityRateComponent implements OnInit {
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog, private activityRateService: ActivityRateService, private globalService: GlobalService) { }
+  constructor(private dialog: MatDialog, private activityRateService: ActivityRateService, private globalService: GlobalService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.activityRateService.requestReferesh.subscribe(() => {this.getActivityRates(); });
@@ -41,8 +43,15 @@ export class ActivityRateComponent implements OnInit {
 
   getActivityRates(){
     this.activityRateService.readActivityRate(this.globalService.GetServer()).subscribe((result: any) => {
-      this.dataSource = new MatTableDataSource(result.ActivityRates);
-      this.dataSource.paginator = this.paginator;
+      if (result.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        this.dataSource = new MatTableDataSource(result.ActivityRates);
+        this.dataSource.paginator = this.paginator;
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
     });
   }
 }

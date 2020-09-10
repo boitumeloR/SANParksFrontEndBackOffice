@@ -29,6 +29,7 @@ export class UpdateAccomodationAddRateComponent implements OnInit {
 
     this.accommodationTypeService.readAccommodationType(this.globalService.GetServer()).subscribe((result: any) => {
       this.accommodationTypeDropDown = result.AccommodationTypes;
+      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.updateAccomodationRateForm = this.formBuilder.group({
@@ -49,12 +50,15 @@ export class UpdateAccomodationAddRateComponent implements OnInit {
 
     updateAccomodationAddRateConfirmation.afterClosed().subscribe(result => {
       if (result === true){
+        const user = JSON.parse(localStorage.getItem('user'));
+
         const updatedAccommodationAddRate = {
           AddRateID: this.addRate.AddRateID,
           AccomodationTypeID: this.updateAccomodationRateForm.get('accomodationType').value,
           AdultRateAmount: this.updateAccomodationRateForm.get('adultRate').value,
           ChildRateAmount: this.updateAccomodationRateForm.get('childRate').value,
           DateEffective: this.updateAccomodationRateForm.get('dateEffective').value,
+          authenticateUser: user
         };
         this.addRateService.updateAccommodationTypeAddRate(updatedAccommodationAddRate, this.globalService.GetServer());
       }
