@@ -10,6 +10,7 @@ import { ResetPasswordUnsuccessfulComponent } from 'src/app/subcomponents/login/
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { HeaderComponent } from 'src/app/subcomponents/header/header.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,13 +27,13 @@ export class LoginService {
   }
 
   constructor(private http: HttpClient, private dialog: MatDialog, private router: Router,
-             ) { }
+              private validationErrorSnackBar: MatSnackBar) { }
   login(User, link){
     return this.http.post(`${link}/api/Auth/Login`, User).subscribe((result: any) => {
       if (result.Error){
        const loginUnsuccessful = this.dialog.open(LoginFailedComponent);
       }
-      else{
+      else if (result.isEmployee && result.isValidEmployee){
         localStorage.setItem('user', JSON.stringify(result));
         this.loggedIn.next(true);
 
@@ -40,6 +41,9 @@ export class LoginService {
         const loggedUser =  user.RoleID;
         this.UserRole.next(loggedUser);
         this.router.navigate(['/Park']);
+      }
+      else{
+        this.authorizationError();
       }
     });
   }
@@ -88,6 +92,12 @@ export class LoginService {
           this.router.navigate(['/Login']);
         });
       }
+    });
+  }
+
+  authorizationError(){
+    this.validationErrorSnackBar.open('The action you are trying to perform is unauthorized', 'OK', {
+      duration: 3500,
     });
   }
 }
