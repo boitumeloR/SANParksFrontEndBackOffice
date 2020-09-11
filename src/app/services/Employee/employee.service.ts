@@ -8,6 +8,9 @@ import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import {SuccessfulProfileUpdateComponent} from 'src/app/modals/employee/successful-profile-update/successful-profile-update.component';
+import {UnsuccessfulProfileUpdateComponent} from 'src/app/modals/employee/unsuccessful-profile-update/unsuccessful-profile-update.component';
+
 export interface Employee {
   EmployeeID: number;
   EmployeeStatusID: number;
@@ -85,5 +88,29 @@ export class EmployeeService {
 
   ReadTitles(link){
     return this.http.get(`${link}/api/employee/getTitles`);
+  }
+
+  viewProfile(link){
+    const user = JSON.parse(localStorage.getItem('user'));
+    return this.http.post(`${link}/api/employee/viewProfile`, user);
+  }
+
+  updateProfile(Employee, link){
+    this.http.post(`${link}/api/employee/updateEmployeeProfile`, Employee).subscribe((updateResult: any) => {
+      if (updateResult.Error){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
+        const updateEmployeeUnsuccessfulDialog = this.dialog.open(UnsuccessfulProfileUpdateComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.userLoggedOut){
+        localStorage.removeItem('user');
+        this.router.navigate(['/Login']);
+      }
+      else{
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
+        const updateEmployeeSuccessfulDialog = this.dialog.open(SuccessfulProfileUpdateComponent);
+        this.refresh.next();
+      }
+    });
   }
 }

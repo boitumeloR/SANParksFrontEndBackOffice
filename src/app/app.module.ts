@@ -385,6 +385,11 @@ import { ForgotPasswordSuccessfulComponent } from './subcomponents/login/forgot-
 import { ResetPasswordSucessfulComponent } from './subcomponents/login/reset-password-sucessful/reset-password-sucessful.component';
 import { ResetPasswordUnsuccessfulComponent } from './subcomponents/login/reset-password-unsuccessful/reset-password-unsuccessful.component';
 import { RouterModule } from '@angular/router';
+import { ViewProfileComponent } from './modals/employee/view-profile/view-profile.component';
+import { UpdateProfileComponent } from './modals/employee/update-profile/update-profile.component';
+import { SuccessfulProfileUpdateComponent } from './modals/employee/successful-profile-update/successful-profile-update.component';
+import { UnsuccessfulProfileUpdateComponent } from './modals/employee/unsuccessful-profile-update/unsuccessful-profile-update.component';
+import { ProfileUpdateConfirmationComponent } from './modals/employee/profile-update-confirmation/profile-update-confirmation.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -759,6 +764,11 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ForgotPasswordSuccessfulComponent,
     ResetPasswordSucessfulComponent,
     ResetPasswordUnsuccessfulComponent,
+    ViewProfileComponent,
+    UpdateProfileComponent,
+    SuccessfulProfileUpdateComponent,
+    UnsuccessfulProfileUpdateComponent,
+    ProfileUpdateConfirmationComponent,
   ],
   entryComponents: [
     AddParkComponent,

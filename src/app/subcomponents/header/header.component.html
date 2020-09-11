@@ -7,14 +7,14 @@
     </div>
     <img src="assets/images/logo-white.png" alt="" class="logo">
     <div class="login">
-      <a mat-raised-button color="primary" id="dash" target="_blank">
+      <!--<a mat-raised-button color="primary" id="dash" target="_blank">
         Dashboard
         <mat-icon>trending_up</mat-icon>
-      </a>
+      </a> -->
 
-      <a mat-raised-button color="primary" id="login" target="_blank"  style="margin-left:10px;">
+      <a mat-raised-button color="primary" id="login" target="_blank"  style="margin-left:10px;" (click)="viewProfile()">
         <mat-icon>account_circle</mat-icon>
-        Admin
+        Profile
       </a>
       <a mat-raised-button color="primary" id="login" target="_blank"  style="margin-left:10px;" (click)="logout()">
         <mat-icon>power_settings_new</mat-icon>
@@ -25,9 +25,9 @@
 
 
 <mat-sidenav-container fxFlexFill class="example-container" color="primary">
-    <mat-sidenav [(opened)] ="opened" mode="over" color = "primary" data-simplebar data-simplebar-auto-hide="true" fxLayout="column" >
+    <mat-sidenav [(opened)] ="opened" mode="over" color = "primary" data-simplebar data-simplebar-auto-hide="true" fxLayout="column" *ngIf="loggedIn$ | async as isLoggedIn">
       <div fxLayout class="links">
-        <mat-expansion-panel>
+        <mat-expansion-panel  *ngIf="number == 3">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Park
@@ -52,9 +52,9 @@
           </mat-selection-list>
         </mat-expansion-panel>
         <mat-divider></mat-divider>
-        <mat-expansion-panel>
+        <mat-expansion-panel  *ngIf="number == 3">
 
-          <mat-expansion-panel-header>
+          <mat-expansion-panel-header >
             <mat-panel-title>
               Camp
             </mat-panel-title>
@@ -78,7 +78,7 @@
 
         <mat-divider></mat-divider>
 
-        <mat-expansion-panel>
+        <mat-expansion-panel  *ngIf="number == 3">
 
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -103,7 +103,7 @@
 
         <mat-divider></mat-divider>
 
-        <mat-expansion-panel>
+        <mat-expansion-panel  *ngIf="number == 3">
 
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -123,7 +123,7 @@
           </mat-selection-list>
         </mat-expansion-panel>
         <mat-divider></mat-divider>
-        <mat-expansion-panel>
+        <mat-expansion-panel  *ngIf="number == 3">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Activity
@@ -168,26 +168,26 @@
           </mat-selection-list>
         </mat-expansion-panel> -->
         <mat-divider></mat-divider>
-        <mat-expansion-panel>
+        <mat-expansion-panel  *ngIf="number == 3 || number == 2">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Wildcard
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/Wildcard-Cluster']">
+            <mat-list-option [routerLink]="[ '/Wildcard-Cluster']"  *ngIf="number == 3">
               Wildcard Cluster
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Wildcard-Category']">
+            <mat-list-option [routerLink]="[ '/Wildcard-Category']"  *ngIf="number == 3">
               Wildcard Category
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Wildcard-Rate']">
+            <mat-list-option [routerLink]="[ '/Wildcard-Rate']"  *ngIf="number == 3">
               Wildcard Rate
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Purhase-Wildcard']">
+            <mat-list-option [routerLink]="[ '/Purhase-Wildcard']"  *ngIf="number == 2">
               Purhase Wildcard
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Search-Wildcard-Membership']">
+            <mat-list-option [routerLink]="[ '/Search-Wildcard-Membership']"  *ngIf="number == 2">
               Wildcard Membership
             </mat-list-option>
           </mat-selection-list>
@@ -195,20 +195,20 @@
 
         <mat-divider></mat-divider>
 
-        <mat-expansion-panel>
+        <mat-expansion-panel  *ngIf="number == 3 || number == 2">
           <mat-expansion-panel-header>
             <mat-panel-title>
               User
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/User-Role']">
+            <mat-list-option [routerLink]="[ '/User-Role']" *ngIf="number == 3">
               User Role
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Employee']">
+            <mat-list-option [routerLink]="[ '/Employee']" *ngIf="number == 3">
               Employee
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Client']">
+            <mat-list-option [routerLink]="[ '/Client']" *ngIf="number == 2">
               Client
             </mat-list-option>
           </mat-selection-list>
@@ -216,7 +216,7 @@
 
         <mat-divider></mat-divider>
 
-        <mat-expansion-panel>
+        <mat-expansion-panel *ngIf="number == 2">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Booking
@@ -233,7 +233,7 @@
         </mat-expansion-panel>
 
         <mat-divider></mat-divider>
-        <mat-expansion-panel>
+        <mat-expansion-panel *ngIf="number == 6">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Payments
@@ -251,7 +251,7 @@
 
         <mat-divider></mat-divider>
 
-        <mat-expansion-panel>
+        <mat-expansion-panel *ngIf="number == 5">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Park Check - In
@@ -267,7 +267,7 @@
           </mat-selection-list>
         </mat-expansion-panel>
         <mat-divider></mat-divider>
-        <mat-expansion-panel>
+        <mat-expansion-panel *ngIf="number == 6">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Camp Check - In
@@ -289,7 +289,7 @@
           </mat-selection-list>
         </mat-expansion-panel>
         <mat-divider></mat-divider>
-        <mat-expansion-panel>
+        <mat-expansion-panel *ngIf="number == 3 || number ==  4">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Reporting

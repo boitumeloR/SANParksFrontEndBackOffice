@@ -8,19 +8,25 @@ import { ForgotPasswordUnsucessfulComponent } from 'src/app/subcomponents/login/
 import { ResetPasswordSucessfulComponent } from 'src/app/subcomponents/login/reset-password-sucessful/reset-password-sucessful.component';
 import { ResetPasswordUnsuccessfulComponent } from 'src/app/subcomponents/login/reset-password-unsuccessful/reset-password-unsuccessful.component';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { HeaderComponent } from 'src/app/subcomponents/header/header.component';
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
   public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public UserRole: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   get isLoggedIn() {
     return this.loggedIn.asObservable();
   }
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
+  get UserRoles() {
+    return this.UserRole.asObservable();
+  }
 
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router,
+             ) { }
   login(User, link){
     return this.http.post(`${link}/api/Auth/Login`, User).subscribe((result: any) => {
       if (result.Error){
@@ -29,6 +35,10 @@ export class LoginService {
       else{
         localStorage.setItem('user', JSON.stringify(result));
         this.loggedIn.next(true);
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        const loggedUser =  user.RoleID;
+        this.UserRole.next(loggedUser);
         this.router.navigate(['/Park']);
       }
     });

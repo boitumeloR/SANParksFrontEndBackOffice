@@ -14,6 +14,7 @@ export class ViewSeasonComponent implements OnInit {
 
   ngOnInit(): void {
     this.season = JSON.parse(localStorage.getItem('season'));
+    console.log(this.season);
   }
 
   updateSeason(){
