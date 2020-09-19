@@ -50,7 +50,7 @@ export class AddCampComponent implements OnInit {
       this.displayValidationError();
     }
     else{
-      const numbers = /^[0-9\.]+$/;
+      const numbers = /^[0-9\.-]+$/;
       if (this.addCampForm.get('campLatitude').value.match(numbers) && this.addCampForm.get('campLongitude').value.match(numbers)){
         this.dialogRef.close();
         const addCampDialog = this.dialog.open(AddCampConfirmationComponent);

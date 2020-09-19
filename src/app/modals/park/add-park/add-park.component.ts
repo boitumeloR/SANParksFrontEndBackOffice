@@ -36,7 +36,7 @@ export class AddParkComponent implements OnInit {
       this.displayValidationError();
     }
     else{
-      const numbers = /^[0-9\.]+$/;
+      const numbers = /^[0-9\.-]+$/;
       if (this.addParkForm.get('parkLongitude').value.match(numbers) && this.addParkForm.get('parkLatitude').value.match(numbers)){
         this.dialogRef.close();
         const addParkConfirmationDiag = this.dialog.open(AddParkConfirmationComponent);

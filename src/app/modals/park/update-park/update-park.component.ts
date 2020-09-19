@@ -37,7 +37,7 @@ export class UpdateParkComponent implements OnInit {
       this.displayValidationError();
     }
     else{
-      const numbers = /^[0-9\.]+$/;
+      const numbers = /^[0-9\.-]+$/;
 
       if (String(this.updateParkForm.get('parkLongitude').value).match(numbers) &&
           String(this.updateParkForm.get('parkLatitude').value).match(numbers)){
