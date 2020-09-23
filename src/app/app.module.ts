@@ -390,6 +390,7 @@ import { UpdateProfileComponent } from './modals/employee/update-profile/update-
 import { SuccessfulProfileUpdateComponent } from './modals/employee/successful-profile-update/successful-profile-update.component';
 import { UnsuccessfulProfileUpdateComponent } from './modals/employee/unsuccessful-profile-update/unsuccessful-profile-update.component';
 import { ProfileUpdateConfirmationComponent } from './modals/employee/profile-update-confirmation/profile-update-confirmation.component';
+import { ErrorModalComponent } from './modals/auxilliary-modals/error-modal/error-modal.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -769,6 +770,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     SuccessfulProfileUpdateComponent,
     UnsuccessfulProfileUpdateComponent,
     ProfileUpdateConfirmationComponent,
+    ErrorModalComponent,
   ],
   entryComponents: [
     AddParkComponent,
