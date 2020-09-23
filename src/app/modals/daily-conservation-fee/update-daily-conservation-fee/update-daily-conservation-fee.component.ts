@@ -20,7 +20,7 @@ export class UpdateDailyConservationFeeComponent implements OnInit {
   regionDropDown;
   startDate;
   endDate;
-
+  listOfYears = [];
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<UpdateDailyConservationFeeComponent>,
               private dailyConservationFeeService: DailyConservationFeeService, private parkService: ParkService,
@@ -28,6 +28,13 @@ export class UpdateDailyConservationFeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.dailyConservationFee = JSON.parse(localStorage.getItem('dailyConservationFee'));
+
+    let year = new Date().getFullYear();
+    const limitYear = year + 4;
+    while (year <= limitYear){
+      this.listOfYears.push(year);
+      year += 1;
+     }
 
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
@@ -38,25 +45,18 @@ export class UpdateDailyConservationFeeComponent implements OnInit {
       this.regionDropDown = result;
     });
 
-    this.startDate = new Date(this.dailyConservationFee.DateEffective);
-    this.endDate = new Date(this.dailyConservationFee.EndDate);
-
     this.updateDailyConservationFeeForm = this.formBuilder.group({
       park: [ this.dailyConservationFee.ParkID, Validators.required],
       region : [ this.dailyConservationFee.RegionID, Validators.required],
       childAmount : [ this.dailyConservationFee.ChildAmount, [Validators.required, Validators.min(1)]],
       adultAmount : [ this.dailyConservationFee.AdultAmount, [Validators.required, Validators.min(1)]],
-      dateEffective: [this.startDate, Validators.required],
-      endDate: [this.endDate, Validators.required]
+      dateEffective: [ this.dailyConservationFee.yearActive, Validators.required]
     });
   }
 
   updateDailyConservationFee(){
     if (this.updateDailyConservationFeeForm.invalid){
       this.displayValidationError();
-    }
-    else if (this.updateDailyConservationFeeForm.get('endDate').value < this.updateDailyConservationFeeForm.get('dateEffective').value){
-      this.displayDateError();
     }
     else{
       this.dialogRef.close();
@@ -72,7 +72,6 @@ export class UpdateDailyConservationFeeComponent implements OnInit {
             ChildAmount: this.updateDailyConservationFeeForm.get('childAmount').value,
             AdultAmount: this.updateDailyConservationFeeForm.get('adultAmount').value,
             DateEffective: this.updateDailyConservationFeeForm.get('dateEffective').value,
-            endDate: this.updateDailyConservationFeeForm.get('endDate').value,
             authenticateUser: user
           };
 

@@ -22,6 +22,10 @@
         <th mat-header-cell *matHeaderCellDef> Date Effective</th>
         <td mat-cell *matCellDef="let element"> {{element.DateEffective}} </td>
       </ng-container>
+      <ng-container matColumnDef="endDate">
+        <th mat-header-cell *matHeaderCellDef> End Date</th>
+        <td mat-cell *matCellDef="let element"> {{element.EndDate}} </td>
+      </ng-container>
       <!-- View Column -->
       <ng-container matColumnDef="view">
         <th mat-header-cell *matHeaderCellDef> View Rate </th>

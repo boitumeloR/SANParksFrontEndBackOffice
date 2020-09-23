@@ -11,6 +11,7 @@ import {UpdateDailyConservationFeeUnsuccessfulComponent} from 'src/app/modals/da
 import { DeleteDailyConservationFeeSuccessfulComponent } from 'src/app/modals/daily-conservation-fee/delete-daily-conservation-fee-successful/delete-daily-conservation-fee-successful.component';
 import { DeleteDailyConservationFeeUnsuccessfulComponent } from 'src/app/modals/daily-conservation-fee/delete-daily-conservation-fee-unsuccessful/delete-daily-conservation-fee-unsuccessful.component';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface DailyConservationFee {
   ConservationID: number;
@@ -22,6 +23,7 @@ export interface DailyConservationFee {
   AdultAmount: DecimalPipe;
   DateEffective: Date;
   EndDate: Date;
+  yearActive: string;
 }
 // ParkGate
 export interface DailyConservationFeeDropDown {
@@ -33,7 +35,8 @@ export interface DailyConservationFeeDropDown {
 })
 export class DailyConservationFeeService {
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router,
+              private rateForYear: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -47,6 +50,11 @@ export class DailyConservationFeeService {
         const addDailyConservationFeeUnsuccessfulDialog = this.dialog.open(AddDailyConservationFeeUnsuccessfulComponent);
         this.refresh.next();
       }
+      else if (addResult.RateForYearExists){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
+        this.rateExistsError(DailyConservationFee.DateEffective);
+        this.refresh.next();
+      }
       else if (addResult.userLoggedOut){
         localStorage.removeItem('user');
         this.router.navigate(['/Login']);
@@ -56,6 +64,11 @@ export class DailyConservationFeeService {
         const addDailyConservationFeeSuccessfulDialog = this.dialog.open(AddDailyConservationFeeSuccessfulComponent);
         this.refresh.next();
       }
+    });
+  }
+  rateExistsError(year) {
+    this.rateForYear.open(`A daily conservation fee for this region already exists for this park in the year ${year}.` , 'OK', {
+      duration: 5000,
     });
   }
 
@@ -69,6 +82,11 @@ export class DailyConservationFeeService {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateDailyConservationFeeUnsuccessfulDialog = this.dialog.open(UpdateDailyConservationFeeUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.RateForYearExists){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
+        this.rateExistsError(DailyConservationFee.DateEffective);
         this.refresh.next();
       }
       else if (updateResult.userLoggedOut){

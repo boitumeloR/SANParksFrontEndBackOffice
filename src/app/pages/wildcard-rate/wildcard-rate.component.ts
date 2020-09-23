@@ -18,7 +18,7 @@ export class WildcardRateComponent implements OnInit {
   constructor(private dialog: MatDialog, private wildcardRateService: WildcardRateService,
               private globalService: GlobalService, private router: Router) { }
 
-  displayedColumns: string[] = ['clusterName', 'categoryName', 'dateEffective', 'view'];
+  displayedColumns: string[] = ['clusterName', 'categoryName', 'dateEffective', 'endDate', 'view'];
   dataSource;
   filter;
 

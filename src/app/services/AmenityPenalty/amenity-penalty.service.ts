@@ -10,6 +10,7 @@ import {UpdateAmenityPenaltyUnsuccessfulComponent} from 'src/app/modals/amenity-
 import { DeleteAmenityPenaltySuccessfulComponent } from 'src/app/modals/amenity-penalty/delete-amenity-penalty-successful/delete-amenity-penalty-successful.component';
 import { DeleteAmenityPenaltyUnsuccessfulComponent } from 'src/app/modals/amenity-penalty/delete-amenity-penalty-unsuccessful/delete-amenity-penalty-unsuccessful.component';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface AmenityPenalty{
   PenaltyID: number;
@@ -35,13 +36,18 @@ export class AmenityPenaltyService {
   }
 
   constructor(private dialog: MatDialog , private http: HttpClient,
-              private router: Router) { }
+              private router: Router, private rateForYear: MatSnackBar) { }
 
   createAmenityPenalty(AmenityPenalty, link){
     return this.http.post(`${link}/api/amenityPenalty/createAmenityPenalty`, AmenityPenalty).subscribe((addResult: any) => {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
         const addAmenityPenaltyUnsuccessfulDialog = this.dialog.open(AddAmenityPenaltyUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.RateForYearExists){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
+        this.rateExistsError(AmenityPenalty.DateEffective);
         this.refresh.next();
       }
       else if (addResult.userLoggedOut){
@@ -55,6 +61,11 @@ export class AmenityPenaltyService {
       }
     });
   }
+  rateExistsError(year) {
+    this.rateForYear.open(`An amenity penalty already exists for this specific amenity in the year ${year}.` , 'OK', {
+      duration: 5000,
+    });
+  }
   readAmenityPenalty(link){
     const user = JSON.parse(localStorage.getItem('user'));
     return this.http.post(`${link}/api/amenityPenalty/getAmenityPenalty`, user);
@@ -64,6 +75,11 @@ export class AmenityPenaltyService {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateAmenityPenaltyUnsuccessfulDialog = this.dialog.open(UpdateAmenityPenaltyUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.RateForYearExists){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
+        this.rateExistsError(updatedAmenityPenalty.DateEffective);
         this.refresh.next();
       }
       else if (updateResult.userLoggedOut){

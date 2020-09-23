@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class ActivityRateComponent implements OnInit {
 
-  displayedColumns: string[] = ['camp', 'type', 'activityDescription', 'dateEffective', 'view'];
+  displayedColumns: string[] = ['camp', 'type', 'activityDescription', 'dateEffective', 'endDate', 'view'];
   dataSource;
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

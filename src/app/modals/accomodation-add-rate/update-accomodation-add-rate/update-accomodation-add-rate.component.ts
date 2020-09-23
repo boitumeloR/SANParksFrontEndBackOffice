@@ -18,14 +18,19 @@ export class UpdateAccomodationAddRateComponent implements OnInit {
   accommodationTypeDropDown;
   addRate;
   startDate;
-
+  listOfYears = [];
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<UpdateAccomodationAddRateComponent>, private addRateService: AccommAddRateService,
               private accommodationTypeService: AccommodationTypeService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
+    let year = new Date().getFullYear();
+    const limitYear = year + 4;
+    while (year <= limitYear){
+      this.listOfYears.push(year);
+      year += 1;
+     }
     this.addRate = JSON.parse(localStorage.getItem('addRate'));
-    this.startDate = new Date(this.addRate.DateEffective);
 
     this.accommodationTypeService.readAccommodationType(this.globalService.GetServer()).subscribe((result: any) => {
       this.accommodationTypeDropDown = result.AccommodationTypes;
@@ -36,7 +41,7 @@ export class UpdateAccomodationAddRateComponent implements OnInit {
       accomodationType: [this.addRate.AccTypeID, Validators.required],
       adultRate : [this.addRate.AdultRateAmount, [Validators.required, Validators.min(1)]],
       childRate : [this.addRate.ChildRateAmount, [Validators.required, Validators.min(1)]],
-      dateEffective : [this.startDate, Validators.required]
+      dateEffective : [this.addRate.yearActive, Validators.required]
     });
   }
 

@@ -18,12 +18,20 @@ export class AddWildcardRateComponent implements OnInit {
   addWildcardRateForm: FormGroup;
   wildcardCategoryDropDown;
   wildcardClusterDropdown;
+  listOfYears = [];
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<AddWildcardRateComponent>, private wildcardClusterService: WildcardClusterService,
               private wildcardCategoryService: WildcardCategoryService, private globalService: GlobalService,
               private wildcardRateService: WildcardRateService) { }
 
   ngOnInit(): void {
+    let year = new Date().getFullYear();
+    const limitYear = year + 4;
+    while (year <= limitYear){
+      this.listOfYears.push(year);
+      year += 1;
+     }
+
     this.wildcardCategoryService.ReadWildcardCategory(this.globalService.GetServer()).subscribe((result: any) => {
       this.wildcardCategoryDropDown = result.WildcardCategories;
       localStorage.setItem('user', JSON.stringify(result.user));
