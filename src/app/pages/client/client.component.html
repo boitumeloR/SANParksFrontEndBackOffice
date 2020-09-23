@@ -1,8 +1,10 @@
 <h1>Client </h1>
 <div class="example-container">
   <mat-form-field hintLabel="Max 100 characters" appearance="fill">
-    <mat-label>Keyword Filter</mat-label>
-    <input matInput #input maxlength="100" placeholder="Ex. Robyn Sancha Pillay">
+    <mat-label>ID Number Filter</mat-label>
+    <input matInput #input maxlength="100" placeholder="Ex. Robyn Sancha Pillay" 
+    [(ngModel)]="filterInfo"
+    (ngModelChange)="filterClients(input.value)">
     <mat-hint>&nbsp; {{input.value?.length || 0}}/100</mat-hint>
   </mat-form-field>
 
@@ -16,11 +18,11 @@
       <!-- Camp Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Client Name</th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let element">{{element.ClietnTitle}} {{element.ClientName}} {{element.ClientSurname}}</td>
       </ng-container> 
       <ng-container matColumnDef="identity">
         <th mat-header-cell *matHeaderCellDef> Identity Number</th>
-        <td mat-cell *matCellDef="let element"> {{element.identity}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.ClientIDCode}} </td>
       </ng-container>
 
       <!-- View Column -->
