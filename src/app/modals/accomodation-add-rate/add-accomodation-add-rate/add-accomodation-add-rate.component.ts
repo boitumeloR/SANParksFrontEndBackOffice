@@ -16,12 +16,19 @@ import { AccommodationTypeService } from 'src/app/services/AccommodationType/acc
 export class AddAccomodationAddRateComponent implements OnInit {
   addAccomodationRateForm: FormGroup;
   accommodationTypeDropDown;
-
+  listOfYears = [];
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<AddAccomodationAddRateComponent>, private addRateService: AccommAddRateService,
               private accommodationTypeService: AccommodationTypeService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
+    let year = new Date().getFullYear();
+    const limitYear = year + 4;
+    while (year <= limitYear){
+      this.listOfYears.push(year);
+      year += 1;
+     }
+
     this.accommodationTypeService.readAccommodationType(this.globalService.GetServer()).subscribe((result: any) => {
       this.accommodationTypeDropDown = result.AccommodationTypes;
       localStorage.setItem('user', JSON.stringify(result.user));

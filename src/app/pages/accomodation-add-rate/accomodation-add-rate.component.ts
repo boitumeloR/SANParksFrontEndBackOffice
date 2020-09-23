@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class AccomodationAddRateComponent implements OnInit {
 
-  displayedColumns: string[] = ['accomodationType', 'date', 'view'];
+  displayedColumns: string[] = ['accomodationType', 'date', 'endDate', 'view'];
   dataSource;
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

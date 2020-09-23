@@ -18,12 +18,19 @@ export class AddDailyConservationFeeComponent implements OnInit {
   parkDropDown;
   regionDropDown;
   newDailyConservationFee: DailyConservationFee;
-
+  listOfYears = [];
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<AddDailyConservationFeeComponent>, private parkService: ParkService,
               private globalService: GlobalService, private dailyConservationFeeService: DailyConservationFeeService) { }
 
   ngOnInit(): void {
+    let year = new Date().getFullYear();
+    const limitYear = year + 4;
+    while (year <= limitYear){
+      this.listOfYears.push(year);
+      year += 1;
+     }
+
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
       localStorage.setItem('user', JSON.stringify(result.user));
@@ -38,17 +45,13 @@ export class AddDailyConservationFeeComponent implements OnInit {
       region : ['', Validators.required],
       childAmount : ['', [Validators.required, Validators.min(1)]],
       adultAmount : ['', [Validators.required, Validators.min(1)]],
-      dateEffective: ['', Validators.required],
-      endDate: ['', Validators.required]
+      dateEffective: ['', Validators.required]
     });
   }
 
   addDailyConservationFee(){
     if (this.addDailyConservationFeeForm.invalid){
       this.displayValidationError();
-    }
-    else if (this.addDailyConservationFeeForm.get('endDate').value < this.addDailyConservationFeeForm.get('dateEffective').value){
-      this.displayDateError();
     }
     else{
       this.dialogRef.close();
@@ -64,10 +67,8 @@ export class AddDailyConservationFeeComponent implements OnInit {
             ChildAmount: this.addDailyConservationFeeForm.get('childAmount').value,
             AdultAmount: this.addDailyConservationFeeForm.get('adultAmount').value,
             DateEffective: this.addDailyConservationFeeForm.get('dateEffective').value,
-            EndDate: this.addDailyConservationFeeForm.get('endDate').value,
             authenticateUser: user
           };
-
           this.dailyConservationFeeService.CreateDailyConservationFee(newDailyConservationFee, this.globalService.GetServer());
         }
       });

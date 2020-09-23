@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class AmenityPenaltyComponent implements OnInit {
 
-  displayedColumns: string[] = ['camp', 'accomodationType', 'unitNumber', 'dateEffective', 'view'];
+  displayedColumns: string[] = ['camp', 'accomodationType', 'unitNumber', 'dateEffective', 'endDate', 'view'];
   dataSource;
   filter;
 

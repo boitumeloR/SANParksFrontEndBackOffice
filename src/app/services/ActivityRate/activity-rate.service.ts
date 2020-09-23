@@ -10,6 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface ActivityRate{
   ActivityRateID: number;
   ActivityID: number;
@@ -32,7 +33,7 @@ export interface ActivityRate{
 export class ActivityRateService {
 
   constructor(private dialog: MatDialog , private http: HttpClient,
-              private router: Router) { }
+              private router: Router,  private rateForYear: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -46,6 +47,11 @@ export class ActivityRateService {
         const addActivityRateUnsuccessfulDialog = this.dialog.open(AddActivityRateUnsuccessfulComponent);
         this.refresh.next();
       }
+      else if (addResult.RateForYearExists){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
+        this.rateExistsError(ActivityRate.DateEffective);
+        this.refresh.next();
+      }
       else if (addResult.userLoggedOut){
         localStorage.removeItem('user');
         this.router.navigate(['/Login']);
@@ -57,6 +63,11 @@ export class ActivityRateService {
       }
     });
   }
+  rateExistsError(year) {
+    this.rateForYear.open(`An activty rate already exists for the activity in this camp, in the year ${year}.` , 'OK', {
+      duration: 5000,
+    });
+  }
   readActivityRate(link){
     const user = JSON.parse(localStorage.getItem('user'));
     return this.http.post(`${link}/api/activityRate/getActivityRate`, user);
@@ -66,6 +77,11 @@ export class ActivityRateService {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateActivityRateUnsuccessfulDialog = this.dialog.open(UpdateActivityRateUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.RateForYearExists){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
+        this.rateExistsError(updatedActivityRate.DateEffective);
         this.refresh.next();
       }
       else if (updateResult.userLoggedOut){

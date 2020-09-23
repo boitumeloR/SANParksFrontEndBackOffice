@@ -11,6 +11,7 @@ import { DeleteWildcardRateSuccessfulComponent } from 'src/app/modals/wildcard-r
 import { DeleteWildcardRateUnsuccessfulComponent } from 'src/app/modals/wildcard-rate/delete-wildcard-rate-unsuccessful/delete-wildcard-rate-unsuccessful.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface WildcardRate {
   WildcardRateID: number;
@@ -25,8 +26,8 @@ export interface WildcardRate {
 })
 export class WildcardRateService {
 
-  constructor(private http: HttpClient, private dialog: MatDialog, 
-              private router: Router) { }
+  constructor(private http: HttpClient, private dialog: MatDialog,
+              private router: Router, private rateForYear: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -38,6 +39,11 @@ export class WildcardRateService {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
         const addWildcardRateUnsuccessfulDialog = this.dialog.open(AddWildcardRateUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (addResult.RateForYearExists){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
+        this.rateExistsError(WildcardRate.DateEffective);
         this.refresh.next();
       }
       else if (addResult.userLoggedOut){
@@ -52,6 +58,12 @@ export class WildcardRateService {
     });
   }
 
+  rateExistsError(year) {
+    this.rateForYear.open(`A wildcard rate already exists for this category and cluster in the year ${year}.` , 'OK', {
+      duration: 5000,
+    });
+  }
+
   ReadWildcardRate(link){
     const user = JSON.parse(localStorage.getItem('user'));
     return this.http.post(`${link}/api/wildcardRate/getwildcardRate`, user);
@@ -62,6 +74,11 @@ export class WildcardRateService {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateWildcardRateUnsuccessfulDialog = this.dialog.open(UpdateWildcardRateUnsuccessfulComponent);
+        this.refresh.next();
+      }
+      else if (updateResult.RateForYearExists){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
+        this.rateExistsError(WildcardRate.DateEffective);
         this.refresh.next();
       }
       else if (updateResult.userLoggedOut){

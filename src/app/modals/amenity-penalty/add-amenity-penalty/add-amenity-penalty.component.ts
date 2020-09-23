@@ -30,7 +30,7 @@ export class AddAmenityPenaltyComponent implements OnInit {
   campSelected;
   amenityDropDown;
   accTypeSelected;
-
+  listOfYears = [];
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<AddAmenityPenaltyComponent>, private parkService: ParkService,
               private accomodationTypeService: AccommodationTypeService, private campService: CampService,
@@ -38,6 +38,13 @@ export class AddAmenityPenaltyComponent implements OnInit {
               private accommodationService: AccommodationService, private amenityPenaltyService: AmenityPenaltyService) { }
 
   ngOnInit(): void {
+    let year = new Date().getFullYear();
+    const limitYear = year + 4;
+    while (year <= limitYear){
+      this.listOfYears.push(year);
+      year += 1;
+     }
+
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
       localStorage.setItem('user', JSON.stringify(result.user));

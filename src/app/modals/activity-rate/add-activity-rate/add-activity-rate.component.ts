@@ -28,13 +28,20 @@ export class AddActivityRateComponent implements OnInit {
   campSelected;
   activityDropDown;
   rateTypeDropDown;
-
+  listOfYears = [];
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<AddActivityRateComponent>, private parkService: ParkService,
               private globalService: GlobalService, private activityTypeService: ActivityTypeService, private campService: CampService,
               private activityService: ActivityService, private activityRateService: ActivityRateService) { }
 
   ngOnInit(): void {
+    let year = new Date().getFullYear();
+    const limitYear = year + 4;
+    while (year <= limitYear){
+      this.listOfYears.push(year);
+      year += 1;
+     }
+
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
       localStorage.setItem('user', JSON.stringify(result.user));

@@ -20,11 +20,13 @@
         <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="fill">
-        <mat-label>Date Effective</mat-label>
-        <input matInput [matDatepicker]="dateEffective" formControlName="dateEffective" readonly>
-        <mat-datepicker-toggle matSuffix [for]="dateEffective"></mat-datepicker-toggle>
-        <mat-datepicker #dateEffective color="primary"></mat-datepicker>
-        <mat-hint>Date from which to apply this add rate.</mat-hint>
+        <mat-label>Year Effective</mat-label>
+        <mat-select formControlName="dateEffective">
+            <mat-option *ngFor="let year of listOfYears" [value]="year">
+              {{year}}
+            </mat-option>
+          </mat-select>
+        <mat-hint>Year in which to apply this add rate.</mat-hint>
     </mat-form-field>
     </div>  
     </mat-dialog-content>

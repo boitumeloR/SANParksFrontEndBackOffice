@@ -10,13 +10,14 @@ import {UpdateAccomodationAddRateUnsuccessfulComponent} from 'src/app/modals/acc
 import {DeleteAccomodationAddRateSuccessfulComponent} from 'src/app/modals/accomodation-add-rate/delete-accomodation-add-rate-successful/delete-accomodation-add-rate-successful.component';
 import {DeleteAccomodationAddRateUnsuccessfulComponent} from 'src/app/modals/accomodation-add-rate/delete-accomodation-add-rate-unsuccessful/delete-accomodation-add-rate-unsuccessful.component';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface AccommodationTypeAddRate{
   AddRateID: number;
   AccomodationTypeID: number;
   AdultRateAmount: number;
   ChildRateAmount: number;
- DateEffective: Date;
+  DateEffective: Date;
  }
 
 @Injectable({
@@ -24,8 +25,8 @@ export interface AccommodationTypeAddRate{
 })
 export class AccommAddRateService {
 
-  constructor(private dialog: MatDialog, private http: HttpClient, 
-              private router: Router) { }
+  constructor(private dialog: MatDialog, private http: HttpClient,
+              private router: Router, private rateForYear: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -39,6 +40,11 @@ export class AccommAddRateService {
         localStorage.setItem('user', JSON.stringify(addResult.user));
         this.refresh.next();
       }
+      else if (addResult.RateForYearExists){
+        localStorage.setItem('user', JSON.stringify(addResult.user));
+        this.rateExistsError(AccommodationTypeAddRate.DateEffective);
+        this.refresh.next();
+      }
       else if (addResult.userLoggedOut){
         localStorage.removeItem('user');
         this.router.navigate(['/Login']);
@@ -48,6 +54,12 @@ export class AccommAddRateService {
         localStorage.setItem('user', JSON.stringify(addResult.user));
         this.refresh.next();
       }
+    });
+  }
+
+  rateExistsError(year) {
+    this.rateForYear.open(`An add rate already exists for this accommodation type in the year ${year}.` , 'OK', {
+      duration: 5000,
     });
   }
   readAccommodationTypeAddRate(link){
@@ -60,6 +72,11 @@ export class AccommAddRateService {
       if (updateResult.Error){
         const updateAccomodationAddRateUnsuccessfulDialog = this.dialog.open(UpdateAccomodationAddRateUnsuccessfulComponent);
         localStorage.setItem('user', JSON.stringify(updateResult.user));
+        this.refresh.next();
+      }
+      else if (updateResult.RateForYearExists){
+        localStorage.setItem('user', JSON.stringify(updateResult.user));
+        this.rateExistsError(updatedAccommodationTypeAddRate.DateEffective);
         this.refresh.next();
       }
       else if (updateResult.userLoggedOut){

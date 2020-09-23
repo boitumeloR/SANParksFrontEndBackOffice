@@ -20,13 +20,19 @@ export class UpdateWildcardRateComponent implements OnInit {
   startDate;
   wildcardCategoryDropDown;
   wildcardClusterDropdown;
-
+  listOfYears = [];
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<UpdateWildcardRateComponent>, private wildcardClusterService: WildcardClusterService,
               private wildcardCategoryService: WildcardCategoryService, private globalService: GlobalService,
               private wildcardRateService: WildcardRateService) { }
 
   ngOnInit(): void {
+    let year = new Date().getFullYear();
+    const limitYear = year + 4;
+    while (year <= limitYear){
+      this.listOfYears.push(year);
+      year += 1;
+     }
     this.wildcardCategoryService.ReadWildcardCategory(this.globalService.GetServer()).subscribe((result: any) => {
       this.wildcardCategoryDropDown = result.WildcardCategories;
       localStorage.setItem('user', JSON.stringify(result.user));
@@ -38,13 +44,12 @@ export class UpdateWildcardRateComponent implements OnInit {
     });
 
     this.wildcardRate = JSON.parse(localStorage.getItem('wildcardRate'));
-    this.startDate = new Date(this.wildcardRate.DateEffective);
 
     this.updateWildcardRateForm = this.formBuilder.group({
       wildcardCluster: [this.wildcardRate.WildcardClusterID, Validators.required],
       wildcardCategory : [this.wildcardRate.WildcardCategoryID, Validators.required],
       wildcardRate : [this.wildcardRate.RateAmount, [Validators.required, Validators.min(1)]],
-      dateEffective : [this.startDate, Validators.required]
+      dateEffective : [this.wildcardRate.yearActive, Validators.required]
     });
   }
 

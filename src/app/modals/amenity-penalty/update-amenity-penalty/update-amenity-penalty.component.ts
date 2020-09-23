@@ -19,21 +19,29 @@ export class UpdateAmenityPenaltyComponent implements OnInit {
   amenityPenalty: FormGroup;
   amenity;
   startDate;
+  listOfYears = [];
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private dialogRef: MatDialogRef<UpdateAmenityPenaltyComponent>, private amenityPenaltyService: AmenityPenaltyService,
               private globalService: GlobalService) { }
 
   ngOnInit(): void {
+    let year = new Date().getFullYear();
+    const limitYear = year + 4;
+    while (year <= limitYear){
+      this.listOfYears.push(year);
+      year += 1;
+     }
+
     this.amenity =  JSON.parse(localStorage.getItem('amenityPenalty'));
 
-    this.startDate = new Date(this.amenity.DateEffective);
+
     this.selectAmenity = this.formBuilder.group({
 
     });
 
     this.amenityPenalty = this.formBuilder.group({
       amenityPenalty: [this.amenity.AmenityPenaltyAmount, [Validators.required, Validators.min(1)]],
-      dateEffective : [this.startDate, Validators.required]
+      dateEffective : [this.amenity.yearActive, Validators.required]
     });
   }
 
