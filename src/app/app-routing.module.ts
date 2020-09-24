@@ -45,15 +45,23 @@ import { WildcardReportComponent } from './pages/reports/wildcard-report/wildcar
 import { BookingCheckinComponent } from './pages/reports/booking-checkin/booking-checkin.component';
 import {ClientComponent} from './pages/client/client.component';
 import {PurchaseWildcardComponent} from './pages/Purchase Wildcard/purchase-wildcard/purchase-wildcard.component';
-import {SearchWildcardMembershipComponent} from './pages/renew/search-wildcard-membership/search-wildcard-membership.component'
-import { LoginComponent } from './subcomponents/login/login/login.component';
+import {SearchWildcardMembershipComponent} from './pages/renew/search-wildcard-membership/search-wildcard-membership.component';
 import { ForgotPasswordComponent } from './subcomponents/login/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './subcomponents/login/reset-password/reset-password.component';
-import { PageNotFoundComponent } from './subcomponents/page-not-found/page-not-found.component';
+import { ActiveDatesComponent } from './modals/settings/active-dates/active-dates.component';
+import { UserTimeOutComponent } from './modals/settings/user-time-out/user-time-out.component';
 const routes: Routes = [
   {
     path: 'Park',
     component: ParkComponent
+  },
+  {
+    path: 'Active-Dates',
+    component: ActiveDatesComponent
+  },
+  {
+    path: 'Session-Timer',
+    component: UserTimeOutComponent
   },
   {
     path: 'Park-Gate',
