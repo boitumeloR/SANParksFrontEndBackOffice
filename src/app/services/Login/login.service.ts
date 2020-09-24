@@ -11,6 +11,19 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { HeaderComponent } from 'src/app/subcomponents/header/header.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+export interface Session {
+  Username: string;
+  Password: string;
+  SessionID: string;
+  UserSecret: string;
+  Error: string;
+  SessionExpiry: Date;
+  RoleID: number;
+  isEmployee: boolean;
+  isValidEmployee: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
