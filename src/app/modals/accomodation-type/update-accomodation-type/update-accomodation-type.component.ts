@@ -53,6 +53,7 @@ export class UpdateAccomodationTypeComponent implements OnInit {
       noOfBaths : [this.accommodationType.NumBaths, [Validators.required, Validators.min(0)]],
       adultLimit : [this.accommodationType.AdultLimit, [Validators.required, Validators.min(0)]],
       childLimit : [this.accommodationType.ChildLimit, [Validators.required, Validators.min(0)]],
+      maxLimit : [this.accommodationType.MaxLimit, [Validators.required, Validators.min(0)]]
     });
 
     this.campsForAccomodationType = this.formBuilder.group({
@@ -97,6 +98,7 @@ export class UpdateAccomodationTypeComponent implements OnInit {
             NumBaths: this.basicUpdateAccomodationTypeDetails.get('noOfBaths').value,
             AdultLimit: this.basicUpdateAccomodationTypeDetails.get('adultLimit').value,
             ChildLimit: this.basicUpdateAccomodationTypeDetails.get('childLimit').value,
+            MaxLimit: this.basicUpdateAccomodationTypeDetails.get('maxLimit').value,
             ListOfAssociatedCamp: selectedCamps,
             ListOfAccommodationTypeImages: this.viewImages,
             authenticateUser: user
@@ -110,6 +112,7 @@ export class UpdateAccomodationTypeComponent implements OnInit {
           formData.append('NumBeds', updateAccommodationType.NumBeds);
           formData.append('ChildLimit', updateAccommodationType.ChildLimit);
           formData.append('AdultLimit', updateAccommodationType.AdultLimit);
+          formData.append('MaxLimit', updateAccommodationType.MaxLimit);
           formData.append('sessionID', user.SessionID);
           formData.append('userSecret', user.UserSecret);
 
@@ -147,8 +150,15 @@ export class UpdateAccomodationTypeComponent implements OnInit {
     });
   }
   stepperToCampSelection(){
+    const adultLimit = this.basicUpdateAccomodationTypeDetails.get('adultLimit').value as unknown as number;
+    const childLimit = this.basicUpdateAccomodationTypeDetails.get('childLimit').value as unknown as number;
+    const maxLimit =  this.basicUpdateAccomodationTypeDetails.get('maxLimit').value as unknown as number;
+
     if (this.basicUpdateAccomodationTypeDetails.invalid){
        this.displayValidationError();
+     }
+     else if ( adultLimit + childLimit > maxLimit){
+       this.displayMaximumLessThanSumError();
      }
      else{
        this.myStepper.next();
@@ -221,6 +231,11 @@ export class UpdateAccomodationTypeComponent implements OnInit {
 
   displayMaximumImageError() {
     this.validationErrorSnackBar.open('A maximum of 3 images is allowed.', 'OK', {
+      duration: 2000,
+    });
+  }
+  displayMaximumLessThanSumError() {
+    this.validationErrorSnackBar.open('The sum of the adult limit and child limit must be less than or equal to the maximum limit.', 'OK', {
       duration: 2000,
     });
   }
