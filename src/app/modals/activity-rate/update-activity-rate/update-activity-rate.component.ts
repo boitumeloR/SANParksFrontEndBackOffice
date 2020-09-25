@@ -44,14 +44,8 @@ export class UpdateActivityRateComponent implements OnInit {
     });
 
     this.activityRateDetails = this.formBuilder.group({
-      rateType: [this.actvivityRate.RateTypeID, Validators.required],
-      adultRate : [this.actvivityRate.AdultRateAmount, [Validators.required, Validators.min(0)]],
-      childRate : [this.actvivityRate.ChildRateAmount, [Validators.required, Validators.min(0)]],
-      vehicleAmount : [this.actvivityRate.VehicleAmount, [Validators.required, Validators.min(0)]],
-      hutAmount : [this.actvivityRate.HutAmount, [Validators.required, Validators.min(0)]],
-      personAmount : [this.actvivityRate.PersonAmount, [Validators.required, Validators.min(0)]],
-      bikeAmount : [this.actvivityRate.BikeAmount, [Validators.required, Validators.min(0)]],
-      noBikeAmunt : [this.actvivityRate.NoBikeAmount, [Validators.required, Validators.min(0)]],
+      rateType: [this.actvivityRate.RateTypeID, Validators.required],      
+      personAmount : [this.actvivityRate.PersonAmount, [Validators.required, Validators.min(0)]],     
       dateEffective : [this.actvivityRate.yearActive, Validators.required]
     });
   }
@@ -79,13 +73,7 @@ export class UpdateActivityRateComponent implements OnInit {
 
          const updateActivityRate = {
           ActivityRateID: this.actvivityRate.ActivityRateID,
-          AdultRateAmount: this.activityRateDetails.get('adultRate').value,
-          ChildRateAmount: this.activityRateDetails.get('childRate').value,
-          VehicleAmount: this.activityRateDetails.get('vehicleAmount').value,
-          HutAmount: this.activityRateDetails.get('hutAmount').value,
           PersonAmount: this.activityRateDetails.get('personAmount').value,
-          BikeAmount: this.activityRateDetails.get('bikeAmount').value,
-          NoBikeAmount: this.activityRateDetails.get('noBikeAmunt').value,
           RateTypeID: this.activityRateDetails.get('rateType').value,
           DateEffective: this.activityRateDetails.get('dateEffective').value,
           ActivityID: this.actvivityRate.ActivityID,

@@ -54,42 +54,12 @@
                         <mat-option *ngFor="let rateType of rateTypeDropDown" [value]="rateType.RateTypeID">{{rateType.RateTypeDescription}}</mat-option>
                     </mat-select>
                     <mat-hint>Select a rate type</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="fill"> 
-                    <mat-label>Adult Rate</mat-label>
-                    <input matInput formControlName="adultRate" type="number" maxlength="13">
-                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>Child Rate</mat-label>
-                    <input matInput formControlName="childRate" type="number" maxlength="13">
-                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>Vehicle Amount</mat-label>
-                    <input matInput formControlName="vehicleAmount" type="number" maxlength="13">
-                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>Hut Amount</mat-label>
-                    <input matInput formControlName="hutAmount" type="number" maxlength="13">
-                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
+                </mat-form-field>              
                 <mat-form-field appearance="fill">
                     <mat-label>Person Amount</mat-label>
                     <input matInput formControlName="personAmount" type="number" maxlength="13">
                     <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>Bike Amount</mat-label>
-                    <input matInput formControlName="bikeAmount" type="number" maxlength="13">
-                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>No Bike Amount</mat-label>
-                    <input matInput formControlName="noBikeAmunt" type="number" maxlength="13">
-                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
+                </mat-form-field>                
                 <mat-form-field appearance="fill">
                     <mat-label>Year Effective</mat-label>
                     <mat-select formControlName="dateEffective">
