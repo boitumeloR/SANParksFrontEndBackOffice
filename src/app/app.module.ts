@@ -393,6 +393,7 @@ import { ProfileUpdateConfirmationComponent } from './modals/employee/profile-up
 import { ActiveDatesComponent } from 'src/app/modals/settings/active-dates/active-dates.component';
 import { UserTimeOutComponent } from 'src/app/modals/settings/user-time-out/user-time-out.component';
 import { ErrorModalComponent } from './modals/auxilliary-modals/error-modal/error-modal.component';
+import { HelpComponent } from './subcomponents/help/help.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -776,6 +777,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ActiveDatesComponent,
     UserTimeOutComponent,
     ErrorModalComponent,
+    HelpComponent,
   ],
   entryComponents: [
     AddParkComponent,
