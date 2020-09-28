@@ -22,6 +22,8 @@ export class AvailabilityComponent implements OnInit {
   isAccommodation: boolean;
   isActivity: boolean;
 
+  panelOpenState = false;
+
   notFound = false;
   // Observables
   dropDowns$: Observable<any>;
@@ -79,6 +81,19 @@ export class AvailabilityComponent implements OnInit {
     // }
     console.log(this.availableResults);
 
+    const availableData = {
+      ParkID: null ,
+      CampID: null,
+      AccommodationChecked: false,
+      ActivityChecked: false,
+      DayVisitChecked: false,
+      AccommodationTypeID: null,
+      ActivityTypeID: null,
+      Forward: true,
+      BaseDate: new Date()
+    };
+
+    this.searchData = availableData;
     // populate dropdown park
     this.dropDowns$ = this.serv.getDropDowns(this.global.GetServer());
     this.dropDowns$.subscribe(res => {
@@ -98,12 +113,12 @@ export class AvailabilityComponent implements OnInit {
     console.log(this.isAccommodation, this.isActivity);
     this.availableGroup = this.formBuilder.group({
       park: [null, Validators.required],
-      camp: [0],
+      camp: [null],
       activity: [false],
       accommodation: [false],
       day: [false],
-      activityType: [0],
-      accommodationType: [0]
+      activityType: [null],
+      accommodationType: [null]
     });
   }
 
@@ -202,7 +217,9 @@ export class AvailabilityComponent implements OnInit {
 
         this.checkAvailability$ = this.serv.checkAvailability(availableData, this.global.GetServer());
         this.checkAvailability$.subscribe(res => {
+          this.parkName = res.ParkName;
           this.loader = false;
+          this.searchData = availableData;
           this.apiData = res;
           this.tableDates = res.Dates;
           this.availableResults = res.AvailableResults;
@@ -242,7 +259,9 @@ export class AvailabilityComponent implements OnInit {
 
     this.checkAvailability$ = this.serv.checkAvailability(this.searchData, this.global.GetServer());
     this.checkAvailability$.subscribe(res => {
+      this.panelOpenState = true;
       this.availableResults = res.AvailableResults;
+      this.parkName = res.ParkName;
       this.tableDates = res.Dates;
       this.loader = false;
       this.isOpen = true;
@@ -268,6 +287,8 @@ export class AvailabilityComponent implements OnInit {
 
     this.checkAvailability$ = this.serv.checkAvailability(this.searchData, this.global.GetServer());
     this.checkAvailability$.subscribe(res => {
+      this.parkName = res.ParkName;
+      this.panelOpenState = true;
       this.availableResults = res.AvailableResults;
       this.tableDates = res.Dates;
       this.loader = false;
@@ -294,6 +315,8 @@ export class AvailabilityComponent implements OnInit {
 
     this.checkAvailability$ = this.serv.checkAvailability(this.searchData, this.global.GetServer());
     this.checkAvailability$.subscribe(res => {
+      this.parkName = res.ParkName;
+      this.panelOpenState = true;
       this.availableResults = res.AvailableResults;
       this.tableDates = res.Dates;
       this.loader = false;

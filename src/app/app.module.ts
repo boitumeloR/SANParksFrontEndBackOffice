@@ -391,6 +391,12 @@ import { SuccessfulProfileUpdateComponent } from './modals/employee/successful-p
 import { UnsuccessfulProfileUpdateComponent } from './modals/employee/unsuccessful-profile-update/unsuccessful-profile-update.component';
 import { ProfileUpdateConfirmationComponent } from './modals/employee/profile-update-confirmation/profile-update-confirmation.component';
 import { ErrorModalComponent } from './modals/auxilliary-modals/error-modal/error-modal.component';
+import { AddAccommodationBookingComponent } from './modals/booking/add-accommodation-booking/add-accommodation-booking.component';
+import {TableModule} from 'primeng/table';
+import {PaginatorModule} from 'primeng/paginator';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { AddActivityBookingComponent } from './modals/booking/add-activity-booking/add-activity-booking.component';
+
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -771,6 +777,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     UnsuccessfulProfileUpdateComponent,
     ProfileUpdateConfirmationComponent,
     ErrorModalComponent,
+    AddAccommodationBookingComponent,
+    AddActivityBookingComponent,
+    
   ],
   entryComponents: [
     AddParkComponent,
@@ -779,6 +788,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AddParkGateComponent
   ],
   imports: [
+    BsDatepickerModule.forRoot(),
+    TableModule,
+    PaginatorModule,
     NgxStripeModule.forRoot(environment.stripeKey),
     MatSnackBarModule,
     ChartModule,
