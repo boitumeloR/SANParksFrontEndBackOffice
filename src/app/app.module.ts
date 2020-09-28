@@ -366,7 +366,6 @@ import { UpdateClientComponent } from './modals/client/update-client/update-clie
 import { UpdateClientConfirmationComponent } from './modals/client/update-client-confirmation/update-client-confirmation.component';
 import { UpdateClientSuccessfulComponent } from './modals/client/update-client-successful/update-client-successful.component';
 import { UpdateClientUnsuccessfulComponent } from './modals/client/update-client-unsuccessful/update-client-unsuccessful.component';
-import { PurchaseWildcardComponent } from './pages/Purchase Wildcard/purchase-wildcard/purchase-wildcard.component';
 import { PurchaseWildcardConfirmationComponent } from './pages/Purchase Wildcard/purchase-wildcard-confirmation/purchase-wildcard-confirmation.component';
 import { SuccessfulWildcardPurchaseComponent } from './pages/Purchase Wildcard/successful-wildcard-purchase/successful-wildcard-purchase.component';
 import { SearchWildcardMembershipComponent } from './pages/renew/search-wildcard-membership/search-wildcard-membership.component';
@@ -394,6 +393,9 @@ import { ActiveDatesComponent } from 'src/app/modals/settings/active-dates/activ
 import { UserTimeOutComponent } from 'src/app/modals/settings/user-time-out/user-time-out.component';
 import { ErrorModalComponent } from './modals/auxilliary-modals/error-modal/error-modal.component';
 import { HelpComponent } from './subcomponents/help/help.component';
+import { SearchClientForWCComponent } from './pages/Purchase Wildcard/search-client-for-wc/search-client-for-wc.component';;
+import { PurchaseWildcardComponent } from './modals/purchase-wildcard/purchase-wildcard.component';
+import { UnsuccessfulWCPurchaseComponent } from './pages/Purchase Wildcard/unsuccessful-wcpurchase/unsuccessful-wcpurchase.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -753,7 +755,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     UpdateClientConfirmationComponent,
     UpdateClientSuccessfulComponent,
     UpdateClientUnsuccessfulComponent,
-    PurchaseWildcardComponent,
     PurchaseWildcardConfirmationComponent,
     SuccessfulWildcardPurchaseComponent,
     SearchWildcardMembershipComponent,
@@ -778,6 +779,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     UserTimeOutComponent,
     ErrorModalComponent,
     HelpComponent,
+    SearchClientForWCComponent,
+    PurchaseWildcardComponent,
+    UnsuccessfulWCPurchaseComponent
   ],
   entryComponents: [
     AddParkComponent,

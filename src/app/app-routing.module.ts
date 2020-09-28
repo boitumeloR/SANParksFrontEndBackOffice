@@ -44,7 +44,7 @@ import { WeeklyBookingComponent } from './pages/reports/weekly-booking/weekly-bo
 import { WildcardReportComponent } from './pages/reports/wildcard-report/wildcard-report.component';
 import { BookingCheckinComponent } from './pages/reports/booking-checkin/booking-checkin.component';
 import {ClientComponent} from './pages/client/client.component';
-import {PurchaseWildcardComponent} from './pages/Purchase Wildcard/purchase-wildcard/purchase-wildcard.component';
+import {SearchClientForWCComponent} from './pages/Purchase Wildcard/search-client-for-wc/search-client-for-wc.component';
 import {SearchWildcardMembershipComponent} from './pages/renew/search-wildcard-membership/search-wildcard-membership.component';
 import { ForgotPasswordComponent } from './subcomponents/login/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './subcomponents/login/reset-password/reset-password.component';
@@ -245,7 +245,7 @@ const routes: Routes = [
   },
   {
     path: 'Purhase-Wildcard',
-    component: PurchaseWildcardComponent
+    component: SearchClientForWCComponent
   },
   {
     path: 'Search-Wildcard-Membership',
