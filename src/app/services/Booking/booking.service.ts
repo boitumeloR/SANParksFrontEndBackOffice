@@ -11,6 +11,7 @@ export interface Booking {
   PaymentAmount: number;
   ConservationAmount: number;
   TotalAmount: number;
+  PaidConservationFee: boolean;
   AccommodationBookings: AccommodationBooking[];
   ActivityBookings: ActivityBooking[];
   DayVisits: DayVisitBooking[];

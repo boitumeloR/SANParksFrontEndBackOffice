@@ -396,6 +396,10 @@ import {TableModule} from 'primeng/table';
 import {PaginatorModule} from 'primeng/paginator';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AddActivityBookingComponent } from './modals/booking/add-activity-booking/add-activity-booking.component';
+import { AddDayvisitComponent } from './modals/booking/add-dayvisit/add-dayvisit.component';
+import { AddAdultGuestComponent } from './modals/guest/add-adult-guest/add-adult-guest.component';
+import { AddChildGuestComponent } from './modals/guest/add-child-guest/add-child-guest.component';
+import { AddArbitraryGuestComponent } from './modals/guest/add-arbitrary-guest/add-arbitrary-guest.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -779,6 +783,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ErrorModalComponent,
     AddAccommodationBookingComponent,
     AddActivityBookingComponent,
+    AddDayvisitComponent,
+    AddAdultGuestComponent,
+    AddChildGuestComponent,
+    AddArbitraryGuestComponent,
     
   ],
   entryComponents: [

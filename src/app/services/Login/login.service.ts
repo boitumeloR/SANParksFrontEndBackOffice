@@ -108,6 +108,10 @@ export class LoginService {
     });
   }
 
+  GetCountries(server) {
+    return this.http.get(`${server}/api/Auth/GetCountries`);
+  }
+
   authorizationError(){
     this.validationErrorSnackBar.open('The action you are trying to perform is unauthorized', 'OK', {
       duration: 3500,
