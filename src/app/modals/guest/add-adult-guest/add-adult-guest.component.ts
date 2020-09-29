@@ -37,6 +37,9 @@ export class AddAdultGuestComponent implements OnInit {
       GuestIDCode: ['', Validators.compose([Validators.maxLength(20), Validators.required])]
     });
   }
+  Cancel() {
+    this.dialogRef.close({success: false, guest: null});
+  }
 
   changeCountry(): void {
     console.log(this.guestInfo.value);
@@ -92,7 +95,7 @@ export class AddAdultGuestComponent implements OnInit {
         });
 
         this.event.emit(this.guestInfo.value);
-        this.close(this.guestInfo.value);
+        this.close({success: true, guest: this.guestInfo.value});
       }
     } else {
       this.httpError = true;

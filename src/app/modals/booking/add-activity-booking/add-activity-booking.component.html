@@ -1,5 +1,8 @@
 <div class="dialog">
-    <h2 mat-dialog-title>Add Accommodation Booking</h2>
+    <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
+        <mat-icon>close</mat-icon>
+      </button>
+    <h2 mat-dialog-title>Add Activity Booking</h2>
     <mat-horizontal-stepper labelPosition="bottom" #stepper style="font-family: 'Nunito', sans-serif; font-size: 18px;">
         <mat-step [stepControl]="firstFormGroup">
           <div class="col-md-12 alert alert-warning alert-dismissible fade show" role="alert" *ngIf="httpError">

@@ -48,6 +48,10 @@ export class AddChildGuestComponent implements OnInit {
     }
   }
 
+  Cancel() {
+  this.dialogRef.close({success: false, guest: null});
+  }
+
   validateGuestDOB(ID: string): boolean {
     let year = '';
     if (Number(ID.substring(0, 2)) < 10) {
@@ -93,7 +97,7 @@ export class AddChildGuestComponent implements OnInit {
         });
 
         this.event.emit(this.guestInfo.value);
-        this.close(this.guestInfo.value);
+        this.close({success: true, guest: this.guestInfo.value});
       }
     } else {
       this.httpError = true;

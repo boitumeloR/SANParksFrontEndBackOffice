@@ -35,7 +35,7 @@
       
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+      <button mat-raised-button color="warn" (click)="Cancel()">Cancel</button>
       <button mat-raised-button color="primary" (click)="confirm()">Add Guest</button>
     </mat-dialog-actions>
     </form>

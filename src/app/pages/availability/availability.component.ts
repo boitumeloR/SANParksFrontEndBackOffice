@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { ViewAccomodationComponent } from 'src/app/modals/accomodation/view-accomodation/view-accomodation.component';
 import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { AddAccommodationBookingComponent } from 'src/app/modals/booking/add-accommodation-booking/add-accommodation-booking.component';
+import { AddActivityBookingComponent } from 'src/app/modals/booking/add-activity-booking/add-activity-booking.component';
 import { AddDayvisitComponent } from 'src/app/modals/booking/add-dayvisit/add-dayvisit.component';
 import { ViewAccommodationModalComponent } from 'src/app/modals/booking/view-accommodation-modal/view-accommodation-modal.component';
 import { TableDate, AvailabilityService } from 'src/app/services/Available/availability.service';
@@ -434,9 +435,9 @@ export class AvailabilityComponent implements OnInit {
   }
 
   addActivityModal(initialData) {
-    const activity = this.dialog.open(AddAccommodationBookingComponent, {
+    const activity = this.dialog.open(AddActivityBookingComponent, {
       disableClose: true,
-      data: initialData
+      data: {actData: initialData}
     });
   }
 

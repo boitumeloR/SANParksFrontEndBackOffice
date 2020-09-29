@@ -1,6 +1,7 @@
+import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AvailabilityService } from 'src/app/services/Available/availability.service';
 import { BookingService, ActivityBooking, Booking } from 'src/app/services/Booking/booking.service';
@@ -44,13 +45,14 @@ export class AddActivityBookingComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<AddActivityBookingComponent>,
               private formBuilder: FormBuilder, private dialog: MatDialog,
               private serv: AvailabilityService, private global: GlobalService, private router: Router,
-              private bookingServ: BookingService) {
+              private bookingServ: BookingService, @Inject(MAT_DIALOG_DATA) private data: any) {
     const Dates = JSON.parse(localStorage.getItem('Dates'));
     this.minDate = this.parseDate(Dates[0].Date);
     this.maxDate = this.parseDate(Dates[Dates.length - 1].Date);
    }
 
   ngOnInit(): void {
+    this.initialData = this.data.actData;
     console.log(this.initialData);
     this.bookingServ.getActivitySlots(this.global.GetServer(), this.initialData.ActivityID, this.initialData.CampID)
     .subscribe(res => {
@@ -108,7 +110,7 @@ export class AddActivityBookingComponent implements OnInit {
 
   addAdultGuest() {
     console.log(Math.min(...this.initialData.Availability.map(zz => zz.AvailableAmount)));
-    if (this.adultGuests < Math.min(...this.initialData.Availability.map(zz => zz.AvailableAmount))) {
+    if (this.adultGuests < this.initialData.MaxCapacity) {
       this.adultGuests++;
       this.totalGuests++;
     } else {
@@ -152,7 +154,11 @@ export class AddActivityBookingComponent implements OnInit {
         disableClose: true
       });
 
-      adult.afterClosed().subscribe((result) => this.bookingGuests.push(result));
+      adult.afterClosed().subscribe((result) => {
+        if (result.success) {
+          this.bookingGuests.push(result.guest);
+        }
+      });
     }
   }
 

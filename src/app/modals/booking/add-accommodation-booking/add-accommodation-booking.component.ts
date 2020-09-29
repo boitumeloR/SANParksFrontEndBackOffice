@@ -165,7 +165,11 @@ export class AddAccommodationBookingComponent implements OnInit {
         disableClose: false
       });
 
-      adult.afterClosed().subscribe((result) => this.bookingGuests.push(result));
+      adult.afterClosed().subscribe((result) => {
+        if (result.success) {
+          this.bookingGuests.push(result.guest);
+        }
+      });
     }
   }
 
@@ -178,7 +182,11 @@ export class AddAccommodationBookingComponent implements OnInit {
         disableClose: false
       });
 
-      adult.afterClosed().subscribe((result) => this.bookingGuests.push(result));
+      adult.afterClosed().subscribe((result) => {
+        if (result.success) {
+          this.bookingGuests.push(result.guest);
+        }
+      });
     }
   }
 
