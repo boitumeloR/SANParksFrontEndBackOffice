@@ -45,4 +45,8 @@ export class AvailabilityService {
   GetAccommodationImage(accommodationTypeID, server) {
     return this.http.get<any>(`${server}/api/Booking/GetAccommodationImage?AccommodationTypeID=${accommodationTypeID}`);
   }
+
+  GetCountries(server) {
+    return this.http.get<any>(`${server}/api/Auth/GetCountries`);
+  }
 }

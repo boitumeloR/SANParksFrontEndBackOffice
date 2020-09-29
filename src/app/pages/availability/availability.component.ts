@@ -6,8 +6,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CalendarOptions, EventApi, DateSelectArg, EventClickArg, disableCursor } from '@fullcalendar/angular';
 import { Observable } from 'rxjs';
+import { ViewAccomodationComponent } from 'src/app/modals/accomodation/view-accomodation/view-accomodation.component';
 import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
+import { AddAccommodationBookingComponent } from 'src/app/modals/booking/add-accommodation-booking/add-accommodation-booking.component';
+import { AddActivityBookingComponent } from 'src/app/modals/booking/add-activity-booking/add-activity-booking.component';
+import { AddDayvisitComponent } from 'src/app/modals/booking/add-dayvisit/add-dayvisit.component';
+import { ViewAccommodationModalComponent } from 'src/app/modals/booking/view-accommodation-modal/view-accommodation-modal.component';
 import { TableDate, AvailabilityService } from 'src/app/services/Available/availability.service';
+import { Booking } from 'src/app/services/Booking/booking.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 
 @Component({
@@ -21,6 +27,8 @@ export class AvailabilityComponent implements OnInit {
   availableGroup: FormGroup;
   isAccommodation: boolean;
   isActivity: boolean;
+
+  panelOpenState = false;
 
   notFound = false;
   // Observables
@@ -79,6 +87,19 @@ export class AvailabilityComponent implements OnInit {
     // }
     console.log(this.availableResults);
 
+    const availableData = {
+      ParkID: null ,
+      CampID: null,
+      AccommodationChecked: false,
+      ActivityChecked: false,
+      DayVisitChecked: false,
+      AccommodationTypeID: null,
+      ActivityTypeID: null,
+      Forward: true,
+      BaseDate: new Date()
+    };
+
+    this.searchData = availableData;
     // populate dropdown park
     this.dropDowns$ = this.serv.getDropDowns(this.global.GetServer());
     this.dropDowns$.subscribe(res => {
@@ -98,12 +119,12 @@ export class AvailabilityComponent implements OnInit {
     console.log(this.isAccommodation, this.isActivity);
     this.availableGroup = this.formBuilder.group({
       park: [null, Validators.required],
-      camp: [0],
+      camp: [null],
       activity: [false],
       accommodation: [false],
       day: [false],
-      activityType: [0],
-      accommodationType: [0]
+      activityType: [null],
+      accommodationType: [null]
     });
   }
 
@@ -202,7 +223,9 @@ export class AvailabilityComponent implements OnInit {
 
         this.checkAvailability$ = this.serv.checkAvailability(availableData, this.global.GetServer());
         this.checkAvailability$.subscribe(res => {
+          this.parkName = res.ParkName;
           this.loader = false;
+          this.searchData = availableData;
           this.apiData = res;
           this.tableDates = res.Dates;
           this.availableResults = res.AvailableResults;
@@ -242,7 +265,9 @@ export class AvailabilityComponent implements OnInit {
 
     this.checkAvailability$ = this.serv.checkAvailability(this.searchData, this.global.GetServer());
     this.checkAvailability$.subscribe(res => {
+      this.panelOpenState = true;
       this.availableResults = res.AvailableResults;
+      this.parkName = res.ParkName;
       this.tableDates = res.Dates;
       this.loader = false;
       this.isOpen = true;
@@ -268,6 +293,8 @@ export class AvailabilityComponent implements OnInit {
 
     this.checkAvailability$ = this.serv.checkAvailability(this.searchData, this.global.GetServer());
     this.checkAvailability$.subscribe(res => {
+      this.parkName = res.ParkName;
+      this.panelOpenState = true;
       this.availableResults = res.AvailableResults;
       this.tableDates = res.Dates;
       this.loader = false;
@@ -294,6 +321,8 @@ export class AvailabilityComponent implements OnInit {
 
     this.checkAvailability$ = this.serv.checkAvailability(this.searchData, this.global.GetServer());
     this.checkAvailability$.subscribe(res => {
+      this.parkName = res.ParkName;
+      this.panelOpenState = true;
       this.availableResults = res.AvailableResults;
       this.tableDates = res.Dates;
       this.loader = false;
@@ -309,12 +338,179 @@ export class AvailabilityComponent implements OnInit {
       this.loader = false;
     });
   }
+
   toggleAccommodationCollapse() {
     this.isAccommodation = !this.isAccommodation;
   }
 
   toggleActivityCollapse() {
     this.isActivity = !this.isActivity;
+  }
+
+  ViewAccommodationModal(accommodation): void {
+    const accModal = this.dialog.open(ViewAccommodationModalComponent, {
+      data: {accInfo: accommodation}
+    });
+  }
+
+  ValidateSamePark(initialData) {
+    const BookingItinerary: Booking = JSON.parse(localStorage.getItem('itinerary'));
+    let ParkIDs = [];
+    let flag = false;
+    if (BookingItinerary) {
+      ParkIDs = ParkIDs.concat(BookingItinerary.AccommodationBookings.filter(zz => zz.ParkID !== initialData.ParkID).map(zz => zz.ParkID));
+      ParkIDs = ParkIDs.concat(BookingItinerary.ActivityBookings.filter(zz => zz.ParkID !== initialData.ParkID).map(zz => zz.ParkID));
+      if (ParkIDs.length > 0) {
+        flag = true;
+      }
+    }
+    return flag;
+  }
+
+  addAccommodationBookingModal(initialData): void {
+    const accommodation = this.dialog.open(AddAccommodationBookingComponent, {
+      disableClose: true,
+      data: {accommodationData: initialData}
+    });
+  }
+
+  bookWeek(bookingData, campID) { // For accommodation booking adding
+    if (this.searchData.AccommodationChecked) {
+      bookingData.campID = campID;
+      bookingData.Dates = this.tableDates;
+      bookingData.EndDate = this.boundaryDate;
+      bookingData.StartDate = this.startDate;
+      bookingData.BaseRate = null;
+
+      console.log(bookingData);
+
+      const BookingsItinerary: Booking = JSON.parse(localStorage.getItem('itinerary'));
+      if (BookingsItinerary) {
+        // there are bookings in the itinerary already
+        let campIDs: any[] = [];
+        campIDs = campIDs.concat(BookingsItinerary.AccommodationBookings.filter(zz => zz.CampID !== bookingData.campID)
+                  .map(zz => zz.CampID));
+        const added: any[] = campIDs.concat(BookingsItinerary.ActivityBookings.filter(zz => zz.CampID !== bookingData.campID)
+                              .map(zz => zz.CampID));
+        console.log(added);
+
+        if (added.length !== 0) {
+          this.mapLoader = true;
+          const distanceRequest = {
+            CurrentCampID: bookingData.campID,
+            CompareCamps: added
+          };
+
+          this.serv.checkDistances(distanceRequest, this.global.GetServer()).subscribe(res => {
+            if (res === false) {
+              this.addAccommodationBookingModal(bookingData);
+              this.mapLoader = false;
+            } else {
+              this.snack.open('You have booked at a camp that is 40KMs away from your other bookings. Unable to book here.', 'OK', {
+                horizontalPosition: 'center',
+                verticalPosition: 'bottom',
+                duration: 5000
+              });
+            }
+          }, (error: HttpErrorResponse) => {
+            this.mapLoader = false;
+            console.log(error.message);
+            this.snack.open('An Error occured on our servers, please try again.', 'OK', {
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom',
+              duration: 5000
+            });
+          });
+        } else {
+          this.addAccommodationBookingModal(bookingData);
+        }
+      } else {
+        this.addAccommodationBookingModal(bookingData);
+      }
+    } else if (this.searchData.ActivityChecked) {
+
+    } else if (this.searchData.DayVisitChecked) {
+
+    }
+  }
+
+  addActivityModal(initialData) {
+    const activity = this.dialog.open(AddActivityBookingComponent, {
+      disableClose: true,
+      data: {actData: initialData}
+    });
+  }
+
+  bookActivity(initialData) {
+    const BookingsItinerary: Booking = JSON.parse(localStorage.getItem('itinerary'));
+    if (BookingsItinerary) {
+      // there are bookings in the itinerary already
+      let campIDs: any[] = [];
+      campIDs = campIDs.concat(BookingsItinerary.AccommodationBookings.filter(zz => zz.CampID !== initialData.CampID)
+                .map(zz => zz.CampID));
+      const added: any[] = campIDs.concat(BookingsItinerary.ActivityBookings.filter(zz => zz.CampID !== initialData.CampID)
+                            .map(zz => zz.CampID));
+      console.log(added);
+
+      if (added.length !== 0) {
+        this.mapLoader = true;
+        const distanceRequest = {
+          CurrentCampID: initialData.CampID,
+          CompareCamps: added
+        };
+
+        this.serv.checkDistances(distanceRequest, this.global.GetServer()).subscribe(res => {
+          if (res === false) {
+            this.addActivityModal(initialData);
+            this.mapLoader = false;
+          } else {
+            this.snack.open('You have booked at a camp that is 40KMs away from your other bookings. Unable to book here.', 'OK', {
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom',
+              duration: 5000
+            });
+          }
+        }, (error: HttpErrorResponse) => {
+          this.mapLoader = false;
+          this.snack.open('An Error occured on our servers, please try again.', 'OK', {
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            duration: 5000
+          });
+        });
+      } else {
+        this.addActivityModal(initialData);
+      }
+    } else {
+      this.addActivityModal(initialData);
+    }
+  }
+
+  bookDayVisit(initialData) {
+    const BookingItinerary: Booking = JSON.parse(localStorage.getItem('itinerary'));
+    let ParkIDs = [];
+    let flag = false;
+    console.log(initialData);
+    if (BookingItinerary) {
+      ParkIDs = ParkIDs.concat(BookingItinerary.AccommodationBookings.filter(zz => zz.ParkID !== initialData.ParkID).map(zz => zz.ParkID));
+      ParkIDs = ParkIDs.concat(BookingItinerary.ActivityBookings.filter(zz => zz.ParkID !== initialData.ParkID).map(zz => zz.ParkID));
+      if (ParkIDs[0] !== undefined) {
+        flag = true;
+      }
+    }
+
+    if (flag) {
+      this.snack.open('You have reservations in a different Park, you may only book at one park', 'OK', {
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+        duration: 5000
+      });
+    } else {
+      const day = this.dialog.open(AddDayvisitComponent, {
+        disableClose: true,
+        data: initialData
+      });
+    }
   }
 
 

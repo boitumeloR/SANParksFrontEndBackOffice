@@ -392,11 +392,20 @@ import { ProfileUpdateConfirmationComponent } from './modals/employee/profile-up
 import { ActiveDatesComponent } from 'src/app/modals/settings/active-dates/active-dates.component';
 import { UserTimeOutComponent } from 'src/app/modals/settings/user-time-out/user-time-out.component';
 import { ErrorModalComponent } from './modals/auxilliary-modals/error-modal/error-modal.component';
+import { AddAccommodationBookingComponent } from './modals/booking/add-accommodation-booking/add-accommodation-booking.component';
+import {TableModule} from 'primeng/table';
+import {PaginatorModule} from 'primeng/paginator';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { AddActivityBookingComponent } from './modals/booking/add-activity-booking/add-activity-booking.component';
+import { AddDayvisitComponent } from './modals/booking/add-dayvisit/add-dayvisit.component';
+import { AddAdultGuestComponent } from './modals/guest/add-adult-guest/add-adult-guest.component';
+import { AddChildGuestComponent } from './modals/guest/add-child-guest/add-child-guest.component';
+import { AddArbitraryGuestComponent } from './modals/guest/add-arbitrary-guest/add-arbitrary-guest.component';
+import { ViewAccommodationModalComponent } from './modals/booking/view-accommodation-modal/view-accommodation-modal.component';
 import { HelpComponent } from './subcomponents/help/help.component';
 import { SearchClientForWCComponent } from './pages/Purchase Wildcard/search-client-for-wc/search-client-for-wc.component';;
 import { PurchaseWildcardComponent } from './modals/purchase-wildcard/purchase-wildcard.component';
 import { UnsuccessfulWCPurchaseComponent } from './pages/Purchase Wildcard/unsuccessful-wcpurchase/unsuccessful-wcpurchase.component';
-
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -778,6 +787,13 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ActiveDatesComponent,
     UserTimeOutComponent,
     ErrorModalComponent,
+    AddAccommodationBookingComponent,
+    AddActivityBookingComponent,
+    AddDayvisitComponent,
+    AddAdultGuestComponent,
+    AddChildGuestComponent,
+    AddArbitraryGuestComponent,
+    ViewAccommodationModalComponent,
     HelpComponent,
     SearchClientForWCComponent,
     PurchaseWildcardComponent,
@@ -790,6 +806,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AddParkGateComponent
   ],
   imports: [
+    BsDatepickerModule.forRoot(),
+    TableModule,
+    PaginatorModule,
     NgxStripeModule.forRoot(environment.stripeKey),
     MatSnackBarModule,
     ChartModule,

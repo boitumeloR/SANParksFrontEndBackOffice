@@ -1,0 +1,30 @@
+<div class="dialog">
+    <h2 mat-dialog-title>View {{accommodation.AccommodationTypeName}}</h2>
+    <mat-dialog-content>
+        <div class="row justify-content-center">
+            <div class="col-md-10 align-items-center">
+              <!--<img src="https://lh3.googleusercontent.com/proxy/tgFK8KbSiCTtgVxASC50wpVnCD2SererY9casCOF_NKdpD5gDaStkdom_7zVETlI2F4gvA5rbqdvyi34nhgOAl36X4QMQokuBLra7SRFfKywz5E" alt=""> -->
+              <img src="{{accommodation.Image}}" class="card-img-top" alt="..." >
+            </div>
+            <h4>Base Rate: {{accommodation.BaseRate | currency:'ZAR' }} / Person</h4>
+            <div class="col-12">
+              <h5>Details</h5>
+            </div>
+            <div class="col-12">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item list-group-item-action">Description: {{accommodation.AccommodationTypeDescription}}</li>
+              </ul>
+            </div>
+            <div class="col-12">
+              <h5>Restrictions</h5>
+            </div>
+            <div class="col-12">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item list-group-item-action">Accommodation Maximum Capacity: {{accommodation.MaxCapacity}} persons</li>
+                <li class="list-group-item list-group-item-action">Base Adults: {{accommodation.BaseAdult}} adults</li>
+                <li class="list-group-item list-group-item-action">Base Children: {{accommodation.BaseChild}} children</li>
+              </ul>
+            </div>
+          </div>
+    </mat-dialog-content>
+</div>
