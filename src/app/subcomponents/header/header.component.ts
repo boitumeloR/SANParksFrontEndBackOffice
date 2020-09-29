@@ -8,7 +8,7 @@ import { tap } from 'rxjs/operators';
 import { EmployeeService } from 'src/app/services/Employee/employee.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewProfileComponent} from 'src/app/modals/employee/view-profile/view-profile.component';
-
+import {HelpComponent} from 'src/app/subcomponents/help/help.component';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -55,5 +55,9 @@ export class HeaderComponent implements OnInit {
         localStorage.setItem('loggedEmployee', JSON.stringify(result.Employees[0]));
       }
     });
+  }
+
+  getHelp(){
+    const displayHelpPage = this.dialog.open(HelpComponent);
   }
 }

@@ -25,11 +25,15 @@
             <input matInput value="{{accommodationType.NumBaths}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
-            <mat-label>Adult Limit</mat-label>
+            <mat-label>Max Capacity</mat-label>
+            <input matInput value="{{accommodationType.MaxLimit}}" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Base Adult Amount</mat-label>
             <input matInput value="{{accommodationType.AdultLimit}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
-            <mat-label>Child Limit</mat-label>
+            <mat-label>Base Child Amount</mat-label>
             <input matInput value="{{accommodationType.ChildLimit}}" readonly>
         </mat-form-field>
         <div class="imageHolder">

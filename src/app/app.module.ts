@@ -366,7 +366,6 @@ import { UpdateClientComponent } from './modals/client/update-client/update-clie
 import { UpdateClientConfirmationComponent } from './modals/client/update-client-confirmation/update-client-confirmation.component';
 import { UpdateClientSuccessfulComponent } from './modals/client/update-client-successful/update-client-successful.component';
 import { UpdateClientUnsuccessfulComponent } from './modals/client/update-client-unsuccessful/update-client-unsuccessful.component';
-import { PurchaseWildcardComponent } from './pages/Purchase Wildcard/purchase-wildcard/purchase-wildcard.component';
 import { PurchaseWildcardConfirmationComponent } from './pages/Purchase Wildcard/purchase-wildcard-confirmation/purchase-wildcard-confirmation.component';
 import { SuccessfulWildcardPurchaseComponent } from './pages/Purchase Wildcard/successful-wildcard-purchase/successful-wildcard-purchase.component';
 import { SearchWildcardMembershipComponent } from './pages/renew/search-wildcard-membership/search-wildcard-membership.component';
@@ -390,6 +389,8 @@ import { UpdateProfileComponent } from './modals/employee/update-profile/update-
 import { SuccessfulProfileUpdateComponent } from './modals/employee/successful-profile-update/successful-profile-update.component';
 import { UnsuccessfulProfileUpdateComponent } from './modals/employee/unsuccessful-profile-update/unsuccessful-profile-update.component';
 import { ProfileUpdateConfirmationComponent } from './modals/employee/profile-update-confirmation/profile-update-confirmation.component';
+import { ActiveDatesComponent } from 'src/app/modals/settings/active-dates/active-dates.component';
+import { UserTimeOutComponent } from 'src/app/modals/settings/user-time-out/user-time-out.component';
 import { ErrorModalComponent } from './modals/auxilliary-modals/error-modal/error-modal.component';
 import { AddAccommodationBookingComponent } from './modals/booking/add-accommodation-booking/add-accommodation-booking.component';
 import {TableModule} from 'primeng/table';
@@ -401,7 +402,10 @@ import { AddAdultGuestComponent } from './modals/guest/add-adult-guest/add-adult
 import { AddChildGuestComponent } from './modals/guest/add-child-guest/add-child-guest.component';
 import { AddArbitraryGuestComponent } from './modals/guest/add-arbitrary-guest/add-arbitrary-guest.component';
 import { ViewAccommodationModalComponent } from './modals/booking/view-accommodation-modal/view-accommodation-modal.component';
-
+import { HelpComponent } from './subcomponents/help/help.component';
+import { SearchClientForWCComponent } from './pages/Purchase Wildcard/search-client-for-wc/search-client-for-wc.component';;
+import { PurchaseWildcardComponent } from './modals/purchase-wildcard/purchase-wildcard.component';
+import { UnsuccessfulWCPurchaseComponent } from './pages/Purchase Wildcard/unsuccessful-wcpurchase/unsuccessful-wcpurchase.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -760,7 +764,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     UpdateClientConfirmationComponent,
     UpdateClientSuccessfulComponent,
     UpdateClientUnsuccessfulComponent,
-    PurchaseWildcardComponent,
     PurchaseWildcardConfirmationComponent,
     SuccessfulWildcardPurchaseComponent,
     SearchWildcardMembershipComponent,
@@ -781,6 +784,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     SuccessfulProfileUpdateComponent,
     UnsuccessfulProfileUpdateComponent,
     ProfileUpdateConfirmationComponent,
+    ActiveDatesComponent,
+    UserTimeOutComponent,
     ErrorModalComponent,
     AddAccommodationBookingComponent,
     AddActivityBookingComponent,
@@ -789,7 +794,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AddChildGuestComponent,
     AddArbitraryGuestComponent,
     ViewAccommodationModalComponent,
-
+    HelpComponent,
+    SearchClientForWCComponent,
+    PurchaseWildcardComponent,
+    UnsuccessfulWCPurchaseComponent
   ],
   entryComponents: [
     AddParkComponent,

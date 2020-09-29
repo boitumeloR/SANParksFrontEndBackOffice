@@ -66,15 +66,8 @@ export class AddActivityRateComponent implements OnInit {
 
     this.activityRateDetails = this.formBuilder.group({
       rateType: ['', Validators.required],
-      adultRate : ['', [Validators.required, Validators.min(0)]],
-      childRate : ['', [Validators.required, Validators.min(0)]],
-      vehicleAmount : ['', [Validators.required, Validators.min(0)]],
-      hutAmount : ['', [Validators.required, Validators.min(0)]],
       personAmount : ['', [Validators.required, Validators.min(0)]],
-      bikeAmount : ['', [Validators.required, Validators.min(0)]],
-      noBikeAmunt : ['', [Validators.required, Validators.min(0)]],
       dateEffective : ['', Validators.required]
-
     });
   }
 
@@ -99,13 +92,7 @@ export class AddActivityRateComponent implements OnInit {
          const user = JSON.parse(localStorage.getItem('user'));
 
          const newActivityRate = {
-          AdultRateAmount: this.activityRateDetails.get('adultRate').value,
-          ChildRateAmount: this.activityRateDetails.get('childRate').value,
-          VehicleAmount: this.activityRateDetails.get('vehicleAmount').value,
-          HutAmount: this.activityRateDetails.get('hutAmount').value,
           PersonAmount: this.activityRateDetails.get('personAmount').value,
-          BikeAmount: this.activityRateDetails.get('bikeAmount').value,
-          NoBikeAmount: this.activityRateDetails.get('noBikeAmunt').value,
           RateTypeID: this.activityRateDetails.get('rateType').value,
           ActivityID: this.selectActivityForm.get('activity').value,
           CampID: this.selectActivityForm.get('camp').value,
