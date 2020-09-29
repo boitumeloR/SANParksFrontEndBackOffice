@@ -5,8 +5,8 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Guest Nationality</mat-label>
-            <mat-select formControlName="park" formControlName = "CountryID">
-                <mat-option *ngFor="let item of countries" [value]="item.CountryID" (change)="changeCountry()">{{item.CountryName}}</mat-option>
+            <mat-select formControlName = "CountryID">
+                <mat-option *ngFor="let item of countries" [value]="item.CountryID" (click)="changeCountry()">{{item.CountryName}}</mat-option>
             </mat-select>
           </mat-form-field>
         <mat-form-field appearance="fill">

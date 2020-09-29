@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AvailabilityService } from 'src/app/services/Available/availability.service';
 import { AccommodationBooking, Booking } from 'src/app/services/Booking/booking.service';
@@ -43,15 +43,15 @@ export class AddAccommodationBookingComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, public dialogRef: MatDialogRef<AddAccommodationBookingComponent>,
               private serv: AvailabilityService, private global: GlobalService, private router: Router,
-              private dialog: MatDialog) {
+              private dialog: MatDialog, @Inject(MAT_DIALOG_DATA) private data: any) {
     const Dates = JSON.parse(localStorage.getItem('Dates'));
     this.minDate = this.parseDate(Dates[0].Date);
     this.maxDate = this.parseDate(Dates[Dates.length - 1].Date);
    }
 
   ngOnInit(): void {
+    this.initialData = this.data.accommodationData;
     console.log(this.initialData);
-
     const Dates = JSON.parse(localStorage.getItem('Dates'));
     this.bsRangeValue = Dates.map(zz => zz.Date);
     this.bsRangeValue = this.bsRangeValue.map(zz => this.parseDate(zz));

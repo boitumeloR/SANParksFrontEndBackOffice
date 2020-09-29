@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AvailabilityService } from 'src/app/services/Available/availability.service';
+import { BookingService } from 'src/app/services/Booking/booking.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { LoginService } from 'src/app/services/Login/login.service';
 
@@ -19,7 +21,7 @@ export class AddAdultGuestComponent implements OnInit {
   idLabelName = 'Identity Number';
   public event: EventEmitter<any> = new EventEmitter<any>();
   constructor(private dialogRef: MatDialogRef<AddAdultGuestComponent>, private snack: MatSnackBar,
-              private formBuilder: FormBuilder, private countryServ: LoginService,
+              private formBuilder: FormBuilder, private countryServ: AvailabilityService,
               private global: GlobalService) { }
 
   ngOnInit(): void {
@@ -38,7 +40,7 @@ export class AddAdultGuestComponent implements OnInit {
 
   changeCountry(): void {
     console.log(this.guestInfo.value);
-    if (this.guestInfo.get('CountryID').value === '1') {
+    if (this.guestInfo.get('CountryID').value === 1) {
       this.idLabelName = 'Identity Number';
     } else {
       this.idLabelName = 'Passport Number';

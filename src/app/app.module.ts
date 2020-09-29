@@ -400,6 +400,7 @@ import { AddDayvisitComponent } from './modals/booking/add-dayvisit/add-dayvisit
 import { AddAdultGuestComponent } from './modals/guest/add-adult-guest/add-adult-guest.component';
 import { AddChildGuestComponent } from './modals/guest/add-child-guest/add-child-guest.component';
 import { AddArbitraryGuestComponent } from './modals/guest/add-arbitrary-guest/add-arbitrary-guest.component';
+import { ViewAccommodationModalComponent } from './modals/booking/view-accommodation-modal/view-accommodation-modal.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -787,7 +788,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AddAdultGuestComponent,
     AddChildGuestComponent,
     AddArbitraryGuestComponent,
-    
+    ViewAccommodationModalComponent,
+
   ],
   entryComponents: [
     AddParkComponent,
