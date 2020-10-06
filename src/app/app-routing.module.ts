@@ -50,10 +50,15 @@ import { ForgotPasswordComponent } from './subcomponents/login/forgot-password/f
 import { ResetPasswordComponent } from './subcomponents/login/reset-password/reset-password.component';
 import { ActiveDatesComponent } from './modals/settings/active-dates/active-dates.component';
 import { UserTimeOutComponent } from './modals/settings/user-time-out/user-time-out.component';
+import { DashBoardHomeComponent } from './subcomponents/dash-board-home/dash-board-home.component';
 const routes: Routes = [
   {
     path: 'Park',
     component: ParkComponent
+  },
+  {
+    path: 'Home',
+    component: DashBoardHomeComponent
   },
   {
     path: 'Active-Dates',

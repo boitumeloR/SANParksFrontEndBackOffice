@@ -10,8 +10,9 @@ import {UpdateAccomodationUnsuccessfulComponent} from 'src/app/modals/accomodati
 import {DeleteAccomodationSuccessfulComponent} from 'src/app/modals/accomodation/delete-accomodation-successful/delete-accomodation-successful.component';
 import {DeleteAccomodationUnsuccessfulComponent} from 'src/app/modals/accomodation/delete-accomodation-unsuccessful/delete-accomodation-unsuccessful.component';
 import { Router } from '@angular/router';
-
-
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { AccommodationaddedComponent} from 'src/app/workflows/accommodationadded/accommodationadded.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface Accommodation{
   AccommodationID: number;
   UnitNumber: number;
@@ -29,7 +30,7 @@ export interface Accommodation{
 export class AccommodationService {
 
   constructor(private dialog: MatDialog , private http: HttpClient,
-              private router: Router) { }
+              private router: Router, private bottomSheet: MatBottomSheet ) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -37,6 +38,7 @@ export class AccommodationService {
   }
 
   createAccommodation(Accommodation, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/accommodation/createAccommodation`, Accommodation).subscribe((addResult: any) => {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -49,16 +51,23 @@ export class AccommodationService {
       }
       else{
         localStorage.setItem('user', JSON.stringify(addResult.user));
-        this.refresh.next();
         const addAccomodationSuccessfulDialog = this.dialog.open(AddAccomodationSuccessfulComponent);
+        this.refresh.next();
+
+        addAccomodationSuccessfulDialog.afterClosed().subscribe(() => {
+          const parkFlowSheet =  this.bottomSheet.open(AccommodationaddedComponent);
+         });
       }
+      displaySpinner.close();
     });
   }
   readAccommodation(link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     const user = JSON.parse(localStorage.getItem('user'));
     return this.http.post(`${link}/api/accommodation/getAccommodations`, user);
   }
   updateAccommodation(updatedAccommodation, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/accommodation/updateAccommodation`, updatedAccommodation).subscribe((updateResult: any) => {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -74,9 +83,11 @@ export class AccommodationService {
         this.refresh.next();
         const updateAccomodationSuccessfulDialog = this.dialog.open(UpdateAccomodationSuccessfulComponent);
       }
+      displaySpinner.close();
     });
   }
   deleteAccommodation(user, AccommodationID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/accommodation/deleteAccommodation?accommodationID=${AccommodationID}`, user).
     subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -93,6 +104,7 @@ export class AccommodationService {
         this.refresh.next();
         const deleteAccomodationSuccessfulDialog = this.dialog.open(DeleteAccomodationSuccessfulComponent);
       }
+      displaySpinner.close();
     });
   }
   readAccommodationsForAccTypeCamp(accommodationTypeID, campID, link){

@@ -12,8 +12,9 @@ import {UpdateAmenityTypeSuccessfulComponent} from 'src/app/modals/amenity-type/
 import {UpdateAmenityTypeUnsuccessfulComponent} from 'src/app/modals/amenity-type/update-amenity-type-unsuccessful/update-amenity-type-unsuccessful.component';
 import { Router } from '@angular/router';
 import { LoginService } from '../Login/login.service';
-
-
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { AmenitytypeaddedComponent} from 'src/app/workflows/amenitytypeadded/amenitytypeadded.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface AmenityType{
   AmenityTypeID: number;
   AmenityTypeName: string;
@@ -29,7 +30,7 @@ export interface AmenityTypeDropDown{
 })
 export class AmenityTypeService {
   constructor(private global: GlobalService , private router: Router, private http: HttpClient, private dialog: MatDialog,
-              private loginService: LoginService) { }
+              private loginService: LoginService, private bottomSheet: MatBottomSheet ) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -37,6 +38,7 @@ export class AmenityTypeService {
   }
 
   createAmenityType(AmenityType, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/amenityType/createAmenityType`, AmenityType).subscribe((addResult: any) => {
       if (addResult.Error){
        localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -51,7 +53,12 @@ export class AmenityTypeService {
         localStorage.setItem('user', JSON.stringify(addResult.user));
         const addAmenityTypeSuccessfulDialog = this.dialog.open(AddAmenityTypeSuccessfulComponent);
         this.refresh.next();
+
+        addAmenityTypeSuccessfulDialog.afterClosed().subscribe(() => {
+          const parkFlowSheet =  this.bottomSheet.open(AmenitytypeaddedComponent);
+         });
       }
+      displaySpinner.close();
     });
   }
 
@@ -61,6 +68,7 @@ export class AmenityTypeService {
   }
 
   updateAmenityType(updatedAmenityType, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/amenityType/updateAmenityType`, updatedAmenityType).subscribe((updateResult: any) => {
       if (updateResult.Error){
        localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -76,10 +84,12 @@ export class AmenityTypeService {
         const updateAmenityTypeSuccessfulDialog = this.dialog.open(UpdateAmenityTypeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 
   deleteAmenityType(user, AmenityTypeID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/amenityType/deleteAmenityType?amenityTypeID=${AmenityTypeID}`, user).
     subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -96,6 +106,7 @@ export class AmenityTypeService {
         const deleteAmenityTypeSuccessfulDialog = this.dialog.open(DeleteAmenityTypeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
 
   }

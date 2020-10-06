@@ -58,6 +58,15 @@ export class HeaderComponent implements OnInit {
   }
 
   getHelp(){
-    const displayHelpPage = this.dialog.open(HelpComponent);
+    const displayHelpPage = this.dialog.open(HelpComponent, {disableClose: true});
+    const speech =  new SpeechSynthesisUtterance();
+    speech.volume = 1;
+    speech.rate = 1;
+    speech.pitch = 1;
+    this.employeeService.viewProfile(this.globalService.GetServer()).subscribe((response: any) => {
+      console.log(response);
+      speech.text = `Welcome ${response.Employees[0].EmployeeName} ${response.Employees[0].EmployeeSurname}. My name is Tabu, how may I help you today?`;
+      window.speechSynthesis.speak(speech);
+    });
   }
 }

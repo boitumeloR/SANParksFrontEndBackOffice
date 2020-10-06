@@ -11,6 +11,9 @@ import {UpdateParkUnsuccessfulComponent} from 'src/app/modals/park/update-park-u
 import { DeleteParkSuccessfulComponent } from 'src/app/modals/park/delete-park-successful/delete-park-successful.component';
 import { DeleteParkUnsuccessfulComponent } from 'src/app/modals/park/delete-park-unsuccessful/delete-park-unsuccessful.component';
 import { Router } from '@angular/router';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import {ParkaddedComponent} from 'src/app/workflows/parkadded/parkadded.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface Park {
   ParkID: number;
   ParkName: string;
@@ -30,7 +33,7 @@ export interface ParkDropdown {
 })
 export class ParkService {
   constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog,
-              private router: Router) { }
+              private router: Router, private bottomSheet: MatBottomSheet) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -38,6 +41,7 @@ export class ParkService {
   }
 
   CreatePark(Park, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/Park/CreatePark`, Park).subscribe((addResult: any) => {
       if (addResult.Error){
        localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -52,16 +56,23 @@ export class ParkService {
        localStorage.setItem('user', JSON.stringify(addResult.user));
        const addParkSuccessfulDialog = this.dialog.open(AddParkSuccessfulComponent);
        this.refresh.next();
+
+       addParkSuccessfulDialog.afterClosed().subscribe(() => {
+        const parkFlowSheet =  this.bottomSheet.open(ParkaddedComponent);
+       });
       }
+      displaySpinner.close();
     });
   }
 
   ReadPark(link){
      const user = JSON.parse(localStorage.getItem('user'));
      return this.http.post(`${link}/api/Park/getPark`, user);
+
   }
 
   UpdatePark(Park, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/Park/UpdatePark`, Park).subscribe((updateResult: any) => {
       if (updateResult.Error){
        localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -77,10 +88,12 @@ export class ParkService {
        const updateParkSuccessfulDialog = this.dialog.open(UpdateParkSuccessfulComponent);
        this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 
   DeletePark(user, ParkID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/Park/DeletePark?parkID=${ParkID}`, user).subscribe((deleteResult: any) => {
       if (deleteResult.Error){
         localStorage.setItem('user', JSON.stringify(deleteResult.user));
@@ -96,6 +109,11 @@ export class ParkService {
         const deleteParkSuccessfulDialog = this.dialog.open(DeleteParkSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
+  }
+
+  ReadVisualizerData(link){
+    return this.http.get(`${link}/api/Park/getHomeData`);
   }
 }

@@ -10,7 +10,7 @@ import { UpdateActivitySlotUnsuccessfulComponent} from 'src/app/modals/activity-
 import { DeleteActivitySlotSuccessfulComponent} from 'src/app/modals/activity-slot/delete-activity-slot-successful/delete-activity-slot-successful.component';
 import { DeleteActivitySlotUnsuccessfulComponent} from 'src/app/modals/activity-slot/delete-activity-slot-unsuccessful/delete-activity-slot-unsuccessful.component';
 import { Router } from '@angular/router';
-
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface ActivitySlot {
   ActivitySlotID: number;
   ActivityID: number;
@@ -37,6 +37,7 @@ export class ActivitySlotService {
   }
 
   CreateActivitySlot(ActivitySlot, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/activitySlot/createActivitySlot`, ActivitySlot).subscribe((addResult: any) => {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -52,6 +53,7 @@ export class ActivitySlotService {
         const addActivitySlotSuccessfulDialog = this.dialog.open(AddActivitySlotSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 
@@ -61,6 +63,7 @@ export class ActivitySlotService {
   }
 
   UpdateActivitySlot(ActivitySlot, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/activitySlot/updateActivitySlot`, ActivitySlot).subscribe((updateResult: any) => {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -76,10 +79,12 @@ export class ActivitySlotService {
         const updateActivitySlotSuccessfulDialog = this.dialog.open(UpdateActivitySlotSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 
   DeleteActivitySlot(user, ActivitySlotID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/activitySlot/deleteActivitySlot?activitySlotID=${ActivitySlotID}`, user).
     subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -96,6 +101,7 @@ export class ActivitySlotService {
         const deleteActivitySlotSuccessfulDialog = this.dialog.open(DeleteActivitySlotSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 }

@@ -10,7 +10,9 @@ import {UpdateWildcardClusterUnsuccessfulComponent} from 'src/app/modals/wildcar
 import { DeleteWildcardClusterSuccessfulComponent } from 'src/app/modals/wildcard-cluster/delete-wildcard-cluster-successful/delete-wildcard-cluster-successful.component';
 import { DeleteWildcardClusterUnsuccessfulComponent } from 'src/app/modals/wildcard-cluster/delete-wildcard-cluster-unsuccessful/delete-wildcard-cluster-unsuccessful.component';
 import { Router } from '@angular/router';
-
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import {WildcardClusterAddedComponent} from 'src/app/workflows/wildcard-cluster-added/wildcard-cluster-added.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface WildcardCluster {
   WildcardClusterID: number;
   WildcardClusterDescription: string;
@@ -29,7 +31,7 @@ export interface WildcardClusterDropDown {
 
 export class WildcardClusterService {
   constructor(private http: HttpClient, private dialog: MatDialog,
-              private router: Router) { }
+              private router: Router, private bottomSheet: MatBottomSheet) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -37,6 +39,7 @@ export class WildcardClusterService {
   }
 
   CreateWildcardCluster(WildcardCluster, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/wildcardCluster/createWildcardCluster`, WildcardCluster).subscribe((addResult: any) => {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -51,7 +54,12 @@ export class WildcardClusterService {
         localStorage.setItem('user', JSON.stringify(addResult.user));
         const addWildcardClusterSuccessfulDialog = this.dialog.open(AddWildcardClusterSuccessfulComponent);
         this.refresh.next();
+
+        addWildcardClusterSuccessfulDialog.afterClosed().subscribe(() => {
+          const parkFlowSheet =  this.bottomSheet.open(WildcardClusterAddedComponent);
+         });
       }
+      displaySpinner.close();
     });
   }
 
@@ -61,6 +69,7 @@ export class WildcardClusterService {
   }
 
   UpdateWildcardCluster(WildcardCluster, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/wildcardCluster/updateWildcardCluster`, WildcardCluster).subscribe((updateResult: any) => {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -76,10 +85,12 @@ export class WildcardClusterService {
         const updateWildcardClusterSuccessfulDialog = this.dialog.open(UpdateWildcardClusterSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 
   DeleteWildcardCluster(user, WildcardClusterID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/wildcardCluster/deleteWildcardCluster?wildcardClusterID=${WildcardClusterID}`, user)
     .subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -96,6 +107,7 @@ export class WildcardClusterService {
         const deleteWildcardClusterSuccessfulDialog = this.dialog.open(DeleteWildcardClusterSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 }

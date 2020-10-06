@@ -1,0 +1,21 @@
+<div>
+    <button id="alignCloseRight" mat-icon-button align="end" color="warn" (click)="closeSheet()" aria-label="Close">
+        <mat-icon>close</mat-icon>
+    </button>
+    <h2 mat-dialog-title>Suggestions for you next action:</h2>
+    <br>
+    <div class="bottom-sheet">
+        <div> Do you want to add a park gate? </div>
+        <button mat-button class="change" type="submit" color="warn" (click)="openParkGate()">Yes</button>
+    </div>
+
+    <div class="bottom-sheet">
+        <div> Do you want to add a daily conservation fee? </div>
+        <button mat-button class="change" type="submit" color="warn" (click)="openDailyConservationFee()">Yes</button>
+    </div>
+
+    <div class="bottom-sheet">
+        <div> Do you want to add a camp? </div>
+        <button mat-button class="change" type="submit" color="warn" (click)="openCamp()">Yes</button>
+    </div>
+</div>
