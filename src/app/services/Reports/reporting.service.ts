@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,5 +6,14 @@ import { Injectable } from '@angular/core';
 })
 export class ReportingService {
 
-  constructor() { }
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+  constructor(private http: HttpClient) { }
+
+  GetWeeklyBookingReport(server: string, filterData: any) {
+    return this.http.post<any>(`${server}/api/Report/WeeklyBooking`, filterData, this.httpOptions);
+  }
 }
