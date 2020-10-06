@@ -10,7 +10,9 @@ import { UpdateAccomodationTypeUnsuccessfulComponent} from 'src/app/modals/accom
 import { DeleteAccomodationTypeSuccessfulComponent} from 'src/app/modals/accomodation-type/delete-accomodation-type-successful/delete-accomodation-type-successful.component';
 import { DeleteAccomodationTypeUnsuccessfulComponent} from 'src/app/modals/accomodation-type/delete-accomodation-type-unsuccessful/delete-accomodation-type-unsuccessful.component';
 import { Router } from '@angular/router';
-
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { AccommodationtypeaddedComponent} from 'src/app/workflows/accommodationtypeadded/accommodationtypeadded.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface AccommodationType{
   AccommodationTypeID: number;
   AccTypeName: string;
@@ -32,7 +34,7 @@ export interface AccommodationTypeDropDown{
 export class AccommodationTypeService {
 
   constructor(private dialog: MatDialog, private http: HttpClient,
-              private router: Router) { }
+              private router: Router, private bottomSheet: MatBottomSheet ) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -40,6 +42,7 @@ export class AccommodationTypeService {
   }
 
   createAccommodationType(accommodationType, link: string){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/accommodationType/createAccommodationType`, accommodationType).subscribe((addResult: any) => {
       if (addResult.Error){
         const addAccomodationTypeUnsuccessfulDialog = this.dialog.open(AddAccomodationTypeUnsuccessfulComponent);
@@ -54,7 +57,12 @@ export class AccommodationTypeService {
         const addAccomodationTypeSuccessfulDialog = this.dialog.open(AddAccomodationTypeSuccessfulComponent);
         localStorage.setItem('user', JSON.stringify(addResult.user));
         this.refresh.next();
+
+        addAccomodationTypeSuccessfulDialog.afterClosed().subscribe(() => {
+          const parkFlowSheet =  this.bottomSheet.open(AccommodationtypeaddedComponent);
+         });
       }
+      displaySpinner.close();
     });
   }
   readAccommodationType(link){
@@ -62,6 +70,7 @@ export class AccommodationTypeService {
     return this.http.post(`${link}/api/accommodationType/getAccommodationType`, user);
   }
   updateAccommodationType(updatedAccommodationType, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/accommodationType/updateAccommodationType`, updatedAccommodationType).
     subscribe((updateResult: any) => {
       if (updateResult.Error){
@@ -77,11 +86,12 @@ export class AccommodationTypeService {
         const updatAccomodationTypeSuccessfulDialog = this.dialog.open(UpdateAccomodationTypeSuccessfulComponent);
         localStorage.setItem('user', JSON.stringify(updateResult.user));
         this.refresh.next();
-
       }
+      displaySpinner.close();
     });
   }
   deleteAccommodationType(user, AccommodationTypeID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/accommodationType/deleteAccommodationType?accommodationTypeID=${AccommodationTypeID}`, user).
     subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -98,8 +108,8 @@ export class AccommodationTypeService {
         const deleteAccomodationTypeSuccessfulDialog = this.dialog.open(DeleteAccomodationTypeSuccessfulComponent);
         localStorage.setItem('user', JSON.stringify(deleteResult.user));
         this.refresh.next();
-
       }
+      displaySpinner.close();
     });
   }
   getAccomomodationTypesForCamp(campID, link){

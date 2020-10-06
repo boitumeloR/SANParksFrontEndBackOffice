@@ -406,6 +406,23 @@ import { HelpComponent } from './subcomponents/help/help.component';
 import { SearchClientForWCComponent } from './pages/Purchase Wildcard/search-client-for-wc/search-client-for-wc.component';;
 import { PurchaseWildcardComponent } from './modals/purchase-wildcard/purchase-wildcard.component';
 import { UnsuccessfulWCPurchaseComponent } from './pages/Purchase Wildcard/unsuccessful-wcpurchase/unsuccessful-wcpurchase.component';
+import { DashBoardHomeComponent } from './subcomponents/dash-board-home/dash-board-home.component';
+import { ParkaddedComponent } from './workflows/parkadded/parkadded.component';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { ParkgateaddedComponent } from './workflows/parkgateadded/parkgateadded.component';
+import { SeasonaddedComponent } from './workflows/seasonadded/seasonadded.component';
+import { CamptypeaddedComponent } from './workflows/camptypeadded/camptypeadded.component';
+import { CampaddedComponent } from './workflows/campadded/campadded.component';
+import { AccommodationtypeaddedComponent } from './workflows/accommodationtypeadded/accommodationtypeadded.component';
+import { AccommodationaddedComponent } from './workflows/accommodationadded/accommodationadded.component';
+import { AmenitytypeaddedComponent } from './workflows/amenitytypeadded/amenitytypeadded.component';
+import { AmenityAddedComponent } from './workflows/amenity-added/amenity-added.component';
+import { ActivityTypeAddedComponent } from './workflows/activity-type-added/activity-type-added.component';
+import { ActivityAddedComponent } from './workflows/activity-added/activity-added.component';
+import { WildcardClusterAddedComponent } from './workflows/wildcard-cluster-added/wildcard-cluster-added.component';
+import { WildcardCategoryAddedComponent } from './workflows/wildcard-category-added/wildcard-category-added.component';
+import { UserRoleAddComponent } from './workflows/user-role-add/user-role-add.component';
+import { SpinnerComponent } from './subcomponents/spinner/spinner.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -797,7 +814,23 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     HelpComponent,
     SearchClientForWCComponent,
     PurchaseWildcardComponent,
-    UnsuccessfulWCPurchaseComponent
+    UnsuccessfulWCPurchaseComponent,
+    DashBoardHomeComponent,
+    ParkaddedComponent,
+    ParkgateaddedComponent,
+    SeasonaddedComponent,
+    CamptypeaddedComponent,
+    CampaddedComponent,
+    AccommodationtypeaddedComponent,
+    AccommodationaddedComponent,
+    AmenitytypeaddedComponent,
+    AmenityAddedComponent,
+    ActivityTypeAddedComponent,
+    ActivityAddedComponent,
+    WildcardClusterAddedComponent,
+    WildcardCategoryAddedComponent,
+    UserRoleAddComponent,
+    SpinnerComponent
   ],
   entryComponents: [
     AddParkComponent,
@@ -811,6 +844,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     PaginatorModule,
     NgxStripeModule.forRoot(environment.stripeKey),
     MatSnackBarModule,
+    MatBottomSheetModule,
     ChartModule,
     SimplebarAngularModule,
     ReactiveFormsModule,

@@ -53,7 +53,7 @@ export class LoginService {
         const user = JSON.parse(localStorage.getItem('user'));
         const loggedUser =  user.RoleID;
         this.UserRole.next(loggedUser);
-        this.router.navigate(['/Park']);
+        this.router.navigate(['/Home']);
       }
       else{
         this.authorizationError();

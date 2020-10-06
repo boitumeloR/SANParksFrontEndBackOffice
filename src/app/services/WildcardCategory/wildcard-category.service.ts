@@ -11,6 +11,9 @@ import { UpdateWildcardCategoryUnsuccessfulComponent} from 'src/app/modals/wildc
 import { DeleteWildcardCategorySuccessfulComponent} from 'src/app/modals/wildcard-category/delete-wildcard-category-successful/delete-wildcard-category-successful.component';
 import { DeleteWildcardCategoryUnsuccessfulComponent} from 'src/app/modals/wildcard-category/delete-wildcard-category-unsuccessful/delete-wildcard-category-unsuccessful.component';
 import { Router } from '@angular/router';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import {WildcardCategoryAddedComponent} from 'src/app/workflows/wildcard-category-added/wildcard-category-added.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface WildcardCategory {
   WildcardCategoryID: number;
   CategoryDescription: string;
@@ -30,7 +33,7 @@ export interface WildcardCategoryDropDown {
 })
 export class WildcardCategoryService {
   constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog, 
-              private router: Router) { }
+              private router: Router, private bottomSheet: MatBottomSheet) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -38,6 +41,7 @@ export class WildcardCategoryService {
   }
 
   CreateWildcardCategory(WildcardCategory, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/WildcardCategory/CreateWildcardCategory`, WildcardCategory).subscribe((addResult: any) => {
       if (addResult.Error){
        localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -52,7 +56,12 @@ export class WildcardCategoryService {
         localStorage.setItem('user', JSON.stringify(addResult.user));
         const addWildcardCategorySuccessfulComponent = this.dialog.open(AddWildcardCategorySuccessfulComponent);
         this.refresh.next();
+
+        addWildcardCategorySuccessfulComponent.afterClosed().subscribe(() => {
+          const parkFlowSheet =  this.bottomSheet.open(WildcardCategoryAddedComponent);
+         });
       }
+      displaySpinner.close();
     });
   }
 
@@ -62,6 +71,7 @@ export class WildcardCategoryService {
   }
 
   UpdateWildcardCategory(WildcardCategory, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/WildcardCategory/UpdateWildcardCategory`, WildcardCategory).subscribe((updateResult: any) => {
       if (updateResult.Error){
        localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -77,10 +87,12 @@ export class WildcardCategoryService {
        const updateWildcardCategorySuccessfulComponent = this.dialog.open(UpdateWildcardCategorySuccessfulComponent);
        this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 
   DeleteWildcardCategory(user , WildcardCategoryID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/WildcardCategory/DeleteWildcardCategory?wildcardCategoryID=${WildcardCategoryID}`, user ).
     subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -97,6 +109,7 @@ export class WildcardCategoryService {
         const deleteWildcardCategorySuccessfulComponent = this.dialog.open(DeleteWildcardCategorySuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 }

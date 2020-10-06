@@ -12,7 +12,7 @@ import { DeleteDailyConservationFeeSuccessfulComponent } from 'src/app/modals/da
 import { DeleteDailyConservationFeeUnsuccessfulComponent } from 'src/app/modals/daily-conservation-fee/delete-daily-conservation-fee-unsuccessful/delete-daily-conservation-fee-unsuccessful.component';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface DailyConservationFee {
   ConservationID: number;
   ParkID: number;
@@ -44,6 +44,7 @@ export class DailyConservationFeeService {
   }
 
   CreateDailyConservationFee(DailyConservationFee, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/dailyConservationFee/createDailyConservationFee`, DailyConservationFee).subscribe((addResult: any) => {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -64,6 +65,7 @@ export class DailyConservationFeeService {
         const addDailyConservationFeeSuccessfulDialog = this.dialog.open(AddDailyConservationFeeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
   rateExistsError(year) {
@@ -78,6 +80,7 @@ export class DailyConservationFeeService {
   }
 
   UpdateDailyConservationFee(DailyConservationFee, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/dailyConservationFee/updateDailyConservation`, DailyConservationFee).subscribe((updateResult: any) => {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -96,11 +99,14 @@ export class DailyConservationFeeService {
       else{
         localStorage.setItem('user', JSON.stringify(updateResult.user));
         const updateDailyConservationFeeSuccessfulDialog = this.dialog.open(UpdateDailyConservationFeeSuccessfulComponent);
-        this.refresh.next();      }
+        this.refresh.next();
+      }
+      displaySpinner.close();
     });
   }
 
   DeleteDailyConservationFee(user, link, ConservationID){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/dailyConservationFee/deleteDailyConservationFee?dailyConservationFeeID=${ConservationID}`, user)
     .subscribe((updateResult: any) => {
       if (updateResult.Error){
@@ -117,6 +123,7 @@ export class DailyConservationFeeService {
         const deleteDailyConservationFeeSuccessfulDialog = this.dialog.open(DeleteDailyConservationFeeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 

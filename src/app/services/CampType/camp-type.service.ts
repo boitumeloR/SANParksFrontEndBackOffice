@@ -11,9 +11,9 @@ import { UpdateCampTypeUnsuccessfulComponent} from 'src/app/modals/camp-type/upd
 import { DeleteCampTypeSuccessfulComponent} from 'src/app/modals/camp-type/delete-camp-type-successful/delete-camp-type-successful.component';
 import { DeleteCampTypeUnsuccessfulComponent} from 'src/app/modals/camp-type/delete-camp-type-unsuccessful/delete-camp-type-unsuccessful.component';
 import { Router } from '@angular/router';
-
-
-
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import {CamptypeaddedComponent} from 'src/app/workflows/camptypeadded/camptypeadded.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface CampType {
   CampTypeID: number;
   CampTypeDescription: string;
@@ -29,7 +29,8 @@ export interface CampTypeDropDown {
   providedIn: 'root'
 })
 export class CampTypeService {
-  constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog, private router: Router) { }
+  constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog, private router: Router,
+              private bottomSheet: MatBottomSheet) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -37,6 +38,7 @@ export class CampTypeService {
   }
 
   CreateCampType(CampType, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/CampType/CreateCampType`, CampType).subscribe((addResult: any) => {
       if (addResult.Error){
        localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -51,7 +53,12 @@ export class CampTypeService {
        localStorage.setItem('user', JSON.stringify(addResult.user));
        const addCampTypeSuccessfulDialog = this.dialog.open(AddCampTypeSuccessfulComponent);
        this.refresh.next();
+
+       addCampTypeSuccessfulDialog.afterClosed().subscribe(() => {
+        const parkFlowSheet =  this.bottomSheet.open(CamptypeaddedComponent);
+       });
       }
+      displaySpinner.close();
     });
   }
 
@@ -61,6 +68,7 @@ export class CampTypeService {
   }
 
   UpdateCampType(CampType, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/CampType/UpdateCampType`, CampType).subscribe((UpdateResult: any) => {
       if (UpdateResult.Error){
        localStorage.setItem('user', JSON.stringify(UpdateResult.user));
@@ -76,10 +84,12 @@ export class CampTypeService {
        const updateCampTypeSuccessfulDialog = this.dialog.open(UpdateCampTypeSuccessfulComponent);
        this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 
   DeleteCampType(user, CampTypeID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/CampType/DeleteCampType?campTypeID=${CampTypeID}`, user).subscribe((deleteResult: any) => {
       if (deleteResult.Error){
         localStorage.setItem('user', JSON.stringify(deleteResult.user));
@@ -95,6 +105,7 @@ export class CampTypeService {
         const deleteCampTypeSuccessfulDialog = this.dialog.open(DeleteCampTypeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 }

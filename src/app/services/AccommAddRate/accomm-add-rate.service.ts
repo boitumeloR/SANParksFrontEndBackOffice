@@ -11,6 +11,7 @@ import {DeleteAccomodationAddRateSuccessfulComponent} from 'src/app/modals/accom
 import {DeleteAccomodationAddRateUnsuccessfulComponent} from 'src/app/modals/accomodation-add-rate/delete-accomodation-add-rate-unsuccessful/delete-accomodation-add-rate-unsuccessful.component';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 
 export interface AccommodationTypeAddRate{
   AddRateID: number;
@@ -34,6 +35,7 @@ export class AccommAddRateService {
   }
 
   createAccommodationTypeAddRate(AccommodationTypeAddRate, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/AccommodationAddRate/createAddRate`, AccommodationTypeAddRate).subscribe((addResult: any) => {
       if (addResult.Error){
         const addAccomodationAddRateUnsuccessfulDialog = this.dialog.open(AddAccomodationAddRateUnsuccessfulComponent);
@@ -54,6 +56,7 @@ export class AccommAddRateService {
         localStorage.setItem('user', JSON.stringify(addResult.user));
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 
@@ -67,6 +70,8 @@ export class AccommAddRateService {
     return this.http.post(`${link}/api/AccommodationAddRate/getAddRate`, user);
   }
   updateAccommodationTypeAddRate(updatedAccommodationTypeAddRate, link){
+
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/AccommodationAddRate/updateAddRate`, updatedAccommodationTypeAddRate)
     .subscribe((updateResult: any) => {
       if (updateResult.Error){
@@ -88,9 +93,11 @@ export class AccommAddRateService {
         localStorage.setItem('user', JSON.stringify(updateResult.user));
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
   deleteAccommodationTypeAddRate(user, AddRateID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/AccommodationAddRate/deleteAddRate?addRateID=${AddRateID}`, user).subscribe((deleteResult: any) => {
       if (deleteResult.Error){
         const deleteAccomodationAddRateUnsuccessfulDialog = this.dialog.open(DeleteAccomodationAddRateUnsuccessfulComponent);
@@ -106,6 +113,7 @@ export class AccommAddRateService {
         localStorage.setItem('user', JSON.stringify(deleteResult.user));
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 }

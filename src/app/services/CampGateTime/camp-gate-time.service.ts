@@ -12,7 +12,7 @@ import {UpdateCampGateTimeUnsuccessfulComponent} from 'src/app/modals/camp-gate-
 import { DeleteCampGateTimeSuccessfulComponent } from 'src/app/modals/camp-gate-time/delete-camp-gate-time-successful/delete-camp-gate-time-successful.component';
 import { DeleteCampGateTimeUnsuccessfulComponent } from 'src/app/modals/camp-gate-time/delete-camp-gate-time-unsuccessful/delete-camp-gate-time-unsuccessful.component';
 import { Router } from '@angular/router';
-
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface CampGateTime{
   CampGateTimeID: number;
   CampID: number;
@@ -40,6 +40,7 @@ export class CampGateTimeService {
   }
 
   createCampGateTime(CampGateTime, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/campGateTime/createCampGateTime`, CampGateTime).subscribe((addResult: any) => {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -55,6 +56,7 @@ export class CampGateTimeService {
         const addCampGateTimeSuccessfulDialog = this.dialog.open(AddCampGateTimeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
   readCampgateTime(link){
@@ -62,6 +64,7 @@ export class CampGateTimeService {
     return this.http.post(`${link}/api/campGateTime/getCampGateTime`, user);
   }
   updateCampGateTime(updatedCampGateTime, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/campGateTime/updateCampGateTime`, updatedCampGateTime).subscribe((updateResult: any) => {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -77,9 +80,11 @@ export class CampGateTimeService {
         const updateCampGateTimeSuccessfulDialog = this.dialog.open(UpdateCampGateTimeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
   deleteCampGateTime(user, CampGateTimeID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/campGateTime/deleteCampGateTime?campGateTimeID=${CampGateTimeID}`, user).
     subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -96,6 +101,7 @@ export class CampGateTimeService {
         const deleteCampGateTimeSuccessfulDialog = this.dialog.open(DeleteCampGateTimeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 }

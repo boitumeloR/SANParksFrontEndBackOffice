@@ -27,6 +27,7 @@
 <mat-sidenav-container fxFlexFill class="example-container" color="primary">
     <mat-sidenav [(opened)] ="opened" mode="over" color = "primary" data-simplebar data-simplebar-auto-hide="true" fxLayout="column" *ngIf="loggedIn$ | async as isLoggedIn">
       <div fxLayout class="links">
+        <mat-accordion>
         <mat-expansion-panel  *ngIf="number == 3">
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -330,6 +331,7 @@
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>
+        </mat-accordion>
       </div>       
   </mat-sidenav>
     <mat-sidenav-content fxFlexFill>

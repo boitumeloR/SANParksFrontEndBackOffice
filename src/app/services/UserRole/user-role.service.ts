@@ -11,6 +11,9 @@ import { UpdateUserRoleUnsuccessfulComponent} from 'src/app/modals/user-role/upd
 import { DeleteUserRoleSuccessfulComponent} from 'src/app/modals/user-role/delete-user-role-successful/delete-user-role-successful.component';
 import { DeleteUserRoleUnsuccessfulComponent} from 'src/app/modals/user-role/delete-user-role-unsuccessful/delete-user-role-unsuccessful.component';
 import { Router } from '@angular/router';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { UserRoleAddComponent} from 'src/app/workflows/user-role-add/user-role-add.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface UserRole {
   RoleID: number;
   UserRoleName: string;
@@ -26,7 +29,8 @@ export interface UserRoleDropDown {
 })
 
 export class UserRoleService {
-  constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog, private router: Router) { }
+  constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog, private router: Router,
+              private bottomSheet: MatBottomSheet) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -34,6 +38,7 @@ export class UserRoleService {
   }
 
   CreateUserRole(UserRole, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/UserRole/CreateUserRole`, UserRole).subscribe((addResult: any) => {
       if (addResult.Error){
        localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -48,7 +53,12 @@ export class UserRoleService {
        localStorage.setItem('user', JSON.stringify(addResult.user));
        const addUserRoleSuccessfulComponent = this.dialog.open(AddUserRoleSuccessfulComponent);
        this.refresh.next();
+
+       addUserRoleSuccessfulComponent.afterClosed().subscribe(() => {
+        const parkFlowSheet =  this.bottomSheet.open(UserRoleAddComponent);
+       });
       }
+      displaySpinner.close();
     });
   }
 
@@ -58,6 +68,7 @@ export class UserRoleService {
   }
 
   UpdateUserRole(UserRole, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/UserRole/UpdateUserRole`, UserRole).subscribe((UpdateResult: any) => {
       if (UpdateResult.Error){
        localStorage.setItem('user', JSON.stringify(UpdateResult.user));
@@ -73,10 +84,12 @@ export class UserRoleService {
        const updateUserRoleSuccessfulComponent = this.dialog.open(UpdateUserRoleSuccessfulComponent);
        this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 
   DeleteUserRole(user, UserRoleID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/UserRole/DeleteUserRole?userRoleID=${UserRoleID}`, user).subscribe((deleteResult: any) => {
       if (deleteResult.Error){
         localStorage.setItem('user', JSON.stringify(deleteResult.user));
@@ -92,6 +105,7 @@ export class UserRoleService {
         const deleteUserRoleSuccessfulDialog = this.dialog.open(DeleteUserRoleSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 }

@@ -11,6 +11,7 @@ import { UpdateParkGateTimeUnsuccessfulComponent} from 'src/app/modals/park-gate
 import { DelteParkGateTimeSuccessfulComponent } from 'src/app/modals/park-gate-time/delte-park-gate-time-successful/delte-park-gate-time-successful.component';
 import { DeleteParkGateTimeUnsuccessfulComponent } from 'src/app/modals/park-gate-time/delete-park-gate-time-unsuccessful/delete-park-gate-time-unsuccessful.component';
 import { Router } from '@angular/router';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface ParkGateTime {
   PTimeID: number;
   ParkGateID: number;
@@ -41,7 +42,8 @@ export class ParkGateTimeService {
     return this.refresh;
   }
 
-  CreateParkGateTime(ParkGateTime, link){ 
+  CreateParkGateTime(ParkGateTime, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/parkGateTime/createParkGateTime`, ParkGateTime).subscribe((addResult: any) => {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -57,6 +59,7 @@ export class ParkGateTimeService {
         const addParkGateTimeSuccessfulDialog = this.dialog.open(AddParkGateTimeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 
@@ -66,6 +69,7 @@ export class ParkGateTimeService {
   }
 
   UpdateParkGateTime(ParkGateTime, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/parkGateTime/updateParkGateTime`, ParkGateTime).subscribe((updateResult: any) => {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -81,10 +85,12 @@ export class ParkGateTimeService {
         const updateParkGateTimeSuccessfulDialog = this.dialog.open(UpdateParkGateTimeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 
-  DeleteParkGateTime(user ,PTimeID, link){ 
+  DeleteParkGateTime(user ,PTimeID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/parkGateTime/deleteParkGateTime?parkGateTimeID=${PTimeID}`, user).subscribe((deleteResult: any) => {
       if (deleteResult.Error){
         localStorage.setItem('user', JSON.stringify(deleteResult.user));
@@ -100,6 +106,7 @@ export class ParkGateTimeService {
         const deleteParkGateTimeSuccessfulDialog = this.dialog.open(DelteParkGateTimeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
     });
   }
 }
