@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
 import {AddWildcardClusterSuccessfulComponent} from 'src/app/modals/wildcard-cluster/add-wildcard-cluster-successful/add-wildcard-cluster-successful.component';
@@ -60,6 +60,12 @@ export class WildcardClusterService {
          });
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -86,6 +92,12 @@ export class WildcardClusterService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -108,6 +120,12 @@ export class WildcardClusterService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 }

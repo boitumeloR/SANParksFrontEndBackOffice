@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {GlobalService} from 'src/app/services/Global/global.service';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';import {GlobalService} from 'src/app/services/Global/global.service';
 import { Subject } from 'rxjs';
-import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { AddUserRoleSuccessfulComponent } from 'src/app/modals/user-role/add-user-role-successful/add-user-role-successful.component';
 import { AddUserRoleUnsuccessfulComponent } from 'src/app/modals/user-role/add-user-role-unsuccessful/add-user-role-unsuccessful.component';
@@ -59,6 +58,12 @@ export class UserRoleService {
        });
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -85,6 +90,12 @@ export class UserRoleService {
        this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -106,6 +117,12 @@ export class UserRoleService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 }

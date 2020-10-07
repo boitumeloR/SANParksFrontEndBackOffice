@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { Subject } from 'rxjs';
-import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import {AddAccomodationSuccessfulComponent} from 'src/app/modals/accomodation/add-accomodation-successful/add-accomodation-successful.component';
 import {AddAccomodationUnsuccessfulComponent} from 'src/app/modals/accomodation/add-accomodation-unsuccessful/add-accomodation-unsuccessful.component';
@@ -59,10 +59,15 @@ export class AccommodationService {
          });
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   readAccommodation(link){
-    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     const user = JSON.parse(localStorage.getItem('user'));
     return this.http.post(`${link}/api/accommodation/getAccommodations`, user);
   }
@@ -84,6 +89,12 @@ export class AccommodationService {
         const updateAccomodationSuccessfulDialog = this.dialog.open(UpdateAccomodationSuccessfulComponent);
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   deleteAccommodation(user, AccommodationID, link){
@@ -105,6 +116,12 @@ export class AccommodationService {
         const deleteAccomodationSuccessfulDialog = this.dialog.open(DeleteAccomodationSuccessfulComponent);
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   readAccommodationsForAccTypeCamp(accommodationTypeID, campID, link){

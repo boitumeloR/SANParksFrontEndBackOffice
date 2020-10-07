@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { LoginFailedComponent } from 'src/app/subcomponents/login/login-failed/login-failed.component';
 import { UserNotFoundComponent } from 'src/app/subcomponents/login/user-not-found/user-not-found.component';
 import { ForgotPasswordSuccessfulComponent } from 'src/app/subcomponents/login/forgot-password-successful/forgot-password-successful.component';
@@ -9,7 +10,7 @@ import { ResetPasswordSucessfulComponent } from 'src/app/subcomponents/login/res
 import { ResetPasswordUnsuccessfulComponent } from 'src/app/subcomponents/login/reset-password-unsuccessful/reset-password-unsuccessful.component';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { HeaderComponent } from 'src/app/subcomponents/header/header.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface Session {
@@ -42,6 +43,7 @@ export class LoginService {
   constructor(private http: HttpClient, private dialog: MatDialog, private router: Router,
               private validationErrorSnackBar: MatSnackBar) { }
   login(User, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/Auth/Login`, User).subscribe((result: any) => {
       if (result.Error){
        const loginUnsuccessful = this.dialog.open(LoginFailedComponent);
@@ -58,6 +60,13 @@ export class LoginService {
       else{
         this.authorizationError();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -70,6 +79,7 @@ export class LoginService {
   }
 
   forgotPassword(User, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/employee/ForgotPassword`, User).subscribe((result: any) => {
       if (result.userNotFound){
         const userNotFoundDialog = this.dialog.open(UserNotFoundComponent);
@@ -87,10 +97,18 @@ export class LoginService {
           this.router.navigate(['/Login']);
         });
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
   resetPassword(User, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/employee/ChangePassword`, User).subscribe((result: any) => {
       if (result.Error)
       {
@@ -105,6 +123,13 @@ export class LoginService {
           this.router.navigate(['/Login']);
         });
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 

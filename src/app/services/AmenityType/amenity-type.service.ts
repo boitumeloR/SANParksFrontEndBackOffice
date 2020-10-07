@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {GlobalService} from '../Global/global.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
-import { tap, delay } from 'rxjs/operators';
 import {AddAmenityTypeSuccessfulComponent} from 'src/app/modals/amenity-type/add-amenity-type-successful/add-amenity-type-successful.component';
 import {AddAmenityTypeUnsuccessfulComponent} from 'src/app/modals/amenity-type/add-amenity-type-unsuccessful/add-amenity-type-unsuccessful.component';
 import {DeleteAmenityTypeSuccessfulComponent} from 'src/app/modals/amenity-type/delete-amenity-type-successful/delete-amenity-type-successful.component';
@@ -59,6 +59,12 @@ export class AmenityTypeService {
          });
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -85,6 +91,12 @@ export class AmenityTypeService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -107,7 +119,12 @@ export class AmenityTypeService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
-
   }
 }

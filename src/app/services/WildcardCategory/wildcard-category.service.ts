@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GlobalService} from 'src/app/services/Global/global.service';
-import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { tap} from 'rxjs/operators';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { AddWildcardCategorySuccessfulComponent} from 'src/app/modals/wildcard-category/add-wildcard-category-successful/add-wildcard-category-successful.component';
 import { AddWildcardCategoryUnsuccessfulComponent} from 'src/app/modals/wildcard-category/add-wildcard-category-unsuccessful/add-wildcard-category-unsuccessful.component';
@@ -62,6 +61,12 @@ export class WildcardCategoryService {
          });
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -88,6 +93,12 @@ export class WildcardCategoryService {
        this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -110,6 +121,12 @@ export class WildcardCategoryService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 }

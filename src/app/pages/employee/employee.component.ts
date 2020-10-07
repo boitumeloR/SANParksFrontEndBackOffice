@@ -7,6 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { EmployeeService } from 'src/app/services/Employee/employee.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 
 @Component({
   selector: 'app-employee',
@@ -42,6 +45,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   getEmployee(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     const user = JSON.parse(localStorage.getItem('user'));
 
     const employee = {
@@ -59,6 +63,14 @@ export class EmployeeComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         localStorage.setItem('user', JSON.stringify(result.user));
       }
-    });
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
+    }
+    );
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,6 +11,7 @@ import {DeleteAccomodationBaseRateSuccessfulComponent} from 'src/app/modals/acco
 import {DeleteAccomodationBaseRateUnsuccessfulComponent} from 'src/app/modals/accomodation-base-rate/delete-accomodation-base-rate-unsuccessful/delete-accomodation-base-rate-unsuccessful.component';
 import { Router } from '@angular/router';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 export interface AccommodationTypeBaseRate{
   BaseRateID: number;
   AccomodationTypeID: number;
@@ -52,8 +53,14 @@ export class AccommBaseRateService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
     });
-  }
+  });
+}
   readAccommodationTypeBaseRate(link){
     const user = JSON.parse(localStorage.getItem('user'));
     return this.http.post(`${link}/api/AccommodationBaseRate/getBaseRate`, user);
@@ -77,6 +84,12 @@ export class AccommBaseRateService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   deleteAccommodationTypeBaseRate(user, BaseRateID, link){    
@@ -98,6 +111,12 @@ export class AccommBaseRateService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+  (error: HttpErrorResponse) => {
+    displaySpinner.close();
+    this.dialog.open(ErrorModalComponent, {
+      data: { errorMessage: error.message }
     });
+  });
   }
 }

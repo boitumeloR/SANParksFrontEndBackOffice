@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {AddActivityRateSuccessfulComponent} from 'src/app/modals/activity-rate/add-activity-rate-successful/add-activity-rate-successful.component';
 import {AddActivityRateUnsuccessfulComponent} from 'src/app/modals/activity-rate/add-activity-rate-unsuccessful/add-activity-rate-unsuccessful.component';
 import { UpdateActivityRateSuccessfulComponent} from 'src/app/modals/activity-rate/update-activity-rate-successful/update-activity-rate-successful.component';
@@ -64,6 +65,12 @@ export class ActivityRateService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   rateExistsError(year) {
@@ -98,6 +105,12 @@ export class ActivityRateService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   deleteActivityRate(user, ActivityRateID, link){
@@ -119,6 +132,12 @@ export class ActivityRateService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   readRateTypes(link){
