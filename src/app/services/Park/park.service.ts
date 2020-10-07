@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {GlobalService} from 'src/app/services/Global/global.service';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { Subject } from 'rxjs';
-import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import {AddParkSuccessfulComponent} from 'src/app/modals/park/add-park-successful/add-park-successful.component';
 import {AddParkUnsuccessfulComponent} from 'src/app/modals/park/add-park-unsuccessful/add-park-unsuccessful.component';
@@ -62,6 +62,12 @@ export class ParkService {
        });
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -89,6 +95,12 @@ export class ParkService {
        this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -110,6 +122,12 @@ export class ParkService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 

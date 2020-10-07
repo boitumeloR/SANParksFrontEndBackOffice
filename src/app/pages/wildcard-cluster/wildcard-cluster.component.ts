@@ -7,7 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { WildcardClusterService } from 'src/app/services/WildcardCluster/wildcard-cluster.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 
 @Component({
   selector: 'app-wildcard-cluster',
@@ -43,6 +45,7 @@ export class WildcardClusterComponent implements OnInit {
   }
 
   getWildcardCluster(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.wildcardClusterService.ReadWildcardCluster(this.globalService.GetServer()).subscribe((result: any) => {
       if (result.userLoggedOut){
         localStorage.removeItem('user');
@@ -53,6 +56,14 @@ export class WildcardClusterComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         localStorage.setItem('user', JSON.stringify(result.user));
       }
-    });
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
+    }
+  );
   }
 }

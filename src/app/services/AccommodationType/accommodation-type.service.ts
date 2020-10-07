@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -63,6 +64,12 @@ export class AccommodationTypeService {
          });
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   readAccommodationType(link){
@@ -88,6 +95,12 @@ export class AccommodationTypeService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   deleteAccommodationType(user, AccommodationTypeID, link){
@@ -110,6 +123,12 @@ export class AccommodationTypeService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   getAccomomodationTypesForCamp(campID, link){

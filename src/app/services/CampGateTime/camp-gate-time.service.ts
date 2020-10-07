@@ -1,9 +1,8 @@
-import { Injectable, DefaultIterableDiffer } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {GlobalService} from '../Global/global.service';
+import { Injectable } from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { DateRange } from '@fullcalendar/core';
 import { Subject } from 'rxjs';
-import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import {AddCampGateTimeSuccessfulComponent} from 'src/app/modals/camp-gate-time/add-camp-gate-time-successful/add-camp-gate-time-successful.component';
 import {AddCampGateTimeUnsuccessfulComponent} from 'src/app/modals/camp-gate-time/add-camp-gate-time-unsuccessful/add-camp-gate-time-unsuccessful.component';
@@ -57,6 +56,12 @@ export class CampGateTimeService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   readCampgateTime(link){
@@ -81,6 +86,12 @@ export class CampGateTimeService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   deleteCampGateTime(user, CampGateTimeID, link){
@@ -102,6 +113,12 @@ export class CampGateTimeService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 }

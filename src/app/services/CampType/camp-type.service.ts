@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {GlobalService} from 'src/app/services/Global/global.service';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { Subject } from 'rxjs';
-import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCampTypeSuccessfulComponent} from 'src/app/modals/camp-type/add-camp-type-successful/add-camp-type-successful.component';
 import { AddCampTypeUnsuccessfulComponent} from 'src/app/modals/camp-type/add-camp-type-unsuccessful/add-camp-type-unsuccessful.component';
@@ -29,7 +28,7 @@ export interface CampTypeDropDown {
   providedIn: 'root'
 })
 export class CampTypeService {
-  constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog, private router: Router,
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router,
               private bottomSheet: MatBottomSheet) { }
 
   private refresh = new Subject<void>();
@@ -59,6 +58,12 @@ export class CampTypeService {
        });
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -85,6 +90,12 @@ export class CampTypeService {
        this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -106,6 +117,12 @@ export class CampTypeService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 }

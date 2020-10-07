@@ -7,7 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { ParkGateService } from 'src/app/services/ParkGate/park-gate.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 @Component({
   selector: 'app-park-gate',
   templateUrl: './park-gate.component.html',
@@ -41,6 +43,7 @@ export class ParkGateComponent implements OnInit {
   }
 
   getParkGates(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.parkGateService.ReadParkGate(this.globalService.GetServer()).subscribe((result: any) => {
       if (result.userLoggedOut){
         localStorage.removeItem('user');
@@ -51,6 +54,13 @@ export class ParkGateComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         localStorage.setItem('user', JSON.stringify(result.user));
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 }

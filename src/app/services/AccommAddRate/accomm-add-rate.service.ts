@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import {AddAccomodationAddRateUnsuccessfulComponent} from 'src/app/modals/accomodation-add-rate/add-accomodation-add-rate-unsuccessful/add-accomodation-add-rate-unsuccessful.component';
 import {AddAccomodationAddRateSuccessfulComponent} from 'src/app/modals/accomodation-add-rate/add-accomodation-add-rate-successful/add-accomodation-add-rate-successful.component';
@@ -12,7 +11,7 @@ import {DeleteAccomodationAddRateUnsuccessfulComponent} from 'src/app/modals/acc
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
-
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 export interface AccommodationTypeAddRate{
   AddRateID: number;
   AccomodationTypeID: number;
@@ -27,7 +26,7 @@ export interface AccommodationTypeAddRate{
 export class AccommAddRateService {
 
   constructor(private dialog: MatDialog, private http: HttpClient,
-              private router: Router, private rateForYear: MatSnackBar) { }
+              private router: Router, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
@@ -57,11 +56,18 @@ export class AccommAddRateService {
         this.refresh.next();
       }
       displaySpinner.close();
-    });
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
+    }
+    );
   }
 
   rateExistsError(year) {
-    this.rateForYear.open(`An add rate already exists for this accommodation type in the year ${year}.` , 'OK', {
+    this.snackbar.open(`An add rate already exists for this accommodation type in the year ${year}.` , 'OK', {
       duration: 5000,
     });
   }
@@ -94,6 +100,12 @@ export class AccommAddRateService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+      (error: HttpErrorResponse) => {
+        displaySpinner.close();
+        this.dialog.open(ErrorModalComponent, {
+          data: { errorMessage: error.message }
+      });
     });
   }
   deleteAccommodationTypeAddRate(user, AddRateID, link){
@@ -114,6 +126,12 @@ export class AccommAddRateService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 }

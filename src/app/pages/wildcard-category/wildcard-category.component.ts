@@ -7,7 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { WildcardCategoryService } from 'src/app/services/WildcardCategory/wildcard-category.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 @Component({
   selector: 'app-wildcard-category',
   templateUrl: './wildcard-category.component.html',
@@ -40,6 +42,7 @@ export class WildcardCategoryComponent implements OnInit {
     const viewWildcardCategoryDialog = this.dialog.open(ViewWildcardCategoryComponent);
   }
   getWildcardCategory(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.wildcardCategoryService.ReadWildcardCategory(this.globalService.GetServer()).subscribe((result: any) => {
       if (result.userLoggedOut){
         localStorage.removeItem('user');
@@ -50,6 +53,14 @@ export class WildcardCategoryComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         localStorage.setItem('user', JSON.stringify(result.user));
       }
-    });
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
+    }
+  );
   }
 }

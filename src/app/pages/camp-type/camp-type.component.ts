@@ -7,7 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { CampType, CampTypeService } from 'src/app/services/CampType/camp-type.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 @Component({
   selector: 'app-camp-type',
   templateUrl: './camp-type.component.html',
@@ -41,6 +43,7 @@ export class CampTypeComponent implements OnInit {
   }
 
   getCampType(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.campTypeService.ReadCampType(this.globalService.GetServer()).subscribe((result: any) => {
       if (result.userLoggedOut){
         localStorage.removeItem('user');
@@ -51,7 +54,15 @@ export class CampTypeComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         localStorage.setItem('user', JSON.stringify(result.user));
       }
-    });
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
+    }
+);
   }
 
 }

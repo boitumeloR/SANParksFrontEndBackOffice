@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { Subject } from 'rxjs';
-import { tap} from 'rxjs/operators';
 import { Time } from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
 import {AddParkGateTimeSuccessfulComponent} from 'src/app/modals/park-gate-time/add-park-gate-time-successful/add-park-gate-time-successful.component';
@@ -60,6 +60,12 @@ export class ParkGateTimeService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -86,6 +92,12 @@ export class ParkGateTimeService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 
@@ -107,6 +119,12 @@ export class ParkGateTimeService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {GlobalService} from '../Global/global.service';
 import { Subject } from 'rxjs';
-import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import {AddCampSuccessfulComponent} from 'src/app/modals/camp/add-camp-successful/add-camp-successful.component';
 import {AddCampUnsuccessfulComponent} from 'src/app/modals/camp/add-camp-unsuccessful/add-camp-unsuccessful.component';
@@ -64,6 +64,12 @@ export class CampService {
          });
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   readCamp(link){
@@ -88,6 +94,12 @@ export class CampService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   deleteCamp(user, CampID, link){
@@ -108,6 +120,12 @@ export class CampService {
         this.refresh.next();
       }
       displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
     });
   }
   getCampsForSpecificPark(parkID, link){

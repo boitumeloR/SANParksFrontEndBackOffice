@@ -7,9 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { AmenityTypeService } from 'src/app/services/AmenityType/amenity-type.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/services/Login/login.service';
-
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 
 @Component({
   selector: 'app-amenity-type',
@@ -44,6 +44,7 @@ export class AmenityTypeComponent implements OnInit {
   }
 
   getAmenityTypes(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.amenityTypeService.readAmenityType(this.globalService.GetServer()).subscribe((result: any) => {
       if (result.userLoggedOut){
         localStorage.removeItem('user');
@@ -54,6 +55,14 @@ export class AmenityTypeComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         localStorage.setItem('user', JSON.stringify(result.user));
       }
-    });
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.dialog.open(ErrorModalComponent, {
+        data: { errorMessage: error.message }
+      });
+    }
+);
   }
 }
