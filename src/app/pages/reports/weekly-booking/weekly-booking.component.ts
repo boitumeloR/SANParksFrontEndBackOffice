@@ -26,8 +26,11 @@ export class WeeklyBookingComponent implements OnInit {
   startDate: Date;
   endDate: Date;
 
-  // Chart 
+  // State
+  generated = false;
+  // Chart
   totalChart: Chart;
+  actChart: Chart;
   // Response
   parkName: any;
   companyInfo: any;
@@ -36,8 +39,8 @@ export class WeeklyBookingComponent implements OnInit {
 
   accommodationColumns: string[] = ['dateCreated', 'stayDates', 'dates', 'paidAmount'];
   activityColumns: string[] = ['dateCreated', 'dates', 'paidAmount'];
-  accommodationData: any;
-  activityData: any;
+  accommodationData: any[] = [];
+  activityData: any[] = [];
   constructor(private dialog: MatDialog, private snack: MatSnackBar,
               private global: GlobalService, private reportServ: ReportingService,
               private avail: AvailabilityService, private fb: FormBuilder,
@@ -54,20 +57,26 @@ export class WeeklyBookingComponent implements OnInit {
   }
 
   GetCamps(park: any) {
+    this.reportForm.get('camp').reset();
     this.avail.getCamps(park.ParkID, this.global.GetServer()).subscribe(res => this.camps = res);
   }
 
-  GenerateChart(amounts: any[], camps: any[]) {
-    if (this.totalChart) {
-      this.totalChart.destroy();
+  GenerateActivityChart(amounts: any[], camps: any[]) {
+    if (this.actChart) {
+      this.actChart.destroy();
     }
 
-    this.totalChart = new Chart('#totalChart', {
-      type: 'bar',
+    this.actChart = new Chart('actChart', {
+      type: 'pie',
       data: {
         labels: camps,
         datasets: [
           {
+            backgroundColor: [
+              'rgb(153,153,255)',
+              'rgb(255,153,238)',
+              'rgb(255,204,179)'
+            ],
             data: amounts
           }
         ]
@@ -75,7 +84,41 @@ export class WeeklyBookingComponent implements OnInit {
       options: {
         title: {
             display: true,
-            text: 'Total Revenue Per Camp'
+            text: 'Total Activity Revenue Per Camp (R)'
+        },
+        legend: {
+          display: true,
+          labels: {
+              fontColor: 'rgb(255, 99, 132)'
+          }
+        }
+    }
+    });
+  }
+  GenerateChart(amounts: any[], camps: any[]) {
+    if (this.totalChart) {
+      this.totalChart.destroy();
+    }
+
+    this.totalChart = new Chart('totalChart', {
+      type: 'pie',
+      data: {
+        labels: camps,
+        datasets: [
+          {
+            backgroundColor: [
+              'rgb(153,153,255)',
+              'rgb(255,153,238)',
+              'rgb(255,204,179)'
+            ],
+            data: amounts
+          }
+        ]
+      },
+      options: {
+        title: {
+            display: true,
+            text: 'Total Accomodation Revenue Per Camp (R)'
         },
         legend: {
           display: true,
@@ -98,12 +141,19 @@ export class WeeklyBookingComponent implements OnInit {
         const filterData = {
           StartDate: new Date(this.reportForm.get('start').value),
           EndDate: new Date(this.reportForm.get('end').value),
-          CampID: this.CampID,
+          ParkID: this.reportForm.get('park').value,
+          CampID: this.reportForm.get('camp').value,
           Session: JSON.parse(localStorage.getItem('user'))
         };
 
         this.reportServ.GetWeeklyBookingReport(this.global.GetServer(), filterData).subscribe(res => {
           if (res.Session !== null) {
+
+            this.generated = true;
+            this.accommodationData = null;
+            this.activityData = null;
+            this.companyInfo = null;
+            this.grandTotal = 0;
             console.log(res);
             this.accommodationData = res.AccommodationBookings;
             this.activityData = res.ActivityBookings;
@@ -111,15 +161,28 @@ export class WeeklyBookingComponent implements OnInit {
             this.parkName = this.parks.find(zz => zz.ParkID === this.reportForm.get('park').value).ParkName;
             localStorage.setItem('user', JSON.stringify(res.Session));
 
-            this.grandTotal += this.accommodationData.map(zz => zz.TotalPaid).reduce((acc, element) => acc + element);
-            this.grandTotal += this.activityData.map(zz => zz.TotalPaid).reduce((acc, element) => acc + element);
-
             let campAmounts: any[] = [];
             let campNames: any[] = [];
-            campAmounts = this.accommodationData.map(zz => zz.TotalPaid);
-            campNames = this.accommodationData.map(zz => zz.CampName);
 
-            this.GenerateChart(campAmounts, campNames);
+            if (this.accommodationData.length > 0 ) {
+              this.grandTotal += this.accommodationData.map(zz => zz.TotalPaid).reduce((acc, element) => acc + element);
+              campAmounts = this.accommodationData.map(zz => zz.TotalPaid);
+              campNames = this.accommodationData.map(zz => zz.CampName);
+              this.GenerateChart(campAmounts, campNames);
+            }
+            else {
+              this.totalChart.destroy();
+            }
+            if (this.activityData.length > 0) {
+              this.grandTotal += this.activityData.map(zz => zz.TotalPaid).reduce((acc, element) => acc + element);
+              campAmounts = this.activityData.map(zz => zz.TotalPaid);
+              campNames = this.activityData.map(zz => zz.CampName);
+
+              this.GenerateActivityChart(campAmounts, campNames);
+            }
+            else {
+              this.actChart.destroy();
+            }
           } else {
             const ref = this.dialog.open(ErrorModalComponent, {
               data: { errorMessage: 'Session Timeout, Login Again!' }
@@ -130,5 +193,17 @@ export class WeeklyBookingComponent implements OnInit {
         });
       }
     }
+  }
+
+  SendReport() {
+    const filterData = {
+      StartDate: new Date(this.reportForm.get('start').value),
+      EndDate: new Date(this.reportForm.get('end').value),
+      ParkID: this.reportForm.get('park').value,
+      CampID: this.reportForm.get('camp').value,
+      Session: JSON.parse(localStorage.getItem('user'))
+    };
+
+    
   }
 }

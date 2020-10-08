@@ -37,6 +37,9 @@
         <button mat-raised-button color="primary" 
         [disabled] = "reportForm.valid ? false: true"
         (click)="Submit()">Generate Report</button>
+        <button mat-raised-button color="primary" 
+        [disabled] = "generated ? false: true"
+        (click)="SendReport()">Send PDF Report</button>
     </mat-card-actions>
   </mat-card> 
 </form> 
@@ -44,89 +47,98 @@
   <!-- <div class="send">
     <button mat-raised-button color="primary">Send Report</button>
 </div> -->
-<div *ngIf="accommodationData || activityData">
+
+<div [hidden]="!generated">
   <div class="grand">
     <h1>Park: {{parkName}}</h1>
   </div>
 
-  <div>
-    <canvas id="totalChart" width="40%"></canvas>  
-  </div>
+
   
 
-  <h1>Accommodation Bookings</h1>
-  <div *ngFor="let acc of accommodationData">
-
-    <h2>{{acc.CampName}}</h2>
-    <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="acc.Bookings">
-        <!-- Camp Column -->
-        <ng-container matColumnDef="dateCreated">
-          <th mat-header-cell *matHeaderCellDef>Date Created</th>
-          <td mat-cell *matCellDef="let element">{{ element.DateCreated | date: 'mediumDate' }}</td>
-        </ng-container> 
-        <ng-container matColumnDef="stayDates">
-          <th mat-header-cell *matHeaderCellDef> No. of Days</th>
-          <td mat-cell *matCellDef="let element">{{ element.StayDates}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="dates">
-          <th mat-header-cell *matHeaderCellDef>Booking Dates</th>
-          <td mat-cell *matCellDef="let element">{{ element.StartDate | date: 'mediumDate' }} - {{ element.EndDate | date: 'mediumDate' }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="paidAmount">
-          <th mat-header-cell *matHeaderCellDef>Amount Paid</th>
-          <td mat-cell *matCellDef="let element">{{ element.PaidAmount | currency:'ZAR' }}</td>
-        </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="accommodationColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: accommodationColumns;"></tr>
-      </table>
-    
-      <mat-paginator [pageSizeOptions]="[1, 5, 8, 20]" showFirstLastButtons></mat-paginator>
+  <div [hidden] = "!accommodationData.length > 0">
+    <h1>Accommodation Bookings</h1>
+    <div class = "graph">
+      <canvas id="totalChart" width="20%" >{{totalChart}}</canvas>  
     </div>
-    <div class="subtotal">
-      <h2>Total Paid at {{acc.CampName}}: {{acc.TotalPaid | currency:'ZAR'}}</h2>
-    </div>
-  </div>
-
-
-  <h1>Activity Bookings</h1>
-  <div *ngFor="let act of activityData">
-    <h2>{{act.CampName}}</h2>
-    <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="act.Bookings">
-        <!-- Camp Column -->
-        <ng-container matColumnDef="dateCreated">
-          <th mat-header-cell *matHeaderCellDef>Date Created</th>
-          <td mat-cell *matCellDef="let element">{{ element.DateCreated | date: 'mediumDate' }}</td>
-        </ng-container> 
-
-        <ng-container matColumnDef="dates">
-          <th mat-header-cell *matHeaderCellDef>Booking Dates</th>
-          <td mat-cell *matCellDef="let element">{{ element.StartDate | date: 'mediumDate' }} - {{ element.EndDate | date: 'mediumDate' }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="paidAmount">
-          <th mat-header-cell *matHeaderCellDef>Amount Paid</th>
-          <td mat-cell *matCellDef="let element">{{ element.PaidAmount | currency:'ZAR' }}</td>
-        </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="activityColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: activityColumns;"></tr>
-      </table>
-      <mat-paginator [pageSizeOptions]="[5, 8, 20]" showFirstLastButtons></mat-paginator>
-    </div>
-
-    <div class="subtotal">
-      <h2>Total Paid at {{act.CampName}}: {{act.TotalPaid | currency:'ZAR'}}</h2>
+    <div *ngFor="let acc of accommodationData">
+  
+      <h2>{{acc.CampName}}</h2>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="acc.Bookings">
+          <!-- Camp Column -->
+          <ng-container matColumnDef="dateCreated">
+            <th mat-header-cell *matHeaderCellDef>Date Created</th>
+            <td mat-cell *matCellDef="let element">{{ element.DateCreated | date: 'mediumDate' }}</td>
+          </ng-container> 
+          <ng-container matColumnDef="stayDates">
+            <th mat-header-cell *matHeaderCellDef> No. of Days</th>
+            <td mat-cell *matCellDef="let element">{{ element.StayDates}}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="dates">
+            <th mat-header-cell *matHeaderCellDef>Booking Dates</th>
+            <td mat-cell *matCellDef="let element">{{ element.StartDate | date: 'mediumDate' }} - {{ element.EndDate | date: 'mediumDate' }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="paidAmount">
+            <th mat-header-cell *matHeaderCellDef>Amount Paid</th>
+            <td mat-cell *matCellDef="let element">{{ element.PaidAmount | currency:'ZAR' }}</td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="accommodationColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: accommodationColumns;"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[1, 5, 8, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+      <div class="subtotal">
+        <h2>Total Paid at {{acc.CampName}}: {{acc.TotalPaid | currency:'ZAR'}}</h2>
+      </div>
     </div>
   </div>
 
+
+  <div [hidden] ="! activityData.length > 0">
+    <h1>Activity Bookings</h1>
+    <div class = "graph">
+      <canvas id="actChart" width="20%" >{{actChart}}</canvas>  
+    </div>
+  
+    <div *ngFor="let act of activityData">
+      <h2>{{act.CampName}}</h2>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="act.Bookings">
+          <!-- Camp Column -->
+          <ng-container matColumnDef="dateCreated">
+            <th mat-header-cell *matHeaderCellDef>Date Created</th>
+            <td mat-cell *matCellDef="let element">{{ element.DateCreated | date: 'mediumDate' }}</td>
+          </ng-container> 
+  
+          <ng-container matColumnDef="dates">
+            <th mat-header-cell *matHeaderCellDef>Booking Dates</th>
+            <td mat-cell *matCellDef="let element">{{ element.StartDate | date: 'mediumDate' }} - {{ element.EndDate | date: 'mediumDate' }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="paidAmount">
+            <th mat-header-cell *matHeaderCellDef>Amount Paid</th>
+            <td mat-cell *matCellDef="let element">{{ element.PaidAmount | currency:'ZAR' }}</td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="activityColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: activityColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 8, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+  
+      <div class="subtotal">
+        <h2>Total Paid at {{act.CampName}}: {{act.TotalPaid | currency:'ZAR'}}</h2>
+      </div>
+    </div>
+  </div>
   <div class="grand">
     <h1>Grand Total at {{parkName}}: {{grandTotal | currency: 'ZAR'}}</h1>
   </div>
-</div>
+  </div>
 
 <!-- <iframe src="assets/images/WeeklyBooking.pdf" frameborder="0" height="100%" width="100%"></iframe> -->

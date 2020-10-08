@@ -16,4 +16,8 @@ export class ReportingService {
   GetWeeklyBookingReport(server: string, filterData: any) {
     return this.http.post<any>(`${server}/api/Report/WeeklyBooking`, filterData, this.httpOptions);
   }
+
+  SendWeeklyBookingReport(server: string, filterData: any) {
+    return this.http.post<any>(`${server}/api/Report/SendWeeklyBooking`, filterData, this.httpOptions);
+  }
 }
