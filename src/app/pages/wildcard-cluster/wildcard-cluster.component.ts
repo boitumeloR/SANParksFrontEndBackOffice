@@ -8,8 +8,8 @@ import { WildcardClusterService } from 'src/app/services/WildcardCluster/wildcar
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-wildcard-cluster',
@@ -19,7 +19,7 @@ import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component'
 export class WildcardClusterComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private wildcardClusterService: WildcardClusterService, private globalService: GlobalService,
-              private router: Router) { }
+              private router: Router, private snackbar: MatSnackBar) { }
 
   displayedColumns: string[] = ['name', 'view'];
   dataSource;
@@ -29,6 +29,12 @@ export class WildcardClusterComponent implements OnInit {
   ngOnInit(): void {
     this.wildcardClusterService.requestReferesh.subscribe(() => {this.getWildcardCluster(); });
     this.getWildcardCluster();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -53,9 +59,7 @@ export class WildcardClusterComponent implements OnInit {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     }
   );
   }

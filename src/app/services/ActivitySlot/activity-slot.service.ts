@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
@@ -12,6 +11,7 @@ import { DeleteActivitySlotSuccessfulComponent} from 'src/app/modals/activity-sl
 import { DeleteActivitySlotUnsuccessfulComponent} from 'src/app/modals/activity-slot/delete-activity-slot-unsuccessful/delete-activity-slot-unsuccessful.component';
 import { Router } from '@angular/router';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface ActivitySlot {
   ActivitySlotID: number;
   ActivityID: number;
@@ -30,13 +30,17 @@ export interface ActivitySlotDropDown {
 })
 
 export class ActivitySlotService {
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
   }
-
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
   CreateActivitySlot(ActivitySlot, link){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/activitySlot/createActivitySlot`, ActivitySlot).subscribe((addResult: any) => {
@@ -58,9 +62,7 @@ export class ActivitySlotService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -90,9 +92,7 @@ export class ActivitySlotService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -118,9 +118,7 @@ export class ActivitySlotService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 }

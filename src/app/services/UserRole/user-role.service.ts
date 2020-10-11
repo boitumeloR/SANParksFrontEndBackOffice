@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';import {GlobalService} from 'src/app/services/Global/global.service';
+import {GlobalService} from 'src/app/services/Global/global.service';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { AddUserRoleSuccessfulComponent } from 'src/app/modals/user-role/add-user-role-successful/add-user-role-successful.component';
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { UserRoleAddComponent} from 'src/app/workflows/user-role-add/user-role-add.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface UserRole {
   RoleID: number;
   UserRoleName: string;
@@ -29,11 +30,17 @@ export interface UserRoleDropDown {
 
 export class UserRoleService {
   constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog, private router: Router,
-              private bottomSheet: MatBottomSheet) { }
+              private bottomSheet: MatBottomSheet, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   CreateUserRole(UserRole, link){
@@ -61,9 +68,7 @@ export class UserRoleService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -93,9 +98,7 @@ export class UserRoleService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -120,9 +123,7 @@ export class UserRoleService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 }

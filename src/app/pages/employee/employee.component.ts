@@ -8,8 +8,8 @@ import { EmployeeService } from 'src/app/services/Employee/employee.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-employee',
@@ -19,7 +19,8 @@ import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component'
 export class EmployeeComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private router: Router,
-              private employeeService: EmployeeService, private globalService: GlobalService) { }
+              private employeeService: EmployeeService, private globalService: GlobalService,
+              private snackbar: MatSnackBar) { }
 
   displayedColumns: string[] = ['park', 'employeeName', 'identityNumber', 'view'];
   dataSource;
@@ -29,6 +30,12 @@ export class EmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.employeeService.requestReferesh.subscribe(() => {this.getEmployee(); });
     this.getEmployee();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -60,9 +67,7 @@ export class EmployeeComponent implements OnInit {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     }
     );
   }

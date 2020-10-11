@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import {AddAccomodationSuccessfulComponent} from 'src/app/modals/accomodation/add-accomodation-successful/add-accomodation-successful.component';
@@ -13,6 +12,7 @@ import { Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AccommodationaddedComponent} from 'src/app/workflows/accommodationadded/accommodationadded.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface Accommodation{
   AccommodationID: number;
   UnitNumber: number;
@@ -30,11 +30,16 @@ export interface Accommodation{
 export class AccommodationService {
 
   constructor(private dialog: MatDialog , private http: HttpClient,
-              private router: Router, private bottomSheet: MatBottomSheet ) { }
+              private router: Router, private bottomSheet: MatBottomSheet, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
+  }
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   createAccommodation(Accommodation, link){
@@ -62,9 +67,7 @@ export class AccommodationService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   readAccommodation(link){
@@ -92,9 +95,7 @@ export class AccommodationService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   deleteAccommodation(user, AccommodationID, link){
@@ -119,9 +120,7 @@ export class AccommodationService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   readAccommodationsForAccTypeCamp(accommodationTypeID, campID, link){

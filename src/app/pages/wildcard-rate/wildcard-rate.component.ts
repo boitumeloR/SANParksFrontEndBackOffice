@@ -8,8 +8,8 @@ import { WildcardRateService } from 'src/app/services/WildcardRate/wildcard-rate
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-wildcard-rate',
   templateUrl: './wildcard-rate.component.html',
@@ -18,7 +18,7 @@ import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component'
 export class WildcardRateComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private wildcardRateService: WildcardRateService,
-              private globalService: GlobalService, private router: Router) { }
+              private globalService: GlobalService, private router: Router, private snackbar: MatSnackBar) { }
 
   displayedColumns: string[] = ['clusterName', 'categoryName', 'dateEffective', 'endDate', 'view'];
   dataSource;
@@ -28,6 +28,12 @@ export class WildcardRateComponent implements OnInit {
   ngOnInit(): void {
     this.wildcardRateService.requestReferesh.subscribe(() => {this.getWildcardRate(); });
     this.getWildcardRate();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -52,9 +58,7 @@ export class WildcardRateComponent implements OnInit {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     }
   );
   }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {GlobalService} from '../Global/global.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
@@ -15,6 +14,7 @@ import { LoginService } from '../Login/login.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AmenitytypeaddedComponent} from 'src/app/workflows/amenitytypeadded/amenitytypeadded.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface AmenityType{
   AmenityTypeID: number;
   AmenityTypeName: string;
@@ -30,11 +30,16 @@ export interface AmenityTypeDropDown{
 })
 export class AmenityTypeService {
   constructor(private global: GlobalService , private router: Router, private http: HttpClient, private dialog: MatDialog,
-              private loginService: LoginService, private bottomSheet: MatBottomSheet ) { }
+              private loginService: LoginService, private bottomSheet: MatBottomSheet, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
+  }
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   createAmenityType(AmenityType, link){
@@ -62,9 +67,7 @@ export class AmenityTypeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -94,9 +97,7 @@ export class AmenityTypeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -122,9 +123,7 @@ export class AmenityTypeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 }

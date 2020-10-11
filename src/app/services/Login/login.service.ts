@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { LoginFailedComponent } from 'src/app/subcomponents/login/login-failed/login-failed.component';
 import { UserNotFoundComponent } from 'src/app/subcomponents/login/user-not-found/user-not-found.component';
 import { ForgotPasswordSuccessfulComponent } from 'src/app/subcomponents/login/forgot-password-successful/forgot-password-successful.component';
@@ -41,7 +40,7 @@ export class LoginService {
   }
 
   constructor(private http: HttpClient, private dialog: MatDialog, private router: Router,
-              private validationErrorSnackBar: MatSnackBar) { }
+              private snackbar: MatSnackBar) { }
   login(User, link){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/Auth/Login`, User).subscribe((result: any) => {
@@ -64,9 +63,7 @@ export class LoginService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -101,9 +98,7 @@ export class LoginService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: 'Our servers are currently down, please try again later.' }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -127,14 +122,18 @@ export class LoginService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
   authorizationError(){
-    this.validationErrorSnackBar.open('The action you are trying to perform is unauthorized', 'OK', {
+    this.snackbar.open('The action you are trying to perform is unauthorized', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
       duration: 3500,
     });
   }

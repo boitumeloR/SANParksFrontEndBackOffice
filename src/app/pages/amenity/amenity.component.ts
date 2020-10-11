@@ -8,8 +8,8 @@ import { AmenityService } from 'src/app/services/Amenity/amenity.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-amenity',
   templateUrl: './amenity.component.html',
@@ -23,7 +23,7 @@ export class AmenityComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private dialog: MatDialog, private amenityService: AmenityService, private globalService: GlobalService,
-              private router: Router) { }
+              private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.amenityService.requestReferesh.subscribe(() => {this.getAmenity(); });
@@ -52,9 +52,13 @@ export class AmenityComponent implements OnInit {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+ }
 }

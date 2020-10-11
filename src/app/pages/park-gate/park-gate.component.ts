@@ -8,8 +8,8 @@ import { ParkGateService } from 'src/app/services/ParkGate/park-gate.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-park-gate',
   templateUrl: './park-gate.component.html',
@@ -18,7 +18,7 @@ import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component'
 export class ParkGateComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private parkGateService: ParkGateService, private globalService: GlobalService,
-              private router: Router) { }
+              private router: Router, private snackbar: MatSnackBar) { }
   displayedColumns: string[] = ['ParkGateName', 'ParkName', 'ParkGateMax', 'view'];
   dataSource;
   filter;
@@ -27,6 +27,12 @@ export class ParkGateComponent implements OnInit {
   ngOnInit(): void {
     this.parkGateService.requestReferesh.subscribe(() => {this.getParkGates(); });
     this.getParkGates();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -51,9 +57,7 @@ export class ParkGateComponent implements OnInit {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 }

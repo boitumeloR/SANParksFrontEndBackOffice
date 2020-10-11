@@ -8,8 +8,8 @@ import { CampService } from 'src/app/services/Camp/camp.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-camp',
@@ -23,11 +23,18 @@ export class CampComponent implements OnInit {
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private campService: CampService,
-              private globalService: GlobalService, private router: Router) { }
+              private globalService: GlobalService, private router: Router,
+              private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.campService.requestReferesh.subscribe(() => {this.getCamp(); });
     this.getCamp();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -52,9 +59,7 @@ export class CampComponent implements OnInit {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 }

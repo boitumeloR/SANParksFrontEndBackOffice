@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { DecimalPipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -43,6 +42,12 @@ export class DailyConservationFeeService {
     return this.refresh;
   }
 
+  serverDownSnack() {
+    this.rateForYear.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
+
   CreateDailyConservationFee(DailyConservationFee, link){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/dailyConservationFee/createDailyConservationFee`, DailyConservationFee).subscribe((addResult: any) => {
@@ -69,9 +74,7 @@ export class DailyConservationFeeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   rateExistsError(year) {
@@ -111,9 +114,7 @@ export class DailyConservationFeeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -139,9 +140,7 @@ export class DailyConservationFeeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 

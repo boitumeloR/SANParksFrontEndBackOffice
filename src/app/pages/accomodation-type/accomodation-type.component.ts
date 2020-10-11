@@ -8,8 +8,8 @@ import { AccommodationTypeService } from 'src/app/services/AccommodationType/acc
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-accomodation-type',
   templateUrl: './accomodation-type.component.html',
@@ -22,7 +22,7 @@ export class AccomodationTypeComponent implements OnInit {
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private accommodationTypeService: AccommodationTypeService,
-              private globalService: GlobalService, private router: Router) { }
+              private globalService: GlobalService, private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.accommodationTypeService.requestReferesh.subscribe(() => this.getAccommodationTypes());
@@ -51,9 +51,13 @@ export class AccomodationTypeComponent implements OnInit {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+ }
 }
