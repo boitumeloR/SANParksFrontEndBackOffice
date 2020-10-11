@@ -45,7 +45,6 @@ export class UpdateCampGateTimeComponent implements OnInit {
     this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((result: any) => {
       this.seasonDropDown = result.Seasons;
       this.displaySeasonDates(this.campGateTime.SeasonID);
-      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.updateCampGateTimeForm = this.formBuilder.group({

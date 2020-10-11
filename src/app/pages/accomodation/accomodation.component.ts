@@ -45,15 +45,8 @@ export class AccomodationComponent implements OnInit {
   getAccommodation(){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.accomodationService.readAccommodation(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
       this.dataSource = new MatTableDataSource(result.Accomodations);
       this.dataSource.paginator = this.paginator;
-      localStorage.setItem('user', JSON.stringify(result.user));
-      }
       displaySpinner.close();
     },
     (error: HttpErrorResponse) => {

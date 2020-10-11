@@ -46,15 +46,8 @@ export class UserRoleComponent implements OnInit {
   getUserRole(){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.userRoleService.ReadUserRole(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
       this.dataSource = new MatTableDataSource(result.UserRoles);
       this.dataSource.paginator = this.paginator;
-      localStorage.setItem('user', JSON.stringify(result.user));
-      }
       displaySpinner.close();
     },
     (error: HttpErrorResponse) => {

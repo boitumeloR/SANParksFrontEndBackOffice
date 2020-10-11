@@ -45,15 +45,8 @@ export class AccomodationBaseRateComponent implements OnInit {
   getAccommodationBaseRate(){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.accommodationTypeBaseRateService.readAccommodationTypeBaseRate(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
       this.dataSource = new MatTableDataSource(result.BaseRates);
       this.dataSource.paginator = this.paginator;
-      localStorage.setItem('user', JSON.stringify(result.user));
-      }
       displaySpinner.close();
     },
     (error: HttpErrorResponse) => {

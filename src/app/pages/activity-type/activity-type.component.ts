@@ -46,15 +46,8 @@ export class ActivityTypeComponent implements OnInit {
   getActivityTypes(){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.activityTypeService.readActivityType(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
       this.dataSource = new MatTableDataSource(result.ActivityTypes);
       this.dataSource.paginator = this.paginator;
-      localStorage.setItem('user', JSON.stringify(result.user));
-      }
       displaySpinner.close();
     },
     (error: HttpErrorResponse) => {

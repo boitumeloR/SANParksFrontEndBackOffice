@@ -33,10 +33,7 @@ export class UpdateAmenityPenaltyComponent implements OnInit {
      }
 
     this.amenity =  JSON.parse(localStorage.getItem('amenityPenalty'));
-
-
     this.selectAmenity = this.formBuilder.group({
-
     });
 
     this.amenityPenalty = this.formBuilder.group({

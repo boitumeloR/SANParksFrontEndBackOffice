@@ -49,11 +49,9 @@ export class AddParkGateTimeComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-      localStorage.setItem('user', JSON.stringify(result.user));
 
       this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((resultSeason: any) => {
           this.seasonDropDown = resultSeason.Seasons;
-          localStorage.setItem('user', JSON.stringify(resultSeason.user));
         });
     });
 

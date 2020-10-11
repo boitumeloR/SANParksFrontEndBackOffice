@@ -102,7 +102,7 @@ export class LoginService {
     (error: HttpErrorResponse) => {
       displaySpinner.close();
       this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
+        data: { errorMessage: 'Our servers are currently down, please try again later.' }
       });
     });
   }

@@ -46,15 +46,8 @@ export class AmenityComponent implements OnInit {
   getAmenity(){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.amenityService.readAmenity(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
-        this.dataSource = new MatTableDataSource(result.Amenities);
-        this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
+      this.dataSource = new MatTableDataSource(result.Amenities);
+      this.dataSource.paginator = this.paginator;
       displaySpinner.close();
     },
     (error: HttpErrorResponse) => {

@@ -35,7 +35,6 @@ export class UpdateAmenityComponent implements OnInit {
 
     this.amenityTypeService.readAmenityType(this.globalService.GetServer()).subscribe((result: any) => {
       this.amenityTypeDropDown = result.AmenityTypes;
-      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.amenityDetails = this.formBuilder.group({

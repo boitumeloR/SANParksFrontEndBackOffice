@@ -23,7 +23,6 @@ export class AddWildcardClusterComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkCheckBox = result.Parks;
-      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.addWildcardClusterForm = this.formBuilder.group({

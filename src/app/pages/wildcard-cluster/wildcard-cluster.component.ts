@@ -47,15 +47,8 @@ export class WildcardClusterComponent implements OnInit {
   getWildcardCluster(){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.wildcardClusterService.ReadWildcardCluster(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
-        this.dataSource = new MatTableDataSource(result.WildcardClusters);
-        this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
+      this.dataSource = new MatTableDataSource(result.WildcardClusters);
+      this.dataSource.paginator = this.paginator;
       displaySpinner.close();
     },
     (error: HttpErrorResponse) => {

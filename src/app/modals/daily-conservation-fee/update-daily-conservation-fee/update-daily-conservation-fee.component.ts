@@ -38,7 +38,6 @@ export class UpdateDailyConservationFeeComponent implements OnInit {
 
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.dailyConservationFeeService.GetRegions(this.globalService.GetServer()).subscribe((result: any) => {

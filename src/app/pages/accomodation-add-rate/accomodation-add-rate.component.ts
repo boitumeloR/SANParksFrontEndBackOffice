@@ -46,15 +46,10 @@ export class AccomodationAddRateComponent implements OnInit {
   getAccommodationAddRate(){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.accommodationTypeAddRateService.readAccommodationTypeAddRate(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
-        this.dataSource = new MatTableDataSource(result.AddRates);
-        this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
+
+      this.dataSource = new MatTableDataSource(result.AddRates);
+      this.dataSource.paginator = this.paginator;
+      //localStorage.setItem('user', JSON.stringify(result.user));      
       displaySpinner.close();
     },
     (error: HttpErrorResponse) => {

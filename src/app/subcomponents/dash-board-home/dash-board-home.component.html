@@ -1,7 +1,7 @@
-<div id="canvasData">
+<div id="canvasData" [hidden]="!pieChart">
     <canvas id="canvas" > {{pieChart}}</canvas>   
 </div>
 
-<div id="canvasData1">
+<div id="canvasData1" [hidden]="!BarChart">
 <canvas id="canvasBar" > {{BarChart}}</canvas>
 </div>
