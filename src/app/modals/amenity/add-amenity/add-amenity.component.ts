@@ -40,15 +40,12 @@ export class AddAmenityComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-      localStorage.setItem('user', JSON.stringify(result.user));
 
       this.accommodationService.readAccommodation(this.globalService.GetServer()).subscribe((resultAccommdoation: any) => {
         this.accommodations = resultAccommdoation.Accomodations;
-        localStorage.setItem('user', JSON.stringify(resultAccommdoation.user));
 
         this.amenityTypeService.readAmenityType(this.globalService.GetServer()).subscribe((resultAmenityType: any) => {
           this.amenityTypeDropDown = resultAmenityType.AmenityTypes;
-          localStorage.setItem('user', JSON.stringify(resultAmenityType.user));
         });
       });
     });

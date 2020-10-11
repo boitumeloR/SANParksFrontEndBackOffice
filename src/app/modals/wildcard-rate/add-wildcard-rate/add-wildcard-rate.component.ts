@@ -34,11 +34,9 @@ export class AddWildcardRateComponent implements OnInit {
 
     this.wildcardCategoryService.ReadWildcardCategory(this.globalService.GetServer()).subscribe((result: any) => {
       this.wildcardCategoryDropDown = result.WildcardCategories;
-      localStorage.setItem('user', JSON.stringify(result.user));
 
       this.wildcardClusterService.ReadWildcardCluster(this.globalService.GetServer()).subscribe((resultWildcardCluster: any) => {
         this.wildcardClusterDropdown = resultWildcardCluster.WildcardClusters;
-        localStorage.setItem('user', JSON.stringify(resultWildcardCluster.user));
       });
     });
 

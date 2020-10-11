@@ -44,16 +44,9 @@ export class CampGateTimeComponent implements OnInit {
 
   getCampGateTime(){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
-    this.campGateTimeService.readCampgateTime(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
-        this.dataSource = new MatTableDataSource(result.CampGateTimes);
-        this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
+    this.campGateTimeService.readCampgateTime(this.globalService.GetServer()).subscribe((result: any) => {     
+      this.dataSource = new MatTableDataSource(result.CampGateTimes);
+      this.dataSource.paginator = this.paginator;
       displaySpinner.close();
     },
     (error: HttpErrorResponse) => {

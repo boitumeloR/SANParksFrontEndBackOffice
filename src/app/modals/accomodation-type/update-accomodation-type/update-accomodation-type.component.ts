@@ -43,7 +43,6 @@ export class UpdateAccomodationTypeComponent implements OnInit {
 
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkWithCamps = result.Parks;
-      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.basicUpdateAccomodationTypeDetails = this.formBuilder.group({

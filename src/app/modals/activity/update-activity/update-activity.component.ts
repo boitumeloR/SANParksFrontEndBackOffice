@@ -40,12 +40,9 @@ export class UpdateActivityComponent implements OnInit {
 
     this.activityTypeService.readActivityType(this.globalService.GetServer()).subscribe((result: any) => {
       this.activityTypeDropDown = result.ActivityTypes;
-      localStorage.setItem('user', JSON.stringify(result.user));
-
 
       this.parkService.ReadPark(this.globalService.GetServer()).subscribe((resultPark: any) => {
       this.parkWithCamps = resultPark.Parks;
-      localStorage.setItem('user', JSON.stringify(resultPark.user));
     });
     });
 

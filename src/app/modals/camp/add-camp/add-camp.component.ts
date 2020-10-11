@@ -27,11 +27,9 @@ export class AddCampComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-      localStorage.setItem('user', JSON.stringify(result.user));
 
       this.campTypeService.ReadCampType(this.globalService.GetServer()).subscribe((resultCampType: any) => {
         this.campTypeDropDown = resultCampType.CampTypes;
-        localStorage.setItem('user', JSON.stringify(resultCampType.user));
       });
     });
 

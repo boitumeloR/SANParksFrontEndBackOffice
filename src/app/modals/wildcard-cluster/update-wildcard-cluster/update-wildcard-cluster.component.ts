@@ -28,7 +28,6 @@ export class UpdateWildcardClusterComponent implements OnInit {
 
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkCheckBox = result.Parks;
-      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.updateWildcardClusterForm = this.formBuilder.group({

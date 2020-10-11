@@ -25,8 +25,8 @@
 
 
 <mat-sidenav-container fxFlexFill class="example-container" color="primary">
-    <mat-sidenav [(opened)] ="opened" mode="over" color = "primary" data-simplebar data-simplebar-auto-hide="true" fxLayout="column" *ngIf="loggedIn$ | async as isLoggedIn">
-      <div fxLayout class="links">
+    <mat-sidenav [(opened)] ="opened" mode="over" color = "primary" data-simplebar data-simplebar-auto-hide="true" fxLayout="column" *ngIf="loggedIn$ | async as isLoggedIn" #sideNav>
+      <div fxLayout class="links" >
         <mat-accordion>
         <mat-expansion-panel  *ngIf="number == 3">
           <mat-expansion-panel-header>
@@ -35,19 +35,19 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="['/Park']">
+            <mat-list-option [routerLink]="['/Park']" (click)="toggleSideBar()">
               Park
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Park-Gate']">
+            <mat-list-option [routerLink]="[ '/Park-Gate']" (click)="toggleSideBar()">
               Park Gate
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Park-Gate-Time']">
+            <mat-list-option [routerLink]="[ '/Park-Gate-Time']" (click)="toggleSideBar()">
               Park Gate Time
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Daily-Conservation-Fee']">
+            <mat-list-option [routerLink]="[ '/Daily-Conservation-Fee']" (click)="toggleSideBar()">
               Daily Conservation Fee
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Season']">
+            <mat-list-option [routerLink]="[ '/Season']" (click)="toggleSideBar()">
               Season
             </mat-list-option>
           </mat-selection-list>
@@ -60,17 +60,17 @@
               Camp
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <mat-selection-list #shoes [multiple]="false" [routerLink]=" ['/Camp-Type']">
+          <mat-selection-list #shoes [multiple]="false" [routerLink]=" ['/Camp-Type']" (click)="toggleSideBar()">
             <mat-list-option>
               Camp Type
             </mat-list-option>
           </mat-selection-list>
-          <mat-selection-list #shoes [multiple]="false" [routerLink]=" ['/Camp']">
+          <mat-selection-list #shoes [multiple]="false" [routerLink]=" ['/Camp']" (click)="toggleSideBar()">
             <mat-list-option>
               Camp 
             </mat-list-option>
           </mat-selection-list>
-          <mat-selection-list #shoes [multiple]="false" [routerLink]=" ['/Camp-Gate-Time']">
+          <mat-selection-list #shoes [multiple]="false" [routerLink]=" ['/Camp-Gate-Time']" (click)="toggleSideBar()">
             <mat-list-option>
               Camp Gate Time
             </mat-list-option>
@@ -87,16 +87,16 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/Accomodation']">
+            <mat-list-option [routerLink]="[ '/Accomodation']" (click)="toggleSideBar()">
               Accommodation
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Accomodation-Type']">
+            <mat-list-option [routerLink]="[ '/Accomodation-Type']" (click)="toggleSideBar()">
               Accommodation Type
             </mat-list-option>
-            <mat-list-option [routerLink] = "[ '/Accomodation-Base-Rate' ]">
+            <mat-list-option [routerLink] = "[ '/Accomodation-Base-Rate' ]" (click)="toggleSideBar()">
               Base Rates
             </mat-list-option>
-            <mat-list-option [routerLink] = "[ '/Accomodation-Add-Rate' ]">
+            <mat-list-option [routerLink] = "[ '/Accomodation-Add-Rate' ]" (click)="toggleSideBar()">
               Add Rates
             </mat-list-option>
           </mat-selection-list>
@@ -112,13 +112,13 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/Amenity']">
+            <mat-list-option [routerLink]="[ '/Amenity']" (click)="toggleSideBar()">
               Amenity
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Amenity-Type']">
+            <mat-list-option [routerLink]="[ '/Amenity-Type']" (click)="toggleSideBar()">
               Amenity Type
             </mat-list-option>
-            <mat-list-option [routerLink] = "[ '/Amenity-Penalty' ]">
+            <mat-list-option [routerLink] = "[ '/Amenity-Penalty' ]" (click)="toggleSideBar()">
               Amenity Penalty
             </mat-list-option>
           </mat-selection-list>
@@ -131,16 +131,16 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/Activity']">
+            <mat-list-option [routerLink]="[ '/Activity']" (click)="toggleSideBar()">
               Activity
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Activity-Type']">
+            <mat-list-option [routerLink]="[ '/Activity-Type']" (click)="toggleSideBar()">
               Activity Type
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Activity-Slot']">
+            <mat-list-option [routerLink]="[ '/Activity-Slot']" (click)="toggleSideBar()">
               Activity Slot
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Activity-Rate']">
+            <mat-list-option [routerLink]="[ '/Activity-Rate']" (click)="toggleSideBar()">
               Activity Rate
             </mat-list-option>
           </mat-selection-list>
@@ -176,19 +176,19 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/Wildcard-Cluster']"  *ngIf="number == 3">
+            <mat-list-option [routerLink]="[ '/Wildcard-Cluster']"  *ngIf="number == 3" (click)="toggleSideBar()">
               Wildcard Cluster
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Wildcard-Category']"  *ngIf="number == 3">
+            <mat-list-option [routerLink]="[ '/Wildcard-Category']"  *ngIf="number == 3" (click)="toggleSideBar()">
               Wildcard Category
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Wildcard-Rate']"  *ngIf="number == 3">
+            <mat-list-option [routerLink]="[ '/Wildcard-Rate']"  *ngIf="number == 3" (click)="toggleSideBar()">
               Wildcard Rate
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Purhase-Wildcard']"  *ngIf="number == 2">
+            <mat-list-option [routerLink]="[ '/Purhase-Wildcard']"  *ngIf="number == 2" (click)="toggleSideBar()">
               Purhase Wildcard
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Search-Wildcard-Membership']"  *ngIf="number == 2">
+            <mat-list-option [routerLink]="[ '/Search-Wildcard-Membership']"  *ngIf="number == 2" (click)="toggleSideBar()">
               Wildcard Membership
             </mat-list-option>
           </mat-selection-list>
@@ -203,13 +203,13 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/User-Role']" *ngIf="number == 3">
+            <mat-list-option [routerLink]="[ '/User-Role']" *ngIf="number == 3" (click)="toggleSideBar()">
               User Role
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Employee']" *ngIf="number == 3">
+            <mat-list-option [routerLink]="[ '/Employee']" *ngIf="number == 3" (click)="toggleSideBar()">
               Employee
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Client']" *ngIf="number == 2">
+            <mat-list-option [routerLink]="[ '/Client']" *ngIf="number == 2" (click)="toggleSideBar()">
               Client
             </mat-list-option>
           </mat-selection-list>
@@ -223,10 +223,10 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/Active-Dates']">
+            <mat-list-option [routerLink]="[ '/Active-Dates']" (click)="toggleSideBar()">
               Active Dates
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/Session-Timer']">
+            <mat-list-option [routerLink]="[ '/Session-Timer']" (click)="toggleSideBar()">
               Session Timer
             </mat-list-option>         
           </mat-selection-list>
@@ -241,10 +241,10 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/availableResults']">
+            <mat-list-option [routerLink]="[ '/availableResults']" (click)="toggleSideBar()">
               Make Booking 
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/searchBookings']">
+            <mat-list-option [routerLink]="[ '/searchBookings']" (click)="toggleSideBar()">
               Search Bookings
             </mat-list-option>
           </mat-selection-list>
@@ -258,10 +258,10 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/checkInPark']">
+            <mat-list-option [routerLink]="[ '/checkInPark']" (click)="toggleSideBar()">
               Pay Inspection Penalty
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/checkOutPark']">
+            <mat-list-option [routerLink]="[ '/checkOutPark']" (click)="toggleSideBar()">
               Pay Vehicle Penalty
             </mat-list-option>
           </mat-selection-list>
@@ -276,10 +276,10 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/checkInPark']">
+            <mat-list-option [routerLink]="[ '/checkInPark']" (click)="toggleSideBar()">
               Check In Park
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/checkOutPark']">
+            <mat-list-option [routerLink]="[ '/checkOutPark']" (click)="toggleSideBar()">
               Check Out Park
             </mat-list-option>
           </mat-selection-list>
@@ -292,16 +292,16 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/checkInAccommodation']">
+            <mat-list-option [routerLink]="[ '/checkInAccommodation']" (click)="toggleSideBar()">
               Check In Accommodation
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/checkInActivity']">
+            <mat-list-option [routerLink]="[ '/checkInActivity']" (click)="toggleSideBar()">
               Check In Activity
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/checkOutList']">
+            <mat-list-option [routerLink]="[ '/checkOutList']" (click)="toggleSideBar()">
               Generate Checkout List
             </mat-list-option>
-            <mat-list-option [routerLink]="[ '/checkoutCamp']">
+            <mat-list-option [routerLink]="[ '/checkoutCamp']" (click)="toggleSideBar()">
               Checkout Camp
             </mat-list-option>
           </mat-selection-list>
@@ -314,19 +314,19 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option [routerLink]="[ '/weeklyBooking']">
+            <mat-list-option [routerLink]="[ '/weeklyBooking']" (click)="toggleSideBar()">
               Weekly Booking Report
             </mat-list-option>
             <br>
-            <mat-list-option [routerLink]="[ '/wildcardMembership']">
+            <mat-list-option [routerLink]="[ '/wildcardMembership']" (click)="toggleSideBar()">
               Wildcard Membership Report
             </mat-list-option>
             <br>
-            <mat-list-option [routerLink]="[ '/parkPerform']">
+            <mat-list-option [routerLink]="[ '/parkPerform']" (click)="toggleSideBar()">
               Park Performance Report
             </mat-list-option>
             <br>
-            <mat-list-option [routerLink]="[ '/bookingCheckin']">
+            <mat-list-option [routerLink]="[ '/bookingCheckin']" (click)="toggleSideBar()">
               Booking vs Check In Report
             </mat-list-option>
           </mat-selection-list>

@@ -47,11 +47,9 @@ export class AddActivitySlotComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-      localStorage.setItem('user', JSON.stringify(result.user));
 
       this.activityTypeService.readActivityType(this.globalService.GetServer()).subscribe((resultActType: any) => {
         this.activityTypeDropDown = resultActType.ActivityTypes;
-        localStorage.setItem('user', JSON.stringify(resultActType.user));
       });
     });
 

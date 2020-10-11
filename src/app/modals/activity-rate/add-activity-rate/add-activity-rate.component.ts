@@ -44,11 +44,9 @@ export class AddActivityRateComponent implements OnInit {
 
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-      localStorage.setItem('user', JSON.stringify(result.user));
 
       this.activityTypeService.readActivityType(this.globalService.GetServer()).subscribe((ActTypeResult: any) => {
         this.activityTypeDropDown = ActTypeResult.ActivityTypes;
-        localStorage.setItem('user', JSON.stringify(ActTypeResult.user));
       });
     });
 

@@ -47,15 +47,8 @@ export class ParkGateTimeComponent implements OnInit {
   getParkGateTime(){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.parkGateTimeService.ReadParkGateTime(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
       this.dataSource = new MatTableDataSource(result.ParkGateTime);
       this.dataSource.paginator = this.paginator;
-      localStorage.setItem('user', JSON.stringify(result.user));
-      }
       displaySpinner.close();
     },
     (error: HttpErrorResponse) => {

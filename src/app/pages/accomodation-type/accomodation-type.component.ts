@@ -45,15 +45,8 @@ export class AccomodationTypeComponent implements OnInit {
   getAccommodationTypes(){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.accommodationTypeService.readAccommodationType(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
       this.dataSource = new MatTableDataSource(result.AccommodationTypes);
       this.dataSource.paginator = this.paginator;
-      localStorage.setItem('user', JSON.stringify(result.user));
-      }
       displaySpinner.close();
     },
     (error: HttpErrorResponse) => {

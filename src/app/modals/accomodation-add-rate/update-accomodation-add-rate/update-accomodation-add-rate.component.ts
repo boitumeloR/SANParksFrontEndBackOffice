@@ -34,7 +34,6 @@ export class UpdateAccomodationAddRateComponent implements OnInit {
 
     this.accommodationTypeService.readAccommodationType(this.globalService.GetServer()).subscribe((result: any) => {
       this.accommodationTypeDropDown = result.AccommodationTypes;
-      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.updateAccomodationRateForm = this.formBuilder.group({
