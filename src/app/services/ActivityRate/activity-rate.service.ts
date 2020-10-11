@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {AddActivityRateSuccessfulComponent} from 'src/app/modals/activity-rate/add-activity-rate-successful/add-activity-rate-successful.component';
 import {AddActivityRateUnsuccessfulComponent} from 'src/app/modals/activity-rate/add-activity-rate-unsuccessful/add-activity-rate-unsuccessful.component';
 import { UpdateActivityRateSuccessfulComponent} from 'src/app/modals/activity-rate/update-activity-rate-successful/update-activity-rate-successful.component';
@@ -41,7 +40,11 @@ export class ActivityRateService {
   get requestReferesh(){
     return this.refresh;
   }
-
+  serverDownSnack() {
+    this.rateForYear.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
   createActivityRate(ActivityRate, link){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/activityRate/createActivityRate`, ActivityRate).subscribe((addResult: any) => {
@@ -68,9 +71,7 @@ export class ActivityRateService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   rateExistsError(year) {
@@ -108,9 +109,7 @@ export class ActivityRateService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   deleteActivityRate(user, ActivityRateID, link){
@@ -135,9 +134,7 @@ export class ActivityRateService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   readRateTypes(link){

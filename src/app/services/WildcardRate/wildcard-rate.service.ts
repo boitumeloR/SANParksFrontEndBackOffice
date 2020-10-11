@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {DecimalPipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
@@ -35,6 +34,12 @@ export class WildcardRateService {
     return this.refresh;
   }
 
+  serverDownSnack() {
+    this.rateForYear.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
+
   CreateWildcardRate(WildcardRate, link){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/wildcardRate/createWildcardRate`, WildcardRate).subscribe((addResult: any) => {
@@ -61,9 +66,7 @@ export class WildcardRateService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -104,9 +107,7 @@ export class WildcardRateService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -132,9 +133,7 @@ export class WildcardRateService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 }

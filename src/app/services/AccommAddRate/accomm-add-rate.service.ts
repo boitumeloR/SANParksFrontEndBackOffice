@@ -11,7 +11,6 @@ import {DeleteAccomodationAddRateUnsuccessfulComponent} from 'src/app/modals/acc
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 export interface AccommodationTypeAddRate{
   AddRateID: number;
   AccomodationTypeID: number;
@@ -32,7 +31,11 @@ export class AccommAddRateService {
   get requestReferesh(){
     return this.refresh;
   }
-
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
   createAccommodationTypeAddRate(AccommodationTypeAddRate, link){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/AccommodationAddRate/createAddRate`, AccommodationTypeAddRate).subscribe((addResult: any) => {
@@ -59,10 +62,7 @@ export class AccommAddRateService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
-    }
+      this.serverDownSnack();    }
     );
   }
 
@@ -103,10 +103,8 @@ export class AccommAddRateService {
     },
       (error: HttpErrorResponse) => {
         displaySpinner.close();
-        this.dialog.open(ErrorModalComponent, {
-          data: { errorMessage: error.message }
+        this.serverDownSnack();
       });
-    });
   }
   deleteAccommodationTypeAddRate(user, AddRateID, link){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
@@ -129,9 +127,7 @@ export class AccommAddRateService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 }

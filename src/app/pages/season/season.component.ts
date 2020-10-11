@@ -8,8 +8,8 @@ import { SeasonService } from 'src/app/services/Season/season.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-season',
   templateUrl: './season.component.html',
@@ -20,7 +20,7 @@ export class SeasonComponent implements OnInit {
   dataSource;
   filter;
   constructor(private dialog: MatDialog, private seasonService: SeasonService, private globalService: GlobalService,
-              private router: Router) { }
+              private router: Router, private snackbar: MatSnackBar) { }
 
   displayedColumns: string[] = ['name', 'startDate', 'endDate', 'view'];
 
@@ -29,6 +29,12 @@ export class SeasonComponent implements OnInit {
     this.seasonService.requestReferesh.subscribe(() => {this.getSeason(); } );
     this.getSeason();
   }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+ }
 
   filterTable(filter){
     this.dataSource.filter = filter;
@@ -52,9 +58,7 @@ export class SeasonComponent implements OnInit {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     }
     );
   }

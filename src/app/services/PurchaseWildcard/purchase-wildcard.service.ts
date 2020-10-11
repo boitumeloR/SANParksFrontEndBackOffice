@@ -1,7 +1,7 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import {SuccessfulWildcardPurchaseComponent} from 'src/app/pages/Purchase Wildcard/successful-wildcard-purchase/successful-wildcard-purchase.component';
 import { UnsuccessfulWCPurchaseComponent } from 'src/app/pages/Purchase Wildcard/unsuccessful-wcpurchase/unsuccessful-wcpurchase.component';
@@ -11,7 +11,12 @@ import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component'
 })
 export class PurchaseWildcardService {
 
-  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) { }
+  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog, private snackbar: MatSnackBar) { }
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
 
   searchClient(client, link){
     return this.http.post(`${link}/api/purchaseWildcard/getClient`, client);
@@ -40,9 +45,7 @@ export class PurchaseWildcardService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 }

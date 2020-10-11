@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCampTypeSuccessfulComponent} from 'src/app/modals/camp-type/add-camp-type-successful/add-camp-type-successful.component';
@@ -13,6 +12,7 @@ import { Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import {CamptypeaddedComponent} from 'src/app/workflows/camptypeadded/camptypeadded.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface CampType {
   CampTypeID: number;
   CampTypeDescription: string;
@@ -29,11 +29,17 @@ export interface CampTypeDropDown {
 })
 export class CampTypeService {
   constructor(private http: HttpClient, private dialog: MatDialog, private router: Router,
-              private bottomSheet: MatBottomSheet) { }
+              private bottomSheet: MatBottomSheet, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   CreateCampType(CampType, link){
@@ -61,9 +67,7 @@ export class CampTypeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -93,9 +97,7 @@ export class CampTypeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -120,9 +122,7 @@ export class CampTypeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 }

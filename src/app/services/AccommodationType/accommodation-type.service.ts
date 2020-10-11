@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,6 +13,7 @@ import { Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AccommodationtypeaddedComponent} from 'src/app/workflows/accommodationtypeadded/accommodationtypeadded.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface AccommodationType{
   AccommodationTypeID: number;
   AccTypeName: string;
@@ -35,11 +35,17 @@ export interface AccommodationTypeDropDown{
 export class AccommodationTypeService {
 
   constructor(private dialog: MatDialog, private http: HttpClient,
-              private router: Router, private bottomSheet: MatBottomSheet ) { }
+              private router: Router, private bottomSheet: MatBottomSheet, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   createAccommodationType(accommodationType, link: string){
@@ -67,9 +73,7 @@ export class AccommodationTypeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   readAccommodationType(link){
@@ -98,9 +102,7 @@ export class AccommodationTypeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   deleteAccommodationType(user, AccommodationTypeID, link){
@@ -126,9 +128,7 @@ export class AccommodationTypeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   getAccomomodationTypesForCamp(campID, link){

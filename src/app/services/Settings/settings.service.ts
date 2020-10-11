@@ -1,5 +1,4 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -11,8 +10,13 @@ import { MatDialog } from '@angular/material/dialog';
 export class SettingsService {
 
   constructor(private http: HttpClient, private rateForYear: MatSnackBar, private router: Router,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog, private snackbar: MatSnackBar) { }
 
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
   CreateActiveDate(Date, link){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/settings/createActiveDates`, Date).subscribe((addResult: any) => {
@@ -26,9 +30,7 @@ export class SettingsService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -57,9 +59,7 @@ export class SettingsService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   successsSnackSession() {

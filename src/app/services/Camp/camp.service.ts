@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {GlobalService} from '../Global/global.service';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,6 +13,7 @@ import { Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CampaddedComponent} from 'src/app/workflows/campadded/campadded.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface Camp{
   CampID: number;
   ParkID: number;
@@ -35,11 +35,17 @@ export interface CampDropDown{
 export class CampService {
 
   constructor(private global: GlobalService , private http: HttpClient, private dialog: MatDialog,
-              private router: Router, private bottomSheet: MatBottomSheet ) { }
+              private router: Router, private bottomSheet: MatBottomSheet, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   createCamp(Camp, link){
@@ -67,9 +73,7 @@ export class CampService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   readCamp(link){
@@ -97,9 +101,7 @@ export class CampService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   deleteCamp(user, CampID, link){
@@ -123,9 +125,7 @@ export class CampService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   getCampsForSpecificPark(parkID, link){

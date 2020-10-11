@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { DateRange } from '@fullcalendar/core';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,6 +11,7 @@ import { DeleteCampGateTimeSuccessfulComponent } from 'src/app/modals/camp-gate-
 import { DeleteCampGateTimeUnsuccessfulComponent } from 'src/app/modals/camp-gate-time/delete-camp-gate-time-unsuccessful/delete-camp-gate-time-unsuccessful.component';
 import { Router } from '@angular/router';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface CampGateTime{
   CampGateTimeID: number;
   CampID: number;
@@ -31,11 +31,17 @@ export interface CampGateTime{
 })
 export class CampGateTimeService {
 
-  constructor(private dialog: MatDialog , private http: HttpClient, private router: Router) { }
+  constructor(private dialog: MatDialog , private http: HttpClient, private router: Router, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   createCampGateTime(CampGateTime, link){
@@ -59,9 +65,7 @@ export class CampGateTimeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   readCampgateTime(link){
@@ -89,9 +93,7 @@ export class CampGateTimeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   deleteCampGateTime(user, CampGateTimeID, link){
@@ -116,9 +118,7 @@ export class CampGateTimeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 }

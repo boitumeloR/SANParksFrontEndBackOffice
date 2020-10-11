@@ -8,8 +8,8 @@ import { DailyConservationFeeService } from 'src/app/services/DailyConservationF
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-daily-conservation-fee',
   templateUrl: './daily-conservation-fee.component.html',
@@ -22,11 +22,17 @@ export class DailyConservationFeeComponent implements OnInit {
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private dailyConservationFeeService: DailyConservationFeeService,
-              private globalService: GlobalService, private router: Router) { }
+              private globalService: GlobalService, private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.dailyConservationFeeService.requestReferesh.subscribe(() => {this.getDailyConservationFee(); });
     this.getDailyConservationFee();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -51,9 +57,7 @@ export class DailyConservationFeeComponent implements OnInit {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-        });
+      this.serverDownSnack();
       }
     );
   }

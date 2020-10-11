@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
@@ -39,6 +38,12 @@ export class AmenityPenaltyService {
   constructor(private dialog: MatDialog , private http: HttpClient,
               private router: Router, private rateForYear: MatSnackBar) { }
 
+  serverDownSnack() {
+    this.rateForYear.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
+
   createAmenityPenalty(AmenityPenalty, link){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/amenityPenalty/createAmenityPenalty`, AmenityPenalty).subscribe((addResult: any) => {
@@ -65,9 +70,7 @@ export class AmenityPenaltyService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   rateExistsError(year) {
@@ -105,9 +108,7 @@ export class AmenityPenaltyService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   deleteAmenityPenalty(user, PenaltyID, link){
@@ -132,9 +133,7 @@ export class AmenityPenaltyService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 }

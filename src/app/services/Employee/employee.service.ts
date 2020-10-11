@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import {AddEmployeeSuccessfulComponent} from 'src/app/modals/employee/add-employee-successful/add-employee-successful.component';
 import {AddEmployeeUnsuccessfulComponent} from 'src/app/modals/employee/add-employee-unsuccessful/add-employee-unsuccessful.component';
 import {UpdateEmployeeSuccessfulComponent} from 'src/app/modals/employee/update-employee-successful/update-employee-successful.component';
@@ -11,6 +10,7 @@ import { Router } from '@angular/router';
 import {SuccessfulProfileUpdateComponent} from 'src/app/modals/employee/successful-profile-update/successful-profile-update.component';
 import {UnsuccessfulProfileUpdateComponent} from 'src/app/modals/employee/unsuccessful-profile-update/unsuccessful-profile-update.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface Employee {
   EmployeeID: number;
   EmployeeStatusID: number;
@@ -32,11 +32,17 @@ export interface Employee {
   providedIn: 'root'
 })
 export class EmployeeService {
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   CreateEmployee(Employee, link){
@@ -60,9 +66,7 @@ export class EmployeeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -92,9 +96,7 @@ export class EmployeeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 
@@ -132,9 +134,7 @@ export class EmployeeService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
 }

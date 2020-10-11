@@ -11,7 +11,7 @@ import {DeleteAccomodationBaseRateSuccessfulComponent} from 'src/app/modals/acco
 import {DeleteAccomodationBaseRateUnsuccessfulComponent} from 'src/app/modals/accomodation-base-rate/delete-accomodation-base-rate-unsuccessful/delete-accomodation-base-rate-unsuccessful.component';
 import { Router } from '@angular/router';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface AccommodationTypeBaseRate{
   BaseRateID: number;
   AccomodationTypeID: number;
@@ -27,13 +27,17 @@ export interface AccommodationTypeBaseRate{
 export class AccommBaseRateService {
 
   constructor(private dialog: MatDialog, private http: HttpClient,
-              private router: Router ) { }
+              private router: Router, private snackbar: MatSnackBar ) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
   }
-
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
 
   createAccommodationTypeBaseRate(AccommodationTypeBaseRate, link){
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
@@ -56,9 +60,7 @@ export class AccommBaseRateService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-    });
+      this.serverDownSnack();
   });
 }
   readAccommodationTypeBaseRate(link){
@@ -87,9 +89,7 @@ export class AccommBaseRateService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   deleteAccommodationTypeBaseRate(user, BaseRateID, link){    
@@ -114,9 +114,7 @@ export class AccommBaseRateService {
     },
   (error: HttpErrorResponse) => {
     displaySpinner.close();
-    this.dialog.open(ErrorModalComponent, {
-      data: { errorMessage: error.message }
-    });
+    this.serverDownSnack();
   });
   }
 }

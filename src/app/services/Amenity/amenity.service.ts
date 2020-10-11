@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
@@ -14,6 +13,7 @@ import { Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AmenityAddedComponent} from 'src/app/workflows/amenity-added/amenity-added.component';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface Amenity{
   PenaltyID: number;
   AmenityID: number;
@@ -32,11 +32,17 @@ export interface Amenity{
 export class AmenityService {
 
   constructor(private dialog: MatDialog , private http: HttpClient,
-              private router: Router,  private bottomSheet: MatBottomSheet) { }
+              private router: Router,  private bottomSheet: MatBottomSheet, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   createAmenity(Amenity, link){
@@ -65,9 +71,7 @@ export class AmenityService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   readAmenity(link){
@@ -95,9 +99,7 @@ export class AmenityService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   deleteAmenity(user,AmenityID, link){
@@ -121,9 +123,7 @@ export class AmenityService {
     },
     (error: HttpErrorResponse) => {
       displaySpinner.close();
-      this.dialog.open(ErrorModalComponent, {
-        data: { errorMessage: error.message }
-      });
+      this.serverDownSnack();
     });
   }
   readAmenityStatus(link){
