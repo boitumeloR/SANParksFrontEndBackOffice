@@ -65,4 +65,7 @@ export class HeaderComponent implements OnInit {
       window.speechSynthesis.speak(speech);
     });
   }
-}
+
+  goDashboard(){
+    this.router.navigate(['/Home']);  }
+  }
