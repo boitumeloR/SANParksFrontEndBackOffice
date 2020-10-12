@@ -34,7 +34,7 @@ export class SeasonComponent implements OnInit {
     this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
       duration: 3500,
     });
- }
+  }
 
   filterTable(filter){
     this.dataSource.filter = filter;

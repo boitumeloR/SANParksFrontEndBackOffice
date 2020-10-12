@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,6 +7,7 @@ import { Router } from '@angular/router';
 import { PurchaseWildcardComponent } from 'src/app/modals/purchase-wildcard/purchase-wildcard.component';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { PurchaseWildcardService } from 'src/app/services/PurchaseWildcard/purchase-wildcard.service';
+import { SpinnerComponent } from 'src/app/subcomponents/spinner/spinner.component';
 
 @Component({
   selector: 'app-search-client-for-wc',
@@ -16,14 +18,18 @@ export class SearchClientForWCComponent implements OnInit {
   searchClientForm: FormGroup;
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private purchaseWildcardService: PurchaseWildcardService, private globalService: GlobalService,
-              private router: Router) { }
+              private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.searchClientForm = this.formBuilder.group({
       identityNUmber: ['', Validators.required]
     });
   }
-
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
   searchClient(){
     if (this.searchClientForm.invalid){
       this.displayValidationError();
@@ -33,7 +39,7 @@ export class SearchClientForWCComponent implements OnInit {
         ClientIDNumber: this.searchClientForm.get('identityNUmber').value,
         authenticateUser:  JSON.parse(localStorage.getItem('user'))
       };
-
+      const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
       this.purchaseWildcardService.searchClient(searchClient, this.globalService.GetServer()).subscribe((response: any) => {
         if (response.clientNotFound){
           this.clientNotFound();
@@ -59,6 +65,10 @@ export class SearchClientForWCComponent implements OnInit {
           localStorage.setItem('user', JSON.stringify(response.user));
           const confirmCancelDialog = this.dialog.open(PurchaseWildcardComponent, {disableClose: true});
         }
+      },
+      (error: HttpErrorResponse) => {
+        displaySpinner.close();
+        this.serverDownSnack();
       });
     }
   }
