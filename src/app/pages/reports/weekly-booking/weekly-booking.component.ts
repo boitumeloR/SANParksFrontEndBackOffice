@@ -51,8 +51,6 @@ export class WeeklyBookingComponent implements OnInit {
     this.reportForm = this.fb.group({
       park: [null, Validators.required],
       camp: [null],
-      start: [null, Validators.required],
-      end: [null, Validators.required]
     });
     this.avail.getDropDowns(this.global.GetServer()).subscribe(result => this.parks = result.Parks);
   }
@@ -132,16 +130,14 @@ export class WeeklyBookingComponent implements OnInit {
   }
   Submit() {
     if (this.reportForm.valid) {
-      if (new Date(this.reportForm.get('start').value) >= new Date(this.reportForm.get('end').value)) {
-        const ref = this.dialog.open(ErrorModalComponent, {
-          data: {errorMessage: 'Invalid dates, choose different dates'}
-        });
-      } else {
         console.log(this.reportForm.value);
 
+        const today = new Date();
+        const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+
         const filterData = {
-          StartDate: new Date(this.reportForm.get('start').value),
-          EndDate: new Date(this.reportForm.get('end').value),
+          StartDate: today,
+          EndDate: lastWeek,
           ParkID: this.reportForm.get('park').value,
           CampID: this.reportForm.get('camp').value,
           Session: JSON.parse(localStorage.getItem('user'))
@@ -192,16 +188,17 @@ export class WeeklyBookingComponent implements OnInit {
             this.router.navigateByUrl('Login');
           }
         });
-      }
     }
   }
 
   SendReport() {
     const activityGraph: HTMLCanvasElement = document.querySelector('#actChart') as HTMLCanvasElement;
     const accommodationGraph: HTMLCanvasElement = document.querySelector('#totalChart') as HTMLCanvasElement;
+    const dayGraph: HTMLCanvasElement = document.querySelector('#dayChart') as HTMLCanvasElement;
 
     const activityImage: string = activityGraph.toDataURL();
     const accommodationImage: string = accommodationGraph.toDataURL();
+    const dayImage: string  = dayGraph.toDataURL();
 
     console.log(activityImage);
     console.log(accommodationImage);
