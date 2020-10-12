@@ -5,6 +5,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Season, SeasonService } from 'src/app/services/Season/season.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
 @Component({
   selector: 'app-add-season',
   templateUrl: './add-season.component.html',
@@ -12,8 +14,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddSeasonComponent implements OnInit {
   addSeasonForm: FormGroup;
-  constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<AddSeasonComponent>) { }
+  newSeason: Season;
+  constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
+              private dialogRef: MatDialogRef<AddSeasonComponent>, private seasonService: SeasonService,
+              private  globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.addSeasonForm = this.formBuilder.group({
@@ -24,26 +28,49 @@ export class AddSeasonComponent implements OnInit {
   }
 
   addSeason(){
-    if(this.addSeasonForm.invalid){
+    if (this.addSeasonForm.invalid){
       this.displayValidationError();
+    }
+    else if (this.addSeasonForm.get('startDate').value > this.addSeasonForm.get('endDate').value){
+      this.displayDateError();
     }
     else{
       this.dialogRef.close();
       const addSeasonConfirmationDialog = this.dialog.open(AddSeasonConfirmationComponent);
+
+      addSeasonConfirmationDialog.afterClosed().subscribe(result => {
+        if (result === true){
+            const user = JSON.parse(localStorage.getItem('user'));
+            const newSeason = {
+              seasonName: this.addSeasonForm.get('seasonName').value,
+              startDate: this.addSeasonForm.get('startDate').value,
+              endDate: this.addSeasonForm.get('endDate').value,
+              authenticateUser: user
+            };
+
+            this.seasonService.CreateSeason(newSeason, this.globalService.GetServer());
+        }
+      });
     }
   }
 
   confirmCancel(){
       const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
       confirmCancelDialog.afterClosed().subscribe(result => {
-        if(result == true){
+        if (result === true){
           this.dialogRef.close();
         }
       });
   }
 
   displayValidationError() {
-    this.validationErrorSnackBar.open("The entered details are not in the correct format. Please try again.", "OK", {
+    this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  displayDateError() {
+    this.validationErrorSnackBar.open('The date effective must be earlier than the end date. Please try again.', 'OK', {
       duration: 3500,
     });
   }

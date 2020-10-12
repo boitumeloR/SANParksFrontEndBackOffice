@@ -5,6 +5,8 @@ import {UpdateCampTypeConfirmationComponent} from 'src/app/modals/camp-type/upda
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
+import { CampType, CampTypeService} from 'src/app/services/CampType/camp-type.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
 @Component({
   selector: 'app-update-camp-type',
   templateUrl: './update-camp-type.component.html',
@@ -12,37 +14,54 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class UpdateCampTypeComponent implements OnInit {
   updateCampTypeForm: FormGroup;
-  constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<UpdateCampTypeComponent>) { }
+  campType: CampType;
+
+  constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
+              private dialogRef: MatDialogRef<UpdateCampTypeComponent>, private campTypeService: CampTypeService,
+              private globalService: GlobalService) { }
 
   ngOnInit(): void {
+    this.campType = JSON.parse(localStorage.getItem('campType'));
     this.updateCampTypeForm = this.formBuilder.group({
-      campTypeName: ['', Validators.required],
-      campTypeDescription : ['', Validators.required]
+      campTypeName: [this.campType.CampTypeName, Validators.required],
+      campTypeDescription : [this.campType.CampTypeDescription, Validators.required]
     });
   }
-  
+
   updateCampType(){
-    if(this.updateCampTypeForm.invalid){
+    if (this.updateCampTypeForm.invalid){
       this.displayValidationError();
     }
     else{
       this.dialogRef.close();
-    const UpdateCampTypeConfirmation = this.dialog.open(UpdateCampTypeConfirmationComponent);
+      const UpdateCampTypeConfirmation = this.dialog.open(UpdateCampTypeConfirmationComponent);
+
+      UpdateCampTypeConfirmation.afterClosed().subscribe( result => {
+        if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
+           const campType = {
+            CampTypeID: this.campType.CampTypeID,
+            CampTypeName: this.updateCampTypeForm.get('campTypeName').value,
+            CampTypeDescription: this.updateCampTypeForm.get('campTypeDescription').value,
+            authenticateUser: user
+          };
+           this.campTypeService.UpdateCampType(campType, this.globalService.GetServer());
+        }
+      });
     }
   }
 
   confirmCancel(){
     const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
     confirmCancelDialog.afterClosed().subscribe(result => {
-      if(result == true){
+      if (result === true){
         this.dialogRef.close();
       }
     });
   }
 
   displayValidationError() {
-    this.validationErrorSnackBar.open("The entered details are not in the correct format. Please try again.", "OK", {
+    this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }

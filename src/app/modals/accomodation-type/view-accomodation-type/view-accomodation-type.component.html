@@ -4,35 +4,43 @@
     <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
         <mat-icon>close</mat-icon>
     </button>
-    <h2 mat-dialog-title>View Accomodation Type</h2>
+    <h2 mat-dialog-title>View Accommodation Type</h2>
   
     <mat-dialog-content appearance="mat-typography">
       <div class="example-container">
         <mat-form-field appearance="fill">
-            <mat-label>Accomodation Type Name</mat-label>
-            <input matInput value="Bungalow" readonly>
+            <mat-label>Accommodation Type Name</mat-label>
+            <input matInput value="{{accommodationType.AccTypeName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
-            <mat-label>Accomodation Type Description</mat-label>
-            <textarea cdkTextareaAutosize matInput  readonly value="Single bedroom units with a bathroom. Some have communal kitchens while others have own kitchenettes with basic kitchen equipment. Some bungalows have perimeter or river views, while others have been upgraded to luxury status."></textarea>
+            <mat-label>Accommodation Type Description</mat-label>
+            <textarea cdkTextareaAutosize matInput  readonly value="{{accommodationType.AccTypeDescription}}"></textarea>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Number of Beds</mat-label>
-            <input matInput value="3" readonly>
+            <input matInput value="{{accommodationType.NumBeds}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Number of Baths</mat-label>
-            <input matInput value="2" readonly>
+            <input matInput value="{{accommodationType.NumBaths}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
-            <mat-label>Adult Limit</mat-label>
-            <input matInput value="4" readonly>
+            <mat-label>Max Capacity</mat-label>
+            <input matInput value="{{accommodationType.MaxLimit}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
-            <mat-label>Child Limit</mat-label>
-            <input matInput value="2" readonly>
+            <mat-label>Base Adult Amount</mat-label>
+            <input matInput value="{{accommodationType.AdultLimit}}" readonly>
         </mat-form-field>
-        <!--I am thinking of using a tree to display which camps this is available at-->
+        <mat-form-field appearance="fill">
+            <mat-label>Base Child Amount</mat-label>
+            <input matInput value="{{accommodationType.ChildLimit}}" readonly>
+        </mat-form-field>
+        <div class="imageHolder">
+        <mat-card *ngFor="let image of listOfImages" >
+            <img mat-card-image class="cardImage" [src]="image" alt="Accomodation type image.">
+        </mat-card>
+        </div>
       </div>      
     </mat-dialog-content>
     <mat-dialog-actions align="end">

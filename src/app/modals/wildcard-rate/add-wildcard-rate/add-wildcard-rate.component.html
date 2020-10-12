@@ -6,31 +6,29 @@
       <mat-form-field appearance="fill">
         <mat-label>Wildcard Cluster</mat-label>
         <mat-select formControlName="wildcardCluster">
-            <mat-option value="All Parks Cluster">All Parks Cluster</mat-option>
-            <mat-option value="Msinsi Cluster">Msinsi Cluster</mat-option>
-            <mat-option value="SANParks Cluster">SANParks Cluster</mat-option>
+            <mat-option *ngFor="let wildcardCluster of wildcardClusterDropdown" value="{{wildcardCluster.WildcardClusterID}}">{{wildcardCluster.WildcardName}}</mat-option>
         </mat-select>
       </mat-form-field> 
       <mat-form-field appearance="fill">
         <mat-label>Wildcard Category</mat-label>
         <mat-select formControlName="wildcardCategory">
-            <mat-option value="Individual">Individual</mat-option>
-            <mat-option value="Couple">Couple</mat-option>
-            <mat-option value="Family">Family</mat-option>
+          <mat-option *ngFor="let wildcardCategory of wildcardCategoryDropDown" value="{{wildcardCategory.WildcardCategoryID}}">{{wildcardCategory.WildcardCategoryName}}</mat-option>
         </mat-select>
       </mat-form-field> 
       <mat-form-field appearance="fill">
         <mat-label>Wildcard Rate</mat-label>
-        <input matInput formControlName="wildcardRate" type="number">
+        <input matInput formControlName="wildcardRate" type="number" maxlength="13">
         <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Date Effective</mat-label>
-        <input matInput [matDatepicker]="dateEffective" formControlName="dateEffective" readonly>
-        <mat-datepicker-toggle matSuffix [for]="dateEffective"></mat-datepicker-toggle>
-        <mat-datepicker #dateEffective color="primary"></mat-datepicker>
-        <mat-hint>Date from which to apply this wildcard rate.</mat-hint>
-      </mat-form-field>
+        <mat-label>Year Effective</mat-label>
+        <mat-select formControlName="dateEffective">
+            <mat-option *ngFor="let year of listOfYears" [value]="year">
+              {{year}}
+            </mat-option>
+          </mat-select>
+        <mat-hint>Year in which to apply this amenity penalty.</mat-hint>
+    </mat-form-field>
     </div>
     
   </mat-dialog-content>

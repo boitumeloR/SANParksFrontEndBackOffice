@@ -326,7 +326,6 @@ import { UnannouncedCheckInComponent } from './pages/unannounced-check-in/unanno
 import { PreBookedCheckInComponent } from './pages/pre-booked-check-in/pre-booked-check-in.component';
 import { SuccessModalComponent } from './modals/auxilliary-modals/success-modal/success-modal.component';
 import { CheckoutParkComponent } from './pages/checkout-park/checkout-park.component';
-
 import { NgxStripeModule } from 'ngx-stripe';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatStepper} from '@angular/material/stepper';
@@ -367,13 +366,63 @@ import { UpdateClientComponent } from './modals/client/update-client/update-clie
 import { UpdateClientConfirmationComponent } from './modals/client/update-client-confirmation/update-client-confirmation.component';
 import { UpdateClientSuccessfulComponent } from './modals/client/update-client-successful/update-client-successful.component';
 import { UpdateClientUnsuccessfulComponent } from './modals/client/update-client-unsuccessful/update-client-unsuccessful.component';
-import { PurchaseWildcardComponent } from './pages/Purchase Wildcard/purchase-wildcard/purchase-wildcard.component';
 import { PurchaseWildcardConfirmationComponent } from './pages/Purchase Wildcard/purchase-wildcard-confirmation/purchase-wildcard-confirmation.component';
 import { SuccessfulWildcardPurchaseComponent } from './pages/Purchase Wildcard/successful-wildcard-purchase/successful-wildcard-purchase.component';
 import { SearchWildcardMembershipComponent } from './pages/renew/search-wildcard-membership/search-wildcard-membership.component';
 import { RenewWildcardMembershipComponent } from './pages/renew/renew-wildcard-membership/renew-wildcard-membership.component';
 import { UpdateWildcardStatusConfirmationComponent } from './pages/renew/update-wildcard-status-confirmation/update-wildcard-status-confirmation.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { LoginComponent } from './subcomponents/login/login/login.component';
+import { LoginFailedComponent } from './subcomponents/login/login-failed/login-failed.component';
+import { ForgotPasswordComponent } from './subcomponents/login/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './subcomponents/login/reset-password/reset-password.component';
+import { PageNotFoundComponent } from './subcomponents/page-not-found/page-not-found.component';
+import { UserNotFoundComponent } from './subcomponents/login/user-not-found/user-not-found.component';
+import { ForgotPasswordUnsucessfulComponent } from './subcomponents/login/forgot-password-unsucessful/forgot-password-unsucessful.component';
+import { ForgotPasswordSuccessfulComponent } from './subcomponents/login/forgot-password-successful/forgot-password-successful.component';
+import { ResetPasswordSucessfulComponent } from './subcomponents/login/reset-password-sucessful/reset-password-sucessful.component';
+import { ResetPasswordUnsuccessfulComponent } from './subcomponents/login/reset-password-unsuccessful/reset-password-unsuccessful.component';
+import { RouterModule } from '@angular/router';
+import { ViewProfileComponent } from './modals/employee/view-profile/view-profile.component';
+import { UpdateProfileComponent } from './modals/employee/update-profile/update-profile.component';
+import { SuccessfulProfileUpdateComponent } from './modals/employee/successful-profile-update/successful-profile-update.component';
+import { UnsuccessfulProfileUpdateComponent } from './modals/employee/unsuccessful-profile-update/unsuccessful-profile-update.component';
+import { ProfileUpdateConfirmationComponent } from './modals/employee/profile-update-confirmation/profile-update-confirmation.component';
+import { ActiveDatesComponent } from 'src/app/modals/settings/active-dates/active-dates.component';
+import { UserTimeOutComponent } from 'src/app/modals/settings/user-time-out/user-time-out.component';
+import { ErrorModalComponent } from './modals/auxilliary-modals/error-modal/error-modal.component';
+import { AddAccommodationBookingComponent } from './modals/booking/add-accommodation-booking/add-accommodation-booking.component';
+import {TableModule} from 'primeng/table';
+import {PaginatorModule} from 'primeng/paginator';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { AddActivityBookingComponent } from './modals/booking/add-activity-booking/add-activity-booking.component';
+import { AddDayvisitComponent } from './modals/booking/add-dayvisit/add-dayvisit.component';
+import { AddAdultGuestComponent } from './modals/guest/add-adult-guest/add-adult-guest.component';
+import { AddChildGuestComponent } from './modals/guest/add-child-guest/add-child-guest.component';
+import { AddArbitraryGuestComponent } from './modals/guest/add-arbitrary-guest/add-arbitrary-guest.component';
+import { ViewAccommodationModalComponent } from './modals/booking/view-accommodation-modal/view-accommodation-modal.component';
+import { HelpComponent } from './subcomponents/help/help.component';
+import { SearchClientForWCComponent } from './pages/Purchase Wildcard/search-client-for-wc/search-client-for-wc.component';;
+import { PurchaseWildcardComponent } from './modals/purchase-wildcard/purchase-wildcard.component';
+import { UnsuccessfulWCPurchaseComponent } from './pages/Purchase Wildcard/unsuccessful-wcpurchase/unsuccessful-wcpurchase.component';
+import { DashBoardHomeComponent } from './subcomponents/dash-board-home/dash-board-home.component';
+import { ParkaddedComponent } from './workflows/parkadded/parkadded.component';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { ParkgateaddedComponent } from './workflows/parkgateadded/parkgateadded.component';
+import { SeasonaddedComponent } from './workflows/seasonadded/seasonadded.component';
+import { CamptypeaddedComponent } from './workflows/camptypeadded/camptypeadded.component';
+import { CampaddedComponent } from './workflows/campadded/campadded.component';
+import { AccommodationtypeaddedComponent } from './workflows/accommodationtypeadded/accommodationtypeadded.component';
+import { AccommodationaddedComponent } from './workflows/accommodationadded/accommodationadded.component';
+import { AmenitytypeaddedComponent } from './workflows/amenitytypeadded/amenitytypeadded.component';
+import { AmenityAddedComponent } from './workflows/amenity-added/amenity-added.component';
+import { ActivityTypeAddedComponent } from './workflows/activity-type-added/activity-type-added.component';
+import { ActivityAddedComponent } from './workflows/activity-added/activity-added.component';
+import { WildcardClusterAddedComponent } from './workflows/wildcard-cluster-added/wildcard-cluster-added.component';
+import { WildcardCategoryAddedComponent } from './workflows/wildcard-category-added/wildcard-category-added.component';
+import { UserRoleAddComponent } from './workflows/user-role-add/user-role-add.component';
+import { SpinnerComponent } from './subcomponents/spinner/spinner.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -732,12 +781,56 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     UpdateClientConfirmationComponent,
     UpdateClientSuccessfulComponent,
     UpdateClientUnsuccessfulComponent,
-    PurchaseWildcardComponent,
     PurchaseWildcardConfirmationComponent,
     SuccessfulWildcardPurchaseComponent,
     SearchWildcardMembershipComponent,
     RenewWildcardMembershipComponent,
     UpdateWildcardStatusConfirmationComponent,
+    LoginComponent,
+    LoginFailedComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    PageNotFoundComponent,
+    UserNotFoundComponent,
+    ForgotPasswordUnsucessfulComponent,
+    ForgotPasswordSuccessfulComponent,
+    ResetPasswordSucessfulComponent,
+    ResetPasswordUnsuccessfulComponent,
+    ViewProfileComponent,
+    UpdateProfileComponent,
+    SuccessfulProfileUpdateComponent,
+    UnsuccessfulProfileUpdateComponent,
+    ProfileUpdateConfirmationComponent,
+    ActiveDatesComponent,
+    UserTimeOutComponent,
+    ErrorModalComponent,
+    AddAccommodationBookingComponent,
+    AddActivityBookingComponent,
+    AddDayvisitComponent,
+    AddAdultGuestComponent,
+    AddChildGuestComponent,
+    AddArbitraryGuestComponent,
+    ViewAccommodationModalComponent,
+    HelpComponent,
+    SearchClientForWCComponent,
+    PurchaseWildcardComponent,
+    UnsuccessfulWCPurchaseComponent,
+    DashBoardHomeComponent,
+    ParkaddedComponent,
+    ParkgateaddedComponent,
+    SeasonaddedComponent,
+    CamptypeaddedComponent,
+    CampaddedComponent,
+    AccommodationtypeaddedComponent,
+    AccommodationaddedComponent,
+    AmenitytypeaddedComponent,
+    AmenityAddedComponent,
+    ActivityTypeAddedComponent,
+    ActivityAddedComponent,
+    WildcardClusterAddedComponent,
+    WildcardCategoryAddedComponent,
+    UserRoleAddComponent,
+    SpinnerComponent
   ],
   entryComponents: [
     AddParkComponent,
@@ -746,8 +839,12 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AddParkGateComponent
   ],
   imports: [
+    BsDatepickerModule.forRoot(),
+    TableModule,
+    PaginatorModule,
     NgxStripeModule.forRoot(environment.stripeKey),
     MatSnackBarModule,
+    MatBottomSheetModule,
     ChartModule,
     SimplebarAngularModule,
     ReactiveFormsModule,
@@ -757,9 +854,18 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     BrowserAnimationsModule,
     MaterialModule,
     NgxMaterialTimepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    HttpClientModule,
+    RouterModule.forRoot([
+      { // Perhaps we should have an actual home component
+        path: 'Login',
+        component: LoginComponent
+      },
+      {path: '', redirectTo: '/Login', pathMatch: 'full'},
+      {path: '**', component: PageNotFoundComponent}
+    ]),
   ],
-  providers: [MatSnackBarModule, MatStepper],
+  providers: [MatSnackBarModule, MatStepper, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,36 +11,28 @@
             <mat-form-field appearance="fill">
                 <mat-label>Park</mat-label>
                 <mat-select formControlName="park">
-                    <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
-                    <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
-                    <mat-option value="Kruger National Park">Kruger National Park</mat-option>
+                    <mat-option *ngFor="let park of parkDropDown" [value]="park.ParkID" (click)="getCampsForPark(park.ParkID)">{{park.ParkName}}</mat-option>
                 </mat-select>
                 <mat-hint>Park in which activity is</mat-hint>
             </mat-form-field>  
             <mat-form-field appearance="fill"> <!--Populated based on the selected Park-->
                 <mat-label>Camp</mat-label>
                 <mat-select formControlName="camp">
-                    <mat-option value="Addo">Addo</mat-option>
-                    <mat-option value="Spekboom">Spekboom</mat-option>
-                    <mat-option value="Matyholweni">Matyholweni</mat-option>           
+                    <mat-option *ngFor="let camp of campDropDown" [value]="camp.CampID" (click)="updateCampID(camp.CampID)">{{camp.CampName}}</mat-option>
                 </mat-select>
                 <mat-hint>Camp in which activity is</mat-hint>
             </mat-form-field>  
             <mat-form-field appearance="fill">
                 <mat-label>Activity Type</mat-label>
                 <mat-select formControlName="activityType">
-                    <mat-option value="Sunset Drive">Sunset Drive</mat-option>
-                    <mat-option value="Night Drive">Night Drive</mat-option>
-                    <mat-option value="Hiking">Hiking</mat-option>
+                    <mat-option *ngFor="let activityType of activityTypeDropDown" [value]="activityType.ActivityTypeID" (click)="getActivityInCampForSpecificType(activityType.ActivityTypeID)">{{activityType.ActivityTypeDescription}}</mat-option>
                 </mat-select>
                 <mat-hint>This is the activty type of the activity</mat-hint>
             </mat-form-field> 
             <mat-form-field appearance="fill">
                 <mat-label>Activity</mat-label>
                 <mat-select formControlName="activity">
-                    <mat-option value="1 Hour Drive">1 Hour Drive</mat-option>
-                    <mat-option value="2 Hour Drive">2 Hour Drive</mat-option>
-                    <mat-option value="4 Hour Drive">4 Hour Drive</mat-option>
+                    <mat-option *ngFor="let activity of activityDropDown" [value]="activity.ActivityID">{{activity.ActivityDescription}}</mat-option>
                 </mat-select>
                 <mat-hint>Select an activity to assign a rate</mat-hint>
             </mat-form-field>
@@ -59,53 +51,23 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Rate Type</mat-label>
                     <mat-select formControlName="rateType">
-                        <mat-option value="Drive">Drive</mat-option>
-                        <mat-option value="Mountain Biking">Mountain Biking</mat-option>
-                        <mat-option value="Swimming">Swimming</mat-option>
+                        <mat-option *ngFor="let rateType of rateTypeDropDown" [value]="rateType.RateTypeID">{{rateType.RateTypeDescription}}</mat-option>
                     </mat-select>
                     <mat-hint>Select a rate type</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="fill"> 
-                    <mat-label>Adult Rate</mat-label>
-                    <input matInput formControlName="adultRate" type="number">
-                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>Child Rate</mat-label>
-                    <input matInput formControlName="childRate" type="number">
-                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>Vehicle Amount</mat-label>
-                    <input matInput formControlName="vehicleAmount" type="number">
-                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>Hut Amount</mat-label>
-                    <input matInput formControlName="hutAmount" type="number">
-                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
+                </mat-form-field>              
                 <mat-form-field appearance="fill">
                     <mat-label>Person Amount</mat-label>
-                    <input matInput formControlName="personAmount" type="number">
+                    <input matInput formControlName="personAmount" type="number" maxlength="13">
                     <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
+                </mat-form-field>                
                 <mat-form-field appearance="fill">
-                    <mat-label>Bike Amount</mat-label>
-                    <input matInput formControlName="bikeAmount" type="number">
-                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>No Bike Amount</mat-label>
-                    <input matInput formControlName="noBikeAmunt" type="number">
-                    <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>Date Effective</mat-label>
-                    <input matInput [matDatepicker]="dateEffective" formControlName="dateEffective" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="dateEffective"></mat-datepicker-toggle>
-                    <mat-datepicker #dateEffective color="primary"></mat-datepicker>
-                    <mat-hint>Date from which to apply this activity rate.</mat-hint>
+                    <mat-label>Year Effective</mat-label>
+                    <mat-select formControlName="dateEffective">
+                        <mat-option *ngFor="let year of listOfYears" [value]="year">
+                          {{year}}
+                        </mat-option>
+                      </mat-select>
+                    <mat-hint>Year in which to apply this activity rate.</mat-hint>
                 </mat-form-field>
             </div>
             </mat-dialog-content>

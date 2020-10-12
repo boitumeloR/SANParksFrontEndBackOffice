@@ -9,31 +9,31 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Park</mat-label>
-            <input matInput value="Addo Elephant National Park" readonly>
+            <input matInput value="{{amenity.ParkName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Camp</mat-label>
-            <input matInput value="Addo" readonly>
+            <input matInput value="{{amenity.CampName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Accomodation Type</mat-label>
-            <input matInput value="Camp Site (CK6P)" readonly>
+            <input matInput value="{{amenity.AccommodationTypeName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Unit Number</mat-label>
-            <input matInput value="107" readonly>
+            <input matInput value="{{amenity.UnitNumber}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Amenity Type</mat-label>
-            <input matInput value="Fridge" readonly>
+            <input matInput value="{{amenity.AmenityTypeName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Amenity Status</mat-label>
-            <input matInput value="Working" readonly>
+            <input matInput value="{{amenity.AmenityStatusName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Amenity Description</mat-label>
-            <textarea cdkTextareaAutosize matInput  readonly value="KIC 220L"></textarea>
+            <textarea cdkTextareaAutosize matInput  readonly value="{{amenity.Description}}"></textarea>
         </mat-form-field>
       </div>
       

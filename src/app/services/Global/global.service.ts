@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Server } from 'http';
 
-const webServer = 'http://localhost:4200';
+const thisWebServer = 'https://localhost:44371/';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +11,6 @@ export class GlobalService {
   GetServer() { // Global server that is a link to the web server whether its localhost or azure.
     // Link global service into any acomponent that uses a service
     // const webServer = 'http://localhost:4200';
-    return webServer;
+    return thisWebServer;
   }
 }

@@ -3,9 +3,10 @@
   <form [formGroup]="updateAmenityTypeForm">
   <mat-dialog-content appearance="mat-typography">
     <div class="example-container">
-      <mat-form-field appearance="fill">
+      <mat-form-field hintLabel="Max 50 characters" appearance="fill">
         <mat-label>Amenity Type Name</mat-label>
-        <input matInput formControlName="amenityTypeName">
+        <textarea matInput #input maxlength="50" cdkTextareaAutosize formControlName="amenityTypeName" ></textarea>
+        <mat-hint>&nbsp;{{input.value?.length || 0}}/50</mat-hint>
       </mat-form-field>      
     </div>
     

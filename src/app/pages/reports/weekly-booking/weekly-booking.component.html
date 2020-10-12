@@ -8,15 +8,13 @@
         <mat-form-field appearance="fill">
             <mat-label>Park</mat-label>
             <mat-select>
-              <mat-option>Kruger National Park</mat-option>
-              <mat-option>Kruger National Park</mat-option>
+              <mat-option *ngFor="let park of parks" [value] ="park.ParkID" (click)="GetCamps(park)">{{park.ParkName}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Camp</mat-label>
-            <mat-select>
-              <mat-option>Skukuza Rest Camp</mat-option>
-              <mat-option>Skukuza Rest Camp</mat-option>
+            <mat-select [(ngModel)]="CampID">
+              <mat-option *ngFor="let camp of camps" [value]="camp.CampID">{{camp.CampName}}</mat-option>
             </mat-select>
           </mat-form-field>
           <div>

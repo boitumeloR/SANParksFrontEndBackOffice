@@ -5,14 +5,12 @@
     <div class="example-container">
       <mat-form-field appearance="fill">
         <mat-label>Park Gate Name</mat-label>
-        <input matInput formControlName="parkGateName">
+        <input matInput formControlName="parkGateName" maxlength="50">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Park</mat-label>
         <mat-select formControlName="park">
-            <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
-            <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
-            <mat-option value="Kruger National Park">Kruger National Park</mat-option>
+          <mat-option *ngFor="let park of parkDropDown" [value]="park.ParkID">{{park.ParkName}}</mat-option>
       </mat-select>
       </mat-form-field> 
       <mat-form-field appearance="fill">
@@ -22,9 +20,14 @@
       </mat-form-field>
       <br>
       <mat-form-field appearance="fill">
-        <mat-label>Park Gate Location</mat-label>
-        <input matInput formControlName="parkGateLocation">
-        <mat-hint>GPS Co-Ordinates</mat-hint>
+        <mat-label>Park Gate Latitude</mat-label>
+        <input matInput formControlName="parkGateLatitude" maxlength="31">
+        <mat-hint>Gate Latitude Co-Ordinates</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Park Gate Longitude</mat-label>
+        <input matInput formControlName="parkGateLongitude" maxlength="31">
+        <mat-hint>Gate Longitude Co-Ordinates</mat-hint>
       </mat-form-field>
       <mat-form-field hintLabel="Max 300 characters" appearance="fill">
         <mat-label>Park Gate Description</mat-label>

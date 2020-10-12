@@ -7,36 +7,34 @@
     <mat-form-field appearance="fill">
         <mat-label>Park</mat-label>
         <mat-select formControlName="park">
-            <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
-            <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
-            <mat-option value="Kruger National Park">Kruger National Park</mat-option>
+            <mat-option *ngFor="let park of parkDropDown" [value]="park.ParkID">{{park.ParkName}}</mat-option>
         </mat-select>
     </mat-form-field> 
-    <mat-form-field appearance="fill"> <!--Populated with park gates of the selected park-->
+    <mat-form-field appearance="fill"> <!--Populated with regions-->
         <mat-label>Region</mat-label> 
         <mat-select formControlName="region">
-            <mat-option value="Domestic">Domestic</mat-option>
-            <mat-option value="SADC">SADC</mat-option>
-            <mat-option value="Other">Other</mat-option>
+            <mat-option *ngFor="let region of regionDropDown" [value]="region.RegionID">{{region.RegionName}}</mat-option>
         </mat-select>
         <mat-hint>Region that a citizen is from.</mat-hint>
     </mat-form-field> 
     <mat-form-field appearance="fill">
         <mat-label>Child Amount</mat-label>
-        <input matInput type="number" formControlName="childAmount">
+        <input matInput type="number" formControlName="childAmount" maxlenght="23">
         <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Adult Amount</mat-label>
-        <input matInput type="number" formControlName="adultAmount">
+        <input matInput type="number" formControlName="adultAmount" maxlenght="23">
         <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="fill">
-        <mat-label>Date Effective</mat-label>
-        <input matInput [matDatepicker]="dateEffective" formControlName="dateEffective" readonly>
-        <mat-datepicker-toggle matSuffix [for]="dateEffective"></mat-datepicker-toggle>
-        <mat-datepicker #dateEffective color="primary"></mat-datepicker>
-        <mat-hint>Date from which to apply this conservation fee.</mat-hint>
+        <mat-label>Year Effective</mat-label>
+        <mat-select formControlName="dateEffective">
+            <mat-option *ngFor="let year of listOfYears" [value]="year">
+              {{year}}
+            </mat-option>
+          </mat-select>
+        <mat-hint>Year in which to apply this conservation fee.</mat-hint>
     </mat-form-field>
     </div>  
     </mat-dialog-content>

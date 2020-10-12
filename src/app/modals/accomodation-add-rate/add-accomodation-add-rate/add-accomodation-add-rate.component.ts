@@ -5,6 +5,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
+import { AccommAddRateService } from 'src/app/services/AccommAddRate/accomm-add-rate.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
+import { AccommodationTypeService } from 'src/app/services/AccommodationType/accommodation-type.service';
 @Component({
   selector: 'app-add-accomodation-add-rate',
   templateUrl: './add-accomodation-add-rate.component.html',
@@ -12,10 +15,24 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddAccomodationAddRateComponent implements OnInit {
   addAccomodationRateForm: FormGroup;
-  constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<AddAccomodationAddRateComponent>) { }
+  accommodationTypeDropDown;
+  listOfYears = [];
+  constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
+              private dialogRef: MatDialogRef<AddAccomodationAddRateComponent>, private addRateService: AccommAddRateService,
+              private accommodationTypeService: AccommodationTypeService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
+    let year = new Date().getFullYear();
+    const limitYear = year + 4;
+    while (year <= limitYear){
+      this.listOfYears.push(year);
+      year += 1;
+     }
+
+    this.accommodationTypeService.readAccommodationType(this.globalService.GetServer()).subscribe((result: any) => {
+      this.accommodationTypeDropDown = result.AccommodationTypes;
+    });
+
     this.addAccomodationRateForm = this.formBuilder.group({
       accomodationType: ['', Validators.required],
       adultRate : ['', [Validators.required, Validators.min(1)]],
@@ -25,26 +42,41 @@ export class AddAccomodationAddRateComponent implements OnInit {
   }
 
   addAccomodationBaseRate(){
-    if(this.addAccomodationRateForm.invalid){
+    if (this.addAccomodationRateForm.invalid){
       this.displayValidationError();
     }
     else{
       this.dialogRef.close();
       const addAccomodationAddRateConfirmation = this.dialog.open(AddAccomodationAddRateConfirmationComponent);
+
+      addAccomodationAddRateConfirmation.afterClosed().subscribe(result => {
+        if (result === true){
+          const user = JSON.parse(localStorage.getItem('user'));
+
+          const newAccommodationAddRate = {
+            AccomodationTypeID: this.addAccomodationRateForm.get('accomodationType').value,
+            AdultRateAmount: this.addAccomodationRateForm.get('adultRate').value,
+            ChildRateAmount: this.addAccomodationRateForm.get('childRate').value,
+            DateEffective: this.addAccomodationRateForm.get('dateEffective').value,
+            authenticateUser: user
+          };
+          this.addRateService.createAccommodationTypeAddRate(newAccommodationAddRate, this.globalService.GetServer());
+        }
+      });
     }
   }
 
   confirmCancel(){
     const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
     confirmCancelDialog.afterClosed().subscribe(result => {
-      if(result == true){
+      if (result === true){
         this.dialogRef.close();
       }
     });
   }
 
   displayValidationError() {
-    this.validationErrorSnackBar.open("The entered details are not in the correct format. Please try again.", "OK", {
+    this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }

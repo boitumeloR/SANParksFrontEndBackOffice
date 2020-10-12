@@ -1,9 +1,9 @@
 
 <h1>Amenity Penalty</h1>
 <div class="example-container">
-  <mat-form-field hintLabel="Max 100 characters" appearance="fill">
+  <mat-form-field hintLabel="Max 100 characters" appearance="fill" >
     <mat-label>Keyword Filter</mat-label>
-    <input matInput #input maxlength="100" placeholder="Ex. KIC 220L">
+    <input matInput #input maxlength="100" placeholder="Ex. KIC 220L" [ngModel]="filter" (ngModelChange)="filterTable(input.value)">
     <mat-hint>&nbsp; {{input.value?.length || 0}}/100</mat-hint>
   </mat-form-field>
 
@@ -17,25 +17,29 @@
        <!-- Camp Column -->
        <ng-container matColumnDef="camp">
         <th mat-header-cell *matHeaderCellDef> Camp </th>
-        <td mat-cell *matCellDef="let element"> {{element.camp}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.CampName}} </td>
       </ng-container>
        <!-- Accomodation Type Column -->
        <ng-container matColumnDef="accomodationType">
         <th mat-header-cell *matHeaderCellDef> Accomodation Type </th>
-        <td mat-cell *matCellDef="let element"> {{element.accomodationType}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.AccommodationTypeName}} </td>
       </ng-container>
        <!-- Unit Number Column -->
       <ng-container matColumnDef="unitNumber">
         <th mat-header-cell *matHeaderCellDef> Unit Number </th>
-        <td mat-cell *matCellDef="let element"> {{element.unitNumber}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.UnitNumber}} </td>
       </ng-container>
       <ng-container matColumnDef="dateEffective">
         <th mat-header-cell *matHeaderCellDef> Date Effective </th>
-        <td mat-cell *matCellDef="let element"> {{element.dateEffective}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.DateEffective}} </td>
+      </ng-container>
+      <ng-container matColumnDef="endDate">
+        <th mat-header-cell *matHeaderCellDef> End Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.EndDate}} </td>
       </ng-container>
       <!-- View Column -->
       <ng-container matColumnDef="view">
-        <th mat-header-cell *matHeaderCellDef> View Camp</th>
+        <th mat-header-cell *matHeaderCellDef> View Penalty</th>
         <td mat-cell *matCellDef="let element"> 
           <a mat-button (click)="viewAmenityPenalty(element)">
             <mat-icon>visibility</mat-icon>

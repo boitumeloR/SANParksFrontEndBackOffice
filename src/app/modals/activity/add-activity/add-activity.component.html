@@ -11,16 +11,14 @@
                 <mat-form-field appearance="fill"> <!--Populated with all activity types-->
                     <mat-label>Activity Type</mat-label>
                     <mat-select formControlName="activityType">
-                        <mat-option value="Sunset Drive">Sunset Drive</mat-option>
-                        <mat-option value="Night Drive">Night Drive</mat-option>
-                        <mat-option value="Hiking">Hiking</mat-option>
+                        <mat-option *ngFor="let activityType of activityTypeDropDown" [value]="activityType.ActivityTypeID" >{{activityType.ActivityTypeDescription}}</mat-option>
                     </mat-select>
                     <mat-hint>The associated activity type</mat-hint>
                 </mat-form-field> 
-                <mat-form-field hintLabel="Max 300 characters" appearance="fill">
+                <mat-form-field hintLabel="Max 75 characters" appearance="fill">
                     <mat-label>Activity Description</mat-label>
-                    <textarea cdkTextareaAutosize matInput #input maxlength="300" formControlName="activityDescription"></textarea>
-                    <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
+                    <textarea cdkTextareaAutosize matInput #input maxlength="75" formControlName="activityDescription"></textarea>
+                    <mat-hint>&nbsp;{{input.value?.length || 0}}/75</mat-hint>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Maximum Capacity</mat-label>
@@ -48,50 +46,44 @@
         <form [formControl]="campsAvailableAt">
             <ng-template matStepLabel>Select Camps</ng-template>
             <mat-accordion>
-            <mat-expansion-panel> <!--At least one should be selected validation is needed-->
-                <mat-expansion-panel-header>
-                    Addo Elephant National Park
-                </mat-expansion-panel-header>
-                <section>
-                    <mat-checkbox>Addo</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Spekboom</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Kabouga</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Nyathi</mat-checkbox>
-                </section>
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    Kruger National Park
-                </mat-expansion-panel-header>
-                <section>
-                    <mat-checkbox>Crocodile Bridge</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Letaba</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Lower Sabie</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Boulders Bush Lodge</mat-checkbox>
-                </section>
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    Tankwa Karoo National Park
-                </mat-expansion-panel-header>
-                <section>
-                    <mat-checkbox>Tankwa Karoo Rest Camp</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Elandsberg Rest Camp</mat-checkbox>
-                </section>
-            </mat-expansion-panel>
+                <mat-expansion-panel *ngFor="let park of parkWithCamps">
+                    <mat-expansion-panel-header> <!--Should have at least one selection-->
+                        {{park.ParkName}}
+                    </mat-expansion-panel-header>
+                    <section *ngFor="let camp of park.listOfCamps">
+                        <mat-checkbox  [value]="camp" (change)="onChange($event)">{{camp.CampName}}</mat-checkbox>
+                        <br>
+                    </section>
+                </mat-expansion-panel>  
             </mat-accordion>
         </form>
         <mat-dialog-actions align="end">
-            <button mat-raised-button color="warn" matStepperPrevious> Previous</button>
-            <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="addActivity()">Create</button>
+            <button mat-raised-button color="warn" matStepperPrevious >Previous</button>
+            <button mat-raised-button color="primary" (click)="stepperToImageSelection()">Next</button>
         </mat-dialog-actions>
+    </mat-step>
+    <mat-step [stepControl]="imagesForActivity">
+        <form [formControl]="imagesForActivity" [formGroup]="imagesForActivity" enctype="multipart/form-data">
+        <ng-template matStepLabel>Provide Images</ng-template>
+        <mat-dialog-content appearance="mat-typography">
+        <input class="inputFile" type="file" accept='image/*' (change)="selectFile($event)" #fileInput formControlName="image">
+        <button mat-raised-button color="primary" (click)="fileInput.click()">Upload Image</button>
+        <br>
+        <div>
+        <mat-card *ngFor="let image of activityImages" >
+            <img mat-card-image class="cardImage" [src]="image" alt="Accomodation type image.">
+            <mat-card-actions>
+                <button mat-mini-fab color="warn" (click)="removeImage(image)">X</button>
+            </mat-card-actions>
+        </mat-card>
+        </div>
+       
+        <mat-dialog-actions align="end">
+            <button mat-raised-button color="warn" matStepperPrevious >Previous</button>
+            <button mat-raised-button color="primary" (click)="addActivity()">Create</button>
+        </mat-dialog-actions>
+        </mat-dialog-content>
+        </form>
     </mat-step>
 </mat-horizontal-stepper>
   

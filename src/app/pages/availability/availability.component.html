@@ -1,95 +1,262 @@
 <mat-card class="example-card">
     <mat-card-header>
-      <mat-card-title>Search Booking</mat-card-title>
+      <mat-card-title>Check Availability</mat-card-title>
       <mat-card-subtitle></mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
+      <form [formGroup]="availableGroup">
         <div class="example-container">
-            <mat-form-field appearance="fill">
-                <mat-label>Park</mat-label>
-                <mat-select>
-                  <mat-option value="option">Kruger National Park</mat-option>
-                  <mat-option value="option">Kruger National Park</mat-option>
-                </mat-select>
-                <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
-              </mat-form-field>
-          
-            <mat-form-field appearance="fill">
-                <mat-label>Camp</mat-label>
-                <mat-select>
-                  <mat-option value="option">Skukuza Rest Camp</mat-option>
-                  <mat-option value="option">Skukuza Rest Camp</mat-option>
-                </mat-select>
-                <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
-              </mat-form-field>
-              <br>
-              <br>
-              <div>
-                <mat-checkbox class="example-margin">Activity</mat-checkbox>
-                <mat-checkbox class="example-margin">Accommodation</mat-checkbox>
-                <mat-checkbox class="example-margin">Day Visit
-                </mat-checkbox>
-              </div>
-          </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary">Check Availability </button>
-    </mat-card-actions>
-  </mat-card>
-  <div class="demo-app-main">
-    <full-calendar
-    *ngIf='calendarVisible'
-    [options]='calendarOptions'
-    ></full-calendar>
-  </div>
-  <div class="accordion" id="accordionExample">
-    <div class="card">
-      <div class="card-header" id="headingOne">
-        <h2 class="mb-0">
-          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            Collapsible Group Item #1
-          </button>
-        </h2>
-      </div>
-  
-      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-        <div class="card-body">
-            <button class="btn btn-success" (click)="ViewMore()">View Night Drive </button>
-  
-            <div class="alert alert-info">
-              Click and drag on a date range to book it
+          <mat-form-field appearance="fill">
+              <mat-label>Park</mat-label>
+              <mat-select formControlName= "park">
+                <mat-option *ngFor="let item of parks" [value] ="item.ParkID" (click)="onChoosePark()">{{item.ParkName}}</mat-option>
+              </mat-select>
+              <mat-hint align="end">Required</mat-hint>
+            </mat-form-field>
+        
+          <mat-form-field appearance="fill">
+              <mat-label>Camp</mat-label>
+              <mat-select formControlName= "camp">
+                <mat-option *ngFor="let item of camps" [value]="item.CampID">{{item.CampName}}</mat-option>
+              </mat-select>
+              <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+            </mat-form-field>
+            <br>
+            <br>
+            <div>
+              <mat-checkbox class="example-margin" (click)="toggleActivityCollapse()" formControlName="activity" (change)="onChooseAct()" >Activity</mat-checkbox>
+              <mat-checkbox class="example-margin" (click)="toggleAccommodationCollapse()" formControlName="accommodation" (change)="onChooseAcc()">Accommodation</mat-checkbox>
+              <mat-checkbox class="example-margin" formControlName="day" (click)="onChooseDay()">Day Visit
+              </mat-checkbox>
             </div>
 
+            <mat-accordion *ngIf="isAccommodation == true || isActivity == true">
+              <mat-expansion-panel hideToggle *ngIf="isAccommodation == true"
+              (expanded)="true">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Accommodation Type
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-form-field appearance="fill">
+                  <mat-label>Accommodation Type</mat-label>
+                  <mat-select formControlName= "accommodationType">
+                    <mat-option *ngFor="let item of accommodationTypes" [value]="item.AccommodationTypeID">{{item.AccommodationTypeName}}</mat-option>
+                  </mat-select>
+                  <mat-hint align="center">Here's the dropdown arrow ^</mat-hint>
+                </mat-form-field>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel hideToggle *ngIf="isActivity == true"
+              (expanded)="true">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Activity Type
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-form-field appearance="fill">
+                  <mat-label>Activity Type</mat-label>
+                  <mat-select formControlName= "activityType">
+                    <mat-option *ngFor="let item of activityTypes" [value]="item.ActivityTypeID">{{item.ActivityTypeName}}</mat-option>
+                  </mat-select>
+                  <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+                </mat-form-field>
+              </mat-expansion-panel>
+            </mat-accordion>
         </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" 
+      [disabled] ="availableGroup.valid ? false: true"
+      (click)="CheckAvailability()"
+      >Check Availability </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <div *ngIf="searchData.AccommodationChecked === true">
+    <h1>Accommodations At {{parkName}}</h1>
+    <mat-accordion multi>
+      <mat-expansion-panel *ngFor="let avail of availableResults" [expanded] = "panelOpenState">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{avail.CampName}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <p-table [value]="avail.AccommodationTypes" [rows]="6" [paginator]="true" [rowHover]="true">
+              <ng-template pTemplate="caption" >
+                  {{avail.CampName}}
+                  <br>
+                  <div class="btn-group mr-2" role="group" aria-label="First group">
+                      <button type="button" class="btn btn-secondary" (click)="pastWeek()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Previous Week</button>
+                      <button type="button" class="btn btn-secondary" (click)="nextWeek()"> Next Week <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+                  </div>
+                  <br>
+                  <div class="spinner-border" role="status" *ngIf="loader">
+                      <span class="sr-only">Loading...</span>
+                  </div>
+              </ng-template>
+              <ng-template pTemplate="header" class="head">
+                  <tr>
+                      <th> 
+                          <div>
+                              <input type="text"  (ngModelChange)="chooseDate($event)"
+                                 placeholder="Pick your date"
+                                 class="form-control"
+                                 bsDatepicker
+                                 placement="right"
+                                 [(ngModel)]="datePicked"
+                                 [bsConfig]="{ isAnimated: true, adaptivePosition: true }"
+                                 >
+                          </div>
+                      </th>
+                      <th *ngFor="let item of tableDates">{{item.Date |date:'mediumDate'}}</th>
+                      <th>Make Your Booking</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-acc>
+                  <tr>
+                      <td><strong>{{acc.AccommodationTypeName}} &nbsp; 
+                          <div>
+                              <button class="btn btn-success" (click)="ViewAccommodationModal(acc)">View more</button>
+                          </div>
+                      </strong>
+                      </td>
+                      <td *ngFor="let amount of acc.Availability">{{amount.AvailableAmount}} Available</td>
+                      <td>
+                          <button class="btn btn-success" (click)="bookWeek(acc, avail.CampID)">Book This Week &nbsp;
+                              <div class="spinner-border" role="status" *ngIf="mapLoader">
+                                  <span class="sr-only">Loading...</span>
+                              </div>
+                          </button>
+                      </td>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="summary">
+              </ng-template>
+          </p-table>
       </div>
-    </div>
-    <div class="card">
-      <div class="card-header" id="headingTwo">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            Collapsible Group Item #2
-          </button>
-        </h2>
-      </div>
-      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-        <div class="card-body">
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header" id="headingThree">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-            Collapsible Group Item #3
-          </button>
-        </h2>
-      </div>
-      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-        <div class="card-body">
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-        </div>
-      </div>
-    </div>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
 
+  <div *ngIf="searchData.ActivityChecked">
+    <h1>Activities at {{parkName}}</h1>
+    <mat-accordion>
+      <mat-expansion-panel  *ngFor="let avail of availableResults">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{avail.CampName}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+            <p-table [value]="avail.Activities" [rows]="6" [paginator]="true" [rowHover]="true">
+                <ng-template pTemplate="caption" >
+                    {{avail.CampName}}
+                    <br>
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-secondary" (click)="pastWeek()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Previous Week</button>
+                        <button type="button" class="btn btn-secondary" (click)="nextWeek()"> Next Week <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+                    </div>
+                    <br>
+                    <div class="spinner-border" role="status" *ngIf="loader">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" class="head">
+                    <tr>
+                        <th>
+                            <div>
+                                <input type="text"  (ngModelChange)="chooseDate($event)"
+                                   placeholder="Pick your date"
+                                   class="form-control"
+                                   bsDatepicker
+                                   placement="right"
+                                   [(ngModel)]="datePicked"
+                                   [bsConfig]="{ isAnimated: true, adaptivePosition: true }"
+                                   >
+                            </div>
+                        </th>
+                        <th *ngFor="let item of tableDates">{{item.Date |date:'mediumDate'}}</th>
+                        <th>Make Your Booking</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-act>
+                    <tr>
+                        <td><strong>{{act.ActivityName}} &nbsp; 
+                            <div>
+                                <!--<button class="btn btn-success" (click)="ViewActivityModal(act)">View more</button>-->
+                            </div>
+                        </strong>
+                        </td>
+                        <td *ngFor="let amount of act.Availability">{{amount.AvailableAmount}} Available</td>
+                        <td>
+                            <button class="btn btn-success"
+                            (click)="bookActivity(act)"
+                            >Book This Week &nbsp;
+                            </button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                </ng-template>
+            </p-table>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+<!--for Day visits-->
+<div *ngIf="searchData.DayVisitChecked">
+  <div>
+      <h1>Visit {{parkName}}</h1>
+      <p-table [value]="availableResults" [rows]="6" [paginator]="true" [rowHover]="true">
+          <ng-template pTemplate="caption" >
+              {{parkName}}
+              <br>
+              <div class="btn-group mr-2" role="group" aria-label="First group">
+                  <button type="button" class="btn btn-secondary" (click)="pastWeek()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Previous Week</button>
+                  <button type="button" class="btn btn-secondary" (click)="nextWeek()"> Next Week <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+              </div>
+              <br>
+              <div class="spinner-border" role="status" *ngIf="loader">
+                  <span class="sr-only">Loading...</span>
+              </div>
+          </ng-template>
+          <ng-template pTemplate="header" class="head">
+              <tr>
+                  <th>
+                      <div>
+                          <input type="text"  (ngModelChange)="chooseDate($event)"
+                             placeholder="Pick your date"
+                             class="form-control"
+                             bsDatepicker
+                             placement="right"
+                             [(ngModel)]="datePicked"
+                             [bsConfig]="{ isAnimated: true, adaptivePosition: true }"
+                             >
+                      </div>
+                  </th>
+                  <th *ngFor="let item of tableDates">{{item.Date |date:'mediumDate'}}</th>
+                  <th>Make Your Booking</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-day>
+              <tr>
+                  <td><strong>{{day.ParkGate}} &nbsp; 
+                      <div>
+                          <!--<button class="btn btn-success">View more</button>-->
+                      </div>
+                  </strong>
+                  </td>
+                  <td *ngFor="let amount of day.Dates">{{amount.SlotsAvailable}} Available</td>
+                  <td>
+                      <button class="btn btn-success"  (click)="bookDayVisit(day)">Book This Week</button>
+                  </td>
+              </tr>
+          </ng-template>
+          <p-paginator></p-paginator>
+      </p-table>
+  </div>
+</div>

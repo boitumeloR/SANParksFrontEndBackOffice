@@ -3,7 +3,7 @@
 <div class="example-container">
   <mat-form-field hintLabel="Max 100 characters" appearance="fill">
     <mat-label>Keyword Filter</mat-label>
-    <input matInput #input maxlength="100" placeholder="Ex. Kruger National Park">
+    <input matInput #input maxlength="100" placeholder="Ex. Kruger National Park" [ngModel]="filter" (ngModelChange)="filterTable(input.value)">
     <mat-hint>&nbsp; {{input.value?.length || 0}}/100</mat-hint>
   </mat-form-field>
 
@@ -15,15 +15,15 @@
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
       <!-- Name Column -->
-      <ng-container matColumnDef="name">
+      <ng-container matColumnDef="ParkGateName">
         <th mat-header-cell *matHeaderCellDef> Gate Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.ParkGateName}} </td>
       </ng-container>
 
       <!-- Season Column-->
-      <ng-container matColumnDef="season">
+      <ng-container matColumnDef="SeasonName">
         <th mat-header-cell *matHeaderCellDef> Season </th>
-        <td mat-cell *matCellDef="let element"> {{element.season}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.SeasonName}} </td>
       </ng-container>
 
       <!-- Actions Column -->

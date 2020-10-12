@@ -4,27 +4,27 @@
   
       <mat-icon>close</mat-icon>
     </button>
-    <h2 mat-dialog-title>View Accomodation Add Rate</h2>
+    <h2 mat-dialog-title>View Accommodation Add Rate</h2>
   
     <mat-dialog-content appearance="mat-typography">
       <div class="example-container">
         <mat-form-field appearance="fill">
-            <mat-label>Accomodation Type</mat-label>
-            <input matInput value="Camp Site (CK6P)" readonly>               
+            <mat-label>Accommodation Type</mat-label>
+            <input matInput value="{{addRate.AccomodationType}}" readonly>               
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Adult Rate</mat-label>
-            <input matInput value="R200" readonly>
+            <input matInput value="{{addRate.AdultRateAmount}}" readonly>
             <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Child Rate</mat-label>
-            <input matInput value="R100" readonly>
+            <input matInput value="{{addRate.ChildRateAmount}}" readonly>
             <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Date Effective</mat-label>
-            <input matInput value="01/01/2020" readonly>
+            <input matInput value="{{addRate.DateEffective}}" readonly>
             <mat-hint>Date from which to apply this add rate.</mat-hint>
         </mat-form-field>
       </div>

@@ -44,13 +44,29 @@ import { WeeklyBookingComponent } from './pages/reports/weekly-booking/weekly-bo
 import { WildcardReportComponent } from './pages/reports/wildcard-report/wildcard-report.component';
 import { BookingCheckinComponent } from './pages/reports/booking-checkin/booking-checkin.component';
 import {ClientComponent} from './pages/client/client.component';
-import {PurchaseWildcardComponent} from './pages/Purchase Wildcard/purchase-wildcard/purchase-wildcard.component';
-import {SearchWildcardMembershipComponent} from './pages/renew/search-wildcard-membership/search-wildcard-membership.component'
-
+import {SearchClientForWCComponent} from './pages/Purchase Wildcard/search-client-for-wc/search-client-for-wc.component';
+import {SearchWildcardMembershipComponent} from './pages/renew/search-wildcard-membership/search-wildcard-membership.component';
+import { ForgotPasswordComponent } from './subcomponents/login/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './subcomponents/login/reset-password/reset-password.component';
+import { ActiveDatesComponent } from './modals/settings/active-dates/active-dates.component';
+import { UserTimeOutComponent } from './modals/settings/user-time-out/user-time-out.component';
+import { DashBoardHomeComponent } from './subcomponents/dash-board-home/dash-board-home.component';
 const routes: Routes = [
   {
     path: 'Park',
     component: ParkComponent
+  },
+  {
+    path: 'Home',
+    component: DashBoardHomeComponent
+  },
+  {
+    path: 'Active-Dates',
+    component: ActiveDatesComponent
+  },
+  {
+    path: 'Session-Timer',
+    component: UserTimeOutComponent
   },
   {
     path: 'Park-Gate',
@@ -92,9 +108,13 @@ const routes: Routes = [
     path: 'Wildcard-Rate',
     component: WildcardRateComponent
   },
-  { // Perhaps we should have an actual home component
-    path: 'home',
-    component: ParkComponent
+  {
+    path: 'Forgot-Password',
+    component: ForgotPasswordComponent
+  },
+  {
+    path: 'Reset-Password',
+    component: ResetPasswordComponent
   },
   {
     path: 'addPark',
@@ -230,7 +250,7 @@ const routes: Routes = [
   },
   {
     path: 'Purhase-Wildcard',
-    component: PurchaseWildcardComponent
+    component: SearchClientForWCComponent
   },
   {
     path: 'Search-Wildcard-Membership',

@@ -1,7 +1,7 @@
 <button id="alignCloseRight" mat-icon-button align="end" color="warn" (click)="confirmCancel()" aria-label="Cancel">
     <mat-icon>close</mat-icon>
 </button>
-<h2 mat-dialog-title>Update Accomodation Type</h2>
+<h2 mat-dialog-title>Update Accommodation Type</h2>
 <mat-horizontal-stepper [linear]="true" #stepper>
     <mat-step [stepControl]="basicUpdateAccomodationTypeDetails">
         <form [formControl]="basicUpdateAccomodationTypeDetails" [formGroup]="basicUpdateAccomodationTypeDetails">
@@ -9,11 +9,11 @@
             <mat-dialog-content appearance="mat-typography">
             <div class="example-container">
                 <mat-form-field appearance="fill">
-                    <mat-label>Accomodation Type Name</mat-label>
-                    <input matInput value="Bungalow" formControlName="accomodationType">
+                    <mat-label>Accommodation Type Name</mat-label>
+                    <input matInput formControlName="accomodationType" maxlength="50">
                 </mat-form-field>
                 <mat-form-field hintLabel="Max 300 characters" appearance="fill">
-                    <mat-label>Accomodation Type Description</mat-label>
+                    <mat-label>Accommodation Type Description</mat-label>
                     <textarea  cdkTextareaAutosize matInput #input maxlength="300" formControlName="accomodationTypeDescription" ></textarea>
                     <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
                 </mat-form-field>
@@ -26,12 +26,17 @@
                     <input matInput type="number" formControlName="noOfBaths">
                 </mat-form-field>
                 <mat-form-field appearance="fill">
-                    <mat-label>Adult Limit</mat-label>
+                    <mat-label>Max Capacity</mat-label>
+                    <input matInput type="number" formControlName="maxLimit">
+                    <mat-hint>Maximum number of persons allowed.</mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Base Adult Amount</mat-label>
                     <input matInput type="number"  formControlName="adultLimit">
                     <mat-hint>Number of adults allowed</mat-hint>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
-                    <mat-label>Child Limit</mat-label>
+                    <mat-label>Base Child Amount</mat-label>
                     <input matInput type="number" formControlName="childLimit">
                     <mat-hint>Number of children allowed</mat-hint>
                 </mat-form-field>
@@ -42,53 +47,24 @@
             </mat-dialog-actions>
         </form>
     </mat-step>
-    <mat-step [stepControl]="udpateCampsForAccomodationType">
-        <form [formControl]="udpateCampsForAccomodationType" [formGroup]="udpateCampsForAccomodationType">
+    <mat-step [stepControl]="campsForAccomodationType">
+        <form [formControl]="campsForAccomodationType" [formGroup]="campsForAccomodationType">
             <ng-template matStepLabel>Select Camps</ng-template>
             <mat-accordion>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    Addo Elephant National Park
-                </mat-expansion-panel-header>
-                <section>
-                    <mat-checkbox>Addo</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Spekboom</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Kabouga</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Nyathi</mat-checkbox>
-                </section>
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    Kruger National Park
-                </mat-expansion-panel-header>
-                <section>
-                    <mat-checkbox>Crocodile Bridge</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Letaba</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Lower Sabie</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Boulders Bush Lodge</mat-checkbox>
-                </section>
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    Tankwa Karoo National Park
-                </mat-expansion-panel-header>
-                <section>
-                    <mat-checkbox>Tankwa Karoo Rest Camp</mat-checkbox>
-                    <br>
-                    <mat-checkbox>Elandsberg Rest Camp</mat-checkbox>
-                </section>
-            </mat-expansion-panel>
+                <mat-expansion-panel *ngFor="let park of parkWithCamps">
+                    <mat-expansion-panel-header> <!--Should have at least one selection-->
+                        {{park.ParkName}}
+                    </mat-expansion-panel-header>
+                    <section *ngFor="let camp of park.listOfCamps">                        
+                        <mat-checkbox type="checkbox" [value]="camp" id="{{camp.CampID}}" (change)="onChange($event)">{{camp.CampName}}</mat-checkbox>
+                        <br>
+                    </section>
+                </mat-expansion-panel> 
             </mat-accordion>
         </form>
         <mat-dialog-actions align="end">
             <button mat-raised-button color="warn" matStepperPrevious> Previous</button>
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
+            <button mat-raised-button color="primary" (click)="stepperToImageSelection()">Next</button>
         </mat-dialog-actions>
     </mat-step>
     <mat-step [stepControl]="imagesAccomodationType">
@@ -102,7 +78,7 @@
         <mat-card *ngFor="let image of accomodationTypesImages" >
             <img mat-card-image class="cardImage" [src]="image" alt="Accomodation type image.">
             <mat-card-actions>
-                <button mat-mini-fab color="warn">X</button>
+                <button mat-mini-fab color="warn" (click)="removeImage(image)">X</button>
             </mat-card-actions>
         </mat-card>
         </div>
@@ -115,4 +91,3 @@
         </form>
     </mat-step>
 </mat-horizontal-stepper>
-  

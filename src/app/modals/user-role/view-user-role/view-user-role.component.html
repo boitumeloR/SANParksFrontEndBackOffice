@@ -11,11 +11,11 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
           <mat-label>User Role Name</mat-label>
-          <input matInput value="Camp Reception" readonly>
+          <input matInput value="{{userRole.UserRoleName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>User Role Description</mat-label>
-            <textarea cdkTextareaAutosize  matInput value="A receptionist is an employee taking an office or administrative support position. The work is usually performed in a waiting area such as a lobby or front office desk of an organization or business." readonly></textarea>
+            <textarea cdkTextareaAutosize  matInput value="{{userRole.UserRoleDescription}}" readonly></textarea>
         </mat-form-field>
       </div>
       

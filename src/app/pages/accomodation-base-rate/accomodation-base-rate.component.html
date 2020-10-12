@@ -1,8 +1,8 @@
-<h1>Accomodation Base Rate</h1>
+<h1>Accommodation Base Rate</h1>
 <div class="example-container">
   <mat-form-field hintLabel="Max 100 characters" appearance="fill">
     <mat-label>Keyword Filter</mat-label>
-    <input matInput #input maxlength="100" placeholder="Ex. Camp Site (CK6P)">
+    <input matInput #input maxlength="100" placeholder="Ex. Bungalow (CK6P)" [ngModel]="filter" (ngModelChange)="filterTable(input.value)">
     <mat-hint>&nbsp; {{input.value?.length || 0}}/100</mat-hint>
   </mat-form-field>
 
@@ -15,16 +15,16 @@
     <table mat-table [dataSource]="dataSource">
       <!-- Camp Column -->
       <ng-container matColumnDef="accomodationType">
-        <th mat-header-cell *matHeaderCellDef> Accomodation Type</th>
-        <td mat-cell *matCellDef="let element"> {{element.accomodationType}} </td>
+        <th mat-header-cell *matHeaderCellDef> Accommodation Type</th>
+        <td mat-cell *matCellDef="let element"> {{element.AccomodationType}} </td>
       </ng-container> 
       <ng-container matColumnDef="camp">
         <th mat-header-cell *matHeaderCellDef> Camp</th>
-        <td mat-cell *matCellDef="let element"> {{element.camp}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.CampName}} </td>
       </ng-container>
       <ng-container matColumnDef="rate">
         <th mat-header-cell *matHeaderCellDef> Rate</th>
-        <td mat-cell *matCellDef="let element"> {{element.rate}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.BaseRateAmount}} </td>
       </ng-container>
       <!-- View Column -->
       <ng-container matColumnDef="view">

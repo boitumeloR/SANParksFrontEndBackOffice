@@ -5,6 +5,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
+import { CampType, CampTypeService } from 'src/app/services/CampType/camp-type.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
 @Component({
   selector: 'app-add-camp-type',
   templateUrl: './add-camp-type.component.html',
@@ -12,8 +14,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddCampTypeComponent implements OnInit {
   addCampTypeForm: FormGroup;
-  constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<AddCampTypeComponent>) { }
+  newCampType: CampType;
+
+  constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
+              // tslint:disable-next-line: max-line-length
+              private dialogRef: MatDialogRef<AddCampTypeComponent>, private campTypeService: CampTypeService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.addCampTypeForm = this.formBuilder.group({
@@ -23,26 +28,38 @@ export class AddCampTypeComponent implements OnInit {
   }
 
   addCampType(){
-    if(this.addCampTypeForm.invalid){
+    if (this.addCampTypeForm.invalid){
       this.displayValidationError();
     }
     else{
       this.dialogRef.close();
-      const addCampTypeDialog =  this.dialog.open(AddCampTypeConfirmationComponent,{disableClose: true});
+      const addCampTypeDialog =  this.dialog.open(AddCampTypeConfirmationComponent);
+
+      addCampTypeDialog.afterClosed().subscribe( result => {
+        if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
+           const newCampType = {
+            CampTypeName: this.addCampTypeForm.get('campTypeName').value,
+            CampTypeDescription: this.addCampTypeForm.get('campTypeDescription').value,
+            authenticateUser: user
+          };
+           this.campTypeService.CreateCampType(newCampType, this.globalService.GetServer());
+        }
+      });
     }
   }
 
   confirmCancel(){
     const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
     confirmCancelDialog.afterClosed().subscribe(result => {
-      if(result == true){
+      if (result === true){
         this.dialogRef.close();
       }
     });
   }
 
   displayValidationError() {
-    this.validationErrorSnackBar.open("The entered details are not in the correct format. Please try again.", "OK", {
+    this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }

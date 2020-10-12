@@ -6,6 +6,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
+import { GlobalService } from 'src/app/services/Global/global.service';
+import { AmenityPenaltyService } from 'src/app/services/AmenityPenalty/amenity-penalty.service';
 @Component({
   selector: 'app-update-amenity-penalty',
   templateUrl: './update-amenity-penalty.component.html',
@@ -15,26 +17,33 @@ export class UpdateAmenityPenaltyComponent implements OnInit {
   @ViewChild('stepper') private myStepper: MatStepper;
   selectAmenity: FormGroup;
   amenityPenalty: FormGroup;
-  constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<UpdateAmenityPenaltyComponent>) { }
+  amenity;
+  startDate;
+  listOfYears = [];
+  constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
+              private dialogRef: MatDialogRef<UpdateAmenityPenaltyComponent>, private amenityPenaltyService: AmenityPenaltyService,
+              private globalService: GlobalService) { }
 
   ngOnInit(): void {
+    let year = new Date().getFullYear();
+    const limitYear = year + 4;
+    while (year <= limitYear){
+      this.listOfYears.push(year);
+      year += 1;
+     }
+
+    this.amenity =  JSON.parse(localStorage.getItem('amenityPenalty'));
     this.selectAmenity = this.formBuilder.group({
-      park: ['', Validators.required],
-      camp : ['', Validators.required],
-      accomodationType : ['', Validators.required],
-      unitNumber : ['', Validators.required],
-      amenity: ['',Validators.required]
     });
-    
+
     this.amenityPenalty = this.formBuilder.group({
-      amenityPenalty: ['', [Validators.required, Validators.min(1)]],
-      dateEffective : ['', Validators.required]
+      amenityPenalty: [this.amenity.AmenityPenaltyAmount, [Validators.required, Validators.min(1)]],
+      dateEffective : [this.amenity.yearActive, Validators.required]
     });
   }
 
   stepperNext(){
-    if(this.selectAmenity.invalid){
+    if (this.selectAmenity.invalid){
       this.displayValidationError();
     }
     else{
@@ -43,26 +52,40 @@ export class UpdateAmenityPenaltyComponent implements OnInit {
   }
 
   updateAmenityPenalty(){
-    if(this.amenityPenalty.invalid){
+    if (this.amenityPenalty.invalid){
       this.displayValidationError();
     }
     else{
     this.dialogRef.close();
-    const updateAmenityPenaltyConfirmationDialog = this.dialog.open(UpdateAmenityPenaltyConfirmationComponent)
+    const updateAmenityPenaltyConfirmationDialog = this.dialog.open(UpdateAmenityPenaltyConfirmationComponent);
+
+    updateAmenityPenaltyConfirmationDialog.afterClosed().subscribe( result => {
+      if (result === true){
+         const user = JSON.parse(localStorage.getItem('user'));
+
+         const updateAmenityPenalty = {
+          PenaltyID: this.amenity.AmenityPenaltyID,
+          AmenityPenaltyAmount: this.amenityPenalty.get('amenityPenalty').value,
+          DateEffective: this.amenityPenalty.get('dateEffective').value,
+          authenticateUser: user
+        };
+         this.amenityPenaltyService.updateAmenityPenalty(updateAmenityPenalty, this.globalService.GetServer());
+      }
+    });
     }
   }
 
   confirmCancel(){
     const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
     confirmCancelDialog.afterClosed().subscribe(result => {
-      if(result == true){
+      if (result === true){
         this.dialogRef.close();
       }
     });
   }
 
   displayValidationError() {
-    this.validationErrorSnackBar.open("The entered details are not in the correct format. Please try again.", "OK", {
+    this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
       duration: 3500,
     });
   }

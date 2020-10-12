@@ -1,32 +1,32 @@
 <div class="dialog">
-    <h2 mat-dialog-title>Update Accomodation Add Rate</h2>
+    <h2 mat-dialog-title>Update Accommodation Add Rate</h2>
     <form [formGroup]="updateAccomodationRateForm">
     <mat-dialog-content appearance="mat-typography">
     <div class="example-container">
     <mat-form-field appearance="fill"> <!--Populated based on the selected Park-->
-        <mat-label>Accomodation Type</mat-label>
+        <mat-label>Accommodation Type</mat-label>
         <mat-select formControlName="accomodationType">
-            <mat-option value="Camp Site (CK6P)">Camp Site (CK6P)</mat-option>
-            <mat-option value="Bungalow BA3">Bungalow BA3</mat-option>
-            <mat-option value="Bungalow BA3U">Bungalow BA3U</mat-option>
+            <mat-option *ngFor="let accType of accommodationTypeDropDown" [value]="accType.AccommodationTypeID">{{accType.AccTypeName}}</mat-option>
         </mat-select>
     </mat-form-field>  
     <mat-form-field appearance="fill">
         <mat-label>Adult Rate</mat-label>
-        <input matInput formControlName="adultRate" type="number">
+        <input matInput formControlName="adultRate" type="number" maxlength="13">
         <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Child Rate</mat-label>
-        <input matInput formControlName="childRate" type="number">
+        <input matInput formControlName="childRate" type="number" maxlength="13">
         <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="fill">
-        <mat-label>Date Effective</mat-label>
-        <input matInput [matDatepicker]="dateEffective" formControlName="dateEffective" readonly>
-        <mat-datepicker-toggle matSuffix [for]="dateEffective"></mat-datepicker-toggle>
-        <mat-datepicker #dateEffective color="primary"></mat-datepicker>
-        <mat-hint>Date from which to apply this add rate.</mat-hint>
+        <mat-label>Year Effective</mat-label>
+        <mat-select formControlName="dateEffective">
+            <mat-option *ngFor="let year of listOfYears" [value]="year">
+              {{year}}
+            </mat-option>
+          </mat-select>
+        <mat-hint>Year in which to apply this add rate.</mat-hint>
     </mat-form-field>
     </div>  
     </mat-dialog-content>

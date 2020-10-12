@@ -20,4 +20,5 @@ export class BookingCheckinComponent implements OnInit {
     });
   }
 
+
 }

@@ -4,18 +4,13 @@ import {MatTableDataSource} from '@angular/material/table';
 import { AddEmployeeComponent } from 'src/app/modals/employee/add-employee/add-employee.component';
 import { ViewEmployeeComponent } from 'src/app/modals/employee/view-employee/view-employee.component';
 import {MatDialog} from '@angular/material/dialog';
+import { EmployeeService } from 'src/app/services/Employee/employee.service';
+import { GlobalService } from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-export interface PeriodicElement {
-  park: string;
-  employeeName: string;
-  identityNumber: string
-
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { park: 'Addo Elephant National Park', employeeName: 'Robyn Sancha Pillay',identityNumber: "9805274927963"},
-  { park: 'Golden Gates Highlands National Park',employeeName: "Blessing Thulani Makumbila",identityNumber: "9510134927820"},
-  { park: 'Kruger National Park', employeeName: 'Jade Dalene Arumugan',identityNumber: "0005254561729"},
-];
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
@@ -23,20 +18,57 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class EmployeeComponent implements OnInit {
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private router: Router,
+              private employeeService: EmployeeService, private globalService: GlobalService,
+              private snackbar: MatSnackBar) { }
 
-  displayedColumns: string[] = ['park','employeeName','identityNumber','view'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['park', 'employeeName', 'identityNumber', 'view'];
+  dataSource;
+  filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
+    this.employeeService.requestReferesh.subscribe(() => {this.getEmployee(); });
+    this.getEmployee();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addEmployee(){
-    const addEmployeeDialog =  this.dialog.open(AddEmployeeComponent,{disableClose: true});
+    const addEmployeeDialog =  this.dialog.open(AddEmployeeComponent, {disableClose: true});
   }
 
   viewEmployee(employee){
+    localStorage.setItem('employee', JSON.stringify(employee));
     const viewEmployeeDialog =  this.dialog.open(ViewEmployeeComponent);
+  }
+
+  getEmployee(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const employee = {
+        SessionID: user.SessionID,
+        UserSecret: user.UserSecret
+    };
+
+    this.employeeService.ReadEmployee(this.globalService.GetServer()).subscribe((result: any) => {
+      this.dataSource = new MatTableDataSource(result.Employees);
+      this.dataSource.paginator = this.paginator;
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
+    }
+    );
   }
 }

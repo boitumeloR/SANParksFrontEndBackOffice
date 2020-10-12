@@ -5,3 +5,27 @@
   .demo-app-main {
     width: 100%;
 }
+
+.mat-card {
+  text-align: center;
+  margin: 0 auto;
+  width: 60%;
+}
+
+.mat-form-field {
+  width: 400px;
+}
+
+.well {
+  text-align: center;
+  border-radius: 12px;
+  background-color: rgb(248, 245, 245);
+}
+
+::ng-deep {
+  .panel.head {
+      background-color: #6d6f70;
+      color: #fff;
+      margin-bottom: 40px;
+      }
+}

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {AddWildcardRateSuccessfulComponent} from 'src/app/modals/wildcard-rate/add-wildcard-rate-successful/add-wildcard-rate-successful.component';
-import {AddWildcardRateUnsuccessfulComponent} from 'src/app/modals/wildcard-rate/add-wildcard-rate-unsuccessful/add-wildcard-rate-unsuccessful.component';
 
 
 @Component({
@@ -14,13 +12,5 @@ export class AddWildcardRateConfirmationComponent implements OnInit {
   constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
-  }
-
-  successfulAddWildcardRate(){
-    const addWildcardRateSuccessfulDialog = this.dialog.open(AddWildcardRateSuccessfulComponent);
-  }
-
-  unsuccessfulAddWildcardRate(){
-    const addWildcardRateUnsuccessfulDialog = this.dialog.open(AddWildcardRateUnsuccessfulComponent);
   }
 }

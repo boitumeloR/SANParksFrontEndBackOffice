@@ -4,25 +4,30 @@
   
       <mat-icon>close</mat-icon>
     </button>
-    <h2 mat-dialog-title>View Accomodation Base Rate</h2>
+    <h2 mat-dialog-title>View Accommodation Base Rate</h2>
   
     <mat-dialog-content appearance="mat-typography">
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label> Park</mat-label>
-            <input matInput value="Addo Elephant National Park" readonly>
+            <input matInput value="{{baseRate.ParkName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Camp</mat-label>
-            <input matInput value="Letaba" readonly>
+            <input matInput value="{{baseRate.CampName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
-            <mat-label>Accomodation Type</mat-label>
-            <input matInput value="Camp Site (CK6P)" readonly>               
+            <mat-label>Accommodation Type</mat-label>
+            <input matInput value="{{baseRate.AccomodationType}}" readonly>               
         </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Season</mat-label>
+          <input matInput value="{{baseRate.SeasonName}}" readonly>
+          <mat-hint>This is the season that is associated to this base rate.</mat-hint>
+      </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Base Rate</mat-label>
-            <input matInput value="R300" readonly>
+            <input matInput value="{{baseRate.BaseRateAmount}}" readonly>
             <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
         </mat-form-field>
       </div>

@@ -1,0 +1,29 @@
+
+<body>
+  
+    <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
+        <mat-icon>close</mat-icon>
+    </button>
+    <h2 mat-dialog-title>Help </h2>    
+    <form [formGroup]="helpForm">   
+    <mat-dialog-content appearance="mat-typography">
+      <div *ngIf="questionAsked == true">
+        <mat-form-field appearance="fill" class="questionClass">
+            <mat-label>Question</mat-label>
+            <textarea matInput readonly cdkTextareaAutosize formControlName="question"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="feedbackClass">
+            <mat-label>Feedback</mat-label>
+            <textarea matInput readonly cdkTextareaAutosize formControlName="feedback"></textarea>
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <button mat-raised-button color="primary" (click)="talk()">
+            <mat-icon>
+                mic
+            </mat-icon>
+        </button>
+    </mat-dialog-actions>
+    </form>
+</body>

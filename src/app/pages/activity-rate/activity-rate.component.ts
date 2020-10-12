@@ -4,17 +4,12 @@ import {MatTableDataSource} from '@angular/material/table';
 import { AddActivityRateComponent } from 'src/app/modals/activity-rate/add-activity-rate/add-activity-rate.component';
 import {MatDialog} from '@angular/material/dialog';
 import { ViewActivityRateComponent } from 'src/app/modals/activity-rate/view-activity-rate/view-activity-rate.component';
-
-export interface PeriodicElement {
-  camp: string;
-  type: string;
-  activityDescription: string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { camp: 'Matyholweni',type: 'Sunset Drive',activityDescription: '2 Hour Drive'},
-  { camp: 'Lower Sabie',type:'Night Drive', activityDescription: '3 Hour Drive'},
-  { camp: 'Sirheni',type:'Hiking',activityDescription: 'Bush Hike'}
-];
+import { GlobalService } from 'src/app/services/Global/global.service';
+import { ActivityRateService } from 'src/app/services/ActivityRate/activity-rate.service';
+import { Router } from '@angular/router';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-activity-rate',
   templateUrl: './activity-rate.component.html',
@@ -22,21 +17,49 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class ActivityRateComponent implements OnInit {
 
-  displayedColumns: string[] = ['camp','type','activityDescription', 'view'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-
+  displayedColumns: string[] = ['camp', 'type', 'activityDescription', 'dateEffective', 'endDate', 'view'];
+  dataSource;
+  filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
- 
-  constructor(private dialog: MatDialog) { }
+
+  constructor(private dialog: MatDialog, private activityRateService: ActivityRateService, private globalService: GlobalService,
+              private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.activityRateService.requestReferesh.subscribe(() => {this.getActivityRates(); });
+    this.getActivityRates();
+  }
+
+  filterTable(filter){
+    this.dataSource.filter = filter;
   }
 
   addActivityRate(){
-    const addActivityRateDialog = this.dialog.open(AddActivityRateComponent,{disableClose: true});
+    const addActivityRateDialog = this.dialog.open(AddActivityRateComponent, {disableClose: true});
   }
 
   viewActivityRate(activityRate){
+    localStorage.setItem('activityRate', JSON.stringify(activityRate));
     const viewActivityRateDialog = this.dialog.open(ViewActivityRateComponent);
   }
+
+  getActivityRates(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
+    this.activityRateService.readActivityRate(this.globalService.GetServer()).subscribe((result: any) => {
+      this.dataSource = new MatTableDataSource(result.ActivityRates);
+      this.dataSource.paginator = this.paginator;
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
+    }
+  );
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+ }
 }

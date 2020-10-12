@@ -7,10 +7,11 @@ import {MatDialog} from '@angular/material/dialog';
   styleUrls: ['./view-employee.component.scss']
 })
 export class ViewEmployeeComponent implements OnInit {
-
+  employee;
   constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.employee = JSON.parse(localStorage.getItem('employee'));
   }
 
   updateEmployee(){

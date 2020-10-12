@@ -6,6 +6,12 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+import { GlobalService } from 'src/app/services/Global/global.service';
+import { ActivityType, ActivityTypeService } from 'src/app/services/ActivityType/activity-type.service';
+import { ParkService } from 'src/app/services/Park/park.service';
+import { CampService } from 'src/app/services/Camp/camp.service';
+import { ActivityService } from 'src/app/services/Activity/activity.service';
+import { ActivitySlotService } from 'src/app/services/ActivitySlot/activity-slot.service';
 
 @Component({
   selector: 'app-add-activity-slot',
@@ -28,10 +34,26 @@ export class AddActivitySlotComponent implements OnInit {
     }
   };
   addActivitySlot: FormGroup;
-  constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<AddActivitySlotComponent>) { }
+  parkDropDown;
+  campDropDown;
+  activityTypeDropDown;
+  campSelected;
+  activityDropDown;
+  constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
+              private dialogRef: MatDialogRef<AddActivitySlotComponent>, private parkService: ParkService,
+              private globalService: GlobalService, private activityTypeService: ActivityTypeService, private campService: CampService,
+              private activityService: ActivityService, private activitySlotService: ActivitySlotService) { }
 
   ngOnInit(): void {
+    this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
+      this.parkDropDown = result.Parks;
+
+      this.activityTypeService.readActivityType(this.globalService.GetServer()).subscribe((resultActType: any) => {
+        this.activityTypeDropDown = resultActType.ActivityTypes;
+      });
+    });
+
+
     this.addActivitySlot = this.formBuilder.group({
       park: ['', Validators.required],
       camp : ['', Validators.required],
@@ -44,27 +66,70 @@ export class AddActivitySlotComponent implements OnInit {
   }
 
   addSlotTime(){
-    if(this.addActivitySlot.invalid){
+    if (this.addActivitySlot.invalid){
       this.displayValidationError();
+    }
+    else if (this.addActivitySlot.get('endDate').value < this.addActivitySlot.get('startDate').value){
+      this.displayDateError();
     }
     else{
       this.dialogRef.close();
-    const addSlotTimeConfirmationDialog = this.dialog.open(AddActivitySlotConfirmationComponent);
+      const addSlotTimeConfirmationDialog = this.dialog.open(AddActivitySlotConfirmationComponent);
+
+      addSlotTimeConfirmationDialog.afterClosed().subscribe( result => {
+        if (result === true){
+           const user = JSON.parse(localStorage.getItem('user'));
+
+           const newActivitySlot = {
+            ActivityID: this.addActivitySlot.get('activity').value,
+            CampID: this.addActivitySlot.get('camp').value,
+            SlotTime: this.addActivitySlot.get('slotTime').value,
+            startDate: this.addActivitySlot.get('startDate').value,
+            endDate: this.addActivitySlot.get('endDate').value,
+            authenticateUser: user
+          };
+           this.activitySlotService.CreateActivitySlot(newActivitySlot, this.globalService.GetServer());
+        }
+      });
     }
   }
 
   confirmCancel(){
     const confirmCancelDialog = this.dialog.open(CancelAlertComponent);
     confirmCancelDialog.afterClosed().subscribe(result => {
-      if(result == true){
+      if (result === true){
         this.dialogRef.close();
       }
     });
   }
 
   displayValidationError() {
-    this.validationErrorSnackBar.open("The entered details are not in the correct format. Please try again.", "OK", {
+    this.validationErrorSnackBar.open('The entered details are not in the correct format. Please try again.', 'OK', {
+      duration: 3500,
+    });
+  }
+
+  getCampsForPark(parkID){
+    this.campService.getCampsForSpecificPark(parkID, this.globalService.GetServer()).subscribe((result: any) => {
+      this.campDropDown = result.Camps;
+    });
+  }
+
+  updateCampID(campID){
+    this.campSelected = campID;
+  }
+
+  getActivityInCampForSpecificType(activityTypeID){
+    this.activityService.getActivtyInSpecificCamp(this.campSelected, activityTypeID, this.globalService.GetServer()).
+    subscribe((result: any) => {
+      this.activityDropDown = result.ListOfActivities;
+    });
+  }
+
+  displayDateError() {
+    this.validationErrorSnackBar.open('The date effective must be earlier or equal than the end date. Please try again.', 'OK', {
       duration: 3500,
     });
   }
 }
+

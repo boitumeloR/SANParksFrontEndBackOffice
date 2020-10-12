@@ -1,0 +1,32 @@
+
+
+mat-card{
+    width: 80%;
+    height: auto;
+    display: inline-block;   
+}
+
+mat-form-field {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+h2{
+    text-align: center;
+}
+
+.center{
+   margin: 0 auto;
+   margin-right: 10px;
+}
+
+.search-card{
+    width: 50%;
+    margin: 0 auto;
+    border: 1px solid green;
+    box-shadow: 5px 10px #888888;
+    padding: 10px;
+    text-align: center;
+}

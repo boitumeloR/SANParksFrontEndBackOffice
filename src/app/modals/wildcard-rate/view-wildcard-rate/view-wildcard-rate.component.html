@@ -11,21 +11,21 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
           <mat-label>Wildcard Cluster</mat-label>
-          <input matInput value="SANParks Cluster" readonly>
+          <input matInput value="{{wildcardRate.WildcardClusterName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Wildcard Category </mat-label>
-          <input matInput value="Family" readonly>
+          <input matInput value="{{wildcardRate.WildcardCategoryName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Wildcard Rate</mat-label>
-          <input matInput value="150" readonly>
+          <input matInput value="{{wildcardRate.RateAmount}}" readonly>
           <mat-hint> Rate in South African Rands (ZAR) </mat-hint>
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill">
           <mat-label>Date Effective</mat-label>
-          <input matInput value="03/06/2020" readonly>
+          <input matInput value="{{wildcardRate.DateEffective}}" readonly>
           <mat-hint>Park GPS Co-Ordinates</mat-hint>
         </mat-form-field>
       </div>

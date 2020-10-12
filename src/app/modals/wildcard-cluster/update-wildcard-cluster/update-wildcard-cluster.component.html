@@ -5,19 +5,22 @@
         <div class="example-container">
             <mat-form-field appearance="fill">
                 <mat-label>Wildcard Cluster Name</mat-label>
-                <input matInput formControlName="wildcardClusterName">
+                <input matInput formControlName="wildcardClusterName" maxlength="50">
                 </mat-form-field>
             <mat-form-field hintLabel="Max 300 characters" appearance="fill">
                 <mat-label>Wildcard Cluster Description</mat-label>
                 <textarea matInput #input maxlength="300" cdkTextareaAutosize formControlName="wildcardClusterDescription"></textarea>
                 <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
             </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Select Parks In Cluster</mat-label>
-                <mat-select multiple formControlName="parksInCluster">
-                    <mat-option *ngFor="let park of listOfParks">{{park.parkName}}</mat-option>
-                </mat-select>
-            </mat-form-field>   
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Select Parks In Cluster
+                </mat-expansion-panel-header>
+                <section *ngFor="let park of parkCheckBox">
+                    <mat-checkbox  [value]="park" (change)="onChange($event)">{{park.ParkName}}</mat-checkbox>
+                    <br>
+                </section>
+            </mat-expansion-panel>
         </div>
     </mat-dialog-content>
     <mat-dialog-actions align="end">

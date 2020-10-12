@@ -5,14 +5,15 @@
     <div class="example-container">
       <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
-        <input matInput formControlName="description">
+        <textarea matInput #input maxlength="300"  cdkTextareaAutosize formControlName="description" ></textarea>
+        <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
       </mat-form-field>      
     </div>
     
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-raised-button color="warn" (click)="confirmCancel()">Cancel</button>
-    <button mat-raised-button color="primary" (click)="updateActivityType()">Update</button>
+    <button mat-raised-button cdkFocusInitial color="primary" (click)="updateActivityType()">Update</button>
   </mat-dialog-actions>
   </form>
   </div>

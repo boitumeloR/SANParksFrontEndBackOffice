@@ -1,0 +1,138 @@
+<button id="alignCloseRight" mat-icon-button align="end" color="warn" (click)="confirmCancel()" aria-label="Cancel">
+    <mat-icon>close</mat-icon>
+</button>
+<h2 mat-dialog-title>Purchase Wildcard</h2>
+<mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="basicClient">
+        <form [formControl]="basicClient" [formGroup]="basicClient">
+            <ng-template matStepLabel>Client Details</ng-template>
+            <mat-dialog-content appearance="mat-typography">
+            <div class="example-container">
+                <mat-form-field appearance="fill">
+                    <mat-label>Name</mat-label>
+                    <input matInput readonly formControlName="clientName">
+                    <mat-hint>dependent full name.</mat-hint>
+                  </mat-form-field>   
+                  <mat-form-field appearance="fill">
+                    <mat-label>Cellphone Number</mat-label>
+                    <input matInput readonly formControlName="cellphoneNumber">
+                    <mat-hint>Cient cellphone number.</mat-hint>
+                  </mat-form-field>   
+                  <mat-form-field appearance="fill">
+                    <mat-label>Email Address</mat-label>
+                    <input matInput readonly formControlName="emailAddress">
+                    <mat-hint>Email address for completing purchase.</mat-hint>
+                  </mat-form-field>
+            </div>
+            </mat-dialog-content>
+            <mat-dialog-actions align="end">
+                <button mat-raised-button color="primary" (click)="stepperNext()">Next</button>
+            </mat-dialog-actions>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="wildcardSelection">
+        <form [formControl]="wildcardSelection" [formGroup]="wildcardSelection">
+            <ng-template matStepLabel>Wildcard</ng-template>
+            <mat-form-field appearance="fill">
+                <mat-label>Wildcard Cluster</mat-label>
+                <mat-select formControlName="wildcardCluster">
+                  <mat-option *ngFor="let wildcardCluster of wildcardClusterDropdown" value="{{wildcardCluster.WildcardClusterID}}" (click)="getRate()">{{wildcardCluster.WildcardName}}</mat-option>
+                </mat-select>
+              </mat-form-field> 
+              <mat-form-field appearance="fill">
+                <mat-label>Wildcard Category</mat-label>
+                <mat-select formControlName="wildcardCategory">
+                  <mat-option *ngFor="let wildcardCategory of wildcardCategoryDropDown" value="{{wildcardCategory.WildcardCategoryID}}" (click)="getRate()">{{wildcardCategory.WildcardCategoryName}}</mat-option>
+                </mat-select>
+              </mat-form-field> 
+              <mat-form-field appearance="fill">
+                <mat-label>Wildcard Rate</mat-label>
+                <input matInput type="number" formControlName="wildcardRate">
+                <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
+              </mat-form-field>  
+        </form>
+        <mat-dialog-actions align="end">
+            <button mat-raised-button color="warn" matStepperPrevious >Previous</button>
+            <button mat-raised-button color="primary" (click)="checkWCValidation()">Next</button>
+        </mat-dialog-actions>
+    </mat-step>
+    <mat-step [stepControl]="dependent">
+        <form [formControl]="dependent" [formGroup]="dependent">
+            <ng-template matStepLabel>Dependents</ng-template>
+            <mat-accordion >
+            <mat-expansion-panel *ngFor="let adult of numberOfAdults">
+                <mat-expansion-panel-header>
+                        Adult Dependent {{adult}}
+                </mat-expansion-panel-header>
+                <section>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Name</mat-label>
+                        <input matInput id="adultDependentName{{adult}}" maxlength="50" formControlName="dependentName">
+                        <mat-hint>Name of the dependent</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Surname</mat-label>
+                        <input matInput id="adultDependentSurname{{adult}}" maxlength="50" formControlName="dependentSurname">
+                        <mat-hint>Surname of the dependent</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Identity Number</mat-label>
+                        <input matInput id="adultDependentIdentityNumber{{adult}}" maxlength="20" formControlName="dependentIdentityNumber">
+                        <mat-hint>Provide a valid identity number</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Cellphone Number</mat-label>
+                        <input matInput id="adultDependentCellphone{{adult}}" maxlength="10" formControlName="dependentCellphone">
+                        <mat-hint>Cell phone number of the dependent</mat-hint>
+                    </mat-form-field>                  
+                    <mat-form-field appearance="fill">
+                        <mat-label>Email Address</mat-label>
+                        <input matInput id="adultDependentEmailAddress{{adult}}" maxlength="320" formControlName="dependentEmailAddress">
+                        <mat-hint>Email address of the dependent</mat-hint>
+                    </mat-form-field>
+                </section>
+            </mat-expansion-panel>            
+            </mat-accordion>
+            <br>
+            <mat-accordion >
+                <mat-expansion-panel *ngFor="let child of numberOfChildren">
+                    <mat-expansion-panel-header>
+                            Child Dependent {{child}}
+                    </mat-expansion-panel-header>
+                    <section>
+                        <mat-form-field appearance="fill" formControlName="dependentIdentityNumber">
+                            <mat-label>Name</mat-label>
+                            <input matInput id="dependentName{{child}}" maxlength="50" formControlName="dependentName">
+                            <mat-hint>Name of the dependent</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Surname</mat-label>
+                            <input matInput id="dependentSurname{{child}}" maxlength="50" formControlName="dependentSurname">
+                            <mat-hint>Surname of the dependent</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Identity Number</mat-label>
+                            <input matInput id="dependentIdentityNumber{{child}}" maxlength="20" formControlName="dependentIdentityNumber">
+                            <mat-hint>Provide a valid identity number</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Cellphone Number</mat-label>
+                            <input matInput id="dependentCellphone{{child}}" maxlength="10" formControlName="dependentCellphone">
+                            <mat-hint>Cell phone number of the dependent</mat-hint>
+                        </mat-form-field>                  
+                        <mat-form-field appearance="fill">
+                            <mat-label>Email Address</mat-label>
+                            <input matInput id="dependentEmailAddress{{child}}" maxlength="320" formControlName="dependentEmailAddress">
+                            <mat-hint>Email address of the dependent</mat-hint>
+                        </mat-form-field>
+                    </section>
+                </mat-expansion-panel>            
+                </mat-accordion>
+        </form>
+        <mat-dialog-actions align="end">
+            <button mat-raised-button color="warn" matStepperPrevious >Previous</button>
+            <button mat-raised-button color="primary" (click)="purchaseWildcard()">Create</button>
+        </mat-dialog-actions>
+    </mat-step>
+</mat-horizontal-stepper>
+  

@@ -3,53 +3,33 @@
 </button>
 <h2 mat-dialog-title>Update Amenity Penalty</h2>
 <mat-horizontal-stepper [linear]="true" #stepper>
-    <mat-step [stepControl]="selectAmenity">
-        <form [formControl]="selectAmenity" [formGroup]="selectAmenity">
+    <mat-step>
+        <form>
             <ng-template matStepLabel>Select An Amenity</ng-template>
             <mat-dialog-content appearance="mat-typography">
                 <mat-form-field appearance="fill">
                     <mat-label>Park</mat-label>
-                    <mat-select formControlName="park">
-                        <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
-                        <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
-                        <mat-option value="Kruger National Park">Kruger National Park</mat-option>
-                    </mat-select>
+                    <input matInput value="{{amenity.ParkName}}" readonly>
                     <mat-hint>Park in which amenity is in.</mat-hint>
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected Park-->
                     <mat-label>Camp</mat-label>
-                    <mat-select formControlName="camp">
-                        <mat-option value="Addo">Addo</mat-option>
-                        <mat-option value="Spekboom">Spekboom</mat-option>
-                        <mat-option value="Matyholweni">Matyholweni</mat-option>
-                    </mat-select>
+                    <input matInput value="{{amenity.CampName}}" readonly>
                     <mat-hint>Camp in which amenity is in.</mat-hint>
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected camp, show acc types in camp -->
                     <mat-label>Accomodation Type</mat-label>
-                    <mat-select formControlName="accomodationType">
-                        <mat-option value="	Camp Site (CK6P)">Camp Site (CK6P)</mat-option>
-                        <mat-option value="Bungalow BA3">Bungalow BA3</mat-option>
-                        <mat-option value="Bungalow BA3U">Bungalow BA3U</mat-option>
-                    </mat-select>
+                    <input matInput value="{{amenity.AccommodationTypeName}}" readonly>
                     <mat-hint>Accomodation type in which amenity is in.</mat-hint>
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected acc type, show unit number of acc in this camp-->
                     <mat-label>Unit Number</mat-label>
-                    <mat-select formControlName="unitNumber">
-                        <mat-option value="107">107</mat-option>
-                        <mat-option value="52">52</mat-option>
-                        <mat-option value="14">14</mat-option>
-                    </mat-select>
+                    <input matInput value="{{amenity.UnitNumber}}" readonly>
                     <mat-hint>Unit number in which amenity is in.</mat-hint>
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected unit number and the amenity within this unit-->
                     <mat-label>Amenity</mat-label>
-                    <mat-select formControlName="amenity">
-                        <mat-option value="KIC 220L">KIC 220L</mat-option>
-                        <mat-option value="Samsung Smart Tv">Samsung Smart Tv</mat-option>
-                        <mat-option value="Braai Area">Braai Area</mat-option>
-                    </mat-select>
+                    <input matInput value="{{amenity.AmenityDescription}}" readonly>
                     <mat-hint>Amenity which penalty is for</mat-hint>
                 </mat-form-field> 
             </mat-dialog-content>
@@ -64,15 +44,17 @@
             <mat-dialog-content appearance="mat-typography">
                 <mat-form-field appearance="fill">
                     <mat-label>Amenity Penalty</mat-label>
-                    <input matInput formControlName="amenityPenalty" type="number">
+                    <input matInput formControlName="amenityPenalty" type="number" maxlength="13">
                     <mat-hint>Rate in South African Rands (ZAR)</mat-hint>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
-                    <mat-label>Date Effective</mat-label>
-                    <input matInput [matDatepicker]="dateEffective" formControlName="dateEffective" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="dateEffective"></mat-datepicker-toggle>
-                    <mat-datepicker #dateEffective color="primary"></mat-datepicker>
-                    <mat-hint>Date from which to apply this penalty.</mat-hint>
+                    <mat-label>Year Effective</mat-label>
+                    <mat-select formControlName="dateEffective">
+                        <mat-option *ngFor="let year of listOfYears" [value]="year">
+                          {{year}}
+                        </mat-option>
+                      </mat-select>
+                    <mat-hint>Year in which to apply this amenity penalty.</mat-hint>
                 </mat-form-field>
             </mat-dialog-content>
         </form>

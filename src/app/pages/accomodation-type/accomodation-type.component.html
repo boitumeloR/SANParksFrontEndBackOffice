@@ -1,8 +1,8 @@
-<h1>Accomodation Type</h1>
+<h1>Accommodation Type</h1>
 <div class="example-container">
   <mat-form-field hintLabel="Max 100 characters" appearance="fill">
     <mat-label>Keyword Filter</mat-label>
-    <input matInput #input maxlength="100" placeholder="Ex. Camp Site (CK6P)">
+    <input matInput #input maxlength="100" placeholder="Ex. Bungalow (CK6P)" [ngModel]="filter" (ngModelChange)="filterTable(input.value)">
     <mat-hint>&nbsp; {{input.value?.length || 0}}/100</mat-hint>
   </mat-form-field>
 
@@ -15,15 +15,15 @@
     <table mat-table [dataSource]="dataSource">
       <!-- Camp Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Accomodation Type Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <th mat-header-cell *matHeaderCellDef> Accommodation Type Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.AccTypeName}} </td>
       </ng-container> 
 
       <!-- View Column -->
       <ng-container matColumnDef="view">
-        <th mat-header-cell *matHeaderCellDef> View Accomodation Type </th>
+        <th mat-header-cell *matHeaderCellDef> View Accommodation Type </th>
         <td mat-cell *matCellDef="let element"> 
-          <a mat-button (click)="viewAccomodationTpe(element)">
+          <a mat-button (click)="viewAccomodationType(element)">
             <mat-icon>visibility</mat-icon>
           </a>
         </td>

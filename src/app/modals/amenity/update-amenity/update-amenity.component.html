@@ -9,43 +9,27 @@
             <mat-dialog-content appearance="mat-typography">
                 <mat-form-field appearance="fill">
                     <mat-label>Park</mat-label>
-                    <mat-select formControlName="park">
-                        <mat-option value="Addo Elephant National Park">Addo Elephant National Park</mat-option>
-                        <mat-option value="Golden Gates Highlands National Park">Golden Gates Highlands National Park</mat-option>
-                        <mat-option value="Kruger National Park">Kruger National Park</mat-option>
-                    </mat-select>
+                    <input matInput value="{{amenity.ParkName}}" readonly>
                     <mat-hint>Park in which this amenity is in.</mat-hint>
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected Park-->
                     <mat-label>Camp</mat-label>
-                    <mat-select formControlName="camp">
-                        <mat-option value="Addo">Addo</mat-option>
-                        <mat-option value="Spekboom">Spekboom</mat-option>
-                        <mat-option value="Matyholweni">Matyholweni</mat-option>
-                    </mat-select>
+                    <input matInput value="{{amenity.CampName}}" readonly>
                     <mat-hint>Camp in which this amenity is in.</mat-hint>
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected camp, show acc types in camp -->
                     <mat-label>Accomodation Type</mat-label>
-                    <mat-select formControlName="accomodationType">
-                        <mat-option value="	Camp Site (CK6P)">Camp Site (CK6P)</mat-option>
-                        <mat-option value="Bungalow BA3">Bungalow BA3</mat-option>
-                        <mat-option value="Bungalow BA3U">Bungalow BA3U</mat-option>
-                    </mat-select>
+                    <input matInput value="{{amenity.AccommodationTypeName}}" readonly>
                     <mat-hint>Accomodation type in which this amenity is in.</mat-hint>
                 </mat-form-field> 
                 <mat-form-field appearance="fill"> <!--Populated based on the selected acc type, show unit number of acc in this camp-->
                     <mat-label>Unit Number</mat-label>
-                    <mat-select formControlName="unitNumber">
-                        <mat-option value="107">107</mat-option>
-                        <mat-option value="52">52</mat-option>
-                        <mat-option value="14">14</mat-option>
-                    </mat-select>
+                    <input matInput value="{{amenity.UnitNumber}}" readonly>
                     <mat-hint>Unit number in which this amenity is in.</mat-hint>
                 </mat-form-field> 
             </mat-dialog-content>
             <mat-dialog-actions align="end">
-                <button mat-raised-button color="primary" (click)="stepperNext()">Next</button>
+                <button mat-raised-button color="primary" matStepperNext >Next</button>
             </mat-dialog-actions>
         </form>
     </mat-step>
@@ -56,22 +40,18 @@
                 <mat-form-field appearance="fill">  
                     <mat-label>Amenity Type</mat-label>
                     <mat-select formControlName="amenityType">
-                        <mat-option value="Fridge">Fridge</mat-option>
-                        <mat-option value="Stove">Stove</mat-option>
-                        <mat-option value="Television">Television</mat-option>
+                        <mat-option *ngFor="let amenityType of amenityTypeDropDown" [value]="amenityType.AmenityTypeID">{{amenityType.AmenityTypeName}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field hintLabel="Max 300 characters" appearance="fill">
                     <mat-label>Amenity Description</mat-label>
-                    <textarea cdkTextareaAutosize matInput #input maxlength="300" formControlName="amenityDescription"></textarea>
+                    <textarea cdkTextareaAutosize matInput #input maxlength="300"  formControlName="amenityDescription"></textarea>
                     <mat-hint>&nbsp;{{input.value?.length || 0}}/300</mat-hint>
                 </mat-form-field>
                 <mat-form-field appearance="fill"> 
                     <mat-label>Amenity Status</mat-label>
                     <mat-select formControlName="amenityStatus">
-                        <mat-option value="Working">Working</mat-option>
-                        <mat-option value="Under Repair">Under Repair</mat-option>
-                        <mat-option value="Broken">Broken</mat-option>
+                        <mat-option *ngFor="let amenityStatus of amenityStatusDropDown" [value]="amenityStatus.AmenityStatusID">{{amenityStatus.AmenityStatusName}}</mat-option>
                     </mat-select>
                     <mat-hint>Status of this amenity</mat-hint>
                 </mat-form-field>

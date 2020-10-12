@@ -4,49 +4,60 @@ import {MatTableDataSource} from '@angular/material/table';
 import { AddParkComponent } from 'src/app/modals/park/add-park/add-park.component';
 import {MatDialog} from '@angular/material/dialog';
 import { ViewParkComponent } from 'src/app/modals/park/view-park/view-park.component';
-
-
-
-export interface PeriodicElement {
-  name: string;
-
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Addo Elephant National Park'},
-  {name: 'Golden Gates Highlands National Park'},
-  {name: 'Kruger National Park'},
-];
+import { ParkService, Park } from 'src/app/services/Park/park.service';
+import {GlobalService} from 'src/app/services/Global/global.service';
+import { Router } from '@angular/router';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-park',
   templateUrl: './park.component.html',
   styleUrls: ['./park.component.scss']
 })
 export class ParkComponent implements OnInit {
-
-  displayedColumns: string[] = ['name', 'view'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['ParkName', 'view'];
+  dataSource;
+  filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private parkService: ParkService, private globalService: GlobalService,
+              private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.parkService.requestReferesh.subscribe(() => {this.getParks(); });
+    this.getParks();
   }
 
-  addPark() {
-    const dialogRef = this.dialog.open(AddParkComponent,{disableClose: true});
-    // disableclose restricts the user from just clicking on the backdrop then the modal closes,
-    // use it when entering info in a modal, so the user doesnt lose data they've
-    //  been entering if they click outside the modal
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
     });
   }
 
+  filterTable(filter){
+    this.dataSource.filter = filter;
+  }
+
+  addPark() {
+    const dialogRef = this.dialog.open(AddParkComponent, {disableClose: true});
+  }
+
   ViewPark(park) {
+    localStorage.setItem('park', JSON.stringify(park));
     const dialogRef = this.dialog.open(ViewParkComponent);
   }
 
-
-
+  getParks(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
+    this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
+      this.dataSource = new MatTableDataSource(result.Parks);
+      this.dataSource.paginator = this.paginator;
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
+    });
+  }
 }

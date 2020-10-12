@@ -10,25 +10,33 @@
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Activity Type </mat-label>
-            <input matInput value="Sunset Drive" readonly>
+            <input matInput value="{{activity.ActivityTypeName}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Activtiy Description</mat-label>
-            <textarea readonly cdkTextareaAutosize matInput value="2 Hour Drive"></textarea>
+            <textarea readonly cdkTextareaAutosize matInput value="{{activity.ActivityDescription}}"></textarea>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Maximum Capacity</mat-label>
-            <input matInput value="15" readonly>
+            <input matInput value="{{activity.ActivityMaxCapacity}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Minimum Age</mat-label>
-            <input matInput value="13" readonly>
+            <input matInput value="{{activity.AgeMin}}" readonly>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Maximum Age</mat-label>
-            <input matInput value="80" readonly>
+            <input matInput value="{{activity.AgeMax}}" readonly>
         </mat-form-field>
-        <!--I am thinking of using a tree to display which camps this is available at-->
+        <mat-form-field appearance="fill">
+            <mat-label>Camps Available At</mat-label>
+            <textarea cdkTextareaAutosize matInput  readonly value="{{campsAvailable}}"></textarea>
+        </mat-form-field>
+        <div class="imageHolder">
+            <mat-card *ngFor="let image of listOfImages" >
+                <img mat-card-image class="cardImage" [src]="image" alt="Accomodation type image.">
+            </mat-card>
+        </div>
       </div>
       
     </mat-dialog-content>

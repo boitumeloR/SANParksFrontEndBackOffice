@@ -1,0 +1,32 @@
+<div class="main">
+    <h2 mat-dialog-title>Create Active Dates</h2>
+    <form [formGroup]="addDates">
+    <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Start Date</mat-label>
+            <input matInput [matDatepicker]="startDate" formControlName="startDate" readonly>
+            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate color="primary"></mat-datepicker>
+            <mat-hint>Date from which to start active dates.</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>End Date</mat-label>
+            <input matInput [matDatepicker]="endDate" formControlName="endDate" readonly>
+            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate color="primary"></mat-datepicker>
+            <mat-hint>Date from which to start active dates.</mat-hint>
+        </mat-form-field>
+    </div>  
+    </mat-dialog-content>
+    
+    <mat-dialog-actions class="button">
+        <button mat-raised-button color="primary" (click)="addActiveDates()">Create</button>
+    </mat-dialog-actions>
+    </form>
+</div>
+      
+      
+      
+      
+      
