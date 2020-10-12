@@ -20,4 +20,8 @@ export class ReportingService {
   SendWeeklyBookingReport(server: string, filterData: any) {
     return this.http.post<any>(`${server}/api/Report/SendWeeklyBooking`, filterData, this.httpOptions);
   }
+
+  SendParkPerformanceReport(server: string, filterData: any) {
+    return this.http.post<any>(`${server}/api/Report/SendParkPerformance`, filterData, this.httpOptions);
+  }
 }

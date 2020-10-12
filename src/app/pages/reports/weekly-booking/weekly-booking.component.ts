@@ -10,6 +10,7 @@ import { AvailabilityService } from 'src/app/services/Available/availability.ser
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { ReportingService } from 'src/app/services/Reports/reporting.service';
 import { Chart} from 'chart.js';
+import { SuccessModalComponent } from 'src/app/modals/auxilliary-modals/success-modal/success-modal.component';
 
 @Component({
   selector: 'app-weekly-booking',
@@ -196,14 +197,43 @@ export class WeeklyBookingComponent implements OnInit {
   }
 
   SendReport() {
+    const activityGraph: HTMLCanvasElement = document.querySelector('#actChart') as HTMLCanvasElement;
+    const accommodationGraph: HTMLCanvasElement = document.querySelector('#totalChart') as HTMLCanvasElement;
+
+    const activityImage: string = activityGraph.toDataURL();
+    const accommodationImage: string = accommodationGraph.toDataURL();
+
+    console.log(activityImage);
+    console.log(accommodationImage);
     const filterData = {
       StartDate: new Date(this.reportForm.get('start').value),
       EndDate: new Date(this.reportForm.get('end').value),
       ParkID: this.reportForm.get('park').value,
       CampID: this.reportForm.get('camp').value,
-      Session: JSON.parse(localStorage.getItem('user'))
+      Session: JSON.parse(localStorage.getItem('user')),
+      graph1URL: accommodationImage,
+      graph2URL: activityImage
     };
 
-    
+    this.reportServ.SendWeeklyBookingReport(this.global.GetServer(), filterData).subscribe(res => {
+      if (res.Session) {
+        if (res.Success === true) {
+          localStorage.setItem('user', JSON.stringify(res.Session));
+          this.dialog.open(SuccessModalComponent, {
+            data: { successMessage: 'PDF Report successfully sent to Manager!'}
+          });
+        } else {
+          localStorage.setItem('user', JSON.stringify(res.Session));
+          const ref = this.dialog.open(ErrorModalComponent, {
+            data: { errorMessage: 'An error occured, plesse try again' }
+          });
+        }
+      } else {
+        const ref = this.dialog.open(ErrorModalComponent, {
+          data: { errorMessage: 'Session Timeout, Login Again!' }
+        });
+        this.router.navigateByUrl('Login');
+      }
+    });
   }
 }
