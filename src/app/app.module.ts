@@ -406,6 +406,8 @@ import { HelpComponent } from './subcomponents/help/help.component';
 import { SearchClientForWCComponent } from './pages/Purchase Wildcard/search-client-for-wc/search-client-for-wc.component';;
 import { PurchaseWildcardComponent } from './modals/purchase-wildcard/purchase-wildcard.component';
 import { UnsuccessfulWCPurchaseComponent } from './pages/Purchase Wildcard/unsuccessful-wcpurchase/unsuccessful-wcpurchase.component';
+import { ItineraryComponent } from './pages/itinerary/itinerary.component';
+import { RefundReportComponent } from './pages/reports/refund-report/refund-report.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -797,7 +799,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     HelpComponent,
     SearchClientForWCComponent,
     PurchaseWildcardComponent,
-    UnsuccessfulWCPurchaseComponent
+    UnsuccessfulWCPurchaseComponent,
+    ItineraryComponent,
+    RefundReportComponent
   ],
   entryComponents: [
     AddParkComponent,

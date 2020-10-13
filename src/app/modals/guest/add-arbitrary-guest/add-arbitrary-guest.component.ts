@@ -50,15 +50,19 @@ export class AddArbitraryGuestComponent implements OnInit {
   }
 
   validateGuestDOB(ID: string): boolean {
+
+    // tslint:disable-next-line: no-construct
+    const newID = new String(ID);
+    console.log(newID.substring(0, 2));
     let year = '';
-    if (Number(ID.substring(0, 2)) < 10) {
-      year = `20${ID.substring(0, 2)}`;
+    if (Number(newID.substring(0, 2)) < 10) {
+      year = `20${newID.substring(0, 2)}`;
     } else {
-      year = `19${ID.substring(0, 2)}`;
+      year = `19${newID.substring(0, 2)}`;
     }
 
-    const month = ID.substring(2, 4);
-    const day = ID.substring(4, 6);
+    const month = newID.substring(2, 4);
+    const day = newID.substring(4, 6);
     if (Number(day) <= 31 && Number(month) <= 12 && Number(year) < new Date().getFullYear()) {
       return true;
     } else {
@@ -69,8 +73,10 @@ export class AddArbitraryGuestComponent implements OnInit {
     // do stuff
     if (this.guestInfo.valid) {
       if (this.guestInfo.get('CountryID').value === 1) {
-        const code: string = this.guestInfo.get('GuestIDCode').value;
-        console.log(this.validateGuestDOB(this.guestInfo.get('GuestIDCode').value));
+        // tslint:disable-next-line: ban-types
+        const code: String = this.guestInfo.get('GuestIDCode').value;
+        console.log(this.guestInfo.get('GuestIDCode').value,
+         this.guestInfo.get('GuestIDCode').value.length);
         if (code.length === 13 && this.validateGuestDOB(this.guestInfo.get('GuestIDCode').value)) {
           console.log(this.guestInfo.value);
           this.snack.open('Successfuly added Guest', 'Okay', {
@@ -78,7 +84,7 @@ export class AddArbitraryGuestComponent implements OnInit {
             verticalPosition: 'bottom',
             duration: 500
           });
-          this.close(this.guestInfo.value);
+          this.close({success: true, guest: this.guestInfo.value});
 
         } else {
           this.httpError = true;

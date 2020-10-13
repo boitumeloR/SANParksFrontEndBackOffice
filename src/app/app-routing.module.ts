@@ -50,6 +50,7 @@ import { ForgotPasswordComponent } from './subcomponents/login/forgot-password/f
 import { ResetPasswordComponent } from './subcomponents/login/reset-password/reset-password.component';
 import { ActiveDatesComponent } from './modals/settings/active-dates/active-dates.component';
 import { UserTimeOutComponent } from './modals/settings/user-time-out/user-time-out.component';
+import { ItineraryComponent } from './pages/itinerary/itinerary.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -250,6 +251,10 @@ const routes: Routes = [
   {
     path: 'Search-Wildcard-Membership',
     component: SearchWildcardMembershipComponent
+  },
+  {
+    path: 'itinerary',
+    component: ItineraryComponent
   }
 ];
 
