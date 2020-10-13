@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AvailabilityService } from 'src/app/services/Available/availability.service';
 import { DayVisitBooking, Booking } from 'src/app/services/Booking/booking.service';
@@ -39,13 +39,15 @@ export class AddDayvisitComponent implements OnInit {
   loader = false;
 
   constructor(private dialogRef: MatDialogRef<AddDayvisitComponent>, private formBuilder: FormBuilder, private dialog: MatDialog,
-              private serv: AvailabilityService, private global: GlobalService, private router: Router) {
+              private serv: AvailabilityService, private global: GlobalService, private router: Router,
+              @Inject(MAT_DIALOG_DATA) private data: any) {
     const Dates = JSON.parse(localStorage.getItem('Dates'));
     this.minDate = this.parseDate(Dates[0].Date);
     this.maxDate = this.parseDate(Dates[Dates.length - 1].Date);
    }
 
   ngOnInit(): void {
+    this.initialData = this.data.dayData;
     console.log(this.initialData);
     const Dates = JSON.parse(localStorage.getItem('Dates'));
     console.log(this.minDate, this.maxDate);
@@ -145,6 +147,8 @@ export class AddDayvisitComponent implements OnInit {
         adult.afterClosed().subscribe((result) => {
           if (result.success) {
             this.bookingGuests.push(result.guest);
+
+            console.log(this.bookingGuests);
           }
         });
       }

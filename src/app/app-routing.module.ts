@@ -50,6 +50,9 @@ import { ForgotPasswordComponent } from './subcomponents/login/forgot-password/f
 import { ResetPasswordComponent } from './subcomponents/login/reset-password/reset-password.component';
 import { ActiveDatesComponent } from './modals/settings/active-dates/active-dates.component';
 import { UserTimeOutComponent } from './modals/settings/user-time-out/user-time-out.component';
+import { ItineraryComponent } from './pages/itinerary/itinerary.component';
+import { RefundReportComponent } from './pages/reports/refund-report/refund-report.component';
+import { PaymentReportComponent } from './pages/reports/payment-report/payment-report.component';
 import { DashBoardHomeComponent } from './subcomponents/dash-board-home/dash-board-home.component';
 const routes: Routes = [
   {
@@ -255,6 +258,18 @@ const routes: Routes = [
   {
     path: 'Search-Wildcard-Membership',
     component: SearchWildcardMembershipComponent
+  },
+  {
+    path: 'itinerary',
+    component: ItineraryComponent
+  },
+  {
+    path: 'refundReport',
+    component: RefundReportComponent
+  },
+  {
+    path: 'paymentReport',
+    component: PaymentReportComponent
   }
 ];
 

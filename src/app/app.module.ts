@@ -406,6 +406,9 @@ import { HelpComponent } from './subcomponents/help/help.component';
 import { SearchClientForWCComponent } from './pages/Purchase Wildcard/search-client-for-wc/search-client-for-wc.component';;
 import { PurchaseWildcardComponent } from './modals/purchase-wildcard/purchase-wildcard.component';
 import { UnsuccessfulWCPurchaseComponent } from './pages/Purchase Wildcard/unsuccessful-wcpurchase/unsuccessful-wcpurchase.component';
+import { ItineraryComponent } from './pages/itinerary/itinerary.component';
+import { RefundReportComponent } from './pages/reports/refund-report/refund-report.component';
+import { PaymentReportComponent } from './pages/reports/payment-report/payment-report.component';
 import { DashBoardHomeComponent } from './subcomponents/dash-board-home/dash-board-home.component';
 import { ParkaddedComponent } from './workflows/parkadded/parkadded.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -815,6 +818,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     SearchClientForWCComponent,
     PurchaseWildcardComponent,
     UnsuccessfulWCPurchaseComponent,
+    ItineraryComponent,
+    RefundReportComponent,
+    PaymentReportComponent
     DashBoardHomeComponent,
     ParkaddedComponent,
     ParkgateaddedComponent,
