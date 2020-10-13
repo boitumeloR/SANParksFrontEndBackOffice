@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {GlobalService} from 'src/app/services/Global/global.service';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCampTypeSuccessfulComponent} from 'src/app/modals/camp-type/add-camp-type-successful/add-camp-type-successful.component';
 import { AddCampTypeUnsuccessfulComponent} from 'src/app/modals/camp-type/add-camp-type-unsuccessful/add-camp-type-unsuccessful.component';
@@ -11,9 +9,10 @@ import { UpdateCampTypeUnsuccessfulComponent} from 'src/app/modals/camp-type/upd
 import { DeleteCampTypeSuccessfulComponent} from 'src/app/modals/camp-type/delete-camp-type-successful/delete-camp-type-successful.component';
 import { DeleteCampTypeUnsuccessfulComponent} from 'src/app/modals/camp-type/delete-camp-type-unsuccessful/delete-camp-type-unsuccessful.component';
 import { Router } from '@angular/router';
-
-
-
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import {CamptypeaddedComponent} from 'src/app/workflows/camptypeadded/camptypeadded.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface CampType {
   CampTypeID: number;
   CampTypeDescription: string;
@@ -29,14 +28,22 @@ export interface CampTypeDropDown {
   providedIn: 'root'
 })
 export class CampTypeService {
-  constructor(private global: GlobalService, private http: HttpClient, private dialog: MatDialog, private router: Router) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router,
+              private bottomSheet: MatBottomSheet, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
   }
 
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
+
   CreateCampType(CampType, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/CampType/CreateCampType`, CampType).subscribe((addResult: any) => {
       if (addResult.Error){
        localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -51,7 +58,16 @@ export class CampTypeService {
        localStorage.setItem('user', JSON.stringify(addResult.user));
        const addCampTypeSuccessfulDialog = this.dialog.open(AddCampTypeSuccessfulComponent);
        this.refresh.next();
+
+       addCampTypeSuccessfulDialog.afterClosed().subscribe(() => {
+        const parkFlowSheet =  this.bottomSheet.open(CamptypeaddedComponent);
+       });
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 
@@ -61,6 +77,7 @@ export class CampTypeService {
   }
 
   UpdateCampType(CampType, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/CampType/UpdateCampType`, CampType).subscribe((UpdateResult: any) => {
       if (UpdateResult.Error){
        localStorage.setItem('user', JSON.stringify(UpdateResult.user));
@@ -76,10 +93,16 @@ export class CampTypeService {
        const updateCampTypeSuccessfulDialog = this.dialog.open(UpdateCampTypeSuccessfulComponent);
        this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 
   DeleteCampType(user, CampTypeID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/CampType/DeleteCampType?campTypeID=${CampTypeID}`, user).subscribe((deleteResult: any) => {
       if (deleteResult.Error){
         localStorage.setItem('user', JSON.stringify(deleteResult.user));
@@ -95,6 +118,11 @@ export class CampTypeService {
         const deleteCampTypeSuccessfulDialog = this.dialog.open(DeleteCampTypeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 }

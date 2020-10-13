@@ -7,7 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { AmenityService } from 'src/app/services/Amenity/amenity.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-amenity',
   templateUrl: './amenity.component.html',
@@ -21,7 +23,7 @@ export class AmenityComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private dialog: MatDialog, private amenityService: AmenityService, private globalService: GlobalService,
-              private router: Router) { }
+              private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.amenityService.requestReferesh.subscribe(() => {this.getAmenity(); });
@@ -42,16 +44,21 @@ export class AmenityComponent implements OnInit {
   }
 
   getAmenity(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.amenityService.readAmenity(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
-        this.dataSource = new MatTableDataSource(result.Amenities);
-        this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
+      this.dataSource = new MatTableDataSource(result.Amenities);
+      this.dataSource.paginator = this.paginator;
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+ }
 }

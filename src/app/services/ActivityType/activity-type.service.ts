@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
@@ -10,9 +10,11 @@ import {DeleteActivityTypeSuccessfulComponent} from 'src/app/modals/activity-typ
 import {DeleteActivityTypeUnsuccessfulComponent} from 'src/app/modals/activity-type/delete-activity-type-unsuccessful/delete-activity-type-unsuccessful.component';
 import {UpdateActivityTypeSuccessfulComponent} from 'src/app/modals/activity-type/update-activity-type-successful/update-activity-type-successful.component';
 import {UpdateActivityTypeUnsuccessfulComponent} from 'src/app/modals/activity-type/update-activity-type-unsuccessful/update-activity-type-unsuccessful.component';
-import { SecurityContext } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
-
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ActivityTypeAddedComponent} from 'src/app/workflows/activity-type-added/activity-type-added.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface ActivityType{
   ActivityTypeID: number;
   ActivityTypeDescription: string;
@@ -29,14 +31,21 @@ export interface ActivityTypeDropDown{
 })
 export class ActivityTypeService {
   constructor(private globalService: GlobalService , private http: HttpClient, private dialog: MatDialog,
-              private router: Router) { }
+              private router: Router, private bottomSheet: MatBottomSheet, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
   }
 
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
+
   createActivityType(ActivityType, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/activityType/createActivityType`, ActivityType).subscribe((addResult: any) => {
       if (addResult.Error){
        localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -51,7 +60,16 @@ export class ActivityTypeService {
        localStorage.setItem('user', JSON.stringify(addResult.user));
        const addActivityTypeSuccessfulDialog = this.dialog.open(AddActivityTypeSuccessfulComponent);
        this.refresh.next();
+
+       addActivityTypeSuccessfulDialog.afterClosed().subscribe(() => {
+        const parkFlowSheet =  this.bottomSheet.open(ActivityTypeAddedComponent);
+       });
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
   readActivityType(link){
@@ -59,6 +77,7 @@ export class ActivityTypeService {
     return this.http.post(`${link}/api/activityType/getActivityType`, user);
   }
   updateActivityType(updatedActivityType, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/activityType/updateActivityType`, updatedActivityType).subscribe((updateResult: any) => {
       if (updateResult.Error){
        localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -74,9 +93,15 @@ export class ActivityTypeService {
        const updateActivityTypeSuccessfulDialog = this.dialog.open(UpdateActivityTypeSuccessfulComponent);
        this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
   deleteActivityType(user, ActivityTypeID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/activityType/deleteActivityType?activityTypeID=${ActivityTypeID}`, user).
     subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -93,7 +118,11 @@ export class ActivityTypeService {
         const deleteActivityTypeSuccessfulDialog = this.dialog.open(DeleteActivityTypeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
-
 }

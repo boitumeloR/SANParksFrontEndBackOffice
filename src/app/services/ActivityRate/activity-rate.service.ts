@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {AddActivityRateSuccessfulComponent} from 'src/app/modals/activity-rate/add-activity-rate-successful/add-activity-rate-successful.component';
 import {AddActivityRateUnsuccessfulComponent} from 'src/app/modals/activity-rate/add-activity-rate-unsuccessful/add-activity-rate-unsuccessful.component';
 import { UpdateActivityRateSuccessfulComponent} from 'src/app/modals/activity-rate/update-activity-rate-successful/update-activity-rate-successful.component';
@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface ActivityRate{
   ActivityRateID: number;
   ActivityID: number;
@@ -39,8 +40,13 @@ export class ActivityRateService {
   get requestReferesh(){
     return this.refresh;
   }
-
+  serverDownSnack() {
+    this.rateForYear.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
   createActivityRate(ActivityRate, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/activityRate/createActivityRate`, ActivityRate).subscribe((addResult: any) => {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -61,6 +67,11 @@ export class ActivityRateService {
         const addActivityRateSuccessfulDialog = this.dialog.open(AddActivityRateSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
   rateExistsError(year) {
@@ -73,6 +84,7 @@ export class ActivityRateService {
     return this.http.post(`${link}/api/activityRate/getActivityRate`, user);
   }
   updateActivityRate(updatedActivityRate, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/activityRate/updateActivityRate`, updatedActivityRate).subscribe((updateResult: any) => {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -93,9 +105,15 @@ export class ActivityRateService {
         const updateActivityRateSuccessfulDialog = this.dialog.open(UpdateActivityRateSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
   deleteActivityRate(user, ActivityRateID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/activityRate/deleteActivityRate?activityRateID=${ActivityRateID}`, user).
     subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -112,6 +130,11 @@ export class ActivityRateService {
         const deleteActivityRateSuccessfulDialog = this.dialog.open(DeleteActivityRateSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
   readRateTypes(link){

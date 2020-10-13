@@ -7,7 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { WildcardRateService } from 'src/app/services/WildcardRate/wildcard-rate.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-wildcard-rate',
   templateUrl: './wildcard-rate.component.html',
@@ -16,7 +18,7 @@ import { Router } from '@angular/router';
 export class WildcardRateComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private wildcardRateService: WildcardRateService,
-              private globalService: GlobalService, private router: Router) { }
+              private globalService: GlobalService, private router: Router, private snackbar: MatSnackBar) { }
 
   displayedColumns: string[] = ['clusterName', 'categoryName', 'dateEffective', 'endDate', 'view'];
   dataSource;
@@ -26,6 +28,12 @@ export class WildcardRateComponent implements OnInit {
   ngOnInit(): void {
     this.wildcardRateService.requestReferesh.subscribe(() => {this.getWildcardRate(); });
     this.getWildcardRate();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -42,16 +50,16 @@ export class WildcardRateComponent implements OnInit {
   }
 
   getWildcardRate(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.wildcardRateService.ReadWildcardRate(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
         this.dataSource = new MatTableDataSource(result.WildcardRates);
         this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
-    });
+        displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
+    }
+  );
   }
 }

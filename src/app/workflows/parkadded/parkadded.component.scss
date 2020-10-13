@@ -1,0 +1,23 @@
+.bottom-sheet {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    background-color: #009900;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+}
+.bottom-sheet div {
+    flex: 1;
+    color: white;
+    display: inline-block;
+}
+
+button.change {
+    color: white !important;
+}
+
+#alignCloseRight{
+    float: right;
+    margin-bottom: 10px;
+}

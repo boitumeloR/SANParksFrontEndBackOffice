@@ -7,6 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { ActivityTypeService } from 'src/app/services/ActivityType/activity-type.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-activity-type',
@@ -20,7 +23,7 @@ export class ActivityTypeComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private activityTypeService: ActivityTypeService, private globalService: GlobalService,
-              private router: Router) { }
+              private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.activityTypeService.requestReferesh.subscribe(() => {this.getActivityTypes(); });
@@ -41,16 +44,22 @@ export class ActivityTypeComponent implements OnInit {
   }
 
   getActivityTypes(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.activityTypeService.readActivityType(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
       this.dataSource = new MatTableDataSource(result.ActivityTypes);
       this.dataSource.paginator = this.paginator;
-      localStorage.setItem('user', JSON.stringify(result.user));
-      }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
+    }
+    );
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
     });
   }
 }

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {GlobalService} from '../Global/global.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
-import { tap, delay } from 'rxjs/operators';
 import {AddAmenityTypeSuccessfulComponent} from 'src/app/modals/amenity-type/add-amenity-type-successful/add-amenity-type-successful.component';
 import {AddAmenityTypeUnsuccessfulComponent} from 'src/app/modals/amenity-type/add-amenity-type-unsuccessful/add-amenity-type-unsuccessful.component';
 import {DeleteAmenityTypeSuccessfulComponent} from 'src/app/modals/amenity-type/delete-amenity-type-successful/delete-amenity-type-successful.component';
@@ -12,8 +11,10 @@ import {UpdateAmenityTypeSuccessfulComponent} from 'src/app/modals/amenity-type/
 import {UpdateAmenityTypeUnsuccessfulComponent} from 'src/app/modals/amenity-type/update-amenity-type-unsuccessful/update-amenity-type-unsuccessful.component';
 import { Router } from '@angular/router';
 import { LoginService } from '../Login/login.service';
-
-
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { AmenitytypeaddedComponent} from 'src/app/workflows/amenitytypeadded/amenitytypeadded.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface AmenityType{
   AmenityTypeID: number;
   AmenityTypeName: string;
@@ -29,14 +30,20 @@ export interface AmenityTypeDropDown{
 })
 export class AmenityTypeService {
   constructor(private global: GlobalService , private router: Router, private http: HttpClient, private dialog: MatDialog,
-              private loginService: LoginService) { }
+              private loginService: LoginService, private bottomSheet: MatBottomSheet, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
   }
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
 
   createAmenityType(AmenityType, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/amenityType/createAmenityType`, AmenityType).subscribe((addResult: any) => {
       if (addResult.Error){
        localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -51,7 +58,16 @@ export class AmenityTypeService {
         localStorage.setItem('user', JSON.stringify(addResult.user));
         const addAmenityTypeSuccessfulDialog = this.dialog.open(AddAmenityTypeSuccessfulComponent);
         this.refresh.next();
+
+        addAmenityTypeSuccessfulDialog.afterClosed().subscribe(() => {
+          const parkFlowSheet =  this.bottomSheet.open(AmenitytypeaddedComponent);
+         });
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 
@@ -61,6 +77,7 @@ export class AmenityTypeService {
   }
 
   updateAmenityType(updatedAmenityType, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/amenityType/updateAmenityType`, updatedAmenityType).subscribe((updateResult: any) => {
       if (updateResult.Error){
        localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -76,10 +93,16 @@ export class AmenityTypeService {
         const updateAmenityTypeSuccessfulDialog = this.dialog.open(UpdateAmenityTypeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 
   deleteAmenityType(user, AmenityTypeID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/amenityType/deleteAmenityType?amenityTypeID=${AmenityTypeID}`, user).
     subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -96,7 +119,11 @@ export class AmenityTypeService {
         const deleteAmenityTypeSuccessfulDialog = this.dialog.open(DeleteAmenityTypeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
-
   }
 }

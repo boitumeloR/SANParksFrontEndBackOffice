@@ -7,7 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { CampType, CampTypeService } from 'src/app/services/CampType/camp-type.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-camp-type',
   templateUrl: './camp-type.component.html',
@@ -20,11 +22,17 @@ export class CampTypeComponent implements OnInit {
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private campTypeService: CampTypeService, private globalService: GlobalService,
-              private router: Router) { }
+              private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.campTypeService.requestReferesh.subscribe(() => {this.getCampType(); });
     this.getCampType();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -41,17 +49,17 @@ export class CampTypeComponent implements OnInit {
   }
 
   getCampType(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.campTypeService.ReadCampType(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
-        this.dataSource = new MatTableDataSource(result.CampTypes);
-        this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
-    });
+      this.dataSource = new MatTableDataSource(result.CampTypes);
+      this.dataSource.paginator = this.paginator;
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
+    }
+);
   }
 
 }

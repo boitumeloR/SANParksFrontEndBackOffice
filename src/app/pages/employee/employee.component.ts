@@ -7,6 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { EmployeeService } from 'src/app/services/Employee/employee.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-employee',
@@ -16,7 +19,8 @@ import { Router } from '@angular/router';
 export class EmployeeComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private router: Router,
-              private employeeService: EmployeeService, private globalService: GlobalService) { }
+              private employeeService: EmployeeService, private globalService: GlobalService,
+              private snackbar: MatSnackBar) { }
 
   displayedColumns: string[] = ['park', 'employeeName', 'identityNumber', 'view'];
   dataSource;
@@ -26,6 +30,12 @@ export class EmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.employeeService.requestReferesh.subscribe(() => {this.getEmployee(); });
     this.getEmployee();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -42,6 +52,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   getEmployee(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     const user = JSON.parse(localStorage.getItem('user'));
 
     const employee = {
@@ -50,15 +61,14 @@ export class EmployeeComponent implements OnInit {
     };
 
     this.employeeService.ReadEmployee(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
-        this.dataSource = new MatTableDataSource(result.Employees);
-        this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
-    });
+      this.dataSource = new MatTableDataSource(result.Employees);
+      this.dataSource.paginator = this.paginator;
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
+    }
+    );
   }
 }

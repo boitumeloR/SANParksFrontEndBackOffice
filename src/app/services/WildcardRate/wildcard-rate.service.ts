@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {DecimalPipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { DeleteWildcardRateUnsuccessfulComponent } from 'src/app/modals/wildcard
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface WildcardRate {
   WildcardRateID: number;
   WildcardClusterID: number;
@@ -34,7 +34,14 @@ export class WildcardRateService {
     return this.refresh;
   }
 
+  serverDownSnack() {
+    this.rateForYear.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
+
   CreateWildcardRate(WildcardRate, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/wildcardRate/createWildcardRate`, WildcardRate).subscribe((addResult: any) => {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -55,6 +62,11 @@ export class WildcardRateService {
         const addWildcardRateSuccessfulDialog = this.dialog.open(AddWildcardRateSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 
@@ -70,6 +82,7 @@ export class WildcardRateService {
   }
 
   UpdateWildcardRate(WildcardRate, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/wildcardRate/updateWildcardRate`, WildcardRate).subscribe((updateResult: any) => {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -90,10 +103,16 @@ export class WildcardRateService {
         const updateWildcardRateSuccessfulDialog = this.dialog.open(UpdateWildcardRateSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 
   DeleteWildcardRate(user, WildcardRateID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/wildcardRate/deleteWildcardRate?wildcardRateID=${WildcardRateID}`, user)
     .subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -110,6 +129,11 @@ export class WildcardRateService {
         const deleteWildcardRateSuccessfulDialog = this.dialog.open(DeleteWildcardRateSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 }

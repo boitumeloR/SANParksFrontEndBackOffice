@@ -7,7 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { AmenityPenaltyService } from 'src/app/services/AmenityPenalty/amenity-penalty.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-amenity-penalty',
   templateUrl: './amenity-penalty.component.html',
@@ -21,11 +23,17 @@ export class AmenityPenaltyComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private amenityPenaltyService: AmenityPenaltyService,
-              private globalService: GlobalService, private router: Router) { }
+              private globalService: GlobalService, private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.amenityPenaltyService.requestReferesh.subscribe(() => this.getAmenityPenalty());
     this.getAmenityPenalty();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -42,16 +50,15 @@ export class AmenityPenaltyComponent implements OnInit {
   }
 
   getAmenityPenalty(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.amenityPenaltyService.readAmenityPenalty(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
-        this.dataSource = new MatTableDataSource(result.AmenityPenalties);
-        this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
+      this.dataSource = new MatTableDataSource(result.AmenityPenalties);
+      this.dataSource.paginator = this.paginator;
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 }

@@ -44,8 +44,8 @@ export class UpdateActivityRateComponent implements OnInit {
     });
 
     this.activityRateDetails = this.formBuilder.group({
-      rateType: [this.actvivityRate.RateTypeID, Validators.required],      
-      personAmount : [this.actvivityRate.PersonAmount, [Validators.required, Validators.min(0)]],     
+      rateType: [this.actvivityRate.RateTypeID, Validators.required],
+      personAmount : [this.actvivityRate.PersonAmount, [Validators.required, Validators.min(0)]],
       dateEffective : [this.actvivityRate.yearActive, Validators.required]
     });
   }

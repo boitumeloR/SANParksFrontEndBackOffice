@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,7 +10,8 @@ import {UpdateAccomodationBaseRateUnsuccessfulComponent} from 'src/app/modals/ac
 import {DeleteAccomodationBaseRateSuccessfulComponent} from 'src/app/modals/accomodation-base-rate/delete-accomodation-base-rate-successful/delete-accomodation-base-rate-successful.component';
 import {DeleteAccomodationBaseRateUnsuccessfulComponent} from 'src/app/modals/accomodation-base-rate/delete-accomodation-base-rate-unsuccessful/delete-accomodation-base-rate-unsuccessful.component';
 import { Router } from '@angular/router';
-
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface AccommodationTypeBaseRate{
   BaseRateID: number;
   AccomodationTypeID: number;
@@ -26,15 +27,20 @@ export interface AccommodationTypeBaseRate{
 export class AccommBaseRateService {
 
   constructor(private dialog: MatDialog, private http: HttpClient,
-              private router: Router ) { }
+              private router: Router, private snackbar: MatSnackBar ) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
   }
-
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
 
   createAccommodationTypeBaseRate(AccommodationTypeBaseRate, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/AccommodationBaseRate/createBaseRate`, AccommodationTypeBaseRate).subscribe((addResult: any) => {
       if (addResult.Error){
         const addAccomodationBaseRateUnsuccessfulDialog = this.dialog.open(AddAccomodationBaseRateUnsuccessfulComponent);
@@ -50,13 +56,19 @@ export class AccommBaseRateService {
         localStorage.setItem('user', JSON.stringify(addResult.user));
         this.refresh.next();
       }
-    });
-  }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
+  });
+}
   readAccommodationTypeBaseRate(link){
     const user = JSON.parse(localStorage.getItem('user'));
     return this.http.post(`${link}/api/AccommodationBaseRate/getBaseRate`, user);
   }
   updateAccommodationTypeBaseRate(updatedAccommodationTypeBaseRate, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/AccommodationBaseRate/updateBaseRate`, updatedAccommodationTypeBaseRate)
     .subscribe((updateResult: any) => {
       if (updateResult.Error){
@@ -73,9 +85,15 @@ export class AccommBaseRateService {
         localStorage.setItem('user', JSON.stringify(updateResult.user));
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
-  deleteAccommodationTypeBaseRate(user, BaseRateID, link){
+  deleteAccommodationTypeBaseRate(user, BaseRateID, link){    
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/AccommodationBaseRate/deleteBaseRate?baseRateID=${BaseRateID}`, user)
     .subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -92,6 +110,11 @@ export class AccommBaseRateService {
         localStorage.setItem('user', JSON.stringify(deleteResult.user));
         this.refresh.next();
       }
-    });
+      displaySpinner.close();
+    },
+  (error: HttpErrorResponse) => {
+    displaySpinner.close();
+    this.serverDownSnack();
+  });
   }
 }

@@ -26,7 +26,6 @@ export class AddParkGateComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
         this.parkDropDown = result.Parks;
-        localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.addParkGateForm = this.formBuilder.group({

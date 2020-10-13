@@ -1,17 +1,24 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatDialog } from '@angular/material/dialog';
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
 
-  constructor(private http: HttpClient, private rateForYear: MatSnackBar, private router: Router) { }
+  constructor(private http: HttpClient, private rateForYear: MatSnackBar, private router: Router,
+              private dialog: MatDialog, private snackbar: MatSnackBar) { }
 
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
   CreateActiveDate(Date, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/settings/createActiveDates`, Date).subscribe((addResult: any) => {
       if (addResult.Error){
         this.errorSnack();
@@ -19,6 +26,11 @@ export class SettingsService {
       else{
         this.successsSnack();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 
@@ -35,6 +47,7 @@ export class SettingsService {
   }
 
   createSessionExpiry(SessionExpry, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/settings/setSessionTimeOut`, SessionExpry).subscribe((addResult: any) => {
       if (addResult.Error){
         this.errorSnack();
@@ -42,6 +55,11 @@ export class SettingsService {
       else{
         this.successsSnackSession();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
   successsSnackSession() {

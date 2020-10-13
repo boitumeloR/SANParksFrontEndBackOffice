@@ -34,11 +34,9 @@ export class AddAccomodationBaseRateComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-      localStorage.setItem('user', JSON.stringify(result.user));
 
       this.seasonService.ReadSeason(this.globalService.GetServer()).subscribe((seasonResult: any) => {
         this.seasonDropDown = seasonResult.Seasons;
-        localStorage.setItem('user', JSON.stringify(seasonResult.user));
       });
     });
 

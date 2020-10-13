@@ -7,7 +7,9 @@ import { ViewAccomodationTypeComponent } from 'src/app/modals/accomodation-type/
 import { AccommodationTypeService } from 'src/app/services/AccommodationType/accommodation-type.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-accomodation-type',
   templateUrl: './accomodation-type.component.html',
@@ -20,7 +22,7 @@ export class AccomodationTypeComponent implements OnInit {
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private accommodationTypeService: AccommodationTypeService,
-              private globalService: GlobalService, private router: Router) { }
+              private globalService: GlobalService, private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.accommodationTypeService.requestReferesh.subscribe(() => this.getAccommodationTypes());
@@ -41,16 +43,21 @@ export class AccomodationTypeComponent implements OnInit {
   }
 
   getAccommodationTypes(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.accommodationTypeService.readAccommodationType(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
       this.dataSource = new MatTableDataSource(result.AccommodationTypes);
       this.dataSource.paginator = this.paginator;
-      localStorage.setItem('user', JSON.stringify(result.user));
-      }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+ }
 }

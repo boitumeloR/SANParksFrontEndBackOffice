@@ -7,7 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { WildcardCategoryService } from 'src/app/services/WildcardCategory/wildcard-category.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-wildcard-category',
   templateUrl: './wildcard-category.component.html',
@@ -20,11 +22,17 @@ export class WildcardCategoryComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private wildcardCategoryService: WildcardCategoryService, private globalService: GlobalService,
-              private router: Router) { }
+              private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.wildcardCategoryService.requestReferesh.subscribe(() => {this.getWildcardCategory(); });
     this.getWildcardCategory();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -40,16 +48,16 @@ export class WildcardCategoryComponent implements OnInit {
     const viewWildcardCategoryDialog = this.dialog.open(ViewWildcardCategoryComponent);
   }
   getWildcardCategory(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.wildcardCategoryService.ReadWildcardCategory(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
         this.dataSource = new MatTableDataSource(result.WildcardCategories);
         this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
-    });
+        displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
+    }
+  );
   }
 }

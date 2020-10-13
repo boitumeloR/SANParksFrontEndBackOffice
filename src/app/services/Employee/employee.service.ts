@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {AddEmployeeSuccessfulComponent} from 'src/app/modals/employee/add-employee-successful/add-employee-successful.component';
 import {AddEmployeeUnsuccessfulComponent} from 'src/app/modals/employee/add-employee-unsuccessful/add-employee-unsuccessful.component';
 import {UpdateEmployeeSuccessfulComponent} from 'src/app/modals/employee/update-employee-successful/update-employee-successful.component';
 import {UpdateEmployeeUnsuccessfulComponent} from 'src/app/modals/employee/update-employee-unsuccessful/update-employee-unsuccessful.component';
 import { Subject } from 'rxjs';
-import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import {SuccessfulProfileUpdateComponent} from 'src/app/modals/employee/successful-profile-update/successful-profile-update.component';
 import {UnsuccessfulProfileUpdateComponent} from 'src/app/modals/employee/unsuccessful-profile-update/unsuccessful-profile-update.component';
-
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface Employee {
   EmployeeID: number;
   EmployeeStatusID: number;
@@ -32,14 +32,21 @@ export interface Employee {
   providedIn: 'root'
 })
 export class EmployeeService {
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
   }
 
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
+
   CreateEmployee(Employee, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/employee/createEmployee`, Employee).subscribe((addResult: any) => {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -55,6 +62,11 @@ export class EmployeeService {
         const addEmployeeSuccessfulDialog = this.dialog.open(AddEmployeeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 
@@ -64,6 +76,7 @@ export class EmployeeService {
   }
 
   UpdateEmployee(Employee, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/employee/updateEmployee`, Employee).subscribe((updateResult: any) => {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -79,6 +92,11 @@ export class EmployeeService {
         const updateEmployeeSuccessfulDialog = this.dialog.open(UpdateEmployeeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 
@@ -96,6 +114,7 @@ export class EmployeeService {
   }
 
   updateProfile(Employee, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/employee/updateEmployeeProfile`, Employee).subscribe((updateResult: any) => {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -111,6 +130,11 @@ export class EmployeeService {
         const updateEmployeeSuccessfulDialog = this.dialog.open(SuccessfulProfileUpdateComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 }

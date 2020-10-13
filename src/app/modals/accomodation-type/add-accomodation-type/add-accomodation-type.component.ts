@@ -31,7 +31,6 @@ export class AddAccomodationTypeComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkWithCamps = result.Parks;
-      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.basicAccomodationTypeDetails = this.formBuilder.group({

@@ -1,9 +1,7 @@
-import { Injectable, DefaultIterableDiffer } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {GlobalService} from '../Global/global.service';
+import { Injectable } from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { DateRange } from '@fullcalendar/core';
 import { Subject } from 'rxjs';
-import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import {AddCampGateTimeSuccessfulComponent} from 'src/app/modals/camp-gate-time/add-camp-gate-time-successful/add-camp-gate-time-successful.component';
 import {AddCampGateTimeUnsuccessfulComponent} from 'src/app/modals/camp-gate-time/add-camp-gate-time-unsuccessful/add-camp-gate-time-unsuccessful.component';
@@ -12,7 +10,8 @@ import {UpdateCampGateTimeUnsuccessfulComponent} from 'src/app/modals/camp-gate-
 import { DeleteCampGateTimeSuccessfulComponent } from 'src/app/modals/camp-gate-time/delete-camp-gate-time-successful/delete-camp-gate-time-successful.component';
 import { DeleteCampGateTimeUnsuccessfulComponent } from 'src/app/modals/camp-gate-time/delete-camp-gate-time-unsuccessful/delete-camp-gate-time-unsuccessful.component';
 import { Router } from '@angular/router';
-
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface CampGateTime{
   CampGateTimeID: number;
   CampID: number;
@@ -32,14 +31,21 @@ export interface CampGateTime{
 })
 export class CampGateTimeService {
 
-  constructor(private dialog: MatDialog , private http: HttpClient, private router: Router) { }
+  constructor(private dialog: MatDialog , private http: HttpClient, private router: Router, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
   }
 
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
+
   createCampGateTime(CampGateTime, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/campGateTime/createCampGateTime`, CampGateTime).subscribe((addResult: any) => {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -55,6 +61,11 @@ export class CampGateTimeService {
         const addCampGateTimeSuccessfulDialog = this.dialog.open(AddCampGateTimeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
   readCampgateTime(link){
@@ -62,6 +73,7 @@ export class CampGateTimeService {
     return this.http.post(`${link}/api/campGateTime/getCampGateTime`, user);
   }
   updateCampGateTime(updatedCampGateTime, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/campGateTime/updateCampGateTime`, updatedCampGateTime).subscribe((updateResult: any) => {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -77,9 +89,15 @@ export class CampGateTimeService {
         const updateCampGateTimeSuccessfulDialog = this.dialog.open(UpdateCampGateTimeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
   deleteCampGateTime(user, CampGateTimeID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/campGateTime/deleteCampGateTime?campGateTimeID=${CampGateTimeID}`, user).
     subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -96,6 +114,11 @@ export class CampGateTimeService {
         const deleteCampGateTimeSuccessfulDialog = this.dialog.open(DeleteCampGateTimeSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 }

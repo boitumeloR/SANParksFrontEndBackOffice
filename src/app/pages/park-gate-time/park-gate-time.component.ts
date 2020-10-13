@@ -7,7 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { ParkGateTimeService } from 'src/app/services/ParkGateTime/park-gate-time.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-park-gate-time',
   templateUrl: './park-gate-time.component.html',
@@ -17,7 +19,7 @@ export class ParkGateTimeComponent implements OnInit {
   dataSource;
   filter;
   constructor(private dialog: MatDialog, private parkGateTimeService: ParkGateTimeService, private globalService: GlobalService,
-              private router: Router) { }
+              private router: Router, private snackbar: MatSnackBar) { }
 
   displayedColumns: string[] = ['ParkGateName', 'SeasonName', 'view'];
 
@@ -27,6 +29,12 @@ export class ParkGateTimeComponent implements OnInit {
   ngOnInit(): void {
     this.parkGateTimeService.requestReferesh.subscribe(() => {this.getParkGateTime(); });
     this.getParkGateTime();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -43,16 +51,16 @@ export class ParkGateTimeComponent implements OnInit {
   }
 
   getParkGateTime(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.parkGateTimeService.ReadParkGateTime(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
       this.dataSource = new MatTableDataSource(result.ParkGateTime);
       this.dataSource.paginator = this.paginator;
-      localStorage.setItem('user', JSON.stringify(result.user));
-      }
-    });
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
+    }
+);
   }
 }

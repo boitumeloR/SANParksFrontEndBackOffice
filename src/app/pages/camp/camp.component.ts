@@ -7,6 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { CampService } from 'src/app/services/Camp/camp.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-camp',
@@ -20,11 +23,18 @@ export class CampComponent implements OnInit {
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private campService: CampService,
-              private globalService: GlobalService, private router: Router) { }
+              private globalService: GlobalService, private router: Router,
+              private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.campService.requestReferesh.subscribe(() => {this.getCamp(); });
     this.getCamp();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -41,16 +51,15 @@ export class CampComponent implements OnInit {
   }
 
   getCamp(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.campService.readCamp(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
-        this.dataSource = new MatTableDataSource(result.Camps);
-        this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
+      this.dataSource = new MatTableDataSource(result.Camps);
+      this.dataSource.paginator = this.paginator;
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 }

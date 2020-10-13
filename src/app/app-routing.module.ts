@@ -53,10 +53,15 @@ import { UserTimeOutComponent } from './modals/settings/user-time-out/user-time-
 import { ItineraryComponent } from './pages/itinerary/itinerary.component';
 import { RefundReportComponent } from './pages/reports/refund-report/refund-report.component';
 import { PaymentReportComponent } from './pages/reports/payment-report/payment-report.component';
+import { DashBoardHomeComponent } from './subcomponents/dash-board-home/dash-board-home.component';
 const routes: Routes = [
   {
     path: 'Park',
     component: ParkComponent
+  },
+  {
+    path: 'Home',
+    component: DashBoardHomeComponent
   },
   {
     path: 'Active-Dates',

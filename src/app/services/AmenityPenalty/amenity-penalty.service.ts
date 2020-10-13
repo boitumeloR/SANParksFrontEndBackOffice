@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { tap} from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { DeleteAmenityPenaltySuccessfulComponent } from 'src/app/modals/amenity-
 import { DeleteAmenityPenaltyUnsuccessfulComponent } from 'src/app/modals/amenity-penalty/delete-amenity-penalty-unsuccessful/delete-amenity-penalty-unsuccessful.component';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 export interface AmenityPenalty{
   PenaltyID: number;
   AmenityID: number;
@@ -38,7 +38,14 @@ export class AmenityPenaltyService {
   constructor(private dialog: MatDialog , private http: HttpClient,
               private router: Router, private rateForYear: MatSnackBar) { }
 
+  serverDownSnack() {
+    this.rateForYear.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
+
   createAmenityPenalty(AmenityPenalty, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/amenityPenalty/createAmenityPenalty`, AmenityPenalty).subscribe((addResult: any) => {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -59,6 +66,11 @@ export class AmenityPenaltyService {
         const addAmenityPenaltySuccessfulDialog = this.dialog.open(AddAmenityPenaltySuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
   rateExistsError(year) {
@@ -71,6 +83,7 @@ export class AmenityPenaltyService {
     return this.http.post(`${link}/api/amenityPenalty/getAmenityPenalty`, user);
   }
   updateAmenityPenalty(updatedAmenityPenalty, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/amenityPenalty/updateAmenityPenalty`, updatedAmenityPenalty).subscribe((updateResult: any) => {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -91,9 +104,15 @@ export class AmenityPenaltyService {
         const updateAmenityPenaltySuccessfulDialog = this.dialog.open(UpdateAmenityPenaltySuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
   deleteAmenityPenalty(user, PenaltyID, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/amenityPenalty/deleteAmenityPenalty?amenityPenaltyID=${PenaltyID}`, user).
     subscribe((deleteResult: any) => {
       if (deleteResult.Error){
@@ -110,7 +129,11 @@ export class AmenityPenaltyService {
         const deleteAmenityPenaltySuccessfulDialog = this.dialog.open(DeleteAmenityPenaltySuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
-
 }

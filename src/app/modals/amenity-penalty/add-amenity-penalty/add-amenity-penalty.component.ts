@@ -47,7 +47,6 @@ export class AddAmenityPenaltyComponent implements OnInit {
 
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-      localStorage.setItem('user', JSON.stringify(result.user));
     });
 
     this.amenityLocation = this.formBuilder.group({

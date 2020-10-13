@@ -21,6 +21,8 @@ export class HeaderComponent implements OnInit {
   userRole$: Observable<number>;
   number: number;
   @ViewChild(MatAccordion) accordion: MatAccordion;
+  @ViewChild('sideNav') sideNav;
+
   constructor(private router: Router, private loginService: LoginService, private globalService: GlobalService,
               private employeeService: EmployeeService, private dialog: MatDialog) {
   }
@@ -28,12 +30,13 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.opened = false;
     this.loggedIn$ = this.loginService.isLoggedIn;
-    // this is used to check if the user is signed in and thereafter will display the header & nav
     this.loginService.UserRoles.pipe( tap(XX => {
       this.number = XX as number;
     })).subscribe();
   }
-
+  toggleSideBar() {
+    this.sideNav.toggle();
+  }
   toggleBurger() {
     this.opened = !this.opened;
   }
@@ -44,20 +47,25 @@ export class HeaderComponent implements OnInit {
 
   viewProfile(){
     this.employeeService.viewProfile(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
         localStorage.setItem('loggedEmployee', result.loggedEmployee);
         const viewProfileDialog = this.dialog.open(ViewProfileComponent);
-        localStorage.setItem('user', JSON.stringify(result.user));
         localStorage.setItem('loggedEmployee', JSON.stringify(result.Employees[0]));
-      }
     });
   }
 
   getHelp(){
-    const displayHelpPage = this.dialog.open(HelpComponent);
+    const displayHelpPage = this.dialog.open(HelpComponent, {disableClose: true});
+    const speech =  new SpeechSynthesisUtterance();
+    speech.volume = 1;
+    speech.rate = 1;
+    speech.pitch = 1;
+    this.employeeService.viewProfile(this.globalService.GetServer()).subscribe((response: any) => {
+      console.log(response);
+      speech.text = `Welcome ${response.Employees[0].EmployeeName} ${response.Employees[0].EmployeeSurname}. My name is Tabu, how may I help you today?`;
+      window.speechSynthesis.speak(speech);
+    });
   }
-}
+
+  goDashboard(){
+    this.router.navigate(['/Home']);  }
+  }

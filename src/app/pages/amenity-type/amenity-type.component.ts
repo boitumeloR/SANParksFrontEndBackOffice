@@ -7,9 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { AmenityTypeService } from 'src/app/services/AmenityType/amenity-type.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/services/Login/login.service';
-
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-amenity-type',
@@ -23,11 +23,17 @@ export class AmenityTypeComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private amenityTypeService: AmenityTypeService, private globalService: GlobalService,
-              private router: Router) { }
+              private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.amenityTypeService.requestReferesh.subscribe(() => {this.getAmenityTypes(); });
     this.getAmenityTypes();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -44,16 +50,16 @@ export class AmenityTypeComponent implements OnInit {
   }
 
   getAmenityTypes(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.amenityTypeService.readAmenityType(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
-        this.dataSource = new MatTableDataSource(result.AmenityTypes);
-        this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
-    });
+      this.dataSource = new MatTableDataSource(result.AmenityTypes);
+      this.dataSource.paginator = this.paginator;
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
+    }
+);
   }
 }

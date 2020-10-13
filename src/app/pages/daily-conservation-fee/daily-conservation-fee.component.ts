@@ -7,7 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { DailyConservationFeeService } from 'src/app/services/DailyConservationFee/daily-conservation-fee.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-daily-conservation-fee',
   templateUrl: './daily-conservation-fee.component.html',
@@ -20,11 +22,17 @@ export class DailyConservationFeeComponent implements OnInit {
   filter;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private dailyConservationFeeService: DailyConservationFeeService,
-              private globalService: GlobalService, private router: Router) { }
+              private globalService: GlobalService, private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.dailyConservationFeeService.requestReferesh.subscribe(() => {this.getDailyConservationFee(); });
     this.getDailyConservationFee();
+  }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
   }
 
   filterTable(filter){
@@ -41,16 +49,16 @@ export class DailyConservationFeeComponent implements OnInit {
   }
 
   getDailyConservationFee(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.dailyConservationFeeService.ReadDailyConservationFee(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
+      this.dataSource = new MatTableDataSource(result.DaliyConservationFees);
+      this.dataSource.paginator = this.paginator;
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
       }
-      else{
-        this.dataSource = new MatTableDataSource(result.DaliyConservationFees);
-        this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
-    });
+    );
   }
 }

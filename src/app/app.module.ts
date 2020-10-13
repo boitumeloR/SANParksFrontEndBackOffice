@@ -409,6 +409,23 @@ import { UnsuccessfulWCPurchaseComponent } from './pages/Purchase Wildcard/unsuc
 import { ItineraryComponent } from './pages/itinerary/itinerary.component';
 import { RefundReportComponent } from './pages/reports/refund-report/refund-report.component';
 import { PaymentReportComponent } from './pages/reports/payment-report/payment-report.component';
+import { DashBoardHomeComponent } from './subcomponents/dash-board-home/dash-board-home.component';
+import { ParkaddedComponent } from './workflows/parkadded/parkadded.component';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { ParkgateaddedComponent } from './workflows/parkgateadded/parkgateadded.component';
+import { SeasonaddedComponent } from './workflows/seasonadded/seasonadded.component';
+import { CamptypeaddedComponent } from './workflows/camptypeadded/camptypeadded.component';
+import { CampaddedComponent } from './workflows/campadded/campadded.component';
+import { AccommodationtypeaddedComponent } from './workflows/accommodationtypeadded/accommodationtypeadded.component';
+import { AccommodationaddedComponent } from './workflows/accommodationadded/accommodationadded.component';
+import { AmenitytypeaddedComponent } from './workflows/amenitytypeadded/amenitytypeadded.component';
+import { AmenityAddedComponent } from './workflows/amenity-added/amenity-added.component';
+import { ActivityTypeAddedComponent } from './workflows/activity-type-added/activity-type-added.component';
+import { ActivityAddedComponent } from './workflows/activity-added/activity-added.component';
+import { WildcardClusterAddedComponent } from './workflows/wildcard-cluster-added/wildcard-cluster-added.component';
+import { WildcardCategoryAddedComponent } from './workflows/wildcard-category-added/wildcard-category-added.component';
+import { UserRoleAddComponent } from './workflows/user-role-add/user-role-add.component';
+import { SpinnerComponent } from './subcomponents/spinner/spinner.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -804,6 +821,22 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ItineraryComponent,
     RefundReportComponent,
     PaymentReportComponent
+    DashBoardHomeComponent,
+    ParkaddedComponent,
+    ParkgateaddedComponent,
+    SeasonaddedComponent,
+    CamptypeaddedComponent,
+    CampaddedComponent,
+    AccommodationtypeaddedComponent,
+    AccommodationaddedComponent,
+    AmenitytypeaddedComponent,
+    AmenityAddedComponent,
+    ActivityTypeAddedComponent,
+    ActivityAddedComponent,
+    WildcardClusterAddedComponent,
+    WildcardCategoryAddedComponent,
+    UserRoleAddComponent,
+    SpinnerComponent
   ],
   entryComponents: [
     AddParkComponent,
@@ -817,6 +850,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     PaginatorModule,
     NgxStripeModule.forRoot(environment.stripeKey),
     MatSnackBarModule,
+    MatBottomSheetModule,
     ChartModule,
     SimplebarAngularModule,
     ReactiveFormsModule,

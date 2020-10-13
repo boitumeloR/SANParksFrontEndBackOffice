@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { tap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import {AddSeasonSuccessfulComponent} from 'src/app/modals/season/add-season-successful/add-season-successful.component';
 import {AddSeasonUnsuccessfulComponent} from 'src/app/modals/season/add-season-unsuccessful/add-season-unsuccessful.component';
 import {UpdateSeasonSuccessfulComponent} from 'src/app/modals/season/update-season-successful/update-season-successful.component';
 import {UpdateSeasonUnsuccessfulComponent} from 'src/app/modals/season/update-season-unsuccessful/update-season-unsuccessful.component';
 import { Router } from '@angular/router';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import {SeasonaddedComponent} from 'src/app/workflows/seasonadded/seasonadded.component';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface Season {
   SeasonID: number;
@@ -26,14 +29,22 @@ export interface SeasonDropDown {
 })
 export class SeasonService {
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router,
+              private bottomSheet: MatBottomSheet, private snackbar: MatSnackBar) { }
 
   private refresh = new Subject<void>();
   get requestReferesh(){
     return this.refresh;
   }
 
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+  }
+
   CreateSeason(Season, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/season/createSeason`, Season).subscribe((addResult: any) => {
       if (addResult.Error){
         localStorage.setItem('user', JSON.stringify(addResult.user));
@@ -48,7 +59,16 @@ export class SeasonService {
         localStorage.setItem('user', JSON.stringify(addResult.user));
         const addSeasonSuccessfulDialog = this.dialog.open(AddSeasonSuccessfulComponent);
         this.refresh.next();
+
+        addSeasonSuccessfulDialog.afterClosed().subscribe(() => {
+          const parkFlowSheet =  this.bottomSheet.open(SeasonaddedComponent);
+         });
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 
@@ -58,6 +78,7 @@ export class SeasonService {
   }
 
   UpdateSeason(Season, link){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.http.post(`${link}/api/season/updateSeason`, Season).subscribe((updateResult: any) => {
       if (updateResult.Error){
         localStorage.setItem('user', JSON.stringify(updateResult.user));
@@ -73,6 +94,11 @@ export class SeasonService {
         const updateSeasonSuccessfulDialog = this.dialog.open(UpdateSeasonSuccessfulComponent);
         this.refresh.next();
       }
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
     });
   }
 }

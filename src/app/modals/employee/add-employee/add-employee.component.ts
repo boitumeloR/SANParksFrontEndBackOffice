@@ -31,11 +31,9 @@ export class AddEmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.parkService.ReadPark(this.globalService.GetServer()).subscribe((result: any) => {
       this.parkDropDown = result.Parks;
-      localStorage.setItem('user', JSON.stringify(result.user));
 
       this.userRoleService.ReadUserRole(this.globalService.GetServer()).subscribe((resultUserRole: any) => {
         this.userRoleDropDown = resultUserRole.UserRoles;
-        localStorage.setItem('user', JSON.stringify(resultUserRole.user));
       });
     });
 

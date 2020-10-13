@@ -7,7 +7,9 @@ import { ViewActivityRateComponent } from 'src/app/modals/activity-rate/view-act
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { ActivityRateService } from 'src/app/services/ActivityRate/activity-rate.service';
 import { Router } from '@angular/router';
-
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-activity-rate',
   templateUrl: './activity-rate.component.html',
@@ -21,7 +23,7 @@ export class ActivityRateComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private dialog: MatDialog, private activityRateService: ActivityRateService, private globalService: GlobalService,
-              private router: Router) { }
+              private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.activityRateService.requestReferesh.subscribe(() => {this.getActivityRates(); });
@@ -42,16 +44,22 @@ export class ActivityRateComponent implements OnInit {
   }
 
   getActivityRates(){
+    const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     this.activityRateService.readActivityRate(this.globalService.GetServer()).subscribe((result: any) => {
-      if (result.userLoggedOut){
-        localStorage.removeItem('user');
-        this.router.navigate(['/Login']);
-      }
-      else{
-        this.dataSource = new MatTableDataSource(result.ActivityRates);
-        this.dataSource.paginator = this.paginator;
-        localStorage.setItem('user', JSON.stringify(result.user));
-      }
-    });
+      this.dataSource = new MatTableDataSource(result.ActivityRates);
+      this.dataSource.paginator = this.paginator;
+      displaySpinner.close();
+    },
+    (error: HttpErrorResponse) => {
+      displaySpinner.close();
+      this.serverDownSnack();
+    }
+  );
   }
+
+  serverDownSnack() {
+    this.snackbar.open('Our servers are currently unreachable. Please try again later.', 'OK', {
+      duration: 3500,
+    });
+ }
 }
