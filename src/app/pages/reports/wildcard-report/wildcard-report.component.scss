@@ -7,6 +7,44 @@
     margin: 0 auto;
     text-align: center;    
 }
+
+table {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.subtotal {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.graph {
+    margin: 0 auto;
+    width: 25%;
+}
+
+.grand {
+    margin-top: 30px;
+    text-align: center; 
+    h1 {
+        font-size: 40px;
+    }
+}
 h1 {
     font-size: 50px;
+}
+
+.chartCard {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 15px;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+.cardChart {
+    width: 30%;
+    height: 400px;
 }

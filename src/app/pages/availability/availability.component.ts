@@ -508,7 +508,7 @@ export class AvailabilityComponent implements OnInit {
     } else {
       const day = this.dialog.open(AddDayvisitComponent, {
         disableClose: true,
-        data: initialData
+        data: {dayData: initialData}
       });
     }
   }

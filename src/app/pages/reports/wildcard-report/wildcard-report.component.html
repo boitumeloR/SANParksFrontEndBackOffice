@@ -1,46 +1,50 @@
 <h1>Wildcard Membership Report</h1>
-<mat-card class="example-card">
+<form [formGroup]="reportForm">
+  <mat-card class="example-card">
     <mat-card-header>
       <mat-card-title>Parameters</mat-card-title>
     </mat-card-header>
     
     <mat-card-content>
-        <mat-form-field appearance="fill">
-            <mat-label>Park</mat-label>
-            <mat-select>
-              <mat-option>Kruger National Park</mat-option>
-              <mat-option>Kruger National Park</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Camp</mat-label>
-            <mat-select>
-              <mat-option>Skukuza Rest Camp</mat-option>
-              <mat-option>Skukuza Rest Camp</mat-option>
-            </mat-select>
-          </mat-form-field>
           <div>
             <mat-form-field appearance="fill">
                 <mat-label>Start Date</mat-label>
-                <input matInput [matDatepicker]="picker">
+                <input matInput [matDatepicker]="picker" formControlName = "start">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
               <mat-form-field appearance="fill">
                 <mat-label>End Date</mat-label>
-                <input matInput [matDatepicker]="picker2">
+                <input matInput [matDatepicker]="picker2" formControlName = "end">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
           </div>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="Submit()">Generate</button>
+        <button mat-raised-button color="primary" 
+        [disabled] = "reportForm.valid ? false: true"
+        (click)="Submit()">Generate Report</button>
+        <button mat-raised-button color="primary" 
+        [hidden] = "!generated"
+        (click)="SendReport()">Send PDF Report</button>
     </mat-card-actions>
-  </mat-card>   
+  </mat-card> 
+</form>
 
-  <div class="send">
-    <button mat-raised-button color="primary">Send Report</button>
+<div class ="chartCard" [hidden] = "!generated">
+    <mat-card *ngFor="let item of initClusters; let i = index" class="cardChart">
+      <mat-card-header>
+        <mat-card-title *ngIf="generated">{{clusterCharts[i].ClusterName}}</mat-card-title>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <canvas  id="canvas{{i}}" #yourId width="100%"></canvas>
+      </mat-card-content>
+      <mat-card-actions>
+
+      </mat-card-actions>
+    </mat-card> 
 </div>
 
-<iframe src="assets/images/WildcardMembership.pdf" frameborder="0" height="100%" width="100%"></iframe>
+<!-- <iframe src="assets/images/WildcardMembership.pdf" frameborder="0" height="100%" width="100%"></iframe> -->
