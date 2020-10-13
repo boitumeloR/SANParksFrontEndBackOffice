@@ -5,18 +5,17 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import * as Chart from 'chart.js';
 import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { AvailabilityService } from 'src/app/services/Available/availability.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { ReportingService } from 'src/app/services/Reports/reporting.service';
 
 @Component({
-  selector: 'app-refund-report',
-  templateUrl: './refund-report.component.html',
-  styleUrls: ['./refund-report.component.scss']
+  selector: 'app-payment-report',
+  templateUrl: './payment-report.component.html',
+  styleUrls: ['./payment-report.component.scss']
 })
-export class RefundReportComponent implements OnInit {
+export class PaymentReportComponent implements OnInit {
 
   reportForm: FormGroup;
   parks: any;
@@ -33,13 +32,14 @@ export class RefundReportComponent implements OnInit {
   // Response
   parkName: any;
   companyInfo: any;
-  refundData = new MatTableDataSource<any>();
+  paymentData;
+  beforeRefunds = 0;
   grandTotal = 0;
   // Tables
 
   accommodationColumns: string[] = ['dateCreated', 'stayDates', 'dates', 'paidAmount'];
   activityColumns: string[] = ['dateCreated', 'dates', 'paidAmount'];
-  refundColumns: string[] = ['bookingDate', 'refundDate', 'refundAmount'];
+  paymentColumns: string[] = ['paymentDate', 'paymentType', 'paymentAmount'];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private snack: MatSnackBar,
@@ -69,17 +69,19 @@ export class RefundReportComponent implements OnInit {
           Session: JSON.parse(localStorage.getItem('user'))
         };
 
-        this.reportServ.GetRefundReport(this.global.GetServer(), filterData).subscribe(res => {
+        this.reportServ.GetPaymentReport(this.global.GetServer(), filterData).subscribe(res => {
           if (res.Session !== null) {
 
             this.generated = true;
-            this.refundData = null;
+            this.paymentData = null;
             this.companyInfo = null;
+            this.beforeRefunds = 0;
             this.grandTotal = 0;
             console.log(res);
-            this.refundData = new MatTableDataSource(res.Refunds);
-            this.refundData.paginator = this.paginator;
-            this.companyInfo = res.companyInfo;
+            this.paymentData = new MatTableDataSource(res.Payments);
+            this.paymentData.paginator = this.paginator;
+            this.beforeRefunds = res.PaymentTotal;
+            this.grandTotal = res.PaymentTotal - res.RefundTotal;
             localStorage.setItem('user', JSON.stringify(res.Session));
 
           } else {
@@ -93,4 +95,5 @@ export class RefundReportComponent implements OnInit {
       }
     }
   }
+
 }

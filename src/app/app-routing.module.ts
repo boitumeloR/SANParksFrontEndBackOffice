@@ -51,6 +51,8 @@ import { ResetPasswordComponent } from './subcomponents/login/reset-password/res
 import { ActiveDatesComponent } from './modals/settings/active-dates/active-dates.component';
 import { UserTimeOutComponent } from './modals/settings/user-time-out/user-time-out.component';
 import { ItineraryComponent } from './pages/itinerary/itinerary.component';
+import { RefundReportComponent } from './pages/reports/refund-report/refund-report.component';
+import { PaymentReportComponent } from './pages/reports/payment-report/payment-report.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -255,6 +257,14 @@ const routes: Routes = [
   {
     path: 'itinerary',
     component: ItineraryComponent
+  },
+  {
+    path: 'refundReport',
+    component: RefundReportComponent
+  },
+  {
+    path: 'paymentReport',
+    component: PaymentReportComponent
   }
 ];
 

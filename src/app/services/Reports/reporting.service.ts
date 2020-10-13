@@ -25,6 +25,14 @@ export class ReportingService {
     return this.http.post<any>(`${server}/api/Report/WildcardMembership`, filterData, this.httpOptions);
   }
 
+  GetRefundReport(server: string, filterData: any) {
+    return this.http.post<any>(`${server}/api/Report/RefundReport`, filterData, this.httpOptions);
+  }
+
+  GetPaymentReport(server: string, filterData: any) {
+    return this.http.post<any>(`${server}/api/Report/PaymentReport`, filterData, this.httpOptions);
+  }
+
   GetClusters(server: string) {
     return this.http.get<any>(`${server}/api/Report/Clusters`);
   }

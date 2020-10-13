@@ -1,4 +1,4 @@
-<h1>Refund Report</h1>
+<h1>Payment Report</h1>
 <form [formGroup]="reportForm">
   <mat-card class="example-card">
     <mat-card-header>
@@ -35,36 +35,40 @@
 
 <div *ngIf="generated">
   <div>
-    <h1>Refunds</h1>
+    <h1>Payments</h1>
     <div>
       <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="refundData">
+        <table mat-table [dataSource]="paymentData">
           <!-- Camp Column -->
-          <ng-container matColumnDef="bookingDate">
-            <th mat-header-cell *matHeaderCellDef>Booking Date</th>
-            <td mat-cell *matCellDef="let element">{{ element.DateCreated | date: 'mediumDate' }}</td>
+          <ng-container matColumnDef="paymentDate">
+            <th mat-header-cell *matHeaderCellDef>Payment Date</th>
+            <td mat-cell *matCellDef="let element">{{ element.PaymentDate | date: 'mediumDate' }}</td>
           </ng-container> 
-          <ng-container matColumnDef="refundDate">
-            <th mat-header-cell *matHeaderCellDef> Refund Date</th>
-            <td mat-cell *matCellDef="let element">{{ element.RefundDate}}</td>
+          <ng-container matColumnDef="paymentType">
+            <th mat-header-cell *matHeaderCellDef> PaymentType</th>
+            <td mat-cell *matCellDef="let element">{{ element.PaymentType}}</td>
           </ng-container>
   
-          <ng-container matColumnDef="refundAmount">
+          <ng-container matColumnDef="paymentAmount">
             <th mat-header-cell *matHeaderCellDef>Amount Paid</th>
-            <td mat-cell *matCellDef="let element">{{ element.RefundAmount | currency:'ZAR' }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.PaymentAmount | currency:'ZAR' }}</td>
           </ng-container>
       
-          <tr mat-header-row *matHeaderRowDef="refundColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: refundColumns;"></tr>
+          <tr mat-header-row *matHeaderRowDef="paymentColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: paymentColumns;"></tr>
         </table>
       
         <mat-paginator [pageSizeOptions]="[5, 8, 20]" showFirstLastButtons></mat-paginator>
       </div>
-      <!-- <div class="subtotal">
-        <h2>Total Paid at {{acc.CampName}}: {{acc.TotalPaid | currency:'ZAR'}}</h2>
-      </div> -->
+      <div class="subtotal">
+        <h2>Total Paid before Refunds {{beforeRefunds | currency:'ZAR'}}</h2>
+      </div>
+      <div class="subtotal">
+        <h2>Total Paid after Refunds {{grandTotal | currency:'ZAR'}}</h2>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- <iframe src="assets/images/WeeklyBooking.pdf" frameborder="0" height="100%" width="100%"></iframe> -->
+

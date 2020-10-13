@@ -408,6 +408,7 @@ import { PurchaseWildcardComponent } from './modals/purchase-wildcard/purchase-w
 import { UnsuccessfulWCPurchaseComponent } from './pages/Purchase Wildcard/unsuccessful-wcpurchase/unsuccessful-wcpurchase.component';
 import { ItineraryComponent } from './pages/itinerary/itinerary.component';
 import { RefundReportComponent } from './pages/reports/refund-report/refund-report.component';
+import { PaymentReportComponent } from './pages/reports/payment-report/payment-report.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -801,7 +802,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     PurchaseWildcardComponent,
     UnsuccessfulWCPurchaseComponent,
     ItineraryComponent,
-    RefundReportComponent
+    RefundReportComponent,
+    PaymentReportComponent
   ],
   entryComponents: [
     AddParkComponent,
