@@ -427,6 +427,7 @@ import { WildcardCategoryAddedComponent } from './workflows/wildcard-category-ad
 import { UserRoleAddComponent } from './workflows/user-role-add/user-role-add.component';
 import { SpinnerComponent } from './subcomponents/spinner/spinner.component';
 import { PayOptionModalComponent } from './modals/auxilliary-modals/pay-option-modal/pay-option-modal.component';
+import { ForbiddenComponent } from './subcomponents/forbidden/forbidden.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -839,6 +840,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     UserRoleAddComponent,
     SpinnerComponent,
     PayOptionModalComponent
+    ForbiddenComponent
   ],
   entryComponents: [
     AddParkComponent,
