@@ -1,0 +1,13 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Confirm </h2>
+  <mat-dialog-content appearance="mat-typography">
+    <div class="example-container">
+        <p>Would you like to pay this conservation fee with cash or card? </p>
+    </div>
+    
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button (click)="Cash()" color="primary">Pay With Cash</button>
+    <button mat-raised-button (click)="Card()" color="primary">Pay With Card</button>
+  </mat-dialog-actions>
+</div>
