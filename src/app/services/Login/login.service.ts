@@ -69,7 +69,7 @@ export class LoginService {
 
   logout(User, link){
     return this.http.post(`${link}/api/Auth/Logout`, User).subscribe(() => {
-      localStorage.removeItem('user');
+      localStorage.clear();
       this.loggedIn.next(false);
       this.router.navigate(['/Login']);
     });

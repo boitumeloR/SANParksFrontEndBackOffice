@@ -51,62 +51,92 @@ import { ResetPasswordComponent } from './subcomponents/login/reset-password/res
 import { ActiveDatesComponent } from './modals/settings/active-dates/active-dates.component';
 import { UserTimeOutComponent } from './modals/settings/user-time-out/user-time-out.component';
 import { DashBoardHomeComponent } from './subcomponents/dash-board-home/dash-board-home.component';
+import { ForbiddenComponent } from './subcomponents/forbidden/forbidden.component';
+import { AuthguardGuard } from './subcomponents/authguard.guard';
 const routes: Routes = [
   {
     path: 'Park',
-    component: ParkComponent
+    component: ParkComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Home',
-    component: DashBoardHomeComponent
+    component: DashBoardHomeComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 'home'}
   },
   {
     path: 'Active-Dates',
-    component: ActiveDatesComponent
+    component: ActiveDatesComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Session-Timer',
-    component: UserTimeOutComponent
+    component: UserTimeOutComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Park-Gate',
-    component: ParkGateComponent
+    component: ParkGateComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Park-Gate-Time',
-    component: ParkGateTimeComponent
+    component: ParkGateTimeComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Daily-Conservation-Fee',
-    component: DailyConservationFeeComponent
+    component: DailyConservationFeeComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Season',
-    component: SeasonComponent
+    component: SeasonComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Camp-Type',
-    component: CampTypeComponent
+    component: CampTypeComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Camp',
-    component: CampComponent
+    component: CampComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Camp-Gate-Time',
-    component: CampGateTimeComponent
+    component: CampGateTimeComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Wildcard-Cluster',
-    component: WildcardClusterComponent
+    component: WildcardClusterComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Wildcard-Category',
-    component: WildcardCategoryComponent
+    component: WildcardCategoryComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Wildcard-Rate',
-    component: WildcardRateComponent
+    component: WildcardRateComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Forgot-Password',
@@ -122,79 +152,117 @@ const routes: Routes = [
   },
   {
     path: 'Activity',
-    component: ActivityComponent
+    component: ActivityComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Activity-Type',
-    component: ActivityTypeComponent
+    component: ActivityTypeComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Activity-Slot',
-    component: ActivitySlotComponent
+    component: ActivitySlotComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Accomodation',
-    component: AccomodationComponent
+    component: AccomodationComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Accomodation-Type',
-    component: AccomodationTypeComponent
+    component: AccomodationTypeComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Accomodation-Base-Rate',
-    component: AccomodationBaseRateComponent
+    component: AccomodationBaseRateComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Accomodation-Add-Rate',
-    component: AccomodationAddRateComponent
+    component: AccomodationAddRateComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Amenity-Type',
-    component: AmenityTypeComponent
+    component: AmenityTypeComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Amenity',
-    component: AmenityComponent
+    component: AmenityComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Amenity-Penalty',
-    component: AmenityPenaltyComponent
+    component: AmenityPenaltyComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Activity-Rate',
-    component: ActivityRateComponent
+    component: ActivityRateComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'User-Role',
-    component: UserRoleComponent
+    component: UserRoleComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'Employee',
-    component: EmployeeComponent
+    component: EmployeeComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 3}
   },
   {
     path: 'checkInPark',
-    component: CheckInParkComponent
+    component: CheckInParkComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 6}
   },
   {
     path: 'unannouncedCheckIn',
-    component: UnannouncedCheckInComponent
+    component: UnannouncedCheckInComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 5}
   },
   {
     path: 'preBookedCheckIn',
-    component: PreBookedCheckInComponent
+    component: PreBookedCheckInComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 6}
   },
   {
     path: 'checkOutPark',
-    component: CheckoutParkComponent
+    component: CheckoutParkComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 6}
   },
   {
     path: 'checkOutList',
-    component: CheckoutListComponent
+    component: CheckoutListComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 6}
   },
   {
     path: 'checkInAccommodation',
-    component: ChecInAccommodationComponent
+    component: ChecInAccommodationComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 6}
   },
   {
     path: 'assignAccommodation',
@@ -202,11 +270,15 @@ const routes: Routes = [
   },
   {
     path: 'checkInActivity',
-    component: CheckInActivityComponent
+    component: CheckInActivityComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 6}
   },
   {
     path: 'searchBookings',
-    component: SearchBookingsComponent
+    component: SearchBookingsComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 2}
   },
   {
     path: 'payOption',
@@ -218,11 +290,15 @@ const routes: Routes = [
   },
   {
     path: 'availableResults',
-    component: AvailabilityComponent
+    component: AvailabilityComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 2}
   },
   {
     path: 'checkoutCamp',
-    component: CheckoutCampComponent
+    component: CheckoutCampComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 6}
   },
   {
     path: 'unassignAcc',
@@ -230,31 +306,49 @@ const routes: Routes = [
   },
   {
     path: 'parkPerform',
-    component: ParkPerformanceComponent
+    component: ParkPerformanceComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 'reporting'}
   },
   {
     path: 'weeklyBooking',
-    component: WeeklyBookingComponent
+    component: WeeklyBookingComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 'reporting'}
   },
   {
     path: 'wildcardMembership',
     component: WildcardReportComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 'reporting'}
   },
   {
     path: 'bookingCheckin',
-    component: BookingCheckinComponent
+    component: BookingCheckinComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 'reporting'}
   },
   {
     path: 'Client',
-    component: ClientComponent
+    component: ClientComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 2}
   },
   {
     path: 'Purhase-Wildcard',
-    component: SearchClientForWCComponent
+    component: SearchClientForWCComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 2}
   },
   {
     path: 'Search-Wildcard-Membership',
-    component: SearchWildcardMembershipComponent
+    component: SearchWildcardMembershipComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 2}
+  },
+  {
+    path: 'Forbidden',
+    component: ForbiddenComponent
   }
 ];
 
