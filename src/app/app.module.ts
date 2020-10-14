@@ -426,6 +426,7 @@ import { WildcardClusterAddedComponent } from './workflows/wildcard-cluster-adde
 import { WildcardCategoryAddedComponent } from './workflows/wildcard-category-added/wildcard-category-added.component';
 import { UserRoleAddComponent } from './workflows/user-role-add/user-role-add.component';
 import { SpinnerComponent } from './subcomponents/spinner/spinner.component';
+import { PayOptionModalComponent } from './modals/auxilliary-modals/pay-option-modal/pay-option-modal.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -820,7 +821,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     UnsuccessfulWCPurchaseComponent,
     ItineraryComponent,
     RefundReportComponent,
-    PaymentReportComponent
+    PaymentReportComponent,
     DashBoardHomeComponent,
     ParkaddedComponent,
     ParkgateaddedComponent,
@@ -836,7 +837,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     WildcardClusterAddedComponent,
     WildcardCategoryAddedComponent,
     UserRoleAddComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    PayOptionModalComponent
   ],
   entryComponents: [
     AddParkComponent,
