@@ -49,7 +49,8 @@ export class UpdateCampComponent implements OnInit {
     }
     else{
       const numbers = /^[0-9\.-]+$/;
-      if (this.updateCampForm.get('campLatitude').value.match(numbers) && this.updateCampForm.get('campLongitude').value.match(numbers)){
+      if (String(this.updateCampForm.get('campLatitude').value).match(numbers)
+          && String(this.updateCampForm.get('campLongitude').value).match(numbers)){
         this.dialogRef.close();
         const udpateCampDialog = this.dialog.open(UpdateCampConfirmationComponent);
 
