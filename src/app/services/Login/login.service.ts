@@ -32,10 +32,26 @@ export class LoginService {
   public UserRole: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   get isLoggedIn() {
+    const validUser =  localStorage.getItem('user');
+    if (validUser !== null || validUser !== undefined){
+      this.loggedIn.next(true);
+    }
+    else{
+      this.loggedIn.next(false);
+    }
     return this.loggedIn.asObservable();
   }
 
   get UserRoles() {
+    const validUser =  JSON.parse(localStorage.getItem('user'));
+    if (validUser !== null || validUser !== undefined){
+      const loggedUser =  validUser.RoleID;
+      this.UserRole.next(loggedUser);
+    }
+    else{
+      const loggedUser =  validUser.RoleID;
+      this.UserRole.next(loggedUser);
+    }
     return this.UserRole.asObservable();
   }
 

@@ -44,8 +44,8 @@ export class AddParkGateComponent implements OnInit {
     }
     else{
       const numbers = /^[0-9\.-]+$/;
-      if (this.addParkGateForm.get('parkGateLongitude').value.match(numbers) &&
-            this.addParkGateForm.get('parkGateLatitude').value.match(numbers)){
+      if (String(this.addParkGateForm.get('parkGateLongitude').value).match(numbers) &&
+            String(this.addParkGateForm.get('parkGateLatitude').value).match(numbers)){
       this.dialogRef.close();
       const addParkGateConfirmationDialog = this.dialog.open(AddParkGateConfirmationComponent);
 
