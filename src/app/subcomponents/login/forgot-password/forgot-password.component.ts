@@ -19,6 +19,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setTitle('Forgot Password');
+    this.loginService.loggedIn.next(false);
     this.forgotPasswordForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.email]]
     });
