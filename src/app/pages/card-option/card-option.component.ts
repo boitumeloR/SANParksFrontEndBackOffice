@@ -5,7 +5,7 @@ import {
   StripeElementsOptions
 } from '@stripe/stripe-js';
 import { FormGroup, FormBuilder } from '@angular/forms';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-card-option',
   templateUrl: './card-option.component.html',
@@ -30,10 +30,10 @@ export class CardOptionComponent implements OnInit {
   onpopstate(event) {
     this.handler.close();
   }
-  constructor(private fb: FormBuilder, private stripeService: StripeService) { }
+  constructor(private fb: FormBuilder, private stripeService: StripeService, private title: Title) { }
 
   ngOnInit(): void {
-
+    this.title.setTitle('Card Option');
     this.stripeService.elements(this.elementsOptions)
     .subscribe(elements => {
       this.elements = elements;

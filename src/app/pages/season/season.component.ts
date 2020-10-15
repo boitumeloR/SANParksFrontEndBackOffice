@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-season',
   templateUrl: './season.component.html',
@@ -20,12 +22,13 @@ export class SeasonComponent implements OnInit {
   dataSource;
   filter;
   constructor(private dialog: MatDialog, private seasonService: SeasonService, private globalService: GlobalService,
-              private router: Router, private snackbar: MatSnackBar) { }
+              private router: Router, private snackbar: MatSnackBar, private title: Title) { }
 
   displayedColumns: string[] = ['name', 'startDate', 'endDate', 'view'];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
+    this.title.setTitle('Season');
     this.seasonService.requestReferesh.subscribe(() => {this.getSeason(); } );
     this.getSeason();
   }

@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-park-gate-time',
   templateUrl: './park-gate-time.component.html',
@@ -19,7 +21,7 @@ export class ParkGateTimeComponent implements OnInit {
   dataSource;
   filter;
   constructor(private dialog: MatDialog, private parkGateTimeService: ParkGateTimeService, private globalService: GlobalService,
-              private router: Router, private snackbar: MatSnackBar) { }
+              private router: Router, private snackbar: MatSnackBar, private title: Title) { }
 
   displayedColumns: string[] = ['ParkGateName', 'SeasonName', 'view'];
 
@@ -27,6 +29,7 @@ export class ParkGateTimeComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   ngOnInit(): void {
+    this.title.setTitle('Park Gate Time');
     this.parkGateTimeService.requestReferesh.subscribe(() => {this.getParkGateTime(); });
     this.getParkGateTime();
   }

@@ -10,7 +10,7 @@ import { SuccessModalComponent } from 'src/app/modals/auxilliary-modals/success-
 import { AvailabilityService } from 'src/app/services/Available/availability.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { ReportingService } from 'src/app/services/Reports/reporting.service';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-booking-checkin',
   templateUrl: './booking-checkin.component.html',
@@ -45,9 +45,10 @@ export class BookingCheckinComponent implements OnInit {
   constructor(private dialog: MatDialog, private snack: MatSnackBar,
               private global: GlobalService, private reportServ: ReportingService,
               private avail: AvailabilityService, private fb: FormBuilder,
-              private router: Router) { }
+              private router: Router, private title: Title ) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Booking vs Check-In Report');
     this.reportForm = this.fb.group({
       park: [null, Validators.required],
       camp: [null],

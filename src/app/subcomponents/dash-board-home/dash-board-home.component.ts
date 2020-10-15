@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {Chart} from 'chart.js';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { ParkService } from 'src/app/services/Park/park.service';
+import { Title } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-dash-board-home',
   templateUrl: './dash-board-home.component.html',
@@ -10,9 +12,11 @@ import { ParkService } from 'src/app/services/Park/park.service';
 export class DashBoardHomeComponent implements OnInit {
   pieChart;
   BarChart;
-  constructor(private parkService: ParkService, private globalService: GlobalService, private cdRef: ChangeDetectorRef) { }
+  constructor(private parkService: ParkService, private globalService: GlobalService, private cdRef: ChangeDetectorRef,
+              private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Home');
     this.displayVisualizer();
   }
 

@@ -9,7 +9,7 @@ import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-moda
 import { AvailabilityService } from 'src/app/services/Available/availability.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { ReportingService } from 'src/app/services/Reports/reporting.service';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-payment-report',
   templateUrl: './payment-report.component.html',
@@ -45,9 +45,10 @@ export class PaymentReportComponent implements OnInit {
   constructor(private dialog: MatDialog, private snack: MatSnackBar,
               private global: GlobalService, private reportServ: ReportingService,
               private avail: AvailabilityService, private fb: FormBuilder,
-              private router: Router) { }
+              private router: Router, private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Payment Report');
     this.reportForm = this.fb.group({
       start: [null, Validators.required],
       end: [null, Validators.required]

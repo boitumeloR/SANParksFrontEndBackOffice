@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-wildcard-rate',
   templateUrl: './wildcard-rate.component.html',
@@ -18,7 +19,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class WildcardRateComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private wildcardRateService: WildcardRateService,
-              private globalService: GlobalService, private router: Router, private snackbar: MatSnackBar) { }
+              private globalService: GlobalService, private router: Router, private snackbar: MatSnackBar,
+              private title: Title) { }
 
   displayedColumns: string[] = ['clusterName', 'categoryName', 'dateEffective', 'endDate', 'view'];
   dataSource;
@@ -26,6 +28,7 @@ export class WildcardRateComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
+    this.title.setTitle('Wildcard Rate');
     this.wildcardRateService.requestReferesh.subscribe(() => {this.getWildcardRate(); });
     this.getWildcardRate();
   }

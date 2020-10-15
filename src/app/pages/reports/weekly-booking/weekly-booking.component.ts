@@ -11,7 +11,7 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 import { ReportingService } from 'src/app/services/Reports/reporting.service';
 import { Chart} from 'chart.js';
 import { SuccessModalComponent } from 'src/app/modals/auxilliary-modals/success-modal/success-modal.component';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-weekly-booking',
   templateUrl: './weekly-booking.component.html',
@@ -45,9 +45,10 @@ export class WeeklyBookingComponent implements OnInit {
   constructor(private dialog: MatDialog, private snack: MatSnackBar,
               private global: GlobalService, private reportServ: ReportingService,
               private avail: AvailabilityService, private fb: FormBuilder,
-              private router: Router) { }
+              private router: Router, private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Weekly Booking Report');
     this.reportForm = this.fb.group({
       park: [null, Validators.required],
       camp: [null],

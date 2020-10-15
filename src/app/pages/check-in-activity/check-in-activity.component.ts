@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { CancelAlertComponent } from 'src/app/modals/auxilliary-modals/cancel-alert/cancel-alert.component';
 import { AddEquipmentComponent } from 'src/app/modals/add-equipment/add-equipment.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { Title } from '@angular/platform-browser';
 const ELEMENT_DATA: any[] = [
   { name: 'Tumi', surname: 'Rampete', ID: '99999999999', age: 22, country: 'South Africa', paid: true},
   { name: 'Jade', surname: 'Arumugam', ID: '99999999999', age: 22, country: 'South Africa', paid: true},
@@ -23,7 +23,7 @@ const ACTIVITY_DATA: any[] = [
 })
 export class CheckInActivityComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar, private title: Title) { }
 
   displayedColumns: string[] = ['name', 'surname', 'id', 'age', 'country', 'conservation'];
   activityColumns: string[] = ['name', 'type', 'date', 'time', 'participants'];
@@ -32,6 +32,7 @@ export class CheckInActivityComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
+    this.title.setTitle('Check-In Activity');
     this.dataSource.paginator = this.paginator;
   }
 

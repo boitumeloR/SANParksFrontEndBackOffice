@@ -10,6 +10,7 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
 import { Router } from '@angular/router';
 import { PayOptionModalComponent } from 'src/app/modals/auxilliary-modals/pay-option-modal/pay-option-modal.component';
+import { Title } from '@angular/platform-browser';
 
 const ELEMENT_DATA: any[] = [
   { name: 'Tumi', surname: 'Rampete', ID: '99999999999', age: 22, country: 'South Africa', paid: 'Yes'},
@@ -35,9 +36,10 @@ export class PreBookedCheckInComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private fb: FormBuilder, private global: GlobalService,
-              private checkServ: CheckInService, private router: Router) { }
+              private checkServ: CheckInService, private router: Router, private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Pre-Booked Check-In');
     this.bookingForm = this.fb.group({
       bookingID: [null, Validators.required]
     });
