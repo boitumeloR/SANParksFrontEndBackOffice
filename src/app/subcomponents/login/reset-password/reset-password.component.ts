@@ -19,6 +19,7 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setTitle('Reset Password');
+    this.loginService.loggedIn.next(false);
     this.resetPasswordForm = this.formBuilder.group({
       password: ['', [Validators.required]],
       confirmedPass: ['', [Validators.required]]
