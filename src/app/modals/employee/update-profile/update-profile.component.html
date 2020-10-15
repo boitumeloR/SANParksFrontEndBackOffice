@@ -1,3 +1,7 @@
+<button id="alignCloseRight" mat-icon-button align="end" color="warn" (click)="confirmCancel()" aria-label="Cancel">
+    <mat-icon>close</mat-icon>
+</button>
+<h2 mat-dialog-title>Update Profile</h2>
 <form [formControl]="basicEmployeeDetails" [formGroup]="basicEmployeeDetails">
     <ng-template matStepLabel>Employee Particulars</ng-template>
     <mat-dialog-content appearance="mat-typography">

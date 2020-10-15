@@ -15,7 +15,7 @@ import { ViewAccommodationModalComponent } from 'src/app/modals/booking/view-acc
 import { TableDate, AvailabilityService } from 'src/app/services/Available/availability.service';
 import { Booking } from 'src/app/services/Booking/booking.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-availability',
   templateUrl: './availability.component.html',
@@ -64,10 +64,11 @@ export class AvailabilityComponent implements OnInit {
   isOpen = true;
   constructor(private router: Router, private serv: AvailabilityService,
               private global: GlobalService, private snack: MatSnackBar,
-              private dialog: MatDialog, private formBuilder: FormBuilder) { }
+              private dialog: MatDialog, private formBuilder: FormBuilder, private title: Title) { }
 
   ngOnInit(): void {
     this.notFound = false;
+    this.title.setTitle('Availability');
     // this.apiData = JSON.parse(localStorage.getItem('availableResults'));
     // this.availableResults = this.apiData.AvailableResults;
 

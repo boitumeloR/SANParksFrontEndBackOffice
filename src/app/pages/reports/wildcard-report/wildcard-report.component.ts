@@ -10,7 +10,7 @@ import { SuccessModalComponent } from 'src/app/modals/auxilliary-modals/success-
 import { AvailabilityService } from 'src/app/services/Available/availability.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { ReportingService } from 'src/app/services/Reports/reporting.service';
-
+import { Title } from '@angular/platform-browser';
 export interface WildcardChart {
   barChart: Chart;
   ClusterName: string;
@@ -51,10 +51,10 @@ export class WildcardReportComponent implements OnInit, AfterViewInit {
   constructor(private dialog: MatDialog, private snack: MatSnackBar,
               private global: GlobalService, private reportServ: ReportingService,
               private avail: AvailabilityService, private fb: FormBuilder,
-              private router: Router) { }
+              private router: Router, private title: Title) { }
 
   ngOnInit(): void {
-
+    this.title.setTitle('Wildcard Membership Report');
     this.reportServ.GetClusters(this.global.GetServer()).subscribe(res => {
       this.initClusters = res;
       console.log(this.initClusters);

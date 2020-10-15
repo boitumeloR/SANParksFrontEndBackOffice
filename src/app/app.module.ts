@@ -839,7 +839,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     WildcardCategoryAddedComponent,
     UserRoleAddComponent,
     SpinnerComponent,
-    PayOptionModalComponent
+    PayOptionModalComponent,
     ForbiddenComponent
   ],
   entryComponents: [

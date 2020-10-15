@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-activity-type',
   templateUrl: './activity-type.component.html',
@@ -23,9 +23,10 @@ export class ActivityTypeComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private activityTypeService: ActivityTypeService, private globalService: GlobalService,
-              private router: Router, private snackbar: MatSnackBar) { }
+              private router: Router, private snackbar: MatSnackBar,private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Activity Type');
     this.activityTypeService.requestReferesh.subscribe(() => {this.getActivityTypes(); });
     this.getActivityTypes();
   }

@@ -4,7 +4,8 @@ import { CancelAlertComponent} from 'src/app/modals/auxilliary-modals/cancel-ale
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {UpdateWildcardStatusConfirmationComponent} from 'src/app/pages/renew/update-wildcard-status-confirmation/update-wildcard-status-confirmation.component'
-import {RenewWildcardMembershipComponent} from 'src/app/pages/renew/renew-wildcard-membership/renew-wildcard-membership.component'
+import {RenewWildcardMembershipComponent} from 'src/app/pages/renew/renew-wildcard-membership/renew-wildcard-membership.component';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-search-wildcard-membership',
   templateUrl: './search-wildcard-membership.component.html',
@@ -13,9 +14,12 @@ import {RenewWildcardMembershipComponent} from 'src/app/pages/renew/renew-wildca
 export class SearchWildcardMembershipComponent implements OnInit {
   wildcardFound: boolean;
   searchWildcardMembershipForm: FormGroup;
-  constructor(private dialog: MatDialog,private formBuilder: FormBuilder,private validationErrorSnackBar: MatSnackBar) { }
+  constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
+              private title: Title) {}
 
   ngOnInit(): void {
+    this.title.setTitle('Search Wildcard Membership');
+
     this.wildcardNotFound();
     this.searchWildcardMembershipForm = this.formBuilder.group({
       wildcardNumber: ['', Validators.required]
@@ -31,7 +35,7 @@ export class SearchWildcardMembershipComponent implements OnInit {
   }
 
   searchWildcardMembership(){
-    if(this.searchWildcardMembershipForm.invalid){
+    if (this.searchWildcardMembershipForm.invalid){
       this.displayValidationError();
     }
     else{

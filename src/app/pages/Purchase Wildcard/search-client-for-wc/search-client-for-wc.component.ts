@@ -8,7 +8,7 @@ import { PurchaseWildcardComponent } from 'src/app/modals/purchase-wildcard/purc
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { PurchaseWildcardService } from 'src/app/services/PurchaseWildcard/purchase-wildcard.service';
 import { SpinnerComponent } from 'src/app/subcomponents/spinner/spinner.component';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-search-client-for-wc',
   templateUrl: './search-client-for-wc.component.html',
@@ -18,9 +18,10 @@ export class SearchClientForWCComponent implements OnInit {
   searchClientForm: FormGroup;
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar,
               private purchaseWildcardService: PurchaseWildcardService, private globalService: GlobalService,
-              private router: Router, private snackbar: MatSnackBar) { }
+              private router: Router, private snackbar: MatSnackBar, private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Search Client');
     this.searchClientForm = this.formBuilder.group({
       identityNUmber: ['', Validators.required]
     });

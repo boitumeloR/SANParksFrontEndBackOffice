@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from 'src/app/services/Login/login.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,9 +14,10 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   show;
   constructor(private formBuilder: FormBuilder, private validationErrorSnackBar: MatSnackBar, private loginService: LoginService,
-              private globalService: GlobalService, private router: Router) { }
+              private globalService: GlobalService, private router: Router, private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Login');
     this.loginService.loggedIn.next(false);
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.email]],

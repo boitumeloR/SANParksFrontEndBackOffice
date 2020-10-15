@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-amenity-penalty',
   templateUrl: './amenity-penalty.component.html',
@@ -23,9 +24,11 @@ export class AmenityPenaltyComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private amenityPenaltyService: AmenityPenaltyService,
-              private globalService: GlobalService, private router: Router, private snackbar: MatSnackBar) { }
+              private globalService: GlobalService, private router: Router, private snackbar: MatSnackBar,
+              private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Amenity Penalty');
     this.amenityPenaltyService.requestReferesh.subscribe(() => this.getAmenityPenalty());
     this.getAmenityPenalty();
   }
