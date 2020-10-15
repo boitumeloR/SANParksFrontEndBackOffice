@@ -15,6 +15,7 @@ import { AddAdultGuestComponent } from '../add-adult-guest/add-adult-guest.compo
 })
 export class AddChildGuestComponent implements OnInit {
 
+  calcAge = 0;
   countries: any;
   guestInfo: FormGroup;
   httpError = false;
@@ -37,16 +38,21 @@ export class AddChildGuestComponent implements OnInit {
       GuestAge: [null, Validators.compose([Validators.required, Validators.min(1), Validators.max(12)])],
       GuestIDCode: ['', Validators.compose([Validators.maxLength(20), Validators.required])]
     });
+
+    this.guestInfo.get('GuestAge').disable();
   }
 
   changeCountry(): void {
     console.log(this.guestInfo.value);
-    if (this.guestInfo.get('CountryID').value === 1) {
+    if (this.guestInfo.get('CountryID').value === '1' || this.guestInfo.get('CountryID').value === 1) {
       this.idLabelName = 'Identity Number';
+      this.guestInfo.get('GuestAge').disable();
     } else {
       this.idLabelName = 'Passport Number';
+      this.guestInfo.get('GuestAge').enable();
     }
   }
+
 
   Cancel() {
   this.dialogRef.close({success: false, guest: null});
@@ -62,18 +68,46 @@ export class AddChildGuestComponent implements OnInit {
 
     const month = ID.substring(2, 4);
     const day = ID.substring(4, 6);
+
     if (Number(day) <= 31 && Number(month) <= 12 && Number(year) < new Date().getFullYear()) {
-      return true;
+      if (this.calculateAge(Number(year), Number(month), Number(day))) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
+      return false;
+    }
+  }
+
+  calculateAge(year: number, month: number, day: number): boolean {
+    this.calcAge = 0;
+    const today = new Date();
+
+    this.calcAge = today.getFullYear() - year;
+    this.calcAge --;
+    if (today.getMonth() > month) {
+      this.calcAge++;
+    } else if (today.getMonth() === month) {
+      if (today.getDay() >= day) {
+        this.calcAge++;
+      }
+    }
+
+    this.guestInfo.get('GuestAge').enable();
+    this.guestInfo.get('GuestAge').setValue(this.calcAge);
+    if (this.guestInfo.get('GuestAge').valid) {
+      return true;
+    } else  {
+      this.guestInfo.get('GuestAge').disable();
       return false;
     }
   }
   confirm() {
     // do stuff
     if (this.guestInfo.valid) {
-      if (this.guestInfo.get('CountryID').value === 1) {
+      if (this.guestInfo.get('CountryID').value === 1 || this.guestInfo.get('CountryID').value === '1') {
         const code: string = this.guestInfo.get('GuestIDCode').value;
-        console.log(this.validateGuestDOB(this.guestInfo.get('GuestIDCode').value));
         if (code.length === 13 && this.validateGuestDOB(this.guestInfo.get('GuestIDCode').value)) {
           console.log(this.guestInfo.value);
           this.snack.open('Successfuly added Guest', 'Okay', {
@@ -81,7 +115,7 @@ export class AddChildGuestComponent implements OnInit {
             verticalPosition: 'bottom',
             duration: 500
           });
-          this.close(this.guestInfo.value);
+          this.close({success: true, guest: this.guestInfo.value});
 
         } else {
           this.httpError = true;

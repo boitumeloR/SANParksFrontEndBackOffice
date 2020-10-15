@@ -153,7 +153,7 @@ export class AddDayvisitComponent implements OnInit {
           if (result.success) {
             let flag = false;
             this.bookingGuests.forEach(el => {
-              if (el.GuestIDCode === result.GuestIDCode) {
+              if (el.GuestIDCode === result.guest.GuestIDCode) {
                 flag = true;
               }
             });
@@ -161,7 +161,7 @@ export class AddDayvisitComponent implements OnInit {
               this.httpError = true;
               this.httpMessage = 'A guest with that ID number is already added';
             } else {
-              this.bookingGuests.push(result);
+              this.bookingGuests.push(result.guest);
             }
             console.log(this.bookingGuests);
           }
