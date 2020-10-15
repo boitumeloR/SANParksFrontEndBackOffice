@@ -5,7 +5,7 @@ import { CancelAlertComponent } from 'src/app/modals/auxilliary-modals/cancel-al
 import { SuccessModalComponent } from 'src/app/modals/auxilliary-modals/success-modal/success-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-
+import { Title } from '@angular/platform-browser';
 const ELEMENT_DATA: any[] = [
   { name: 'Tumi', surname: 'Rampete', ID: '99999999999', age: 22, country: 'South Africa', paid: true},
   { name: 'Jade', surname: 'Arumugam', ID: '99999999999', age: 22, country: 'South Africa', paid: true},
@@ -19,13 +19,14 @@ const ELEMENT_DATA: any[] = [
 })
 export class CheckoutCampComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private router: Router) { }
+  constructor(private dialog: MatDialog, private router: Router, private title: Title) { }
 
   displayedColumns: string[] = ['name', 'surname', 'id', 'age', 'country'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
+    this.title.setTitle('Checkout Camp');
     this.dataSource.paginator = this.paginator;
   }
 

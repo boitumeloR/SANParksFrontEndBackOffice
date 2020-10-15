@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-wildcard-cluster',
   templateUrl: './wildcard-cluster.component.html',
@@ -19,7 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class WildcardClusterComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private wildcardClusterService: WildcardClusterService, private globalService: GlobalService,
-              private router: Router, private snackbar: MatSnackBar) { }
+              private router: Router, private snackbar: MatSnackBar, private title: Title) { }
 
   displayedColumns: string[] = ['name', 'view'];
   dataSource;
@@ -27,6 +27,7 @@ export class WildcardClusterComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
+    this.title.setTitle('Wildcard Cluster');
     this.wildcardClusterService.requestReferesh.subscribe(() => {this.getWildcardCluster(); });
     this.getWildcardCluster();
   }

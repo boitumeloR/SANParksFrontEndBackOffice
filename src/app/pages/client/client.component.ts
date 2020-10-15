@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { Client, ClientService } from 'src/app/services/Client/client.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-client',
@@ -21,9 +22,10 @@ export class ClientComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private clientServ: ClientService,
-              private globalService: GlobalService, private router: Router) { }
+              private globalService: GlobalService, private router: Router, private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Client');
     this.dataSource.paginator = this.paginator;
     this.clientServ.requestRefresh.subscribe(() => {this.getClients(); });
     this.getClients();

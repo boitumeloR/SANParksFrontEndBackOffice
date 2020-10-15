@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/modals/auxilliary-modals/confirm-modal/confirm-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-pay-option',
   templateUrl: './pay-option.component.html',
@@ -10,9 +10,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class PayOptionComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private snack: MatSnackBar) { }
+  constructor(private dialog: MatDialog, private snack: MatSnackBar, private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Pay Option');
   }
 
   CashPay() {

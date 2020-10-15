@@ -4,8 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoginService } from 'src/app/services/Login/login.service';
-import { pluck } from 'rxjs/operators';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
@@ -16,9 +15,10 @@ export class ResetPasswordComponent implements OnInit {
   sessionID;
   constructor(private formBuilder: FormBuilder,  private validationErrorSnackBar: MatSnackBar,
               private globalService: GlobalService, private router: Router, private loginService: LoginService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute, private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Reset Password');
     this.resetPasswordForm = this.formBuilder.group({
       password: ['', [Validators.required]],
       confirmedPass: ['', [Validators.required]]

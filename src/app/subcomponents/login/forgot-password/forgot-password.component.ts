@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/Login/login.service';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -14,9 +14,11 @@ export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,  private validationErrorSnackBar: MatSnackBar,
-              private globalService: GlobalService, private router: Router, private loginService: LoginService) { }
+              private globalService: GlobalService, private router: Router, private loginService: LoginService,
+              private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Forgot Password');
     this.forgotPasswordForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.email]]
     });

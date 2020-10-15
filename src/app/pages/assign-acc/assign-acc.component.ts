@@ -7,7 +7,7 @@ import { ConfirmModalComponent } from 'src/app/modals/auxilliary-modals/confirm-
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { AssignAccommodationComponent } from 'src/app/modals/auxilliary-modals/assign-accommodation/assign-accommodation.component';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-assign-acc',
   templateUrl: './assign-acc.component.html',
@@ -18,11 +18,12 @@ export class AssignAccComponent implements OnInit {
   toppingList: string[] = ['Unit Number: EKF6', 'MUnit Number: EKF6', 'Unit Number: EKF6', 'Unit Number: EKF6'];
 
   opened = false;
-  constructor(private dialog: MatDialog, private router: Router) {
+  constructor(private dialog: MatDialog, private router: Router, private title: Title) {
   }
 
 
   ngOnInit() {
+    this.title.setTitle('Assign Accommodation');
   }
 
   Submit() {

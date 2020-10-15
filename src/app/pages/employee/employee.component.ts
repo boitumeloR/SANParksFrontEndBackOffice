@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
@@ -20,7 +20,7 @@ export class EmployeeComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private router: Router,
               private employeeService: EmployeeService, private globalService: GlobalService,
-              private snackbar: MatSnackBar) { }
+              private snackbar: MatSnackBar, private title: Title) { }
 
   displayedColumns: string[] = ['park', 'employeeName', 'identityNumber', 'view'];
   dataSource;
@@ -28,6 +28,7 @@ export class EmployeeComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
+    this.title.setTitle('Employee');
     this.employeeService.requestReferesh.subscribe(() => {this.getEmployee(); });
     this.getEmployee();
   }

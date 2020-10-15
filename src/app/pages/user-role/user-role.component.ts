@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-user-role',
   templateUrl: './user-role.component.html',
@@ -23,9 +24,10 @@ export class UserRoleComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private userRoleService: UserRoleService, private globalService: GlobalService,
-              private router: Router, private snackbar: MatSnackBar) { }
+              private router: Router, private snackbar: MatSnackBar, private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('User Role');
     this.userRoleService.requestReferesh.subscribe(() => {this.getUserRole(); });
     this.getUserRole();
   }

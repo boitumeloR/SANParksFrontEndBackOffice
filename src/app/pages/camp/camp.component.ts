@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-camp',
   templateUrl: './camp.component.html',
@@ -24,9 +24,10 @@ export class CampComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private campService: CampService,
               private globalService: GlobalService, private router: Router,
-              private snackbar: MatSnackBar) { }
+              private snackbar: MatSnackBar, private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Camp');
     this.campService.requestReferesh.subscribe(() => {this.getCamp(); });
     this.getCamp();
   }

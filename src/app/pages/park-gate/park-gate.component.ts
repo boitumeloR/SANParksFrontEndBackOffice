@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-park-gate',
   templateUrl: './park-gate.component.html',
@@ -18,13 +20,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ParkGateComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private parkGateService: ParkGateService, private globalService: GlobalService,
-              private router: Router, private snackbar: MatSnackBar) { }
+              private router: Router, private snackbar: MatSnackBar, private title: Title) { }
   displayedColumns: string[] = ['ParkGateName', 'ParkName', 'ParkGateMax', 'view'];
   dataSource;
   filter;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
+    this.title.setTitle('Park Gate');
     this.parkGateService.requestReferesh.subscribe(() => {this.getParkGates(); });
     this.getParkGates();
   }

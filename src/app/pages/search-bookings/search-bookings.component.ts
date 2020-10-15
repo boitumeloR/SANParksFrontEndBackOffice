@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { AddParkComponent } from 'src/app/modals/park/add-park/add-park.component';
 import { ViewParkComponent } from 'src/app/modals/park/view-park/view-park.component';
-
+import { Title } from '@angular/platform-browser';
 export interface PeriodicElement {
   clientID: string;
   name: string;
@@ -27,9 +27,10 @@ export class SearchBookingsComponent implements OnInit {
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Search Bookings');
     this.dataSource.paginator = this.paginator;
   }
 
