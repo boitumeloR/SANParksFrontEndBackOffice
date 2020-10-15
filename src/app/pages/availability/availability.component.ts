@@ -369,6 +369,7 @@ export class AvailabilityComponent implements OnInit {
   }
 
   addAccommodationBookingModal(initialData): void {
+    localStorage.setItem('Dates', JSON.stringify(initialData.Dates));
     const accommodation = this.dialog.open(AddAccommodationBookingComponent, {
       disableClose: true,
       data: {accommodationData: initialData}
@@ -436,6 +437,7 @@ export class AvailabilityComponent implements OnInit {
   }
 
   addActivityModal(initialData) {
+    localStorage.setItem('Dates', JSON.stringify(this.tableDates));
     const activity = this.dialog.open(AddActivityBookingComponent, {
       disableClose: true,
       data: {actData: initialData}
@@ -507,6 +509,7 @@ export class AvailabilityComponent implements OnInit {
         duration: 5000
       });
     } else {
+      localStorage.setItem('Dates', JSON.stringify(initialData.Dates));
       const day = this.dialog.open(AddDayvisitComponent, {
         disableClose: true,
         data: {dayData: initialData}

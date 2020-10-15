@@ -428,6 +428,9 @@ import { UserRoleAddComponent } from './workflows/user-role-add/user-role-add.co
 import { SpinnerComponent } from './subcomponents/spinner/spinner.component';
 import { PayOptionModalComponent } from './modals/auxilliary-modals/pay-option-modal/pay-option-modal.component';
 import { ForbiddenComponent } from './subcomponents/forbidden/forbidden.component';
+import { UpdateArbitraryGuestComponent } from './modals/guest/update-arbitrary-guest/update-arbitrary-guest.component';
+import { UpdateAdultGuestComponent } from './modals/guest/update-adult-guest/update-adult-guest.component';
+import { UpdateChildGuestComponent } from './modals/guest/update-child-guest/update-child-guest.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -840,7 +843,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     UserRoleAddComponent,
     SpinnerComponent,
     PayOptionModalComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    UpdateArbitraryGuestComponent,
+    UpdateAdultGuestComponent,
+    UpdateChildGuestComponent
   ],
   entryComponents: [
     AddParkComponent,
