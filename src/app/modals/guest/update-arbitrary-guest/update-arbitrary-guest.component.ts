@@ -145,4 +145,8 @@ export class UpdateArbitraryGuestComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  Cancel() {
+    this.dialogRef.close();
+  }
+
 }

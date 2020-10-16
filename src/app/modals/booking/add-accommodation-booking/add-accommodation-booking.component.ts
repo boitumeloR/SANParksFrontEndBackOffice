@@ -168,7 +168,6 @@ export class AddAccommodationBookingComponent implements OnInit {
     if (threshold < this.adultGuests) {
 
       const adult = this.dialog.open(AddAdultGuestComponent, {
-        width: '30%',
         disableClose: false
       });
 
@@ -206,11 +205,13 @@ export class AddAccommodationBookingComponent implements OnInit {
     });
 
     update.afterClosed().subscribe(res => {
-      this.bookingGuests.forEach((el, i) => {
-        if (el.GuestIDCode === initialData.GuestIDCode) {
-          this.bookingGuests[i] = res;
-        }
-      });
+      if (res.success) {
+        this.bookingGuests.forEach((el, i) => {
+          if (el.GuestIDCode === initialData.GuestIDCode) {
+            this.bookingGuests[i] = res;
+          }
+        });
+      }
     });
   }
 
@@ -236,11 +237,13 @@ export class AddAccommodationBookingComponent implements OnInit {
     });
 
     update.afterClosed().subscribe(res => {
-      this.bookingGuests.forEach((el, i) => {
-        if (el.GuestIDCode === initialData.GuestIDCode) {
-          this.bookingGuests[i] = res;
-        }
-      });
+      if (res.success) {
+        this.bookingGuests.forEach((el, i) => {
+          if (el.GuestIDCode === initialData.GuestIDCode) {
+            this.bookingGuests[i] = res;
+          }
+        });
+      }
     });
   }
 
@@ -249,8 +252,7 @@ export class AddAccommodationBookingComponent implements OnInit {
     if (threshold < this.guests) {
 
       const adult = this.dialog.open(AddChildGuestComponent, {
-        width: '30%',
-        disableClose: false
+        disableClose: true
       });
 
       adult.afterClosed().subscribe((result) => {

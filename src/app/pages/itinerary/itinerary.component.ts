@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ConfirmModalComponent } from 'src/app/modals/auxilliary-modals/confirm-modal/confirm-modal.component';
+import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
+import { SuccessModalComponent } from 'src/app/modals/auxilliary-modals/success-modal/success-modal.component';
 import { Booking, BookingService, Guest } from 'src/app/services/Booking/booking.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 
@@ -149,105 +151,91 @@ export class ItineraryComponent implements OnInit, AfterViewInit {
   }
 
   LoginModal() {
-    this.loginRef = this.modalService.show(LoginModalComponent,
-      {
-        class: 'modal-md modal-dialog-centered',
-        backdrop: 'static',
-        initialState: {
-          data: {
-          message: 'Are you sure you want to remove this guest?'
-          }
-        }
-      });
-    this.loginRef.content.closeBtnName = 'Close';
-    this.loginRef.content.event.subscribe(res => {
-      if (res.result === true) {
-        const session = JSON.parse(sessionStorage.getItem('session'));
-        this.serv.WildcardExists(this.global.GetServer(), session).subscribe(result => {
-          if (result.Exists === true) {
-            this.snack.open('You will be exempt from paying any conservation fees for this booking.', 'OK', {
-              horizontalPosition: 'center',
-              verticalPosition: 'bottom',
-              duration: 5000
-            });
-
-            if (this.fullConservationAmount > 0 ) {
-              this.totalDue -= this.fullConservationAmount;
-              this.fullConservationAmount = 0;
-            }
-            this.payAmount = this.payPerc * this.totalDue;
-            this.bookingData.PaidConservationFee = true;
-            sessionStorage.setItem('session', JSON.stringify(result.Session));
-          } else {
-            this.WCChecked = null;
-            const snacker = this.snack.open('You do not have a valid wildcard, choose another option', 'OK', {
-              horizontalPosition: 'center',
-              verticalPosition: 'bottom',
-              duration: 5000
-            });
-
-            sessionStorage.setItem('session', JSON.stringify(result.Session));
-            snacker.afterDismissed().subscribe(() => {
-              location.reload();
-            });
-          }
-        });
-      }
-    });
-  }
-  changeWC() {
     const session = JSON.parse(sessionStorage.getItem('session'));
-
-    if (!session) {
-      this.LoginModal();
-    } else {
-      this.serv.WildcardExists(this.global.GetServer(), session).subscribe(result => {
-        if (result.Session.Error) {
-          const snacker = this.snack.open(result.Session.Error, 'OK', {
-            horizontalPosition: 'center',
-            verticalPosition: 'bottom',
-            duration: 5000
-          });
-
-          snacker.afterDismissed().subscribe(() => {
-            this.router.navigateByUrl('Login');
-          });
-        } else {
-          sessionStorage.setItem('session', JSON.stringify(result.Session));
-        }
-
-        if (result.Exists === true) {
-          this.snack.open('You will be exempt from paying any conservation fees for this booking.', 'OK', {
-            horizontalPosition: 'center',
-            verticalPosition: 'bottom',
-            duration: 5000
-          });
-          this.bookingData.PaidConservationFee = true;
-          if (this.fullConservationAmount > 0 ) {
-            this.totalDue -= this.fullConservationAmount;
-            this.fullConservationAmount = 0;
-            this.payAmount = this.payPerc * this.totalDue;
-          }
-        } else {
-          this.WCChecked = null;
-          const snacker = this.snack.open('You do not have a valid wildcard, choose another option', 'OK', {
-            horizontalPosition: 'center',
-            verticalPosition: 'bottom',
-            duration: 5000
-          });
-
-          snacker.afterDismissed().subscribe(() => {
-            location.reload();
-          });
-        }
-      }, (error: HttpErrorResponse) => {
-        this.snack.open(error.message, 'OK', {
+    this.serv.WildcardExists(this.global.GetServer(), session).subscribe(result => {
+      if (result.Exists === true) {
+        this.snack.open('You will be exempt from paying any conservation fees for this booking.', 'OK', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
           duration: 5000
         });
+
+        if (this.fullConservationAmount > 0 ) {
+          this.totalDue -= this.fullConservationAmount;
+          this.fullConservationAmount = 0;
+        }
+        this.payAmount = this.payPerc * this.totalDue;
+        this.bookingData.PaidConservationFee = true;
+        sessionStorage.setItem('session', JSON.stringify(result.Session));
+      } else {
+        this.WCChecked = null;
+        const snacker = this.snack.open('You do not have a valid wildcard, choose another option', 'OK', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 5000
+        });
+
+        sessionStorage.setItem('session', JSON.stringify(result.Session));
+        snacker.afterDismissed().subscribe(() => {
+          location.reload();
+        });
+      }
+    });
+  }
+
+  changeWC() {
+    const session = JSON.parse(localStorage.getItem('user'));
+    const wcObj = {
+      Session: session,
+      ClientID: this.bookingData.ClientID
+    };
+
+    this.serv.WildcardExists(this.global.GetServer(), wcObj).subscribe(result => {
+      if (result.Session.Error) {
+        const snacker = this.snack.open(result.Session.Error, 'OK', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 5000
+        });
+
+        snacker.afterDismissed().subscribe(() => {
+          this.router.navigateByUrl('Login');
+        });
+      } else {
+        localStorage.setItem('user', JSON.stringify(result.Session));
+      }
+
+      if (result.Exists === true) {
+        this.snack.open('You will be exempt from paying any conservation fees for this booking.', 'OK', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 5000
+        });
+        this.bookingData.PaidConservationFee = true;
+        if (this.fullConservationAmount > 0 ) {
+          this.totalDue -= this.fullConservationAmount;
+          this.fullConservationAmount = 0;
+          this.payAmount = this.payPerc * this.totalDue;
+        }
+      } else {
+        this.WCChecked = null;
+        const snacker = this.snack.open('You do not have a valid wildcard, choose another option', 'OK', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 5000
+        });
+
+        snacker.afterDismissed().subscribe(() => {
+          location.reload();
+        });
+      }
+    }, (error: HttpErrorResponse) => {
+      this.snack.open(error.message, 'OK', {
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+        duration: 5000
       });
-    }
+    });
   }
 
   changeLater() {
@@ -284,49 +272,12 @@ export class ItineraryComponent implements OnInit, AfterViewInit {
       console.log(this.fullConservationAmount);
     });
   }
-  confirmRemoveGuest() {
-    const initialState = {
-      backdrop: 'static'
-    };
-    this.bsModalRef = this.modalService.show(GlobalConfirmComponent,
-      {
-        class: 'modal-md modal-dialog-centered',
-        initialState: {
-          data: {
-          message: 'Are you sure you want to remove this guest?'
-          }
-        }
-      });
-    this.bsModalRef.content.closeBtnName = 'Close';
-  }
 
-  ConfirmWild() {
-    this.bsModalRef = this.modalService.show(GlobalConfirmComponent,
-      {
-        class: 'modal-md modal-dialog-centered',
-        initialState: {
-          data: {
-          message: 'Unsuccessful Payment Transaction'
-          }
-        }
-      });
-    this.bsModalRef.content.closeBtnName = 'Close';
-  }
   changePaymentAmount() {
     this.payAmount = this.payPerc * 1100;
     console.log(this.payAmount);
   }
 
-  addGuestModal() {
-    const initialState = {
-      backdrop: 'static'
-    };
-    this.bsModalRef = this.modalService.show(AddGuestComponent,
-      {
-        class: 'modal-md modal-dialog-centered'
-      });
-    this.bsModalRef.content.closeBtnName = 'Close';
-  }
   dummy() {
     const session = JSON.parse(sessionStorage.getItem('session'));
     this.serv.dummy(this.global.GetServer(), session).subscribe(res => {
@@ -336,19 +287,12 @@ export class ItineraryComponent implements OnInit, AfterViewInit {
   }
 
   CancelAll() {
-    this.bsModalRef = this.modalService.show(GlobalConfirmComponent,
-      {
-        class: 'modal-md modal-dialog-centered',
-        initialState: {
-          data: {
-          message: 'Are you sure you want to cancel all your reservations?'
-          }
-        }
-      });
-    this.bsModalRef.content.closeBtnName = 'Close';
+    const clear = this.dialog.open(ConfirmModalComponent, {
+      data: { confirmMessage: 'Are you sure you wish to cancel all of your reservations' }
+    });
 
-    this.bsModalRef.content.event.subscribe(res => {
-      if (res.data) {
+    clear.afterClosed().subscribe(res => {
+      if (res) {
         localStorage.removeItem('itinerary');
         location.reload();
       }
@@ -356,19 +300,12 @@ export class ItineraryComponent implements OnInit, AfterViewInit {
   }
 
   RemoveAccommodationBooking(booking) {
-    this.bsModalRef = this.modalService.show(GlobalConfirmComponent,
-      {
-        class: 'modal-md modal-dialog-centered',
-        initialState: {
-          data: {
-          message: 'Are you sure you want to cancel this reservation?'
-          }
-        }
-      });
-    this.bsModalRef.content.closeBtnName = 'Close';
+    const clear = this.dialog.open(ConfirmModalComponent, {
+      data: { confirmMessage: 'Are you sure you wish to cancel all of your reservations' }
+    });
 
-    this.bsModalRef.content.event.subscribe(res => {
-      if (res.data) {
+    clear.afterClosed().subscribe(res => {
+      if (res) {
         const index = this.bookingData.AccommodationBookings.indexOf(booking);
         this.bookingData.AccommodationBookings.splice(index, 1);
         localStorage.setItem('itinerary', JSON.stringify(this.bookingData));
@@ -386,19 +323,12 @@ export class ItineraryComponent implements OnInit, AfterViewInit {
   }
 
   RemoveAccommodationGuest(acc, guest) {
-    this.bsModalRef = this.modalService.show(GlobalConfirmComponent,
-      {
-        class: 'modal-md modal-dialog-centered',
-        initialState: {
-          data: {
-          message: 'Are you sure you want to remove this guest?'
-          }
-        }
-      });
-    this.bsModalRef.content.closeBtnName = 'Close';
+    const clear = this.dialog.open(ConfirmModalComponent, {
+      data: { confirmMessage: 'Are you sure you wish to remove this guest? ' }
+    });
 
-    this.bsModalRef.content.event.subscribe(res => {
-      if (res.data) {
+    clear.afterClosed().subscribe(res => {
+      if (res) {
         const indexGuest = this.bookingData.AccommodationBookings.find(z => z === acc).Guests.indexOf(guest);
         if (this.bookingData.AccommodationBookings.find(z => z === acc).Guests.length > 2) {
           this.bookingData.AccommodationBookings.find(z => z === acc).Guests.splice(indexGuest, 1);
@@ -417,19 +347,12 @@ export class ItineraryComponent implements OnInit, AfterViewInit {
   }
 
   RemoveActivityBooking(booking) {
-    this.bsModalRef = this.modalService.show(GlobalConfirmComponent,
-      {
-        class: 'modal-md modal-dialog-centered',
-        initialState: {
-          data: {
-          message: 'Are you sure you want to cancel this reservation?'
-          }
-        }
-      });
-    this.bsModalRef.content.closeBtnName = 'Close';
+    const clear = this.dialog.open(ConfirmModalComponent, {
+      data: { confirmMessage: 'Are you sure you wish to cancel this reservation? ' }
+    });
 
-    this.bsModalRef.content.event.subscribe(res => {
-      if (res.data) {
+    clear.afterClosed().subscribe(res => {
+      if (res) {
         const index = this.bookingData.ActivityBookings.indexOf(booking);
         this.bookingData.ActivityBookings.splice(index, 1);
         localStorage.setItem('itinerary', JSON.stringify(this.bookingData));
@@ -447,19 +370,12 @@ export class ItineraryComponent implements OnInit, AfterViewInit {
   }
 
   RemoveActivityGuest(acc, guest) {
-    this.bsModalRef = this.modalService.show(GlobalConfirmComponent,
-      {
-        class: 'modal-md modal-dialog-centered',
-        initialState: {
-          data: {
-          message: 'Are you sure you want to remove this guest?'
-          }
-        }
-      });
-    this.bsModalRef.content.closeBtnName = 'Close';
+    const clear = this.dialog.open(ConfirmModalComponent, {
+      data: { confirmMessage: 'Are you sure you wish to cancel this reservation? ' }
+    });
 
-    this.bsModalRef.content.event.subscribe(res => {
-      if (res.data) {
+    clear.afterClosed().subscribe(res => {
+      if (res) {
         const indexGuest = this.bookingData.ActivityBookings.find(z => z === acc).Guests.indexOf(guest);
         if (this.bookingData.ActivityBookings.find(z => z === acc).Guests.length > 2) {
           this.bookingData.ActivityBookings.find(z => z === acc).Guests.splice(indexGuest, 1);
@@ -478,19 +394,12 @@ export class ItineraryComponent implements OnInit, AfterViewInit {
   }
 
   RemoveDayVisits(booking) {
-    this.bsModalRef = this.modalService.show(GlobalConfirmComponent,
-      {
-        class: 'modal-md modal-dialog-centered',
-        initialState: {
-          data: {
-          message: 'Are you sure you want to cancel this reservation?'
-          }
-        }
-      });
-    this.bsModalRef.content.closeBtnName = 'Close';
+    const clear = this.dialog.open(ConfirmModalComponent, {
+      data: { confirmMessage: 'Are you sure you wish to cancel this reservation? ' }
+    });
 
-    this.bsModalRef.content.event.subscribe(res => {
-      if (res.data) {
+    clear.afterClosed().subscribe(res => {
+      if (res) {
         const index = this.bookingData.DayVisits.indexOf(booking);
         this.bookingData.DayVisits.splice(index, 1);
         localStorage.setItem('itinerary', JSON.stringify(this.bookingData));
@@ -507,19 +416,12 @@ export class ItineraryComponent implements OnInit, AfterViewInit {
   }
 
   RemoveDayVisitGuest(acc, guest) {
-    this.bsModalRef = this.modalService.show(GlobalConfirmComponent,
-      {
-        class: 'modal-md modal-dialog-centered',
-        initialState: {
-          data: {
-          message: 'Are you sure you want to remove this guest?'
-          }
-        }
-      });
-    this.bsModalRef.content.closeBtnName = 'Close';
+    const clear = this.dialog.open(ConfirmModalComponent, {
+      data: { confirmMessage: 'Are you sure you wish to cancel this reservation? ' }
+    });
 
-    this.bsModalRef.content.event.subscribe(res => {
-      if (res.data) {
+    clear.afterClosed().subscribe(res => {
+      if (res) {
         const indexGuest = this.bookingData.DayVisits.find(zz => zz === acc).Guests.indexOf(guest);
         if (this.bookingData.DayVisits.find(z => z === acc).Guests.length > 2) {
           this.bookingData.DayVisits.find(z => z === acc).Guests.splice(indexGuest, 1);
@@ -557,29 +459,6 @@ export class ItineraryComponent implements OnInit, AfterViewInit {
     }
   }
 
-  LoginFinal() {
-    this.loginRef = this.modalService.show(LoginModalComponent,
-      {
-        class: 'modal-md modal-dialog-centered',
-        backdrop: 'static',
-        initialState: {
-          data: {
-          message: 'Are you sure you want to remove this guest?'
-          }
-        }
-      });
-    this.loginRef.content.closeBtnName = 'Close';
-    this.loginRef.content.event.subscribe(res => {
-      if (res.result === true) {
-        const snackBar = this.snack.open('Login Success.', 'OK', {
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-          duration: 1000
-        });
-      }
-    });
-  }
-
   Checkout() {
     if (this.laterChecked == null &&
        this.upfrontChecked == null &&
@@ -591,27 +470,32 @@ export class ItineraryComponent implements OnInit, AfterViewInit {
           duration: 5000
         });
     } else {
-      const sess = JSON.parse(sessionStorage.getItem('session'));
-      if (sess) {
-        console.log(this.totalDue);
-        if (this.bookingData) {
-          if (this.fullConservationAmount === 0 ) {
-            this.bookingData.PaidConservationFee = true;
-          }
-          this.bookingData.ConservationAmount = this.fullConservationAmount;
-          this.bookingData.PaymentAmount = this.payAmount;
-          this.bookingData.TotalAmount = this.totalDue;
-          console.log(this.totalDue);
-          localStorage.setItem('itinerary', JSON.stringify(this.bookingData));
-          this.router.navigate(['bookingPayment']);
+      const sess = JSON.parse(localStorage.getItem('user'));
+      console.log(this.totalDue);
+      if (this.bookingData) {
+        if (this.fullConservationAmount === 0 ) {
+          this.bookingData.PaidConservationFee = true;
         }
-      } else {
-        const snackBar = this.snack.open('Login before you checkout.', 'OK', {
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-          duration: 500
+        this.bookingData.ConservationAmount = this.fullConservationAmount;
+        this.bookingData.PaymentAmount = 0;
+        this.bookingData.TotalAmount = this.totalDue;
+        this.bookingData.Session = sess;
+        console.log(this.totalDue);
+        localStorage.setItem('itinerary', JSON.stringify(this.bookingData));
+
+        this.serv.SaveBooking(this.bookingData, this.global.GetServer()).subscribe(res => {
+          if (res.Success) {
+            localStorage.setItem('user', JSON.stringify(res.Session));
+            this.router.navigateByUrl('Home');
+            this.dialog.open(SuccessModalComponent, {
+              data: { successMessage: 'Booking successfully saved. This Booking can be paid in the next hour.' }
+            });
+          } else {
+            this.dialog.open(ErrorModalComponent, {
+              data: { errorMessage: res.Message }
+            });
+          }
         });
-        snackBar.afterDismissed().subscribe(() => this.LoginFinal());
       }
     }
   }

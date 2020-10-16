@@ -115,7 +115,7 @@ export class AddAdultGuestComponent implements OnInit {
             verticalPosition: 'bottom',
             duration: 500
           });
-          this.close(this.guestInfo.value);
+          this.close({success: true, guest: this.guestInfo.value});
 
         } else {
           this.httpError = true;

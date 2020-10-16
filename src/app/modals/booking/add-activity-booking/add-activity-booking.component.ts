@@ -185,11 +185,13 @@ export class AddActivityBookingComponent implements OnInit {
     });
 
     adult.afterClosed().subscribe(res => {
-      this.bookingGuests.forEach((el, i) => {
-        if (el.GuestIDCode === initialData.GuestIDCode) {
-          this.bookingGuests[i] = res;
-        }
-      });
+      if (res.success) {
+        this.bookingGuests.forEach((el, i) => {
+          if (el.GuestIDCode === initialData.GuestIDCode) {
+            this.bookingGuests[i] = res.guest;
+          }
+        });
+      }
     });
   }
 
