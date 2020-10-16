@@ -89,8 +89,8 @@ export class BookingService {
     dummy(server, session) {
       return this.http.post<any>(`${server}/api/Booking/dummy`, session, this.httpOptions);
     }
-    WildcardExists(server: string, session) {
-      return this.http.post<any>(`${server}/api/Booking/WildcardExists`, session, this.httpOptions);
+    WildcardExists(server: string, wildcard) {
+      return this.http.post<any>(`${server}/api/Booking/CallCentreVerifyWildcard`, wildcard, this.httpOptions);
     }
 
     SaveBooking(bookingData, server) {

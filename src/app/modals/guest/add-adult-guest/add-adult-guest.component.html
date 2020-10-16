@@ -2,6 +2,12 @@
     <h2 mat-dialog-title>Add Adult Guest</h2>
     <form [formGroup]="guestInfo">
       <mat-dialog-content appearance="mat-typography">
+        <div class="col-md-12 alert alert-warning alert-dismissible fade show" role="alert" *ngIf="httpError">
+          {{httpMessage}}
+          <button type="button" class="close" data-dismiss="alert" (click)="resetHttp()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Guest Nationality</mat-label>
@@ -28,7 +34,7 @@
           </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Guest {{idLabelName}}</mat-label>
-            <input matInput type="number" formControlName="GuestIDCode">
+            <input matInput type="text" formControlName="GuestIDCode">
             <mat-hint>{{idLabelName}}</mat-hint>
         </mat-form-field>
       </div>
