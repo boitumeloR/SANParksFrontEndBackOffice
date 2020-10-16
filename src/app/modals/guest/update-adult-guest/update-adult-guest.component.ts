@@ -1,45 +1,48 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AvailabilityService } from 'src/app/services/Available/availability.service';
-import { BookingService } from 'src/app/services/Booking/booking.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
-import { LoginService } from 'src/app/services/Login/login.service';
-import { AddAdultGuestComponent } from '../add-adult-guest/add-adult-guest.component';
 
 @Component({
-  selector: 'app-add-child-guest',
-  templateUrl: './add-child-guest.component.html',
-  styleUrls: ['./add-child-guest.component.scss']
+  selector: 'app-update-adult-guest',
+  templateUrl: './update-adult-guest.component.html',
+  styleUrls: ['./update-adult-guest.component.scss']
 })
-export class AddChildGuestComponent implements OnInit {
+export class UpdateAdultGuestComponent implements OnInit {
 
   calcAge = 0;
+  initialData: any;
   countries: any;
   guestInfo: FormGroup;
   httpError = false;
   httpMessage = '';
   idLabelName = 'Identity Number';
   public event: EventEmitter<any> = new EventEmitter<any>();
-  constructor(private dialogRef: MatDialogRef<AddAdultGuestComponent>, private snack: MatSnackBar,
+  constructor(private dialogRef: MatDialogRef<UpdateAdultGuestComponent>, private snack: MatSnackBar,
               private formBuilder: FormBuilder, private countryServ: AvailabilityService,
-              private global: GlobalService) { }
+              private global: GlobalService, @Inject(MAT_DIALOG_DATA) private data: any) { }
 
   ngOnInit(): void {
-
+    this.initialData = this.data.initialData;
     this.countryServ.GetCountries(this.global.GetServer()).subscribe(res => {
       this.countries = res;
     });
+
     this.guestInfo = this.formBuilder.group({
-      CountryID: [1, Validators.required],
-      GuestName: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
-      GuestSurname: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
-      GuestAge: [null, Validators.compose([Validators.required, Validators.min(1), Validators.max(12)])],
-      GuestIDCode: ['', Validators.compose([Validators.maxLength(20), Validators.required])]
+      CountryID: [this.initialData.CountryID, Validators.required],
+      GuestName: [this.initialData.GuestName, Validators.compose([Validators.required, Validators.maxLength(50)])],
+      GuestSurname: [this.initialData.GuestSurname, Validators.compose([Validators.required, Validators.maxLength(50)])],
+      GuestAge: [this.initialData.GuestAge, Validators.compose([Validators.required, Validators.min(13), Validators.max(100)])],
+      GuestIDCode: [this.initialData.GuestIDCode, Validators.compose([Validators.maxLength(20), Validators.required])]
     });
 
     this.guestInfo.get('GuestAge').disable();
+  }
+
+  Cancel() {
+    this.dialogRef.close({success: false, guest: null});
   }
 
   changeCountry(): void {
@@ -51,11 +54,6 @@ export class AddChildGuestComponent implements OnInit {
       this.idLabelName = 'Passport Number';
       this.guestInfo.get('GuestAge').enable();
     }
-  }
-
-
-  Cancel() {
-  this.dialogRef.close({success: false, guest: null});
   }
 
   validateGuestDOB(ID: string): boolean {
@@ -103,6 +101,8 @@ export class AddChildGuestComponent implements OnInit {
       return false;
     }
   }
+
+
   confirm() {
     // do stuff
     if (this.guestInfo.valid) {

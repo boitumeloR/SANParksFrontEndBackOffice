@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AvailabilityService } from 'src/app/services/Available/availability.service';
 import { DayVisitBooking, Booking } from 'src/app/services/Booking/booking.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { ConfirmModalComponent } from '../../auxilliary-modals/confirm-modal/confirm-modal.component';
 import { AddArbitraryGuestComponent } from '../../guest/add-arbitrary-guest/add-arbitrary-guest.component';
 
 @Component({
@@ -88,7 +89,7 @@ export class AddDayvisitComponent implements OnInit {
       this.totalGuests++;
     } else {
       this.httpError = true;
-      this.httpMessage = `You may only add ${this.guests} children for your accommodation/s`;
+      this.httpMessage = `You may only add ${this.guests} children for your visit`;
     }
   }
   subtractGuest() {
@@ -104,7 +105,7 @@ export class AddDayvisitComponent implements OnInit {
       this.totalGuests++;
     } else {
       this.httpError = true;
-      this.httpMessage = `You may only add ${this.adultGuests} adults for your accommodation/s`;
+      this.httpMessage = `You may only add ${this.adultGuests} adults for your visit`;
     }
 
   }
@@ -112,6 +113,10 @@ export class AddDayvisitComponent implements OnInit {
     if (this.adultGuests > 1) {
       this.adultGuests--;
       this.totalGuests--;
+
+      if (this.bookingGuests.length > this.adultGuests) {
+        this.bookingGuests = [];
+      }
     } else {
       this.httpError = true;
       this.httpMessage = `Add at least one adult`;
@@ -146,13 +151,55 @@ export class AddDayvisitComponent implements OnInit {
 
         adult.afterClosed().subscribe((result) => {
           if (result.success) {
-            this.bookingGuests.push(result.guest);
-
+            let flag = false;
+            this.bookingGuests.forEach(el => {
+              if (el.GuestIDCode === result.guest.GuestIDCode) {
+                flag = true;
+              }
+            });
+            if (flag) {
+              this.httpError = true;
+              this.httpMessage = 'A guest with that ID number is already added';
+            } else {
+              this.bookingGuests.push(result.guest);
+            }
             console.log(this.bookingGuests);
           }
         });
       }
     }
+  }
+
+  UpdateGuest(initialData) {
+    const adult = this.dialog.open(AddArbitraryGuestComponent, {
+      disableClose: true,
+      data: { guest: initialData }
+    });
+
+    adult.afterClosed().subscribe(res => {
+      if (res.success) {
+        this.bookingGuests.forEach((el, i) => {
+          if (el.GuestIDCode === initialData.GuestIDCode) {
+            this.bookingGuests[i] = res.guest;
+          }
+        });
+      }
+    });
+  }
+
+  DeleteGuest(guest) {
+    const inGuest = this.dialog.open(ConfirmModalComponent, {
+      disableClose: true,
+      data: { confirmMessage: 'Are you sure you wan to delete this guest.' }
+    });
+
+    inGuest.afterClosed().subscribe(res => {
+      if (res) {
+        const index = this.bookingGuests.findIndex(zz => zz === guest);
+
+        this.bookingGuests.splice(index, 1);
+      }
+    });
   }
 
 

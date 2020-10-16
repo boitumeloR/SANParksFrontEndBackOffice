@@ -5,8 +5,11 @@ import { Router } from '@angular/router';
 import { AvailabilityService } from 'src/app/services/Available/availability.service';
 import { AccommodationBooking, Booking } from 'src/app/services/Booking/booking.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
+import { ConfirmModalComponent } from '../../auxilliary-modals/confirm-modal/confirm-modal.component';
 import { AddAdultGuestComponent } from '../../guest/add-adult-guest/add-adult-guest.component';
 import { AddChildGuestComponent } from '../../guest/add-child-guest/add-child-guest.component';
+import { UpdateAdultGuestComponent } from '../../guest/update-adult-guest/update-adult-guest.component';
+import { UpdateChildGuestComponent } from '../../guest/update-child-guest/update-child-guest.component';
 
 @Component({
   selector: 'app-add-accommodation-booking',
@@ -131,6 +134,10 @@ export class AddAccommodationBookingComponent implements OnInit {
     if (this.adultGuests > 1) {
       this.adultGuests--;
       this.totalGuests--;
+
+      if (this.bookingGuests.length > this.adultGuests) {
+        this.bookingGuests = [];
+      }
     } else {
       this.httpError = true;
       this.httpMessage = `Add at least one adult`;
@@ -161,16 +168,83 @@ export class AddAccommodationBookingComponent implements OnInit {
     if (threshold < this.adultGuests) {
 
       const adult = this.dialog.open(AddAdultGuestComponent, {
-        width: '30%',
         disableClose: false
       });
 
       adult.afterClosed().subscribe((result) => {
         if (result.success) {
-          this.bookingGuests.push(result.guest);
+          let flag = false;
+          this.bookingGuests.forEach(el => {
+            if (el.GuestIDCode === result.guest.GuestIDCode) {
+              flag = true;
+            }
+          });
+          if (flag) {
+            this.httpError = true;
+            this.httpMessage = 'A guest with that ID number is already added';
+          } else {
+            this.bookingGuests.push(result.guest);
+          }
         }
       });
     }
+  }
+
+  UpdateGuest(guest) {
+    if (guest.GuestAge >= 13) {
+      this.UpdateAdultGuest(guest);
+    } else if (guest.GuestAge <= 12) {
+      this.UpdateChildGuest(guest);
+    }
+  }
+
+  UpdateAdultGuest(initialData) {
+    const update = this.dialog.open(UpdateAdultGuestComponent, {
+      disableClose: false,
+      data: { initialData }
+    });
+
+    update.afterClosed().subscribe(res => {
+      if (res.success) {
+        this.bookingGuests.forEach((el, i) => {
+          if (el.GuestIDCode === initialData.GuestIDCode) {
+            this.bookingGuests[i] = res;
+          }
+        });
+      }
+    });
+  }
+
+  DeleteGuest(guest) {
+    const confirm = this.dialog.open(ConfirmModalComponent, {
+      disableClose: false,
+      data: { confirmMessage: 'Are you sure that you want to delete this guest?' }
+    });
+
+    confirm.afterClosed().subscribe(res => {
+      if (res) {
+        const index = this.bookingGuests.findIndex(zz => zz === guest);
+
+        this.bookingGuests.splice(index, 1);
+      }
+    });
+  }
+
+  UpdateChildGuest(initialData) {
+    const update = this.dialog.open(UpdateChildGuestComponent, {
+      disableClose: false,
+      data: { initialData }
+    });
+
+    update.afterClosed().subscribe(res => {
+      if (res.success) {
+        this.bookingGuests.forEach((el, i) => {
+          if (el.GuestIDCode === initialData.GuestIDCode) {
+            this.bookingGuests[i] = res;
+          }
+        });
+      }
+    });
   }
 
   AddChildGuest() {
@@ -178,13 +252,23 @@ export class AddAccommodationBookingComponent implements OnInit {
     if (threshold < this.guests) {
 
       const adult = this.dialog.open(AddChildGuestComponent, {
-        width: '30%',
-        disableClose: false
+        disableClose: true
       });
 
       adult.afterClosed().subscribe((result) => {
         if (result.success) {
-          this.bookingGuests.push(result.guest);
+          let flag = false;
+          this.bookingGuests.forEach(el => {
+            if (el.GuestIDCode === result.guest.GuestIDCode) {
+              flag = true;
+            }
+          });
+          if (flag) {
+            this.httpError = true;
+            this.httpMessage = 'A guest with that ID number is already added';
+          } else {
+            this.bookingGuests.push(result.guest);
+          }
         }
       });
     }

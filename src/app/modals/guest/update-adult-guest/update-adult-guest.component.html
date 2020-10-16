@@ -1,18 +1,18 @@
 <div class="dialog">
-    <h2 mat-dialog-title>Add Guest</h2>
+    <h2 mat-dialog-title>Update Adult Guest</h2>
     <form [formGroup]="guestInfo">
       <mat-dialog-content appearance="mat-typography">
         <div class="col-md-12 alert alert-warning alert-dismissible fade show" role="alert" *ngIf="httpError">
-          {{httpMessage}}
-          <button type="button" class="close" data-dismiss="alert" (click)="resetHttp()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+            {{httpMessage}}
+            <button type="button" class="close" data-dismiss="alert" (click)="resetHttp()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
       <div class="example-container">
         <mat-form-field appearance="fill">
             <mat-label>Guest Nationality</mat-label>
-            <mat-select formControlName="park" formControlName = "CountryID">
-                <mat-option *ngFor="let item of countries" [value]="item.CountryID" (change)="changeCountry()">{{item.CountryName}}</mat-option>
+            <mat-select formControlName = "CountryID">
+                <mat-option *ngFor="let item of countries" [value]="item.CountryID" (click)="changeCountry()">{{item.CountryName}}</mat-option>
             </mat-select>
           </mat-form-field>
         <mat-form-field appearance="fill">
@@ -34,7 +34,7 @@
           </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Guest {{idLabelName}}</mat-label>
-            <input matInput type="text" formControlName="GuestIDCode">
+            <input matInput type="number" formControlName="GuestIDCode">
             <mat-hint>{{idLabelName}}</mat-hint>
         </mat-form-field>
       </div>
