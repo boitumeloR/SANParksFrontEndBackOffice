@@ -45,6 +45,14 @@ export class ReportingService {
     return this.http.post<any>(`${server}/api/Report/SendParkPerformance`, filterData, this.httpOptions);
   }
 
+  SendPaymentReport(server: string, filterData: any) {
+    return this.http.post<any>(`${server}/api/Report/SendPaymentReport`, filterData, this.httpOptions);
+  }
+
+  SendRefundReport(server: string, filterData: any) {
+    return this.http.post<any>(`${server}/api/Report/SendRefundReport`, filterData, this.httpOptions);
+  }
+
   SendWildcardReport(server: string, filterData: any) {
     return this.http.post<any>(`${server}/api/Report/SendWildcard`, filterData, this.httpOptions);
   }
