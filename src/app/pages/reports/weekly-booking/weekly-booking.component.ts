@@ -133,17 +133,18 @@ export class WeeklyBookingComponent implements OnInit {
     if (this.reportForm.valid) {
         console.log(this.reportForm.value);
 
-        const today = new Date();
-        const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+        const today: Date = new Date();
+        const lastWeek: Date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
 
         const filterData = {
-          StartDate: today,
-          EndDate: lastWeek,
+          StartDate: lastWeek,
+          EndDate: today,
           ParkID: this.reportForm.get('park').value,
           CampID: this.reportForm.get('camp').value,
           Session: JSON.parse(localStorage.getItem('user'))
         };
 
+        console.log(filterData);
         this.reportServ.GetWeeklyBookingReport(this.global.GetServer(), filterData).subscribe(res => {
           if (res.Session !== null) {
 
@@ -169,7 +170,6 @@ export class WeeklyBookingComponent implements OnInit {
               this.GenerateChart(campAmounts, campNames);
             }
             else {
-              this.totalChart.destroy();
             }
             if (this.activityData.length > 0) {
               this.grandTotal += this.activityData.map(zz => zz.TotalPaid).reduce((acc, element) => acc + element);
@@ -179,7 +179,7 @@ export class WeeklyBookingComponent implements OnInit {
               this.GenerateActivityChart(campAmounts, campNames);
             }
             else {
-              this.actChart.destroy();
+
             }
           } else {
             const ref = this.dialog.open(ErrorModalComponent, {
@@ -199,13 +199,12 @@ export class WeeklyBookingComponent implements OnInit {
 
     const activityImage: string = activityGraph.toDataURL();
     const accommodationImage: string = accommodationGraph.toDataURL();
-    const dayImage: string  = dayGraph.toDataURL();
 
-    console.log(activityImage);
-    console.log(accommodationImage);
+    const today: Date = new Date();
+    const lastWeek: Date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
     const filterData = {
-      StartDate: new Date(this.reportForm.get('start').value),
-      EndDate: new Date(this.reportForm.get('end').value),
+      StartDate: lastWeek,
+      EndDate: today,
       ParkID: this.reportForm.get('park').value,
       CampID: this.reportForm.get('camp').value,
       Session: JSON.parse(localStorage.getItem('user')),
@@ -217,6 +216,27 @@ export class WeeklyBookingComponent implements OnInit {
       if (res.Session) {
         if (res.Success === true) {
           localStorage.setItem('user', JSON.stringify(res.Session));
+          // PDF
+          console.log(res.PDF);
+          const data = res.PDF;
+          const fileName = `${ new Date()} - Weekly Booking Report`;
+          if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE workaround
+              const byteCharacters = atob(data);
+              const byteNumbers = new Array(byteCharacters.length);
+              for (let i = 0; i < byteCharacters.length; i++) {
+                  byteNumbers[i] = byteCharacters.charCodeAt(i);
+              }
+              const byteArray = new Uint8Array(byteNumbers);
+              const blob = new Blob([byteArray], {type: 'application/pdf'});
+              window.navigator.msSaveOrOpenBlob(blob, fileName);
+          }
+          else { // much easier if not IE
+            const pdfWindow = window.open('');
+            pdfWindow.document.write(
+                `<iframe width='100%' height='100%' src='data:application/pdf;base64,
+                ${encodeURI(data)}'></iframe>`
+            );
+          }
           this.dialog.open(SuccessModalComponent, {
             data: { successMessage: 'PDF Report successfully sent to Manager!'}
           });

@@ -10,6 +10,7 @@ import { AvailabilityService } from 'src/app/services/Available/availability.ser
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { ReportingService } from 'src/app/services/Reports/reporting.service';
 import { Title } from '@angular/platform-browser';
+import { SuccessModalComponent } from 'src/app/modals/auxilliary-modals/success-modal/success-modal.component';
 @Component({
   selector: 'app-payment-report',
   templateUrl: './payment-report.component.html',
@@ -97,4 +98,55 @@ export class PaymentReportComponent implements OnInit {
     }
   }
 
+  SendReport() {
+
+    const filterData = {
+      StartDate: new Date(this.reportForm.get('start').value),
+      EndDate: new Date(this.reportForm.get('end').value),
+      Session: JSON.parse(localStorage.getItem('user')),
+    };
+
+    this.reportServ.SendPaymentReport(this.global.GetServer(), filterData).subscribe(res => {
+      if (res.Session) {
+        if (res.Success === true) {
+          localStorage.setItem('user', JSON.stringify(res.Session));
+          // PDF
+          console.log(res.PDF);
+          const data = res.PDF;
+          const fileName = `${ new Date()} - Weekly Booking Report`;
+          if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE workaround
+              const byteCharacters = atob(data);
+              const byteNumbers = new Array(byteCharacters.length);
+              for (let i = 0; i < byteCharacters.length; i++) {
+                  byteNumbers[i] = byteCharacters.charCodeAt(i);
+              }
+              const byteArray = new Uint8Array(byteNumbers);
+              const blob = new Blob([byteArray], {type: 'application/pdf'});
+              window.navigator.msSaveOrOpenBlob(blob, fileName);
+          }
+          else { // much easier if not IE
+            const pdfWindow = window.open('');
+            pdfWindow.document.write(
+                `<iframe width='100%' height='100%' src='data:application/pdf;base64,
+                ${encodeURI(data)}'></iframe>`
+            );
+          }
+
+          this.dialog.open(SuccessModalComponent, {
+            data: { successMessage: 'PDF Report successfully sent to Manager!'}
+          });
+        } else {
+          localStorage.setItem('user', JSON.stringify(res.Session));
+          const ref = this.dialog.open(ErrorModalComponent, {
+            data: { errorMessage: 'An error occured, plesse try again' }
+          });
+        }
+      } else {
+        const ref = this.dialog.open(ErrorModalComponent, {
+          data: { errorMessage: 'Session Timeout, Login Again!' }
+        });
+        this.router.navigateByUrl('Login');
+      }
+    });
+  }
 }
