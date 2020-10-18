@@ -104,7 +104,7 @@
   </div>
 
   <div class="center" *ngIf="!conservationFeePaid && !hasWildcard">
-    <h1>Total Due: R 00.00</h1>
+    <h1>Total Due: {{conservationAmount}}</h1>
     <button mat-raised-button color="accent" (click)="MakePayment()">Make Payment</button>
   </div>
 

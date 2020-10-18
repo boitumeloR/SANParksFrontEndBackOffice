@@ -235,7 +235,7 @@ const routes: Routes = [
     path: 'checkInPark',
     component: CheckInParkComponent,
     canActivate: [AuthguardGuard],
-    data: { roleID: 6}
+    data: { roleID: 5}
   },
   {
     path: 'unannouncedCheckIn',
@@ -247,7 +247,7 @@ const routes: Routes = [
     path: 'preBookedCheckIn',
     component: PreBookedCheckInComponent,
     canActivate: [AuthguardGuard],
-    data: { roleID: 6}
+    data: { roleID: 5}
   },
   {
     path: 'checkOutPark',

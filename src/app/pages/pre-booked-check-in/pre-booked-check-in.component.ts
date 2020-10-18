@@ -11,6 +11,7 @@ import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-moda
 import { Router } from '@angular/router';
 import { PayOptionModalComponent } from 'src/app/modals/auxilliary-modals/pay-option-modal/pay-option-modal.component';
 import { Title } from '@angular/platform-browser';
+import { SpinnerComponent } from 'src/app/subcomponents/spinner/spinner.component';
 
 const ELEMENT_DATA: any[] = [
   { name: 'Tumi', surname: 'Rampete', ID: '99999999999', age: 22, country: 'South Africa', paid: 'Yes'},
@@ -57,6 +58,7 @@ export class PreBookedCheckInComponent implements OnInit {
         if (res.Found === true) {
           localStorage.setItem('user', JSON.stringify(res.Session));
           this.checkData = res;
+          this.client = res.Client;
           this.dataSource = new MatTableDataSource(res.Guests);
           this.dataSource.paginator = this.paginator;
           this.conservationFeePaid = res.PaidConservationFee;
