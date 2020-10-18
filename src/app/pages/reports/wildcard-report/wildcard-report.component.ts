@@ -261,6 +261,28 @@ export class WildcardReportComponent implements OnInit, AfterViewInit {
       if (res.Session) {
         if (res.Success === true) {
           localStorage.setItem('user', JSON.stringify(res.Session));
+
+          // PDF
+          console.log(res.PDF);
+          const data = res.PDF;
+          const fileName = `${ new Date()} - Wildcard Report`;
+          if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE workaround
+              const byteCharacters = atob(data);
+              const byteNumbers = new Array(byteCharacters.length);
+              for (let i = 0; i < byteCharacters.length; i++) {
+                  byteNumbers[i] = byteCharacters.charCodeAt(i);
+              }
+              const byteArray = new Uint8Array(byteNumbers);
+              const blob = new Blob([byteArray], {type: 'application/pdf'});
+              window.navigator.msSaveOrOpenBlob(blob, fileName);
+          }
+          else { // much easier if not IE
+            const pdfWindow = window.open('');
+            pdfWindow.document.write(
+                `<iframe width='100%' height='100%' src='data:application/pdf;base64,
+                ${encodeURI(data)}'></iframe>`
+            );
+          }
           this.dialog.open(SuccessModalComponent, {
             data: { successMessage: 'PDF Report successfully sent to Manager!'}
           });
