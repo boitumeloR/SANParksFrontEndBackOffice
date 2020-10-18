@@ -46,7 +46,7 @@ export class ReportingService {
   }
 
   SendPaymentReport(server: string, filterData: any) {
-    return this.http.post<any>(`${server}/api/Report/SendPaymentReport`, filterData, this.httpOptions);
+    return this.http.post<any>(`${server}/api/Report/SendPaymentReportPDF`, filterData, this.httpOptions);
   }
 
   SendRefundReport(server: string, filterData: any) {
