@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 import { PayOptionModalComponent } from 'src/app/modals/auxilliary-modals/pay-option-modal/pay-option-modal.component';
 import { Title } from '@angular/platform-browser';
 import { SpinnerComponent } from 'src/app/subcomponents/spinner/spinner.component';
+import { ConfirmModalComponent } from 'src/app/modals/auxilliary-modals/confirm-modal/confirm-modal.component';
+import { Session } from 'protractor';
 
 const ELEMENT_DATA: any[] = [
   { name: 'Tumi', surname: 'Rampete', ID: '99999999999', age: 22, country: 'South Africa', paid: 'Yes'},
@@ -88,9 +90,45 @@ export class PreBookedCheckInComponent implements OnInit {
 
     payment.afterClosed().subscribe(res => {
       if (res) {
-        // Pay with card
+        localStorage.setItem('payAmount', JSON.stringify({amount: this.conservationAmount, BookingID: this.checkData.BookingID}));
+        this.router.navigateByUrl('payConservationFee');
       } else {
-        // PayCash
+        const dlg = this.dialog.open(ConfirmModalComponent, {
+          disableClose: true,
+          data: {confirmMessage: `Was the amount ZAR${this.conservationAmount} paid in full?`}
+        });
+
+        dlg.afterClosed().subscribe(result => {
+          if (result) {
+            const check = {
+              Session: localStorage.getItem('user'),
+              BookingID: this.checkData.BookingID
+            };
+            this.checkServ.PreBookedCheckin(this.global.GetServer(), check)
+              .subscribe(checked => {
+                if (checked.Session == null) {
+                  this.router.navigateByUrl('Login');
+                  const err = this.dialog.open(ErrorModalComponent, {
+                    disableClose: true,
+                    data: {errorMessage: `Session Errror, Login Again`}
+                  });
+                } else {
+                  if (checked.Success === true) {
+                    this.router.navigateByUrl('Home');
+                    const err = this.dialog.open(SuccessModalComponent, {
+                      disableClose: true,
+                      data: {successMessage: `Successfully Checked in. Welcome the client.`}
+                    });
+                  } else {
+                    const err = this.dialog.open(ErrorModalComponent, {
+                      disableClose: true,
+                      data: {errorMessage: checked.Message}
+                    });
+                  }
+                }
+              });
+          }
+        });
       }
     });
   }

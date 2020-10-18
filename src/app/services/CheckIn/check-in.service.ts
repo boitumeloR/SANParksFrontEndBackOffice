@@ -15,4 +15,12 @@ export class CheckInService {
   PreBookedBookings(server: string, data: any) {
     return this.http.post<any>(`${server}/api/CheckIn/ClientBooking`, data, this.httpOptions);
   }
+
+  PreBookedCheckin(server: string, data: any) {
+    return this.http.post<any>(`${server}/api/CheckIn/CheckInWithBooking`, data, this.httpOptions);
+  }
+
+  PayCheckIn(server: string, data: any) {
+    return this.http.post<any>(`${server}/api/CheckIn/PayConservationFee`, data, this.httpOptions);
+  }
 }
