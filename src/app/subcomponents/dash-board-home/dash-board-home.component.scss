@@ -1,10 +1,20 @@
-#canvasData{
-    float: left;
-    width: 50%;
-    margin: 0 auto;
+.graphs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
 }
-#canvasData1{
-    float: right;
-    width: 50%;
-    margin: 0 auto;
+
+.example-card {
+    width: 660px;
+    height: 500px;
+    margin-left: 25px;
+    margin-bottom: 25px;
+}
+
+h1 {
+    margin: 40px;
+    font-size: 50px;
 }

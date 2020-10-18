@@ -25,6 +25,9 @@
         <button mat-raised-button color="primary" 
         [disabled] = "reportForm.valid ? false: true"
         (click)="Submit()">Generate Report</button>
+        <button mat-raised-button color="primary" 
+        [disabled] = "generated ? false: true"
+        (click)="SendReport()">Send and Download PDF Report</button>
     </mat-card-actions>
   </mat-card> 
 </form> 
