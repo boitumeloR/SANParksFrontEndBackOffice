@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-const thisWebServer = 'https://localhost:44371/';
+const thisWebServer = 'https://sanparksapi.azurewebsites.net';
 @Injectable({
   providedIn: 'root'
 })
