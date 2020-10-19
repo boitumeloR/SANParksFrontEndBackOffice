@@ -107,6 +107,7 @@ export class PayConservationFeeComponent implements OnInit {
                 data: { errorMessage: 'Session Error, login error.'}
               });
             } else {
+              localStorage.setItem('user', JSON.stringify(res.Session));
               if (res.Success === true) {
                 this.router.navigateByUrl('Home');
                 this.dialog.open(SuccessModalComponent, {

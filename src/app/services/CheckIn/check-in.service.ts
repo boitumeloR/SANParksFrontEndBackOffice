@@ -48,4 +48,8 @@ export class CheckInService {
   SaveDigitalCheckIn(server: string, booking: Booking) {
     return this.http.post<any>(`${server}/api/CheckIn/CheckInDigitalPay`, booking, this.httpOptions);
   }
+
+  SaveUnpaid(server: string, booking: Booking) {
+    return this.http.post<any>(`${server}/api/CheckIn/SaveUnpaid`, booking, this.httpOptions);
+  }
 }

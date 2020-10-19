@@ -434,6 +434,7 @@ import { UpdateChildGuestComponent } from './modals/guest/update-child-guest/upd
 import { PayConservationFeeComponent } from './pages/pay-conservation-fee/pay-conservation-fee.component';
 import { PayUnannouncedConservationComponent } from './pages/pay-unannounced-conservation/pay-unannounced-conservation.component';
 import { QrCodeModalComponent } from './modals/qr-code-modal/qr-code-modal.component';
+import { QRCodeModule } from 'angularx-qrcode';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -877,6 +878,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MaterialModule,
     NgxMaterialTimepickerModule,
     MatNativeDateModule,
+    QRCodeModule,
     HttpClientModule,
     RouterModule.forRoot([
       { // Perhaps we should have an actual home component

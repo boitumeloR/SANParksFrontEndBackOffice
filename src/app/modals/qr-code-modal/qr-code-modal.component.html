@@ -1,1 +1,10 @@
-<p>qr-code-modal works!</p>
+
+<div class="dialog">
+    <h2 mat-dialog-title>Client QR Code</h2>
+    <mat-dialog-content appearance="mat-typography">
+        <qrcode #parent [qrdata]="qrdata" [size]="256" [level]="'M'"></qrcode>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-raised-button color="primary" (click)="saveAsImage(parent)">Download QR Code</button>
+    </mat-dialog-actions>
+</div>

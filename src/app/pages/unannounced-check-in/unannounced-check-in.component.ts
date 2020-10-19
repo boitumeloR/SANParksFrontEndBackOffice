@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, resolveForwardRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,6 +13,8 @@ import { UpdateArbitraryGuestComponent } from 'src/app/modals/guest/update-arbit
 import { ConfirmModalComponent } from 'src/app/modals/auxilliary-modals/confirm-modal/confirm-modal.component';
 import { PayOptionModalComponent } from 'src/app/modals/auxilliary-modals/pay-option-modal/pay-option-modal.component';
 import { SuccessModalComponent } from 'src/app/modals/auxilliary-modals/success-modal/success-modal.component';
+import { QrCodeModalComponent } from 'src/app/modals/qr-code-modal/qr-code-modal.component';
+import { resolveAny } from 'dns';
 
 const ELEMENT_DATA: any[] = [
   { name: 'Tumi', surname: 'Rampete', ID: '99999999999', age: 22, country: 'South Africa'},
@@ -115,6 +117,7 @@ export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
   PayFirst() {
     this.ourDayVisit.Guests = [...this.dataSource];
     this.booking.DayVisits.push(this.ourDayVisit);
+    this.booking.PaidConservationFee = true;
     this.checkServ.GetConservationFees(this.global.GetServer(), this.dataSource)
     .subscribe(res => {
       this.booking.ConservationAmount = res;
@@ -144,13 +147,21 @@ export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
                   this.router.navigateByUrl('Login');
                 } else {
                   if (checked.Success === true) {
+                    localStorage.setItem('user', JSON.stringify(checked.Session));
                     const succ = this.dialog.open(SuccessModalComponent, {
                       disableClose: true,
                       data: {successMessage: `Check In Successfull!!`}
                     });
-
                     this.router.navigateByUrl('Home');
+
+                    succ.afterClosed().subscribe(() => {
+                      this.dialog.open(QrCodeModalComponent, {
+                        data: { BookingID: checked.BookingID},
+                        disableClose: true
+                      });
+                    });
                   } else {
+                    localStorage.setItem('user', JSON.stringify(checked.Session));
                     const err = this.dialog.open(ErrorModalComponent, {
                       disableClose: true,
                       data: {errorMessage: checked.Message}
@@ -168,5 +179,36 @@ export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
   CheckIn() {
     this.ourDayVisit.Guests = [...this.dataSource];
     this.booking.DayVisits.push(this.ourDayVisit);
+    this.booking.PaidConservationFee = true;
+    this.booking.Session = JSON.parse(localStorage.getItem('user'));
+
+    this.checkServ.SaveUnpaid(this.global.GetServer(), this.booking).subscribe(res => {
+      if (res.Session == null) {
+        localStorage.removeItem('user');
+        this.router.navigateByUrl('Login');
+      } else {
+        if (res.Success === true) {
+          localStorage.setItem('user', JSON.stringify(res.Session));
+          const succ = this.dialog.open(SuccessModalComponent, {
+            disableClose: true,
+            data: {successMessage: `Check In Successfull!!`}
+          });
+          this.router.navigateByUrl('Home');
+
+          succ.afterClosed().subscribe(() => {
+            this.dialog.open(QrCodeModalComponent, {
+              data: { BookingID: res.BookingID},
+              disableClose: true
+            });
+          });
+        } else {
+          localStorage.setItem('user', JSON.stringify(res.Session));
+          const err = this.dialog.open(ErrorModalComponent, {
+            disableClose: true,
+            data: {errorMessage: res.Message}
+          });
+        }
+      }
+    });
   }
 }

@@ -105,6 +105,7 @@ export class PayUnannouncedConservationComponent implements OnInit {
                 data: { errorMessage: 'Session Error, login error.'}
               });
             } else {
+              localStorage.setItem('user', JSON.stringify(res.Session));
               if (res.Success === true) {
                 this.router.navigateByUrl('Home');
                 const qr = this.dialog.open(SuccessModalComponent, {
