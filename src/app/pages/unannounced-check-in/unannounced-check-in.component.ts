@@ -31,14 +31,24 @@ export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
 
   hasWildcard: boolean;
   booking: Booking;
-  ourDayVisit: DayVisitBooking;
+
+  guests: Guest[] = [];
+  ourDayVisit: DayVisitBooking = {
+    Date: new Date(),
+    ParkGateID: null,
+    ParkGateName: null,
+    ParkID: null,
+    Guests: [],
+    ParkName: null,
+    Rate: 0
+  };
   parkGates: any[];
   availableAmount: number;
   constructor(private dialog: MatDialog, private title: Title, private router: Router,
               private checkServ: CheckInService, private global: GlobalService) { }
 
   displayedColumns: string[] = ['name', 'surname', 'id', 'age', 'actions'];
-  dataSource: Guest[] = [];
+  dataSource = new MatTableDataSource<Guest>(this.guests);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
@@ -74,7 +84,7 @@ export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
   }
 
   UpdateGuest(guest: Guest) {
-    const index = this.dataSource.findIndex(zz => zz === guest);
+    const index = this.guests.findIndex(zz => zz === guest);
 
     const update =  this.dialog.open(UpdateArbitraryGuestComponent, {
       disableClose: true,
@@ -83,13 +93,15 @@ export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
 
     update.afterClosed().subscribe(res => {
       if (res.success) {
-        this.dataSource[index] = res.guest;
+        this.guests[index] = res.guest;
+
+        this.dataSource.data = this.guests;
       }
     });
   }
 
   DeleteGuest(guest: Guest) {
-    const index = this.dataSource.findIndex(zz => zz === guest);
+    const index = this.guests.findIndex(zz => zz === guest);
     const del =  this.dialog.open(ConfirmModalComponent, {
       disableClose: true,
       data: { confirmMessage: 'Are you sure that you want to remove this guest' }
@@ -97,7 +109,8 @@ export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
 
     del.afterClosed().subscribe(res => {
       if (res) {
-        this.dataSource.splice(index, 1);
+        this.guests.splice(index, 1);
+        this.dataSource.data = this.guests;
       }
     });
   }
@@ -109,16 +122,18 @@ export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
 
     guest.afterClosed().subscribe(res => {
       if (res.success) {
-        this.dataSource.push(res.guest);
+        this.guests.push(res.guest);
+        this.dataSource.data = this.guests;
+        console.log(this.dataSource);
       }
     });
   }
 
   PayFirst() {
-    this.ourDayVisit.Guests = [...this.dataSource];
+    this.ourDayVisit.Guests = [...this.guests];
     this.booking.DayVisits.push(this.ourDayVisit);
     this.booking.PaidConservationFee = true;
-    this.checkServ.GetConservationFees(this.global.GetServer(), this.dataSource)
+    this.checkServ.GetConservationFees(this.global.GetServer(), this.guests)
     .subscribe(res => {
       this.booking.ConservationAmount = res;
 
@@ -157,7 +172,7 @@ export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
                     succ.afterClosed().subscribe(() => {
                       this.dialog.open(QrCodeModalComponent, {
                         data: { BookingID: checked.BookingID},
-                        disableClose: true
+                        disableClose: false
                       });
                     });
                   } else {
@@ -177,7 +192,7 @@ export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
   }
 
   CheckIn() {
-    this.ourDayVisit.Guests = [...this.dataSource];
+    this.ourDayVisit.Guests = [...this.guests];
     this.booking.DayVisits.push(this.ourDayVisit);
     this.booking.PaidConservationFee = true;
     this.booking.Session = JSON.parse(localStorage.getItem('user'));
@@ -204,7 +219,7 @@ export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
         } else {
           localStorage.setItem('user', JSON.stringify(res.Session));
           const err = this.dialog.open(ErrorModalComponent, {
-            disableClose: true,
+            disableClose: false,
             data: {errorMessage: res.Message}
           });
         }

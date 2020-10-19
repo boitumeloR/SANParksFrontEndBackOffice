@@ -47,6 +47,7 @@ export class PayUnannouncedConservationComponent implements OnInit {
 
   ngOnInit(): void {
     this.booking = JSON.parse(localStorage.getItem('unannouncedBooking'));
+    this.amount = this.booking.ConservationAmount;
     this.title.setTitle('Pay Conservation Fee');
     this.stripeService.elements(this.elementsOptions)
     .subscribe(elements => {

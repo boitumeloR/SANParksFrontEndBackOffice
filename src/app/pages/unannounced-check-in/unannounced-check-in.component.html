@@ -14,7 +14,7 @@
     </mat-form-field>
   </mat-card-content>
   <mat-card-actions>
-    <h1>Slots Available: {{availableAmount}}</h1>
+    <h2>Slots Available: {{availableAmount}}</h2>
   </mat-card-actions>
 </mat-card>
 
@@ -66,14 +66,12 @@
   <mat-divider></mat-divider> -->
 <div *ngIf="availableAmount">
   <div mat-subheader> Guests</div>
-<div class="example-container">
-
   <button mat-fab color="primary" aria-label="Add season" class="add" (click)="AddGuest()"
-  [disabled] = "availableAmount >= dataSource.length ? false: true"
+  [disabled] = "availableAmount >= guests.length ? false: true"
   >
     <mat-icon>add</mat-icon>
   </button>
-
+<div class="example-container">
 </div>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
@@ -121,7 +119,7 @@
   </div>
 
   <div class="check">
-    <button mat-raised-button color="primary" (click)="PayFirst()">Pay and Check In</button>
-    <button mat-raised-button color="primary" (click)="CheckIn()">Check In</button>
+    <button mat-raised-button color="primary" *ngIf="hasWildcard" (click)="PayFirst()">Pay and Check In</button>
+    <button mat-raised-button color="primary" *ngIf="hasWildcard" (click)="CheckIn()">Check In</button>
   </div>
 </div>

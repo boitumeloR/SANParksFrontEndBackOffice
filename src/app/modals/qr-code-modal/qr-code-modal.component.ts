@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-qr-code-modal',
@@ -9,22 +9,29 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class QrCodeModalComponent implements OnInit {
 
   qrData = '';
-  constructor(@Inject(MAT_DIALOG_DATA) private data: any) {
-    this.qrData = data.BookingID;
+  constructor(@Inject(MAT_DIALOG_DATA) private data: any, private dialogRef: MatDialogRef<QrCodeModalComponent>) {
+    this.qrData = String(data.BookingID);
+    console.log(this.qrData);
   }
 
   ngOnInit(): void {
+    this.qrData = String(this.data.BookingID);
+    console.log(this.qrData);
   }
 
+  Close() {
+    this.dialogRef.close();
+  }
   saveAsImage(parent) {
     // fetches base 64 date from image
-    const parentElement = parent.el.nativeElement.querySelector('img').src;
+    console.log(parent);
+    const parentElement = parent.qrcElement.nativeElement.toDataURL();
 
     // converts base 64 encoded image to blobData
     const blobData = this.convertBase64ToBlob(parentElement);
 
     // saves as image
-    if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE
       window.navigator.msSaveOrOpenBlob(blobData, 'Qrcode');
     } else { // chrome
       const blob = new Blob([blobData], { type: 'image/png' });
