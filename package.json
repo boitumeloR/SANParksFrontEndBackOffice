@@ -47,6 +47,7 @@
     "primeicons": "^4.0.0",
     "primeng": "^10.0.0",
     "rxjs": "~6.5.4",
+    "save": "^2.4.0",
     "simplebar-angular": "^2.2.0",
     "stripe-angular": "^1.1.0",
     "tslib": "^1.10.0",
