@@ -101,7 +101,7 @@ export class PreBookedCheckInComponent implements OnInit {
         dlg.afterClosed().subscribe(result => {
           if (result) {
             const check = {
-              Session: localStorage.getItem('user'),
+              Session: JSON.parse(localStorage.getItem('user')),
               BookingID: this.checkData.BookingID
             };
             this.checkServ.PreBookedCheckin(this.global.GetServer(), check)
@@ -114,6 +114,7 @@ export class PreBookedCheckInComponent implements OnInit {
                   });
                 } else {
                   if (checked.Success === true) {
+                    localStorage.setItem('user', JSON.stringify(checked.Session));
                     this.router.navigateByUrl('Home');
                     const err = this.dialog.open(SuccessModalComponent, {
                       disableClose: true,
@@ -140,9 +141,34 @@ export class PreBookedCheckInComponent implements OnInit {
   }
 
   Submit() {
-    const submitDialog = this.dialog.open(SuccessModalComponent, {
-      disableClose: true,
-      data: {successMessage: 'You have successfully checked in!'}
+
+    const check = {
+      Session: JSON.parse(localStorage.getItem('user')),
+      BookingID: this.checkData.BookingID
+    };
+    this.checkServ.PreBookedCheckin(this.global.GetServer(), check)
+    .subscribe(checked => {
+      if (checked.Session == null) {
+        this.router.navigateByUrl('Login');
+        const err = this.dialog.open(ErrorModalComponent, {
+          disableClose: true,
+          data: {errorMessage: `Session Errror, Login Again`}
+        });
+      } else {
+        localStorage.setItem('user', JSON.stringify(checked.Session));
+        if (checked.Success === true) {
+          this.router.navigateByUrl('Home');
+          const err = this.dialog.open(SuccessModalComponent, {
+            disableClose: true,
+            data: {successMessage: `Successfully Checked in. Welcome the client.`}
+          });
+        } else {
+          const err = this.dialog.open(ErrorModalComponent, {
+            disableClose: true,
+            data: {errorMessage: checked.Message}
+          });
+        }
+      }
     });
   }
 

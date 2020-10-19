@@ -86,7 +86,6 @@ export class PayUnannouncedConservationComponent implements OnInit {
 
   handlePayment() {
     this.loading = true;
-    const name = this.stripeTest.get('name').value;
     this.stripeService
       .createToken(this.card, {})
       .subscribe(result => {
