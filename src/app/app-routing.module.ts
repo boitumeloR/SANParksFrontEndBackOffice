@@ -338,6 +338,12 @@ const routes: Routes = [
     data: { roleID: 2}
   },
   {
+    path: 'SearchClient',
+    component: ClientComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 5}
+  },
+  {
     path: 'Purhase-Wildcard',
     component: SearchClientForWCComponent,
     canActivate: [AuthguardGuard],

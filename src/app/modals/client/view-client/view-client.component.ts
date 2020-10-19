@@ -31,6 +31,38 @@ export class ViewClientComponent implements OnInit {
     const updateEmployeeDialog = this.dialog.open(UpdateClientComponent, {disableClose: true});
   }
 
+  AddDayVisit() {
+    let employee: number;
+
+    this.serv.getBookingEmployee(this.global.GetServer()).subscribe(result => {
+      if (result.userLoggedOut) {
+        localStorage.removeItem('user');
+        this.router.navigateByUrl('Login');
+      } else {
+        employee = result.EmployeeID;
+        localStorage.setItem('user', JSON.stringify(result.Session));
+
+        const booking: Booking =  {
+          ClientID: this.client.ClientID,
+          BookingID: null,
+          EmployeeID: employee,
+          paymentToken: null,
+          PaymentAmount: null,
+          ConservationAmount: null,
+          TotalAmount: null,
+          PaidConservationFee: false,
+          AccommodationBookings: [],
+          ActivityBookings: [],
+          DayVisits: [],
+          Session: null
+        };
+
+        localStorage.setItem('dayVisit', JSON.stringify(booking));
+        this.router.navigateByUrl('unannouncedCheckIn');
+      }
+    });
+  }
+
   makeBooking() {
     let employee: number;
 

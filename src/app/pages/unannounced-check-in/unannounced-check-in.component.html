@@ -1,11 +1,11 @@
 <app-park-gate-count></app-park-gate-count>
 <h1>Unannounced Check In</h1>
-<div class="check">
-    <button mat-raised-button color="primary" >Search Client </button>
-    <button mat-raised-button color="accent" >Register Client </button>
-    <button mat-raised-button color="primary" >Make Payment </button>
-    <button mat-raised-button color="accent" >Make Booking </button>
-</div>
+<mat-form-field appearance="fill">
+  <mat-label>Park</mat-label>
+  <mat-select formControlName = "park">
+    <mat-option *ngFor="let park of parks" [value] ="park.ParkID" (click)="GetCamps(park)">{{park.ParkName}}</mat-option>
+  </mat-select>
+</mat-form-field>
 
 <mat-list>
     <div mat-subheader>Booking Details</div>
@@ -56,7 +56,7 @@
   <div mat-subheader> Guests</div>
 <div class="example-container">
 
-  <button mat-fab color="primary" aria-label="Add season" class="add" (click)="addSeason()">
+  <button mat-fab color="primary" aria-label="Add season" class="add">
     <mat-icon>add</mat-icon>
   </button>
 

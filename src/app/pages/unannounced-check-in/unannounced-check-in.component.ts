@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CheckInService } from 'src/app/services/CheckIn/check-in.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
+import { Booking, DayVisitBooking } from 'src/app/services/Booking/booking.service';
 
 const ELEMENT_DATA: any[] = [
   { name: 'Tumi', surname: 'Rampete', ID: '99999999999', age: 22, country: 'South Africa'},
@@ -21,16 +22,20 @@ const ELEMENT_DATA: any[] = [
 })
 export class UnannouncedCheckInComponent implements OnInit {
 
+  booking: Booking;
+  ourDayVisit: DayVisitBooking;
   parkGates: any[];
   availableAmount: number;
   constructor(private dialog: MatDialog, private title: Title, private router: Router,
               private checkServ: CheckInService, private global: GlobalService) { }
 
   displayedColumns: string[] = ['name', 'surname', 'id', 'age', 'country'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
+    this.booking = JSON.parse(localStorage.getItem('dayVisit'));
+    this.ourDayVisit.Date = new Date();
     this.title.setTitle('Unannounced Check-In');
 
     const sess = JSON.parse(localStorage.getItem('user'));
