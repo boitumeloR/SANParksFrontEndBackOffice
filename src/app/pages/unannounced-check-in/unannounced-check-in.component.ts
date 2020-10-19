@@ -7,7 +7,10 @@ import { Router } from '@angular/router';
 import { CheckInService } from 'src/app/services/CheckIn/check-in.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
 import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
-import { Booking, DayVisitBooking } from 'src/app/services/Booking/booking.service';
+import { Booking, DayVisitBooking, Guest } from 'src/app/services/Booking/booking.service';
+import { AddArbitraryGuestComponent } from 'src/app/modals/guest/add-arbitrary-guest/add-arbitrary-guest.component';
+import { UpdateArbitraryGuestComponent } from 'src/app/modals/guest/update-arbitrary-guest/update-arbitrary-guest.component';
+import { ConfirmModalComponent } from 'src/app/modals/auxilliary-modals/confirm-modal/confirm-modal.component';
 
 const ELEMENT_DATA: any[] = [
   { name: 'Tumi', surname: 'Rampete', ID: '99999999999', age: 22, country: 'South Africa'},
@@ -29,8 +32,8 @@ export class UnannouncedCheckInComponent implements OnInit {
   constructor(private dialog: MatDialog, private title: Title, private router: Router,
               private checkServ: CheckInService, private global: GlobalService) { }
 
-  displayedColumns: string[] = ['name', 'surname', 'id', 'age', 'country'];
-  dataSource = new MatTableDataSource();
+  displayedColumns: string[] = ['name', 'surname', 'id', 'age', 'actions'];
+  dataSource: Guest[] = [];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   ngOnInit(): void {
@@ -50,10 +53,53 @@ export class UnannouncedCheckInComponent implements OnInit {
         });
       }
     });
-    this.dataSource.paginator = this.paginator;
   }
 
-  GateAvailability() {
-    
+  GateAvailability(parkGate: any) {
+    this.checkServ.CheckGateAvailability(this.global.GetServer(), parkGate.ParkGateID)
+      .subscribe(res => {
+        this.availableAmount = res.Available;
+      });
+  }
+
+  UpdateGuest(guest: Guest) {
+    const index = this.dataSource.findIndex(zz => zz === guest);
+
+    const update =  this.dialog.open(UpdateArbitraryGuestComponent, {
+      disableClose: true,
+      data: { guest }
+    });
+
+    update.afterClosed().subscribe(res => {
+      if (res.success) {
+        this.dataSource[index] = res.guest;
+      }
+    });
+  }
+
+  DeleteGuest(guest: Guest) {
+    const index = this.dataSource.findIndex(zz => zz === guest);
+    const del =  this.dialog.open(ConfirmModalComponent, {
+      disableClose: true,
+      data: { confirmMessage: 'Are you sure that you want to remove this guest' }
+    });
+
+    del.afterClosed().subscribe(res => {
+      if (res) {
+        this.dataSource.splice(index, 1);
+      }
+    });
+  }
+
+  AddGuest() {
+    const guest =  this.dialog.open(AddArbitraryGuestComponent, {
+      disableClose: true
+    });
+
+    guest.afterClosed().subscribe(res => {
+      if (res.success) {
+        this.dataSource.push(res.guest);
+      }
+    });
   }
 }
