@@ -112,7 +112,7 @@ export class UpdateArbitraryGuestComponent implements OnInit {
           console.log(this.guestInfo.value);
 
           this.event.emit(this.guestInfo.value);
-          this.close();
+          this.dialogRef.close({success: true, guest: this.guestInfo.value});
 
         } else {
           this.httpError = true;
@@ -128,7 +128,7 @@ export class UpdateArbitraryGuestComponent implements OnInit {
         });
 
         this.event.emit(this.guestInfo.value);
-        this.close();
+        this.dialogRef.close({success: true, guest: this.guestInfo.value});
       }
     } else {
       this.httpError = true;
@@ -146,7 +146,7 @@ export class UpdateArbitraryGuestComponent implements OnInit {
   }
 
   Cancel() {
-    this.dialogRef.close();
+    this.dialogRef.close({success: false, guest: null});
   }
 
 }

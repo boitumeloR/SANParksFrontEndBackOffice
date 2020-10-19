@@ -68,4 +68,15 @@ export class CardOptionComponent implements OnInit {
   });
   }
 
+  handlePayment() {
+    const name = this.stripeTest.get('name').value;
+    this.stripeService
+      .createToken(this.card, {})
+      .subscribe(result => {
+        if (result) {
+          // Use the token to create a charge or a customer
+          // https://stripe.com/docs/charges
+        }
+      });
+    }
 }
