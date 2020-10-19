@@ -12,6 +12,7 @@ import { AddArbitraryGuestComponent } from 'src/app/modals/guest/add-arbitrary-g
 import { UpdateArbitraryGuestComponent } from 'src/app/modals/guest/update-arbitrary-guest/update-arbitrary-guest.component';
 import { ConfirmModalComponent } from 'src/app/modals/auxilliary-modals/confirm-modal/confirm-modal.component';
 import { PayOptionModalComponent } from 'src/app/modals/auxilliary-modals/pay-option-modal/pay-option-modal.component';
+import { SuccessModalComponent } from 'src/app/modals/auxilliary-modals/success-modal/success-modal.component';
 
 const ELEMENT_DATA: any[] = [
   { name: 'Tumi', surname: 'Rampete', ID: '99999999999', age: 22, country: 'South Africa'},
@@ -124,7 +125,8 @@ export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
 
       dlg.afterClosed().subscribe(result => {
         if (result) {
-          // Card Payment
+          localStorage.setItem('unannouncedBooking', JSON.stringify(this.booking));
+          this.router.navigateByUrl('payUnannounced');
         } else {
           const del = this.dialog.open(ConfirmModalComponent, {
             disableClose: true,
@@ -134,7 +136,28 @@ export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
           del.afterClosed().subscribe(upd => {
             if (upd) {
               this.booking.Session = JSON.parse(localStorage.getItem('user'));
-              // Save Checkin
+
+              this.checkServ.SavePaidCheckin(this.global.GetServer(), this.booking)
+              .subscribe(checked => {
+                if (checked.Session === null) {
+                  localStorage.removeItem('user');
+                  this.router.navigateByUrl('Login');
+                } else {
+                  if (checked.Success === true) {
+                    const succ = this.dialog.open(SuccessModalComponent, {
+                      disableClose: true,
+                      data: {successMessage: `Check In Successfull!!`}
+                    });
+
+                    this.router.navigateByUrl('Home');
+                  } else {
+                    const err = this.dialog.open(ErrorModalComponent, {
+                      disableClose: true,
+                      data: {errorMessage: checked.Message}
+                    });
+                  }
+                }
+              });
             }
           });
         }

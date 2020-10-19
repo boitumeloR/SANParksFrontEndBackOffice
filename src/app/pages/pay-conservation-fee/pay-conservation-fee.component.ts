@@ -11,6 +11,7 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorModalComponent } from 'src/app/modals/auxilliary-modals/error-modal/error-modal.component';
+import { SuccessModalComponent } from 'src/app/modals/auxilliary-modals/success-modal/success-modal.component';
 
 @Component({
   selector: 'app-pay-conservation-fee',
@@ -108,8 +109,8 @@ export class PayConservationFeeComponent implements OnInit {
             } else {
               if (res.Success === true) {
                 this.router.navigateByUrl('Home');
-                this.dialog.open(ErrorModalComponent, {
-                  data: { errorMessage: 'Success! Allow the client in!!.'}
+                this.dialog.open(SuccessModalComponent, {
+                  data: { successMessage: 'Success! Allow the client in!!.'}
                 });
               } else {
                 this.dialog.open(ErrorModalComponent, {
