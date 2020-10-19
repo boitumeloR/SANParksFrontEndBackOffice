@@ -56,6 +56,8 @@ import { PaymentReportComponent } from './pages/reports/payment-report/payment-r
 import { DashBoardHomeComponent } from './subcomponents/dash-board-home/dash-board-home.component';
 import { ForbiddenComponent } from './subcomponents/forbidden/forbidden.component';
 import { AuthguardGuard } from './subcomponents/authguard.guard';
+import { PayUnannouncedConservationComponent } from './pages/pay-unannounced-conservation/pay-unannounced-conservation.component';
+import { PayConservationFeeComponent } from './pages/pay-conservation-fee/pay-conservation-fee.component';
 const routes: Routes = [
   {
     path: 'Park',
@@ -370,6 +372,18 @@ const routes: Routes = [
   {
     path: 'paymentReport',
     component: PaymentReportComponent
+  },
+  {
+    path: 'payUnannounced',
+    component: PayUnannouncedConservationComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 5}
+  },
+  {
+    path: 'payConservationFee',
+    component: PayConservationFeeComponent,
+    canActivate: [AuthguardGuard],
+    data: { roleID: 5}
   }
 ];
 

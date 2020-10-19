@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,6 +11,7 @@ import { Booking, DayVisitBooking, Guest } from 'src/app/services/Booking/bookin
 import { AddArbitraryGuestComponent } from 'src/app/modals/guest/add-arbitrary-guest/add-arbitrary-guest.component';
 import { UpdateArbitraryGuestComponent } from 'src/app/modals/guest/update-arbitrary-guest/update-arbitrary-guest.component';
 import { ConfirmModalComponent } from 'src/app/modals/auxilliary-modals/confirm-modal/confirm-modal.component';
+import { PayOptionModalComponent } from 'src/app/modals/auxilliary-modals/pay-option-modal/pay-option-modal.component';
 
 const ELEMENT_DATA: any[] = [
   { name: 'Tumi', surname: 'Rampete', ID: '99999999999', age: 22, country: 'South Africa'},
@@ -23,8 +24,9 @@ const ELEMENT_DATA: any[] = [
   templateUrl: './unannounced-check-in.component.html',
   styleUrls: ['./unannounced-check-in.component.scss']
 })
-export class UnannouncedCheckInComponent implements OnInit {
+export class UnannouncedCheckInComponent implements OnInit, AfterViewInit {
 
+  hasWildcard: boolean;
   booking: Booking;
   ourDayVisit: DayVisitBooking;
   parkGates: any[];
@@ -55,7 +57,13 @@ export class UnannouncedCheckInComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.checkServ.ClientHasWildcard(this.global.GetServer(), this.booking.ClientID)
+      .subscribe(res => this.hasWildcard = res);
+  }
+
   GateAvailability(parkGate: any) {
+    this.ourDayVisit.ParkGateID = parkGate.ParkGateID;
     this.checkServ.CheckGateAvailability(this.global.GetServer(), parkGate.ParkGateID)
       .subscribe(res => {
         this.availableAmount = res.Available;
@@ -101,5 +109,41 @@ export class UnannouncedCheckInComponent implements OnInit {
         this.dataSource.push(res.guest);
       }
     });
+  }
+
+  PayFirst() {
+    this.ourDayVisit.Guests = [...this.dataSource];
+    this.booking.DayVisits.push(this.ourDayVisit);
+    this.checkServ.GetConservationFees(this.global.GetServer(), this.dataSource)
+    .subscribe(res => {
+      this.booking.ConservationAmount = res;
+
+      const dlg = this.dialog.open(PayOptionModalComponent, {
+        disableClose: true
+      });
+
+      dlg.afterClosed().subscribe(result => {
+        if (result) {
+          // Card Payment
+        } else {
+          const del = this.dialog.open(ConfirmModalComponent, {
+            disableClose: true,
+            data: {confirmMessage: `Was the amount ZAR${this.booking.ConservationAmount} paid in full?`}
+          });
+
+          del.afterClosed().subscribe(upd => {
+            if (upd) {
+              this.booking.Session = JSON.parse(localStorage.getItem('user'));
+              // Save Checkin
+            }
+          });
+        }
+      });
+    });
+  }
+
+  CheckIn() {
+    this.ourDayVisit.Guests = [...this.dataSource];
+    this.booking.DayVisits.push(this.ourDayVisit);
   }
 }

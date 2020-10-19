@@ -432,6 +432,7 @@ import { UpdateArbitraryGuestComponent } from './modals/guest/update-arbitrary-g
 import { UpdateAdultGuestComponent } from './modals/guest/update-adult-guest/update-adult-guest.component';
 import { UpdateChildGuestComponent } from './modals/guest/update-child-guest/update-child-guest.component';
 import { PayConservationFeeComponent } from './pages/pay-conservation-fee/pay-conservation-fee.component';
+import { PayUnannouncedConservationComponent } from './pages/pay-unannounced-conservation/pay-unannounced-conservation.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -848,7 +849,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     UpdateArbitraryGuestComponent,
     UpdateAdultGuestComponent,
     UpdateChildGuestComponent,
-    PayConservationFeeComponent
+    PayConservationFeeComponent,
+    PayUnannouncedConservationComponent
   ],
   entryComponents: [
     AddParkComponent,
