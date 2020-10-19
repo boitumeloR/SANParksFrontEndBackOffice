@@ -23,4 +23,12 @@ export class CheckInService {
   PayCheckIn(server: string, data: any) {
     return this.http.post<any>(`${server}/api/CheckIn/PayConservationFee`, data, this.httpOptions);
   }
+
+  GetParkGates(server: string, session: any) {
+    return this.http.post<any>(`${server}/api/CheckIn/GetParkGates`, session, this.httpOptions);
+  }
+
+  CheckGateAvailability(server: string, gate: number) {
+    return this.http.get<any>(`${server}/api/CheckIn/CheckGateAvailability?parkGateID=${gate}`);
+  }
 }
