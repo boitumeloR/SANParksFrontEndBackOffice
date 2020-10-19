@@ -13,7 +13,7 @@ export class PayOptionModalComponent implements OnInit {
               private dialogRef: MatDialogRef<PayOptionModalComponent>) { }
 
   ngOnInit(): void {
-    this.confirmMessage = this.data.confirmMessage;
+
   }
 
   Card() {

@@ -431,6 +431,10 @@ import { ForbiddenComponent } from './subcomponents/forbidden/forbidden.componen
 import { UpdateArbitraryGuestComponent } from './modals/guest/update-arbitrary-guest/update-arbitrary-guest.component';
 import { UpdateAdultGuestComponent } from './modals/guest/update-adult-guest/update-adult-guest.component';
 import { UpdateChildGuestComponent } from './modals/guest/update-child-guest/update-child-guest.component';
+import { PayConservationFeeComponent } from './pages/pay-conservation-fee/pay-conservation-fee.component';
+import { PayUnannouncedConservationComponent } from './pages/pay-unannounced-conservation/pay-unannounced-conservation.component';
+import { QrCodeModalComponent } from './modals/qr-code-modal/qr-code-modal.component';
+import { QRCodeModule } from 'angularx-qrcode';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -846,7 +850,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ForbiddenComponent,
     UpdateArbitraryGuestComponent,
     UpdateAdultGuestComponent,
-    UpdateChildGuestComponent
+    UpdateChildGuestComponent,
+    PayConservationFeeComponent,
+    PayUnannouncedConservationComponent,
+    QrCodeModalComponent
   ],
   entryComponents: [
     AddParkComponent,
@@ -871,6 +878,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MaterialModule,
     NgxMaterialTimepickerModule,
     MatNativeDateModule,
+    QRCodeModule,
     HttpClientModule,
     RouterModule.forRoot([
       { // Perhaps we should have an actual home component

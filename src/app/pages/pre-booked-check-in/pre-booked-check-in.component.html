@@ -104,13 +104,12 @@
   </div>
 
   <div class="center" *ngIf="!conservationFeePaid && !hasWildcard">
-    <h1>Total Due: R 00.00</h1>
+    <h1>Total Due: {{conservationAmount}}</h1>
     <button mat-raised-button color="accent" (click)="MakePayment()">Make Payment</button>
   </div>
 
 <div class="submit">
-    <button mat-raised-button color="primary" (click)="Submit()">Submit</button>
-    <button mat-raised-button color="warn" (click)="Cancel()">Cancel</button>
+    <button mat-raised-button color="primary" *ngIf="hasWildcard" (click)="Submit()">Submit</button>
 </div>
 </div>
 
