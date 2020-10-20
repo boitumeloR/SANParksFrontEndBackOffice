@@ -11,6 +11,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
+import { HelpDocComponent } from 'src/app/help-doc/help-doc.component';
 
 @Component({
   selector: 'app-park',
@@ -62,5 +63,9 @@ export class ParkComponent implements OnInit {
       displaySpinner.close();
       this.serverDownSnack();
     });
+  }
+
+  help(){
+    const dialogRef = this.dialog.open(HelpDocComponent, {data: '1'});
   }
 }
