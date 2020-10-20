@@ -58,6 +58,7 @@ export class LoginService {
   constructor(private http: HttpClient, private dialog: MatDialog, private router: Router,
               private snackbar: MatSnackBar) { }
   login(User, link){
+    console.log(link);
     const displaySpinner = this.dialog.open(SpinnerComponent, {disableClose: true});
     return this.http.post(`${link}/api/Auth/Login`, User).subscribe((result: any) => {
       if (result.Error){
