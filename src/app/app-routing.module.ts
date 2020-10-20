@@ -58,7 +58,12 @@ import { ForbiddenComponent } from './subcomponents/forbidden/forbidden.componen
 import { AuthguardGuard } from './subcomponents/authguard.guard';
 import { PayUnannouncedConservationComponent } from './pages/pay-unannounced-conservation/pay-unannounced-conservation.component';
 import { PayConservationFeeComponent } from './pages/pay-conservation-fee/pay-conservation-fee.component';
+import { HelpDocComponent } from './help-doc/help-doc.component';
 const routes: Routes = [
+  {
+    path: 'Help-Document',
+    component: HelpDocComponent
+  },
   {
     path: 'Park',
     component: ParkComponent,

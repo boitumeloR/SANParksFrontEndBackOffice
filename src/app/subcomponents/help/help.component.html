@@ -4,6 +4,7 @@
     <button id="alignCloseRight" mat-icon-button align="end" color="warn" [mat-dialog-close] aria-label="Close">
         <mat-icon>close</mat-icon>
     </button>
+
     <h2 mat-dialog-title>Help </h2>    
     <form [formGroup]="helpForm">   
     <mat-dialog-content appearance="mat-typography">
@@ -25,5 +26,7 @@
             </mat-icon>
         </button>
     </mat-dialog-actions>
+    <br>    
+    <iframe src="assets/Help.pdf" frameborder="0" height="100%" width="100%"></iframe> 
     </form>
 </body>

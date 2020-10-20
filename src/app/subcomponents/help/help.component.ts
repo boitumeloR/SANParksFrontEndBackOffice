@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EmployeeService } from 'src/app/services/Employee/employee.service';
 import { GlobalService } from 'src/app/services/Global/global.service';
-
+import { PdfViewerComponent } from 'ng2-pdf-viewer';
 @Component({
   selector: 'app-help',
   templateUrl: './help.component.html',
@@ -12,6 +12,7 @@ import { GlobalService } from 'src/app/services/Global/global.service';
 export class HelpComponent implements OnInit {
   helpForm: FormGroup;
   questionAsked = false;
+  thisHelpDisplay: boolean;
   constructor(private formBuilder: FormBuilder, private micActiveSnackBar: MatSnackBar, private cdRef: ChangeDetectorRef,
               private employeeService: EmployeeService, private globalService: GlobalService) { }
 
@@ -395,7 +396,7 @@ export class HelpComponent implements OnInit {
     helpRecognition.onstart = () => {
       this.micActiveMessage();
     };
-    console.log('Hello World')
+    console.log('Hello World');
     helpRecognition.onresult  = (event) => {
       const currentIndex = event.resultIndex;
       const userInput = event.results[currentIndex][0].transcript;
