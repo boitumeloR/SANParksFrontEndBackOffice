@@ -435,6 +435,8 @@ import { PayConservationFeeComponent } from './pages/pay-conservation-fee/pay-co
 import { PayUnannouncedConservationComponent } from './pages/pay-unannounced-conservation/pay-unannounced-conservation.component';
 import { QrCodeModalComponent } from './modals/qr-code-modal/qr-code-modal.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { HelpDocComponent } from './help-doc/help-doc.component';
+
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
@@ -446,6 +448,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
+    HelpDocComponent,
     AppComponent,
     HeaderComponent,
     ParkComponent,

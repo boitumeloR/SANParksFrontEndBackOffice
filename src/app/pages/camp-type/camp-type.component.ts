@@ -11,6 +11,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {SpinnerComponent} from 'src/app/subcomponents/spinner/spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
+import { HelpDocComponent } from 'src/app/help-doc/help-doc.component';
 @Component({
   selector: 'app-camp-type',
   templateUrl: './camp-type.component.html',
@@ -36,7 +37,9 @@ export class CampTypeComponent implements OnInit {
       duration: 3500,
     });
   }
-
+  help(){
+    const dialogRef = this.dialog.open(HelpDocComponent, {data: '2'});
+  }
   filterTable(filter){
     this.dataSource.filter = filter;
   }
