@@ -110,7 +110,7 @@
     </h1>
   </div>
 <div class="submit">
-    <button mat-raised-button color="primary" *ngIf="hasWildcard" (click)="Submit()">Checkout Client</button>
+    <button mat-raised-button color="primary" *ngIf="hasWildcard || conservationFeePaid" (click)="Submit()">Checkout Client</button>
 </div>
 </div>
 
