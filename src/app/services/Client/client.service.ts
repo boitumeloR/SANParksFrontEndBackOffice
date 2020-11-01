@@ -32,4 +32,16 @@ export class ClientService {
     const user = JSON.parse(localStorage.getItem('user'));
     return this.http.post(`${link}/api/Client/getClients`, user);
   }
+
+  CreateClient(client, link){
+    return this.http.post<any>(`${link}/api/Auth/AgentAddClient`, client);
+  }
+
+  getCountries(link){
+    return this.http.get(`${link}/api/Auth/GetCountries`);
+  }
+
+  getTitles(link){
+    return this.http.get(`${link}/api/Auth/GetTitles`);
+  }
 }

@@ -33,6 +33,12 @@ export class ClientComponent implements OnInit {
 
   addClient(){
     const addClientDialog = this.dialog.open(AddClientComponent, {disableClose: true});
+
+    addClientDialog.afterClosed().subscribe(res => {
+      if (res === true) {
+        this.getClients();
+      }
+    });
   }
   filterClients(filter) {
     this.dataSource.filter = filter;

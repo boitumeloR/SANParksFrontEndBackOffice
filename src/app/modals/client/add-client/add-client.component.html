@@ -6,11 +6,9 @@
             <mat-form-field appearance="fill">
                 <mat-label>Title</mat-label>
                 <mat-select formControlName="title">
-                    <mat-option value="Mr">Mr</mat-option>
-                    <mat-option value="Mrs">Mrs</mat-option>
-                    <mat-option value="Miss">Miss</mat-option>
+                    <mat-option *ngFor="let item of titles" [value]="item.TitleID">{{item.TitleName}}</mat-option>
                 </mat-select>
-            </mat-form-field>            
+            </mat-form-field>             
             <mat-form-field appearance="fill">
                 <mat-label>Name</mat-label>
                 <input matInput formControlName="name">
@@ -22,9 +20,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Country</mat-label>
                 <mat-select formControlName="country">
-                    <mat-option value="South Africa">South Africa</mat-option>
-                    <mat-option value="Mozambique">Mozambique</mat-option>
-                    <mat-option value="Swaziland">Swaziland</mat-option>
+                    <mat-option *ngFor="let item of countries" [value]="item.CountryID">{{item.CountryID}}</mat-option>
                 </mat-select>
             </mat-form-field>         
             <mat-form-field appearance="fill">
@@ -39,6 +35,10 @@
             <mat-form-field appearance="fill">
                 <mat-label>Email Address</mat-label>
                 <input matInput formControlName="emailAddress">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Age</mat-label>
+                <input matInput formControlName="age">
             </mat-form-field>
             <mat-form-field hintLabel="Max 200 characters" appearance="fill">
                 <mat-label>Address Line 1</mat-label>
@@ -63,8 +63,3 @@
     </mat-dialog-actions>
     </form>
     </div>
-    
-    
-    
-    
-    
