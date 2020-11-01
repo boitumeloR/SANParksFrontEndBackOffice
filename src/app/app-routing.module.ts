@@ -260,7 +260,7 @@ const routes: Routes = [
     path: 'checkOutPark',
     component: CheckoutParkComponent,
     canActivate: [AuthguardGuard],
-    data: { roleID: 6}
+    data: { roleID: 5}
   },
   {
     path: 'checkOutList',

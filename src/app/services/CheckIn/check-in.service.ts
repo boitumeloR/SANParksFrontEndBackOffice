@@ -17,6 +17,14 @@ export class CheckInService {
     return this.http.post<any>(`${server}/api/CheckIn/ClientBooking`, data, this.httpOptions);
   }
 
+  CheckoutSearch(server: string, data: any) {
+    return this.http.post<any>(`${server}/api/CheckIn/CheckoutSearch`, data, this.httpOptions);
+  }
+
+  CheckoutPark(server: string, data: any) {
+    return this.http.post<any>(`${server}/api/CheckIn/CheckoutPark`, data, this.httpOptions);
+  }
+
   PreBookedCheckin(server: string, data: any) {
     return this.http.post<any>(`${server}/api/CheckIn/CheckInWithBooking`, data, this.httpOptions);
   }
