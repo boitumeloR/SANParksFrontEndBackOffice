@@ -156,7 +156,7 @@ export class CheckoutParkComponent implements OnInit {
           this.router.navigateByUrl('Home');
           const err = this.dialog.open(SuccessModalComponent, {
             disableClose: true,
-            data: {successMessage: `Successfully Checked out. Client may leave theough the park gate.`}
+            data: {successMessage: `Successfully Checked out. Client may leave through the park gate.`}
           });
         } else {
           const err = this.dialog.open(ErrorModalComponent, {
