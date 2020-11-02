@@ -84,7 +84,6 @@ export class CheckoutParkComponent implements OnInit {
     const payment = this.dialog.open(PayOptionModalComponent, {
       disableClose: true
     });
-
     payment.afterClosed().subscribe(res => {
       if (res) {
         localStorage.setItem('payAmount', JSON.stringify({amount: this.conservationAmount, BookingID: this.checkData.BookingID}));
@@ -125,11 +124,11 @@ export class CheckoutParkComponent implements OnInit {
                   }
                 }
               });
-          }
-        });
-      }
-    });
-  }
+            }
+          });
+        }
+      });
+    }
 
   Cancel() {
     const cancelDialog = this.dialog.open(CancelAlertComponent, {
