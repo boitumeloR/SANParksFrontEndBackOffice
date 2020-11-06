@@ -17,6 +17,15 @@ export class CheckInService {
     return this.http.post<any>(`${server}/api/CheckIn/ClientBooking`, data, this.httpOptions);
   }
 
+  SearchActivityBooking(server: string, data: any) {
+    return this.http.post<any>(`${server}/api/CheckIn/ActivitySearch`, data, this.httpOptions);
+  }
+
+  SearchAccommodationBooking(server: string, data: any) {
+    return this.http.post<any>(`${server}/api/CheckIn/AccommodationSearch`, data, this.httpOptions);
+  }
+
+
   CheckoutSearch(server: string, data: any) {
     return this.http.post<any>(`${server}/api/CheckIn/CheckoutSearch`, data, this.httpOptions);
   }
@@ -27,6 +36,22 @@ export class CheckInService {
 
   PreBookedCheckin(server: string, data: any) {
     return this.http.post<any>(`${server}/api/CheckIn/CheckInWithBooking`, data, this.httpOptions);
+  }
+
+  ActivityCheckIn(server: string, data: any) {
+    return this.http.post<any>(`${server}/api/CheckIn/CheckInActivity`, data, this.httpOptions);
+  }
+
+  AccommodationCheckIn(server: string, data: any) {
+    return this.http.post<any>(`${server}/api/CheckIn/CheckInAccommodation`, data, this.httpOptions);
+  }
+
+  AccommodationCheckOut(server: string, data: any) {
+    return this.http.post<any>(`${server}/api/CheckIn/CheckOutAccommodation`, data, this.httpOptions);
+  }
+
+  ActivityTicket(server: string, activityBookDateID: any) {
+    return this.http.get<any>(`${server}/api/CheckIn/ActivityTicket?activityBookDateID=${activityBookDateID}`);
   }
 
   PayCheckIn(server: string, data: any) {
